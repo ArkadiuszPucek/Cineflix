@@ -1,26 +1,22 @@
-package pl.puccini.viaplay.domain.series;
+package pl.puccini.viaplay.domain.series.dto;
 
-
-import jakarta.persistence.*;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import pl.puccini.viaplay.domain.genre.Genre;
 
-@Entity
+@AllArgsConstructor
 @Getter
 @Setter
-public class Series {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class SeriesDto {
     private Long id;
     private String title;
     private int releaseYear;
     private String imageUrl;
     private String imdbRating;
     private int seasonsNumber;
-    @ManyToOne
-    @JoinColumn(name = "genre_id", referencedColumnName = "id")
-    private Genre genre;
+    private String  genre;
     private boolean promoted;
-
 }

@@ -12,6 +12,7 @@
             <column name="releaseYear" type="INT"/>
             <column name="imageUrl" type="VARCHAR(255)"/>
             <column name="imdbRating" type="VARCHAR(10)"/>
+            <column name="promoted" type="BOOLEAN"/>
             <column name="genre_id" type="BIGINT">
                 <constraints nullable="false"
                              foreignKeyName="fk_movie_genre"

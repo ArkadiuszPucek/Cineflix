@@ -11,12 +11,17 @@ import pl.puccini.viaplay.domain.genre.Genre;
 @Setter
 public class Movie {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String imdbId;
     private String title;
     private int releaseYear;
     private String imageUrl;
-    private String imdbRating;
+    private String mediaUrl;
+    private String timeline;
+    private int ageLimit;
+    private String description;
+    private String cast;
+    private String directedBy;
+    private String languages;
     @ManyToOne
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
     private Genre genre;

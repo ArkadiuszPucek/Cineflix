@@ -4,12 +4,17 @@
 
     <meta charset="UTF-8">
     <title>ViaPlay</title>
-    <!--  Automatic page scaling  s-->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script defer src="../static/scripts/common.js"></script>
-    <link rel="stylesheet" href="../static/styles/main.css">
+<!--    &lt;!&ndash;  Automatic page scaling  s&ndash;&gt;-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    <script defer src="../static/scripts/common.js"></script>-->
+<!--    <script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-B9R7R68EHB&amp;l=dataLayer&amp;cx=c"></script>-->
+<!--    <script type="text/javascript" async="" src="https://bat.bing.com/bat.js"></script>-->
+<!--    <script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-K8LTL3"></script>-->
+<!--    <script src="https://bat.bing.com/p/action/5318216.js" type="text/javascript" async="" data-ueto="ueto_e0a41b7b5e"></script>-->
+    <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
 </head>
 <body>
+
 <div id="content-wrapper" class>
     <div class="dockable"></div>
     <div id="react-mount">
@@ -21,7 +26,7 @@
                     <span>
                         <div class="HeaderLogo-module-headerLogo-lWX4m">
                             <a class="HeaderLogo-module-link-kdP1e" href="/">
-                                <img src="/images/header-logo.png" alt="Viaplay Start logo"
+                                <img src="https://viaplay-web-frontend-assets.mtg-api.com/frontend-2023092141850/images/header-logo.png" alt="Viaplay Start logo"
                                      class="Logo-module-logo-pfYdr">
                             </a>
                         </div>
@@ -73,9 +78,11 @@
             </header>
 
             <div id="content" class="root">
+
                 <div class="dockable"></div>
                 <div class="blocksEnsembleContainer-module-container-ZXS1I" id="blockEnsembleContainer">
 
+<!--                    FUTUREBOX-->
                     <div style="display: block;">
                         <section class="FeatureBox-module-featurebox-k0Qb-" tabindex="-1">
                             <div class="FeatureBox-module-scaffold-pbGsj">
@@ -83,14 +90,13 @@
 
                                     <ul class="FeatureBox-module-frames-KRTS0">
                                         <div style="display: block;">
-                                            <li data-testhook="featurebox-frame"
-                                                class="Frame-module-container-hTg-J Frame-module-autofadein-pgNO2"
-                                                style="background-image: url(&quot;https://i-viaplay-com.akamaized.net/editorial-media/editorial_pages/featurebox/Series/hellonwheelsS1_webxdk.jpg?width=1920&amp;height=1080&quot;);">
+                                            <li class="Frame-module-container-hTg-J Frame-module-autofadein-pgNO2"
+                                                th:each="item : ${randomPromotedItems}">
                                                 <div class="FeatureBoxVideo-module-container-8tmrB">
                                                     <div class="FeatureBoxVideo-module-wrapper-8UDKL">
-                                                        <video class="FeatureBoxVideo-module-video-wVrdf" playsinline=""></video>
                                                         <div class="FeatureBoxVideo-module-poster-SJpIi FeatureBoxVideo-module-visibleItem-85rzi FeatureBoxVideo-module-smoothVisibleItem-1w-S7"
-                                                             style="background-image: url(&quot;https://i-viaplay-com.akamaized.net/editorial-media/editorial_pages/featurebox/Series/hellonwheelsS1_webxdk.jpg?width=1920&amp;height=1080&quot;);">
+                                                             style="background-image: url(https://i-viaplay-com.akamaized.net/editorial-media/editorial_pages/featurebox/Series/hellonwheelsS1_webxdk.jpg?width=1920&height=1080);}"
+                                                        th:style="'background-image: url(${item.imageUrl});'">
                                                         </div>
                                                     </div>
                                                     <div class="FeatureBoxVideo-module-shadow-IJEZu"></div>
@@ -98,15 +104,17 @@
                                                 <div class="FeatureBoxFlags-module-container-kShG1"></div>
                                                 <div class="Frame-module-vignette-eazga"></div>
                                                 <div></div>
+
+<!--                                                INFORMATION MODULE FRAME-->
                                                 <div class="Frame-module-body-ICZKd">
-                                                    <h3 class="Frame-module-title-wgDhS">
+                                                    <h3 class="Frame-module-title-wgDhS" th:text="${item.title}">
                                                         Hell on Wheels: Witaj w piekle
                                                     </h3>
                                                     <p class="FrameMeta-module-metadata-n-nYT">
                                                         <span class="Divider-module-divider-U-3-- Divider-module-featurebox-lE8g3">
                                                             <span>
                                                                 <a data-tracking-click="IMDB" class="ImdbRating-module-link-yYfI- ImdbRating-module-featurebox-rOXSw"
-                                                            href="http://www.imdb.com/title/tt1699748?ref_ext_viaplay"
+                                                            href="http://www.imdb.com/title/tt1699748?ref_ext_viaplay" th:href="@{http://www.imdb.com/title/tt1699748}"
                                                             target="_blank" rel="noopener noreferrer nofollow" tabindex="-1">
                                                                     8.3
                                                                 </a>
@@ -202,7 +210,7 @@
                                             <a class="Item-module-link-Lms-C" tabindex="-1"
                                                href="/series/good-doctor-the?seasonNumber=6">
                                                 <div class="Item-module-image-CGday"
-                                                     style="background-image: url('/images/medical/the_good_doctor_bg_img.jpg');">
+                                                     style="background-image: url('/images/the_good_doctor_bg_img.jpg');">
                                                 </div>
                                             </a>
                                         </div>
@@ -219,7 +227,7 @@
                                             <a class="Item-module-link-Lms-C" data-testhook="item-product-page-link"
                                                tabindex="-1" href="/series/new-amsterdam">
                                                 <div class="Item-module-image-CGday"
-                                                     style="background-image: url('/images/medical/new_amsterdam_bg_img.jpg');">
+                                                     style="background-image: url('/images/new_amsterdam_bg_img.jpg');">
                                                 </div>
                                             </a>
                                         </div>
@@ -235,7 +243,7 @@
                                         <div class="Item-module-box-4uBp3">
                                             <a class="Item-module-link-Lms-C" tabindex="-1" href="/series/chicago-med">
                                                 <div class="Item-module-image-CGday"
-                                                     style="background-image: url('/images/medical/chicago_med_bg_img.jpg');">
+                                                     style="background-image: url('/images/chicago_med_bg_img.jpg');">
                                                 </div>
                                             </a>
                                         </div>
@@ -252,7 +260,7 @@
                                             <a class="Item-module-link-Lms-C" tabindex="-1"
                                                href="/series/mary-kills-people">
                                                 <div class="Item-module-image-CGday"
-                                                     style="background-image: url('/images/medical/marry_kills_bg_img.jpg');">
+                                                     style="background-image: url('/images/marry_kills_bg_img.jpg');">
                                                 </div>
                                             </a>
                                         </div>
@@ -268,7 +276,7 @@
                                         <div class="Item-module-box-4uBp3">
                                             <a class="Item-module-link-Lms-C" tabindex="-1" href="/series/pulse">
                                                 <div class="Item-module-image-CGday"
-                                                     style="background-image: url('/images/medical/pulse_bg_img.jpg');">
+                                                     style="background-image: url('/images/pulse_bg_img.jpg');">
                                                 </div>
                                             </a>
                                         </div>

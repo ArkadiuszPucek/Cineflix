@@ -9,7 +9,14 @@ public class MovieDtoMapper {
                 movie.getTitle(),
                 movie.getReleaseYear(),
                 movie.getImageUrl(),
+                movie.getMediaUrl(),
                 movie.getImdbRating(),
+                movie.getTimeline(),
+                movie.getAgeLimit(),
+                movie.getDescription(),
+                movie.getCast(),
+                movie.getDirectedBy(),
+                movie.getLanguages(),
                 movie.getGenre().getName(),
                 movie.isPromoted()
         );

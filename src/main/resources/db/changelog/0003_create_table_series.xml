@@ -5,20 +5,44 @@
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
     <changeSet id="0001-3" author="puccini">
         <createTable tableName="series">
-            <column name="id" type="BIGINT" autoIncrement="true">
+            <column name="imdbId" type="VARCHAR(255)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="title" type="VARCHAR(100)"/>
-            <column name="releaseYear" type="INT"/>
-            <column name="imageUrl" type="VARCHAR(2055)"/>
-            <column name="imdbRating" type="VARCHAR(10)"/>
-            <column name="seasonsNumber" type="INT"/>
-            <column name="promoted" type="BOOLEAN"/>
+            <column name="title" type="VARCHAR(100)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="releaseYear" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="imageUrl" type="VARCHAR(2055)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cast" type="VARCHAR(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="languages" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
             <column name="genre_id" type="BIGINT">
                 <constraints nullable="false"
                              foreignKeyName="fk_series_genre"
                              referencedTableName="genre"
                              referencedColumnNames="id"/>
+            </column>
+            <column name="promoted" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="imdbRating" type="VARCHAR(10)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="imdbUrl" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="seasons" type="VARCHAR(15)">
+                <constraints nullable="true"/>
             </column>
         </createTable>
     </changeSet>

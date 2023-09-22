@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.puccini.viaplay.domain.movie.dto.MovieDto;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieService {
@@ -18,6 +19,10 @@ public class MovieService {
         return movieRepository.findAllByPromotedIsTrue().stream()
                 .map(MovieDtoMapper::map)
                 .toList();
+    }
+
+    public Optional<Movie> getFirstMovie(){
+        return movieRepository.findById(1L);
     }
 
 }

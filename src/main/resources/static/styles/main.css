@@ -441,7 +441,7 @@ html footer.block.page-footer {
 }
 
 .page-footer .upper .logo .logo-viaplay {
-    background-image: url('/footer_logo-b733b3ac36465f82.png');
+    background-image: url('/images/footer_logo-b733b3ac36465f82.png');
     background-position: 0 0;
     background-repeat: no-repeat;
     background-size: contain;
@@ -479,7 +479,7 @@ html footer.block.page-footer {
 }
 
 .page-footer .lower .copyright:after {
-    background-image: url(resources/viaplay-group-1e0adad9ac4b5c65.png);
+    background-image: url('/images/viaplay-group-1e0adad9ac4b5c65.png');
     background-repeat: no-repeat;
     background-size: 128px 30px;
     bottom: -2px;
@@ -493,7 +493,7 @@ html footer.block.page-footer {
 
 @media screen and (-webkit-min-device-pixel-ratio: 2), screen and (min-resolution: 2x) {
     .page-footer .upper .logo .logo-viaplay {
-        background-image: url(resources/footer_logo_large-89450c62fc192d9c.png)
+        background-image: url('../../images/footer_logo-b733b3ac36465f82.png');
     }
 }
 
@@ -641,15 +641,15 @@ html.upgrade-browser .editorial-wrapper h1 {
 }
 
 #content section.error.notfound {
-    background-image: url(resources/404-97ce9f19497f148e.png)
+    background-image: url('/images/error-404.png');
 }
 
 #content section.error.server {
-    background-image: url(resources/500-c12b4525f2ce49bb.png)
+    background-image: url('/images/error-500.png');
 }
 
 #content section.error.timeout {
-    background-image: url(resources/503-b9e3b30ee0e5b462.png)
+    background-image: url('/images/error-504.jpg');
 }
 
 #content section.error h1 {
@@ -823,9 +823,10 @@ html.upgrade-browser .editorial-wrapper h1 {
     z-index: 29 !important
 }
 
+/*mod*/
 .notifybar {
     overflow: hidden;
-    transition: top .5 ease
+    transition: top ease;
 }
 
 .notifybar .notifybar-display {
@@ -1300,9 +1301,10 @@ html.upgrade-browser .editorial-wrapper h1 {
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIxMiIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iIzFCMUIyNCIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMjIgMUgyYTEgMSAwIDAgMC0xIDF2OGExIDEgMCAwIDAgMSAxaDIwYTEgMSAwIDAgMCAxLTFWMmExIDEgMCAwIDAtMS0xWk0yIDBhMiAyIDAgMCAwLTIgMnY4YTIgMiAwIDAgMCAyIDJoMjBhMiAyIDAgMCAwIDItMlYyYTIgMiAwIDAgMC0yLTJIMloiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjxwYXRoIGZpbGw9IiMxQjFCMjQiIGQ9Ik01LjY3IDkuMTJhMy41IDMuNSAwIDAgMS0xLjIyNC0uMjE2IDIuODg5IDIuODg5IDAgMCAxLS45OTItLjZsLjY0LS45NDRjLjIzNC4xOTIuNDg1LjM0NC43NTIuNDU2LjI3Mi4xMDcuNTQ2LjE2LjgyNC4xNi4yNjYgMCAuNDY2LS4wNDguNi0uMTQ0YS40ODguNDg4IDAgMCAwIC4yMDgtLjQxNi40NTMuNDUzIDAgMCAwLS4yMDgtLjM5MmMtLjEzNC0uMTAxLS4zNjYtLjIyNC0uNjk2LS4zNjhsLS41MzYtLjI0Yy0uNDc1LS4yMDgtLjgwNi0uNDM1LS45OTItLjY4LS4xODItLjI0NS0uMjcyLS41NDQtLjI3Mi0uODk2IDAtLjI5My4wNzctLjU2NS4yMzItLjgxNi4xNTQtLjI1LjM4NC0uNDUuNjg4LS42LjMwNC0uMTUuNjcyLS4yMjQgMS4xMDQtLjIyNGEyLjc3IDIuNzcgMCAwIDEgMS44MzIuNjRsLS42OTYuOTI4YTIuMjk2IDIuMjk2IDAgMCAwLS41NjgtLjMyOCAxLjYyMiAxLjYyMiAwIDAgMC0uNjA4LS4xMTJjLS4yNCAwLS40MjIuMDQ1LS41NDQuMTM2YS40Mi40MiAwIDAgMC0uMTg0LjM1MmMwIC4xMjMuMDU2LjIzLjE2OC4zMi4xMTcuMDg1LjMwNC4xODQuNTYuMjk2bC41MjguMjMyYy4zMy4xNDQuNTk3LjI4OC44LjQzMi4yMDguMTQ0LjM2OC4zMTcuNDguNTIuMTEyLjIwMy4xNjguNDUzLjE2OC43NTIgMCAuMzYzLS4wODguNjc3LS4yNjQuOTQ0YTEuNjM2IDEuNjM2IDAgMCAxLS43MjguNmMtLjMxLjEzOS0uNjY3LjIwOC0xLjA3Mi4yMDhaTTIwIDloLTEuMjg4VjYuNjRoLTIuMjhWOWgtMS4yOFYzLjMyaDEuMjh2Mi4xNjhoMi4yOFYzLjMySDIwVjlaTTkgMy4zMmgyLjAzMmMuNTcgMCAxLjA3NS4xMTUgMS41MTIuMzQ0YTIuMzcgMi4zNyAwIDAgMSAxLjAyNC45ODRjLjI0NS40MjcuMzY4LjkzLjM2OCAxLjUxMiAwIC41ODEtLjEyMyAxLjA4OC0uMzY4IDEuNTJhMi40MyAyLjQzIDAgMCAxLTEuMDI0Ljk4NGMtLjQzNy4yMjQtLjk0MS4zMzYtMS41MTIuMzM2SDlWMy4zMlptMS45NjggNC41MjhjLjUxMiAwIC45Mi0uMTUgMS4yMjQtLjQ0OC4zMDQtLjI5OS40NTYtLjcxMi40NTYtMS4yNHMtLjE1Mi0uOTQxLS40NTYtMS4yNGMtLjMwNC0uMjk5LS43MTItLjQ0OC0xLjIyNC0uNDQ4aC0uNjg4djMuMzc2aC42ODhaIi8+PC9zdmc+)
 }
 
-.vask-container video::-webkit-media-text-track-container {
-    display: none !important
-}
+/*mod*/
+/*.vask-container video::-webkit-media-text-track-container {*/
+/*    display: none !important*/
+/*}*/
 
 .vask-container .timeline {
     flex-grow: 1
@@ -2675,9 +2677,9 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
     width: 100%;
     z-index: 3
 }
-
+/*mod*/
 .vask-container .curtain .curtain-logo {
-    background: url(resources/logo-ddaec6feef98c246.png) top no-repeat;
+    background: url('/images/header-logo.png') top no-repeat;
     height: 100px;
     margin: 160px auto 0
 }
@@ -2849,9 +2851,9 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
 .vask-container .scene.receiver .status.pause {
     background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii00NjkgNDcxIDYwIDYwIj48cGF0aCBmaWxsPSIjRkZGIiBkPSJNLTQzNiA0ODdoNnYyOGgtNnYtMjh6bS0xMiAwaDZ2MjhoLTZ2LTI4eiIvPjwvc3ZnPg==) 50% no-repeat
 }
-
+/*mod*/
 .vask-container .scene.receiver .logo {
-    background: url(resources/viaplay-logo-9c9068de05a16046.png) 50% no-repeat;
+    background: url('/images/header-logo.png') 50% no-repeat;
     height: 100px;
     position: absolute;
     right: 40px;
@@ -2970,13 +2972,15 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
     animation-timing-function: steps(72);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    background-image: url(resources/spinner_sheet-211c90ebe328516e.png);
+    /*mod*/
+    /*background-image: url();*/
     height: 90px;
     left: 50%;
     margin-left: -40px;
     margin-top: -40px;
     overflow: hidden;
-    perspective: 1000;
+    /*mod*/
+    perspective: inherit;
     position: absolute;
     top: 50%;
     transform: translateZ(0);
@@ -3178,7 +3182,7 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
 
 .vask-container .curtain .expired {
     background-color: #0f161a;
-    background-image: url(resources/viaplay-logo-9c9068de05a16046.png);
+    background-image: url('../../images/header-logo.png');
     background-position: bottom 7.5% right 7.5%;
     background-repeat: no-repeat;
     background-size: 6.5%;
@@ -4356,7 +4360,7 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
     font-size: 10px;
     font-style: normal;
     font-weight: 700;
-    height: -moz-fit-content;
+    /*mod -moz-fit-content*/
     height: fit-content;
     letter-spacing: .05rem;
     line-height: 16px;
@@ -5224,7 +5228,8 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
 }
 
 .FormControlWrapper-module-explanation-azgQ- {
-    align-content: left;
+    /*mod left*/
+    align-content: baseline;
     color: hsla(0, 0%, 93%, .7);
     font-size: 1.2rem;
     font-weight: 400;
@@ -5621,7 +5626,8 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
         font-size: 4.8rem;
         font-weight: 900;
         line-height: 5.6rem;
-        padding-bottom: auto;
+        /*mod auto*/
+        padding-bottom: inherit;
         width: 26.271vw
     }
 }
@@ -6071,7 +6077,7 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
 }
 
 .ModalBody-module-buttons-DR2qJ * + * {
-    margin-left: 0 8px
+    margin-left: 8px;
 }
 
 .ModalBody-module-error-V6Dpo {
@@ -10922,7 +10928,7 @@ header .Header-module-xsHeaderStickyContainer-K-MTU {
 @media screen and (max-width: 480px) {
     .DriverProfile-module-countryFlag-LqPQL {
         max-height: 40px;
-        min-width: 16;
+        min-width: 16px;
         width: 16px
     }
 
@@ -14819,8 +14825,8 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 }
 
 .Synopsis-module-hiddenObjects-8bniB {
-    max-width: -moz-fit-content;
-    max-width: fit-content
+    /*mod -moz-fit-content*/
+    max-width: fit-content;
 }
 
 @media screen and (min-width: 1900px) {
@@ -17048,7 +17054,8 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 
 @media screen and (max-width: 480px) {
     .ToplistMeta-module-container-hIQHu {
-        max-height: auto;
+        /*mod auto*/
+        max-height: fit-content;
         padding: 32px 16px
     }
 
@@ -21953,7 +21960,8 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 .Player-module-playerClickAbsorber-wsGal {
     background: transparent;
     position: absolute;
-    transition: 0;
+    /*mod 0*/
+    transition: unset;
     z-index: 11
 }
 
@@ -24410,7 +24418,8 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 @media screen and (min-width: 3500px) {
     .FeatureBoxButton-module-button--HNtu {
         margin: 0 .6672vw 0 0;
-        max-width: auto
+        /*mod auto*/
+        max-width: fit-content;
     }
 
     .FeatureBoxButton-module-button--HNtu:nth-child(2) {
@@ -28568,7 +28577,8 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     line-height: 2.4rem;
     padding: 8px;
     text-align: center;
-    transition: color .2 ease;
+    /*mod color .2 ease*/
+    transition: ease;
     width: 100%;
     z-index: 1
 }
@@ -28647,7 +28657,8 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     line-height: 2rem;
     padding: 8px;
     text-align: center;
-    transition: color .2 ease;
+    /*mod color .2 ease*/
+    transition: ease;
     width: 100%;
     z-index: 1
 }
@@ -32575,7 +32586,7 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 }
 
 .Footer-module-copyright-myMzS:after {
-    background-image: url(resources/viaplay-group-1e0adad9ac4b5c65.png);
+    background-image: url('/images/viaplay-group-1e0adad9ac4b5c65.png');
     background-repeat: no-repeat;
     background-size: 128px 30px;
     bottom: -2px;
@@ -32595,7 +32606,7 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 }
 
 .Footer-module-logo-l7-f- {
-    background-image: url(resources/footer_logo-b733b3ac36465f82.png);
+    background-image: url('/images/footer_logo-b733b3ac36465f82.png');
     background-position: 0 0;
     background-repeat: no-repeat;
     background-size: contain;
@@ -32607,13 +32618,13 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     text-indent: -9999px;
     width: 80px
 }
-
+/*mod footer_logo_evv-1ea904c4e6b9d6f4.png*/
 .Footer-module-logoEvv-Rzho3 {
-    background-image: url(resources/footer_logo_evv-1ea904c4e6b9d6f4.png)
+    background-image: url('/images/footer_logo-b733b3ac36465f82.png');
 }
-
+/*mod elisa_viihde_logo-323cf1a2c1708ff7.png*/
 .Footer-module-logoElisaViihde-13MnO {
-    background-image: url(resources/elisa_viihde_logo-323cf1a2c1708ff7.png);
+    background-image: url('/images/1554378525-cbae85a3c479ca556ce2614d8ea6522eb76b426a.jpg');
     background-size: 50px 24px;
     display: inline-block;
     height: 24px;
@@ -32650,14 +32661,14 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     padding: 8px 0 48px;
     position: relative
 }
-
+/*mod  footer_logo_large-89450c62fc192d9c.png*/
 @media screen and (-webkit-min-device-pixel-ratio: 2), screen and (min-resolution: 2x) {
     .Footer-module-logo-l7-f- {
-        background-image: url(resources/footer_logo_large-89450c62fc192d9c.png)
+        background-image: url('/images/footer_logo-b733b3ac36465f82.png')
     }
-
+/*mod footer_logo_large_evv-2c06892443184cb1.png*/
     .Footer-module-logoEvv-Rzho3 {
-        background-image: url(resources/footer_logo_large_evv-2c06892443184cb1.png)
+        background-image: url('../../images/footer_logo-b733b3ac36465f82.png')
     }
 }
 

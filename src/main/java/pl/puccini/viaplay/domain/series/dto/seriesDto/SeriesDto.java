@@ -1,28 +1,24 @@
-package pl.puccini.viaplay.domain.movie.dto;
+package pl.puccini.viaplay.domain.series.dto.seriesDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import pl.puccini.viaplay.domain.genre.Genre;
 
 @AllArgsConstructor
 @Getter
 @Setter
-public class MovieDto {
-
+public class SeriesDto {
     private String imdbId;
     private String title;
     private int releaseYear;
     private String imageUrl;
-    private String mediaUrl;
-    private String timeline;
-    private int ageLimit;
     private String description;
     private String staff;
-    private String directedBy;
     private String languages;
     private String genre;
     private boolean promoted;
+    private int ageLimit;
     private double imdbRating;
     private String imdbUrl;
+    private int seasonsCount;
 }

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Dodaj nowy serial</title>
+</head>
+<body>
+<h1>Dodaj nowy serial</h1>
+<form th:action="@{/series/add}" method="post">
+  <label for="title">Tytuł:</label>
+  <input type="text" id="title" name="title" required><br>
+  <label for="releaseYear">Rok wydania:</label>
+  <input type="text" id="releaseYear" name="releaseYear" required><br>
+  <!-- Inne pola dla pozostałych danych serialu -->
+
+  <label for="imdbId">IMDb ID:</label>
+  <input type="text" id="imdbId" name="imdbId" required><br>
+
+  <button type="submit">Dodaj serial</button>
+</form>
+</body>
+</html>

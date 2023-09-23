@@ -1,15 +1,16 @@
-package pl.puccini.viaplay.domain.movie.dto;
+package pl.puccini.viaplay.domain.movie.model;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import pl.puccini.viaplay.domain.genre.Genre;
 
-@AllArgsConstructor
+
+@Entity
 @Getter
 @Setter
-public class MovieDto {
-
+public class Movie {
+    @Id
     private String imdbId;
     private String title;
     private int releaseYear;
@@ -21,7 +22,9 @@ public class MovieDto {
     private String staff;
     private String directedBy;
     private String languages;
-    private String genre;
+    @ManyToOne
+    @JoinColumn(name = "genre_id", referencedColumnName = "genreType")
+    private Genre genre;
     private boolean promoted;
     private double imdbRating;
     private String imdbUrl;

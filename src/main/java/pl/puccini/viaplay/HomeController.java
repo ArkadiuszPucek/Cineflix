@@ -3,10 +3,10 @@ package pl.puccini.viaplay;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import pl.puccini.viaplay.domain.movie.MovieService;
+import pl.puccini.viaplay.domain.movie.service.MovieService;
 import pl.puccini.viaplay.domain.movie.dto.MovieDto;
-import pl.puccini.viaplay.domain.series.SeriesService;
-import pl.puccini.viaplay.domain.series.SeriesDto;
+import pl.puccini.viaplay.domain.series.service.SeriesService;
+import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +25,9 @@ class HomeController {
 
     @GetMapping("/")
     String home(Model model){
-        Object randomPromotedItem = getRandomPromotedItem();
-        model.addAttribute("randomPromotedItems", randomPromotedItem);
-        return "movie-listing";
+//        Object randomPromotedItem = getRandomPromotedItem();
+//        model.addAttribute("randomPromotedItems", randomPromotedItem);
+        return "index";
     }
 
     private Object getRandomPromotedItem(){
@@ -44,7 +44,8 @@ class HomeController {
             int randomIndex = ThreadLocalRandom.current().nextInt(size);
             return promotedItems.get(randomIndex);
         }else {
-            return movieService.getFirstMovie();
+//            TO DO
+            return null;
         }
     }
 }

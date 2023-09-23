@@ -2,8 +2,6 @@ package pl.puccini.viaplay.domain.imdb;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
-import pl.puccini.viaplay.domain.movie.MovieRepository;
-import pl.puccini.viaplay.domain.series.SeriesRepository;
 
 import java.io.IOException;
 import java.net.URI;

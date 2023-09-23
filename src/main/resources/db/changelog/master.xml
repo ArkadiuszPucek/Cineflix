@@ -5,9 +5,9 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
 
-    <include file="0001_create_table_genre.xml" relativeToChangelogFile="true" />
-    <include file="0002_create_table_movie.xml" relativeToChangelogFile="true" />
-    <include file="0003_create_table_series.xml" relativeToChangelogFile="true" />
+    <include file="0001_2_create_table_genre.xml" relativeToChangelogFile="true" />
+    <include file="0002_2_create_table_movie.xml" relativeToChangelogFile="true" />
+    <include file="0003_2_create_table_series.xml" relativeToChangelogFile="true" />
 
     <include file="../testdata/0001_genres.sql" relativeToChangelogFile="true" context="dev"/>
     <include file="../testdata/0002_movies.sql" relativeToChangelogFile="true" context="dev"/>

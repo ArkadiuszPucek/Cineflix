@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <title>ViaPlay</title>
+    <!--    &lt;!&ndash;  Automatic page scaling  s&ndash;&gt;-->
+    <!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <!--    <script defer src="../static/scripts/common.js"></script>-->
+    <!--    <script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-B9R7R68EHB&amp;l=dataLayer&amp;cx=c"></script>-->
+    <!--    <script type="text/javascript" async="" src="https://bat.bing.com/bat.js"></script>-->
+    <!--    <script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-K8LTL3"></script>-->
+    <!--    <script src="https://bat.bing.com/p/action/5318216.js" type="text/javascript" async="" data-ueto="ueto_e0a41b7b5e"></script>-->
+    <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+</head>
+<body>
+
+<div id="content-wrapper" class>
+    <div class="dockable"></div>
+    <div id="react-mount">
+        <div class="Layout-module-internal-page--krBv">
+            <header class="Navigation-module-container-2t2XT">
+                <div class="Navigation-module-wrapper-VDNDW">
+                    <div class="Navigation-module-sections-tzP7z">
+                        <div class="Navigation-module-left-FaRmB">
+                    <span>
+                        <div class="HeaderLogo-module-headerLogo-lWX4m">
+                            <a class="HeaderLogo-module-link-kdP1e" href="/">
+                                <img src="https://viaplay-web-frontend-assets.mtg-api.com/frontend-2023092141850/images/header-logo.png"
+                                     alt="Viaplay Start logo"
+                                     class="Logo-module-logo-pfYdr">
+                            </a>
+                        </div>
+                    </span>
+                        </div>
+                        <nav class="NavigationItems-module-center-cd-0t">
+                            <a class="NavigationItem-module-item-vXU--" href="/series">Seriale</a>
+                            <a class="NavigationItem-module-item-vXU--" href="/movies">Filmy</a>
+                            <a class="NavigationItem-module-item-vXU--" href="/sport">Sport</a>
+                            <a class="NavigationItem-module-item-vXU--" href="/kids">Dla dzieci</a>
+                            <a class="NavigationItem-module-item-vXU--" href="/channels">Kanały TV</a>
+                        </nav>
+                        <div class="Navigation-module-right-643YK">
+                            <div class="SearchButton-module-container-oHmID">
+                                <a class="SearchButton-module-icon-zn1mS" href="/#search="></a>
+                            </div>
+                            <a class="NavigationItem-module-item-vXU-- NavigationItem-module-library-E3ML5 NavigationItem-module-hide-n07a1"
+                               href="/library"></a>
+                            <div class="UserMenu-module-detailsAuthenticated-Ku3RE">
+                                <button class="UserMenu-module-toggle-mkB6K">
+                                    <div class="UserMenu-module-buttonbox-HF7RL">
+                                        <div class="ProfileAvatar-module-container-aV27r ProfileAvatar-module-small-HCZsN"
+                                             tabindex="-1">
+                                            <div class="ProfileAvatar-module-editContainer-mwkk5">
+                                                <img class="ProfileAvatar-module-avatar-2Qy4H" alt="avatar"
+                                                     src="https://i-viaplay-com.akamaized.net/viaplay-static-prod/profiles/avatars/adults/boombox.png?width=500&amp;height=500">
+                                                <div class="ProfileAvatar-module-editIcon-zlhbG"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                            <button class="Navigation-module-toggleNavigation-uQPGv" id="toggle-navigation"></button>
+                            <nav class="NavigationItems-module-navigation-AW08m NavigationItems-module-hide-bZgrX">
+                                <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA"
+                                   href="/series">Seriale</a>
+                                <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA"
+                                   href="/movies">Filmy</a>
+                                <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA"
+                                   href="/sport">Sport</a>
+                                <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA"
+                                   href="/kids">Dla dzieci</a>
+                                <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA"
+                                   href="/channels">Kanały TV</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div id="content" class="root">
+
+                <div class="dockable"></div>
+                <div class="blocksEnsembleContainer-module-container-ZXS1I" id="blockEnsembleContainer">
+
+                    <!--                    FUTUREBOX-->
+                    <div style="display: block;">
+                        <section class="FeatureBox-module-featurebox-k0Qb-" tabindex="-1">
+                            <div class="FeatureBox-module-scaffold-pbGsj">
+                                <div class="FeatureBox-module-inner-pr6ZF">
+
+                                    <ul class="FeatureBox-module-frames-KRTS0">
+                                        <div style="display: block;">
+                                            <li class="Frame-module-container-hTg-J Frame-module-autofadein-pgNO2"
+                                                th:each="item : ${randomPromotedItems}">
+                                                <div class="FeatureBoxVideo-module-container-8tmrB">
+                                                    <div class="FeatureBoxVideo-module-wrapper-8UDKL">
+                                                        <div class="FeatureBoxVideo-module-poster-SJpIi FeatureBoxVideo-module-visibleItem-85rzi FeatureBoxVideo-module-smoothVisibleItem-1w-S7"
+                                                             style="background-image: url(https://i-viaplay-com.akamaized.net/editorial-media/editorial_pages/featurebox/Series/hellonwheelsS1_webxdk.jpg?width=1920&height=1080);}"
+                                                             th:style="'background-image: url(' + ${item.imageUrl} + ');'">
+                                                        </div>
+                                                    </div>
+                                                    <div class="FeatureBoxVideo-module-shadow-IJEZu"></div>
+                                                </div>
+                                                <div class="FeatureBoxFlags-module-container-kShG1"></div>
+                                                <div class="Frame-module-vignette-eazga"></div>
+                                                <div></div>
+
+                                                <!--                                                INFORMATION MODULE FRAME-->
+                                                <div class="Frame-module-body-ICZKd">
+                                                    <h3 class="Frame-module-title-wgDhS" th:text="${item.title}">
+                                                        Hell on Wheels: Witaj w piekle
+                                                    </h3>
+                                                    <p class="FrameMeta-module-metadata-n-nYT">
+                                                        <span class="Divider-module-divider-U-3-- Divider-module-featurebox-lE8g3">
+                                                            <span>
+                                                                <a data-tracking-click="IMDB"
+                                                                   class="ImdbRating-module-link-yYfI- ImdbRating-module-featurebox-rOXSw"
+                                                                   href="http://www.imdb.com/title/tt1699748?ref_ext_viaplay"
+                                                                   th:href="@{${item.imdbUrl}}" target="_blank"
+                                                                   rel="noopener noreferrer nofollow" tabindex="-1"
+                                                                   th:text="${item.imdbRating}">
+                                                                        8.3
+                                                                </a>
+                                                            </span>
+                                                        </span>
+                                                        <span class="Divider-module-divider-U-3-- Divider-module-featurebox-lE8g3">
+                                                            <span>
+                                                                <span class="Divider-module-divider-U-3-- Divider-module-featurebox-lE8g3 Divider-module-genres-ezeLN">
+                                                                    <a class="Genre-module-container-HcI4x Genre-module-featurebox-qQIAg Genre-module-link-kGNTi"
+                                                                       tabindex="-1"
+                                                                       href="/series/drama" th:href="@{'/' + item.genre}"
+                                                                    th:text="${item.genre}">
+                                                                        Seriale dramatyczne
+                                                                    </a>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="Divider-module-divider-U-3-- Divider-module-featurebox-lE8g3">
+                                                            <span class="Year-module-container-60QAr Year-module-featurebox-kwpHV">
+                                                                2011
+                                                            </span>
+                                                            <meta itemprop="copyrightYear" content="2011">
+                                                        </span>
+                                                        <span class="Divider-module-divider-U-3-- Divider-module-featurebox-lE8g3">
+                                                            <span class="Seasons-module-container-ZM15y Seasons-module-featurebox-O9JXt">
+                                                                5
+                                                                <span>
+                                                                    Sezony
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="Divider-module-divider-U-3-- Divider-module-featurebox-lE8g3 Divider-module-hasDefaultTypography-Uy4EO">
+                                                            <span class="ParentalRating-module-container-lxbzk ParentalRating-module-featurebox-5aV-1 ParentalRating-module-hasDefaultTypography-UP2B1">
+                                                                15
+                                                                <span>
+                                                                    lat
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </p>
+                                                    <p class="Frame-module-synopsis-Zx-xG">
+                                                        Dołącz do weterana podróżującego na zachód w poszukiwaniu
+                                                        zemsty.
+                                                    </p>
+                                                    <div class="Frame-module-buttons-bIDYz">
+                                                        <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl Buttons-module-play-AAOaC"
+                                                           tabindex="-1"
+                                                           href="/series/hell-on-wheels-witaj-w-piekle/sezon-1/odcinek-1">
+                                                            Obejrzyj
+                                                        </a>
+                                                        <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl"
+                                                           tabindex="-1"
+                                                           href="/series/hell-on-wheels-witaj-w-piekle">
+                                                            Przeczytaj więcej
+                                                        </a>
+                                                        <span>
+                                                            <a class="MyList-module-container-zkH2- Buttons-module-secondary-br7-v Buttons-module-icon-ODVKH MyList-module-featureBox-F6kLA"
+                                                               tabindex="-1">
+                                                                <div class="MyList-module-myList-kmBI5"></div>
+                                                            </a>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div style="display: block;">
+                        <div class="CarouselHeader-module-container-dBOIV">
+                            <section itemtype="">
+                                <div class="Scaffold-module-scaffold-F6aIC">
+                                    <header class="CarouselHeader-module-wrapper-B8ict">
+                                        <h2 class="Title-module-subheader--ZDhF">
+                                            Wciągające historie ze szpitalnych korytarzy
+                                        </h2>
+                                    </header>
+                                </div>
+                            </section>
+                        </div>
+                        <section>
+                            <div class="Scaffold-module-scaffold-F6aIC">
+                                <div class="MosaicLite-module-container-kmYfB MosaicLite-module-block5-iSivd">
+
+                                    <div class="Item-module-item-yTZtG
+                                    Item-module-carouselItem-Q3n9V
+                                    Item-module-hasProgress-r6MCx
+                                    Item-module-landscapeItem-Sf-nw
+                                    Item-module-mosaicGridItem-XKjcG"
+                                         id="series-good-doctor-the-7d8dbbef-1f8b-46af-86e5-31f701fe97d6"
+                                         data-product-id="series-good-doctor-the">
+                                        <div class="Item-module-box-4uBp3">
+                                            <a class="Item-module-link-Lms-C" tabindex="-1"
+                                               href="/series/good-doctor-the?seasonNumber=6">
+                                                <div class="Item-module-image-CGday"
+                                                     style="background-image: url('/images/the_good_doctor_bg_img.jpg');">
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
+                                    </div>
+
+                                    <div class="Item-module-item-yTZtG
+                                    Item-module-carouselItem-Q3n9V
+                                    Item-module-landscapeItem-Sf-nw
+                                    Item-module-mosaicGridItem-XKjcG"
+                                         id="series-new-amsterdam-7d8dbbef-1f8b-46af-86e5-31f701fe97d6"
+                                         data-product-id="series-new-amsterdam">
+                                        <div class="Item-module-box-4uBp3">
+                                            <a class="Item-module-link-Lms-C" data-testhook="item-product-page-link"
+                                               tabindex="-1" href="/series/new-amsterdam">
+                                                <div class="Item-module-image-CGday"
+                                                     style="background-image: url('/images/new_amsterdam_bg_img.jpg');">
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
+                                    </div>
+
+                                    <div class="Item-module-item-yTZtG
+                                    Item-module-carouselItem-Q3n9V
+                                    Item-module-landscapeItem-Sf-nw
+                                    Item-module-mosaicGridItem-XKjcG"
+                                         id="series-chicago-med-7d8dbbef-1f8b-46af-86e5-31f701fe97d6"
+                                         data-product-id="series-chicago-med">
+                                        <div class="Item-module-box-4uBp3">
+                                            <a class="Item-module-link-Lms-C" tabindex="-1" href="/series/chicago-med">
+                                                <div class="Item-module-image-CGday"
+                                                     style="background-image: url('/images/chicago_med_bg_img.jpg');">
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
+                                    </div>
+
+                                    <div class="Item-module-item-yTZtG
+                                    Item-module-carouselItem-Q3n9V
+                                    Item-module-landscapeItem-Sf-nw
+                                    Item-module-mosaicGridItem-XKjcG"
+                                         id="series-mary-kills-people-7d8dbbef-1f8b-46af-86e5-31f701fe97d6"
+                                         data-product-id="series-mary-kills-people">
+                                        <div class="Item-module-box-4uBp3">
+                                            <a class="Item-module-link-Lms-C" tabindex="-1"
+                                               href="/series/mary-kills-people">
+                                                <div class="Item-module-image-CGday"
+                                                     style="background-image: url('/images/marry_kills_bg_img.jpg');">
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
+                                    </div>
+
+                                    <div class="Item-module-item-yTZtG
+                                    Item-module-carouselItem-Q3n9V
+                                    Item-module-landscapeItem-Sf-nw
+                                    Item-module-mosaicGridItem-XKjcG"
+                                         id="series-pulse-7d8dbbef-1f8b-46af-86e5-31f701fe97d6"
+                                         data-product-id="series-pulse">
+                                        <div class="Item-module-box-4uBp3">
+                                            <a class="Item-module-link-Lms-C" tabindex="-1" href="/series/pulse">
+                                                <div class="Item-module-image-CGday"
+                                                     style="background-image: url('/images/pulse_bg_img.jpg');">
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="Carousel-module-container-o-YFo">
+                        <!-- Pętla generująca pozycje dla różnych gatunków -->
+                        <th:block th:each="category : ${categories}">
+                            <div th:replace="templates/header :: header(${categoryName}, ${categoryLink})"></div>
+
+                            <div class="Carousel-module-carousel-NbPjL" th:id="carousel-${category.id}">
+                                <div class="Carousel-module-wrapper-QhccC">
+                                    <button class="Carousel-module-navigation-crAaj Carousel-module-prev-EJuzt Carousel-module-disabled-vHRrb"></button>
+                                    <div class="Carousel-module-inner-4oa8u Carousel-module-useTransition-vWyzl"
+                                         th:style="'transform: translateX(' + ${category.transformX} + 'px);'">
+                                        <div style="display: block;">
+                                            <th:block th:each="item : ${category.items}">
+                                                <!-- Użycie komponentu Thymeleaf dla elementu filmu -->
+                                                <div th:replace="templates/media :: media(${item.productId}, ${item.imageUrl}, ${item.mediaLink})"></div>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                    <button class="Carousel-module-navigation-crAaj Carousel-module-next-AXbEv"></button>
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+
+            <footer id="page-footer" class="Footer-module-footer-rUC1K">
+                <div class="Footer-module-upper-BE4ds">
+                    <section class="Footer-module-upperscaffold-0uiqs" itemtype="">
+                        <div class="Scaffold-module-scaffold-F6aIC">
+                            <div class="Footer-module-logocolumn-2E6O5">
+                                <a class="Footer-module-logo-l7-f-" data-href="" data-testhook="footer-viaplay-logo"
+                                   href="/"
+                                   tabindex="-1">
+                                    <span>Viaplay</span>
+                                </a>
+                            </div>
+                            <div class="Footer-module-tablecontainer-8X-RH">
+                                <div class="Footer-module-table-MvQSs">
+                                    <div class="Footer-module-column-9P75e">
+                                        <div>
+                                            <h3 class="FooterColumn-module-header-X99Fv" tabindex="-1">VIAPLAY</h3>
+                                            <ul class="FooterColumn-module-list-EJzCV">
+                                                <li class="FooterColumnLink-module-item-VsqhI"
+                                                    data-testhook="footer-section">
+                                                    <a class="FooterColumnLink-module-link-F0qFS" href="/series">
+                                                        <span>Seriale</span>
+                                                    </a>
+                                                </li>
+                                                <li class="FooterColumnLink-module-item-VsqhI"
+                                                    data-testhook="footer-section">
+                                                    <a class="FooterColumnLink-module-link-F0qFS" href="/movies">
+                                                        <span>Filmy</span>
+                                                    </a>
+                                                </li>
+                                                <li class="FooterColumnLink-module-item-VsqhI"
+                                                    data-testhook="footer-section">
+                                                    <a class="FooterColumnLink-module-link-F0qFS" href="/sport">
+                                                        <span>Sport</span>
+                                                    </a>
+                                                </li>
+                                                <li class="FooterColumnLink-module-item-VsqhI"
+                                                    data-testhook="footer-section">
+                                                    <a class="FooterColumnLink-module-link-F0qFS" href="/kids">
+                                                        <span>Dla dzieci</span>
+                                                    </a>
+                                                </li>
+                                                <li class="FooterColumnLink-module-item-VsqhI"
+                                                    data-testhook="footer-section">
+                                                    <a class="FooterColumnLink-module-link-F0qFS" href="/channels">
+                                                        <span>Kanały TV</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="Footer-module-column-9P75e">
+                                        <div>
+                                            <h3 class="FooterColumn-module-header-X99Fv" tabindex="-1">Informacje</h3>
+                                            <ul class="FooterColumn-module-list-EJzCV">
+                                                <li class="FooterColumnLink-module-item-VsqhI"
+                                                    data-testhook="footer-section">
+                                                    <a class="FooterColumnLink-module-link-F0qFS"
+                                                       href="https://help.viaplay.com/pl">
+                                                        <span>Obsługa klienta</span>
+                                                    </a>
+                                                </li>
+                                                <li class="FooterColumnLink-module-item-VsqhI"
+                                                    data-testhook="footer-section">
+                                                    <a class="FooterColumnLink-module-link-F0qFS" href="/devices">
+                                                        <span>Nasze platformy</span>
+                                                    </a>
+                                                </li>
+                                                <li class="FooterColumnLink-module-item-VsqhI"
+                                                    data-testhook="footer-section">
+                                                    <a class="FooterColumnLink-module-link-F0qFS" href="/terms">
+                                                        <span>Regulamin serwisu Viaplay</span>
+                                                    </a>
+                                                </li>
+                                                <li class="FooterColumnLink-module-item-VsqhI"
+                                                    data-testhook="footer-section">
+                                                    <a class="FooterColumnLink-module-link-F0qFS" href="/privacy">
+                                                        <span>Polityka prywatności</span>
+                                                    </a>
+                                                </li>
+                                                <li class="FooterColumnLink-module-item-VsqhI"
+                                                    data-testhook="footer-section">
+                                                    <a class="FooterColumnLink-module-link-F0qFS" href="/cookies">
+                                                        <span>Pliki cookie</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="Footer-module-column-9P75e">
+                                        <div>
+                                            <h3 class="FooterColumn-module-header-X99Fv" tabindex="-1">O nas</h3>
+                                            <ul class="FooterColumn-module-list-EJzCV">
+                                                <li class="FooterColumnLink-module-item-VsqhI"
+                                                    data-testhook="footer-section">
+                                                    <a class="FooterColumnLink-module-link-F0qFS"
+                                                       href="https://www.viaplaygroup.com/news">
+                                                        <span>Prasa i newsy</span>
+                                                    </a>
+                                                </li>
+                                                <li class="FooterColumnLink-module-item-VsqhI"
+                                                    data-testhook="footer-section">
+                                                    <a class="FooterColumnLink-module-link-F0qFS"
+                                                       href="https://careers.viaplaygroup.com/">
+                                                        <span>Oferty pracy</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="Footer-module-column-9P75e">
+                                        <div>
+                                            <h3 class="FooterColumn-module-header-X99Fv" tabindex="-1">Śledź nas</h3>
+                                            <ul class="FooterColumn-module-list-EJzCV">
+                                                <li class="FooterColumnLink-module-item-VsqhI"
+                                                    data-testhook="footer-section">
+                                                    <a class="FooterColumnLink-module-link-F0qFS"
+                                                       href="https://www.facebook.com/viaplay/">
+                                                        <span>Facebook</span></a>
+                                                </li>
+                                                <li class="FooterColumnLink-module-item-VsqhI"
+                                                    data-testhook="footer-section">
+                                                    <a class="FooterColumnLink-module-link-F0qFS"
+                                                       href="https://www.linkedin.com/company/viaplay">
+                                                        <span>LinkedIn</span>
+                                                    </a>
+                                                </li>
+                                                <li class="FooterColumnLink-module-item-VsqhI"
+                                                    data-testhook="footer-section">
+                                                    <a class="FooterColumnLink-module-link-F0qFS"
+                                                       href="https://www.instagram.com/viaplay/">
+                                                        <span>Instagram</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="Footer-module-lower-ieG8u">
+                    <section itemtype="">
+                        <div class="Scaffold-module-scaffold-F6aIC">
+                            <span class="Footer-module-copyright-myMzS">© 2023 Viaplay Group Sweden AB (org.no: 556304-7041). All rights reserved.</span>
+                        </div>
+                    </section>
+                </div>
+            </footer>
+        </div>
+    </div>
+</div>
+</body>
+</html>

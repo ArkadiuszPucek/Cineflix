@@ -23,6 +23,10 @@ public class SeriesController {
         this.seriesRepository = seriesRepository;
         this.imdbApiService = imdbApiService;
     }
+    @GetMapping
+    public String seriesPage(){
+        return "series";
+    }
 
     @GetMapping("/add")
     public String showAddSeriesForm(Model model) {

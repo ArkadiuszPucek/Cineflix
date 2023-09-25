@@ -16,16 +16,17 @@ public class Movie {
     private int releaseYear;
     private String imageUrl;
     private String mediaUrl;
-    private String timeline;
+    private int timeline;
     private int ageLimit;
     private String description;
     private String staff;
     private String directedBy;
     private String languages;
-    @ManyToOne
-    @JoinColumn(name = "genre_id", referencedColumnName = "genreType")
-    private Genre genre;
     private boolean promoted;
     private double imdbRating;
     private String imdbUrl;
+
+    @ManyToOne
+    @JoinColumn(name = "genre_type")
+    private Genre genre;
 }

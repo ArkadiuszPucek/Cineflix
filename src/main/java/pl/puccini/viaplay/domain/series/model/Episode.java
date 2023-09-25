@@ -11,6 +11,7 @@ public class Episode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private int episodeNumber;
     private String episodeTitle;
     private String mediaUrl;
     private int durationMinutes;

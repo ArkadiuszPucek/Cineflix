@@ -1,4 +1,4 @@
-INSERT INTO movie (imdbId, title, releaseYear, imageUrl, mediaUrl, timeline, ageLimit, description, staff, directedBy, languages, genre_id, promoted, imdbRating, imdbUrl)
+INSERT INTO movie (imdb_id, title, release_year, image_url, media_url, timeline, age_limit, description, staff, directed_by, languages, genre_type, promoted, imdb_rating, imdb_url)
 VALUES
     ('tt12164018', 'Movies That Changed My Life', 2020, 'https://m.media-amazon.com/images/M/MV5BNjdkZWE5YjAtNTY1NS00N2M1LTllZmItMzY5M2E1ODcxMjEwXkEyXkFqcGdeQXVyODIyOTEyMzY@._V1_.jpg', 'https://www.example.com/video.mp4', 90, 15, 'An IMDb Podcast', 'Alice Johnson, Bob Brown', 'Director Y', 'Polish', 'Documentary', FALSE, 6.8, 'www.imdb.com/title/tt12164018'),
     ('tt6718170', 'The Super Mario Bros. Movie', 2023, 'https://m.media-amazon.com/images/M/MV5BOTJhNzlmNzctNTU5Yy00N2YwLThhMjQtZDM0YjEzN2Y0ZjNhXkEyXkFqcGdeQXVyMTEwMTQ4MzU5._V1_.jpg', 'https://www.example.com/video.mp4', 90, 18, 'Chris Pratt and Anya Taylor-Joy star in this animated adventure.', 'Chris Pratt, Anya Taylor-Joy', 'Director Z', 'English', 'Animation', TRUE, 8.2, 'www.imdb.com/title/tt6718170'),

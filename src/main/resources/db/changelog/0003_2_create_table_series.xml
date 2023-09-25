@@ -3,18 +3,18 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
-    <changeSet id="0001-3" author="puccini">
+    <changeSet id="0003-2" author="puccini">
         <createTable tableName="series">
-            <column name="imdbId" type="VARCHAR(255)">
+            <column name="imdb_id" type="VARCHAR(255)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="title" type="VARCHAR(100)" >
                 <constraints nullable="false"/>
             </column>
-            <column name="releaseYear" type="INT">
+            <column name="release_year" type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="imageUrl" type="VARCHAR(2055)">
+            <column name="image_url" type="VARCHAR(2055)">
                 <constraints nullable="false"/>
             </column>
             <column name="description" type="VARCHAR(1000)">
@@ -26,25 +26,25 @@
             <column name="languages" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="genre_id" type="VARCHAR(100)">
+            <column name="genre_type" type="VARCHAR(100)">
                 <constraints nullable="false"
                              foreignKeyName="fk_series_genre"
                              referencedTableName="genre"
-                             referencedColumnNames="genreType"/>
+                             referencedColumnNames="genre_type"/>
             </column>
             <column name="promoted" type="BOOLEAN">
                 <constraints nullable="false"/>
             </column>
-            <column name="imdbRating" type="DOUBLE">
+            <column name="imdb_rating" type="DOUBLE">
                 <constraints nullable="true"/>
             </column>
-            <column name="imdbUrl" type="VARCHAR(255)">
+            <column name="imdb_url" type="VARCHAR(255)">
                 <constraints nullable="true"/>
             </column>
-            <column name="seasonsCount" type="INT">
+            <column name="seasons_count" type="INT">
                 <constraints nullable="true"/>
             </column>
-            <column name="ageLimit" type="INT">
+            <column name="age_limit" type="INT">
                 <constraints nullable="true"/>
             </column>
         </createTable>

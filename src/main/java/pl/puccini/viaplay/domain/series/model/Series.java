@@ -29,7 +29,7 @@ public class Series {
     private int seasonsCount;
 
     @ManyToOne
-    @JoinColumn(name = "genre_id", referencedColumnName = "genreType")
+    @JoinColumn(name = "genre_type", referencedColumnName = "genre_type")
     private Genre genre;
 
     @OneToMany(mappedBy = "series", cascade = CascadeType.ALL, orphanRemoval = true)

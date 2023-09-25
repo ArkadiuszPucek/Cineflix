@@ -15,7 +15,7 @@ public class MovieDto {
     private int releaseYear;
     private String imageUrl;
     private String mediaUrl;
-    private String timeline;
+    private int timeline;
     private int ageLimit;
     private String description;
     private String staff;

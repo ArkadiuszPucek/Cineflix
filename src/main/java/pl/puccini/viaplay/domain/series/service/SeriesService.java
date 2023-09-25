@@ -1,9 +1,9 @@
 package pl.puccini.viaplay.domain.series.service;
 
 import org.springframework.stereotype.Service;
-import pl.puccini.viaplay.domain.series.repository.SeriesRepository;
 import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDto;
 import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDtoMapper;
+import pl.puccini.viaplay.domain.series.repository.SeriesRepository;
 
 import java.util.List;
 
@@ -22,4 +22,11 @@ public class SeriesService {
                 .map(SeriesDtoMapper::map)
                 .toList();
     }
+
+    public List<SeriesDto> getSeriesByImdbId(String imdbId){
+        return seriesRepository.findAllByImdbId(imdbId).stream()
+                .map(SeriesDtoMapper::map)
+                .toList();
+    }
+
 }

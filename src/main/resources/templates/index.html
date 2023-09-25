@@ -4,14 +4,8 @@
 
     <meta charset="UTF-8">
     <title>ViaPlay</title>
-    <!--    &lt;!&ndash;  Automatic page scaling  s&ndash;&gt;-->
-    <!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
-    <!--    <script defer src="../static/scripts/common.js"></script>-->
-    <!--    <script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-B9R7R68EHB&amp;l=dataLayer&amp;cx=c"></script>-->
-    <!--    <script type="text/javascript" async="" src="https://bat.bing.com/bat.js"></script>-->
-    <!--    <script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-K8LTL3"></script>-->
-    <!--    <script src="https://bat.bing.com/p/action/5318216.js" type="text/javascript" async="" data-ueto="ueto_e0a41b7b5e"></script>-->
     <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+    <script src="/scripts/refreshFutureBox.js"></script>
 </head>
 <body>
 
@@ -85,7 +79,7 @@
 
                     <!--                    FUTUREBOX-->
                     <div style="display: block;">
-                        <section class="FeatureBox-module-featurebox-k0Qb-" tabindex="-1">
+                        <section id="futureBoxContainer" class="FeatureBox-module-featurebox-k0Qb-" tabindex="-1">
                             <div class="FeatureBox-module-scaffold-pbGsj">
                                 <div class="FeatureBox-module-inner-pr6ZF">
 
@@ -137,41 +131,72 @@
                                                             </span>
                                                         </span>
                                                         <span class="Divider-module-divider-U-3-- Divider-module-featurebox-lE8g3">
-                                                            <span class="Year-module-container-60QAr Year-module-featurebox-kwpHV">
+                                                            <span class="Year-module-container-60QAr Year-module-featurebox-kwpHV"
+                                                            th:text="${item.releaseYear}">
                                                                 2011
                                                             </span>
-                                                            <meta itemprop="copyrightYear" content="2011">
+<!--                                                            <meta itemprop="copyrightYear" content="2011">-->
                                                         </span>
                                                         <span class="Divider-module-divider-U-3-- Divider-module-featurebox-lE8g3">
-                                                            <span class="Seasons-module-container-ZM15y Seasons-module-featurebox-O9JXt">
-                                                                5
-                                                                <span>
-                                                                    Sezony
-                                                                </span>
+                                                            <span class="Seasons-module-container-ZM15y Seasons-module-featurebox-O9JXt"
+                                                                  th:if="${item.getClass().simpleName == 'SeriesDto'}">
+                                                                 <span th:text="${item.seasonsCount} + ' ' + (item.seasonsCount == 1 ? 'Sezon' : 'Sezony')">
+                                                                     5 Sezony
+                                                                 </span>
                                                             </span>
+                                                           <span class="Seasons-module-container-ZM15y Seasons-module-featurebox-O9JXt"
+                                                                 th:if="${item.getClass().simpleName == 'MovieDto'}">
+                                                               <span th:if="${item.timeline < 59}">
+                                                                   <span th:text="${item.timeline} + ' min.'"></span>
+                                                               </span>
+                                                               <span th:if="${item.timeline >= 60}">
+                                                                   <span th:text="${item.timeline div 60 + ' godz.' + (item.timeline % 60 > 0 ? ' ' + item.timeline % 60 + ' min.' : '')}"></span>
+                                                               </span>
+                                                           </span>
                                                         </span>
                                                         <span class="Divider-module-divider-U-3-- Divider-module-featurebox-lE8g3 Divider-module-hasDefaultTypography-Uy4EO">
                                                             <span class="ParentalRating-module-container-lxbzk ParentalRating-module-featurebox-5aV-1 ParentalRating-module-hasDefaultTypography-UP2B1">
-                                                                15
-                                                                <span>
-                                                                    lat
+                                                                <span th:text="${item.ageLimit} + ' lat'">
+                                                                    15 lat
                                                                 </span>
                                                             </span>
                                                         </span>
                                                     </p>
-                                                    <p class="Frame-module-synopsis-Zx-xG">
+                                                    <p class="Frame-module-synopsis-Zx-xG" th:text="${item.description}">
                                                         Dołącz do weterana podróżującego na zachód w poszukiwaniu
                                                         zemsty.
                                                     </p>
                                                     <div class="Frame-module-buttons-bIDYz">
                                                         <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl Buttons-module-play-AAOaC"
                                                            tabindex="-1"
-                                                           href="/series/hell-on-wheels-witaj-w-piekle/sezon-1/odcinek-1">
+                                                           th:if="${item.getClass().simpleName == 'SeriesDto'}"
+                                                           th:with="formattedTitle=${item.title.replace(' ', '-')}"
+                                                           th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} "
+                                                           href="/series/hell-on-wheels-witaj-w-piekle/">
                                                             Obejrzyj
                                                         </a>
                                                         <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl"
                                                            tabindex="-1"
+                                                           th:if="${item.getClass().simpleName == 'MovieDto'}"
+                                                           th:with="formattedTitle=${item.title.replace(' ', '-')}"
+                                                           th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} "
+                                                           href="/movie/to_do">
+                                                            Obejrzyj
+                                                        </a>
+                                                        <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl"
+                                                           tabindex="-1"
+                                                           th:if="${item.getClass().simpleName == 'SeriesDto'}"
+                                                           th:with="formattedTitle=${item.title.replace(' ', '-')}"
+                                                           th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} "
                                                            href="/series/hell-on-wheels-witaj-w-piekle">
+                                                            Przeczytaj więcej
+                                                        </a>
+                                                        <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl"
+                                                           tabindex="-1"
+                                                           th:if="${item.getClass().simpleName == 'MovieDto'}"
+                                                           th:with="formattedTitle=${item.title.replace(' ', '-')}"
+                                                           th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} "
+                                                           href="movies/to_do">
                                                             Przeczytaj więcej
                                                         </a>
                                                         <span>
@@ -190,13 +215,14 @@
                         </section>
                     </div>
 
+                    <!--                   SERIES PROMOBOX-->
                     <div style="display: block;">
                         <div class="CarouselHeader-module-container-dBOIV">
                             <section itemtype="">
                                 <div class="Scaffold-module-scaffold-F6aIC">
                                     <header class="CarouselHeader-module-wrapper-B8ict">
-                                        <h2 class="Title-module-subheader--ZDhF">
-                                            Wciągające historie ze szpitalnych korytarzy
+                                        <h2 class="Title-module-subheader--ZDhF" th:text="${seriesPromoBoxMainTitle}">
+                                            Series PromoBox title
                                         </h2>
                                     </header>
                                 </div>
@@ -205,97 +231,32 @@
                         <section>
                             <div class="Scaffold-module-scaffold-F6aIC">
                                 <div class="MosaicLite-module-container-kmYfB MosaicLite-module-block5-iSivd">
-
-                                    <div class="Item-module-item-yTZtG
-                                    Item-module-carouselItem-Q3n9V
-                                    Item-module-hasProgress-r6MCx
-                                    Item-module-landscapeItem-Sf-nw
-                                    Item-module-mosaicGridItem-XKjcG"
-                                         id="series-good-doctor-the-7d8dbbef-1f8b-46af-86e5-31f701fe97d6"
-                                         data-product-id="series-good-doctor-the">
+                                    <div th:each="promoItem : ${seriesPromoBox}"
+                                         class="Item-module-item-yTZtG
+                                        Item-module-carouselItem-Q3n9V
+                                        Item-module-landscapeItem-Sf-nw
+                                        Item-module-mosaicGridItem-XKjcG"
+                                         th:id="'series-' + ${promoItem.imdbId}"
+                                         th:data-product-id="${promoItem.imdbId}">
                                         <div class="Item-module-box-4uBp3">
-                                            <a class="Item-module-link-Lms-C" tabindex="-1"
-                                               href="/series/good-doctor-the?seasonNumber=6">
+                                            <a class="Item-module-link-Lms-C"
+                                               tabindex="-1"
+                                               th:with="formattedTitle=${promoItem.title.replace(' ', '-')}"
+                                               th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} ">
                                                 <div class="Item-module-image-CGday"
-                                                     style="background-image: url('/images/the_good_doctor_bg_img.jpg');">
+                                                     th:style="'background-image: url(' + ${promoItem.imageUrl} + ');'">
                                                 </div>
                                             </a>
                                         </div>
                                         <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
                                     </div>
-
-                                    <div class="Item-module-item-yTZtG
-                                    Item-module-carouselItem-Q3n9V
-                                    Item-module-landscapeItem-Sf-nw
-                                    Item-module-mosaicGridItem-XKjcG"
-                                         id="series-new-amsterdam-7d8dbbef-1f8b-46af-86e5-31f701fe97d6"
-                                         data-product-id="series-new-amsterdam">
-                                        <div class="Item-module-box-4uBp3">
-                                            <a class="Item-module-link-Lms-C" data-testhook="item-product-page-link"
-                                               tabindex="-1" href="/series/new-amsterdam">
-                                                <div class="Item-module-image-CGday"
-                                                     style="background-image: url('/images/new_amsterdam_bg_img.jpg');">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
-                                    </div>
-
-                                    <div class="Item-module-item-yTZtG
-                                    Item-module-carouselItem-Q3n9V
-                                    Item-module-landscapeItem-Sf-nw
-                                    Item-module-mosaicGridItem-XKjcG"
-                                         id="series-chicago-med-7d8dbbef-1f8b-46af-86e5-31f701fe97d6"
-                                         data-product-id="series-chicago-med">
-                                        <div class="Item-module-box-4uBp3">
-                                            <a class="Item-module-link-Lms-C" tabindex="-1" href="/series/chicago-med">
-                                                <div class="Item-module-image-CGday"
-                                                     style="background-image: url('/images/chicago_med_bg_img.jpg');">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
-                                    </div>
-
-                                    <div class="Item-module-item-yTZtG
-                                    Item-module-carouselItem-Q3n9V
-                                    Item-module-landscapeItem-Sf-nw
-                                    Item-module-mosaicGridItem-XKjcG"
-                                         id="series-mary-kills-people-7d8dbbef-1f8b-46af-86e5-31f701fe97d6"
-                                         data-product-id="series-mary-kills-people">
-                                        <div class="Item-module-box-4uBp3">
-                                            <a class="Item-module-link-Lms-C" tabindex="-1"
-                                               href="/series/mary-kills-people">
-                                                <div class="Item-module-image-CGday"
-                                                     style="background-image: url('/images/marry_kills_bg_img.jpg');">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
-                                    </div>
-
-                                    <div class="Item-module-item-yTZtG
-                                    Item-module-carouselItem-Q3n9V
-                                    Item-module-landscapeItem-Sf-nw
-                                    Item-module-mosaicGridItem-XKjcG"
-                                         id="series-pulse-7d8dbbef-1f8b-46af-86e5-31f701fe97d6"
-                                         data-product-id="series-pulse">
-                                        <div class="Item-module-box-4uBp3">
-                                            <a class="Item-module-link-Lms-C" tabindex="-1" href="/series/pulse">
-                                                <div class="Item-module-image-CGday"
-                                                     style="background-image: url('/images/pulse_bg_img.jpg');">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
-                                    </div>
-
                                 </div>
                             </div>
                         </section>
                     </div>
 
                     <div class="Carousel-module-container-o-YFo">
+
                         <!-- Pętla generująca pozycje dla różnych gatunków -->
                         <th:block th:each="category : ${categories}">
                             <div th:replace="templates/header :: header(${categoryName}, ${categoryLink})"></div>

@@ -7,8 +7,11 @@ import pl.puccini.viaplay.domain.movie.dto.MovieDto;
 import pl.puccini.viaplay.domain.movie.dto.MovieDtoMapper;
 import pl.puccini.viaplay.domain.movie.model.Movie;
 import pl.puccini.viaplay.domain.movie.repository.MovieRepository;
+import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDto;
+import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDtoMapper;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -42,5 +45,17 @@ public class MovieService {
 
         // Ponownie zapisz film w bazie danych, aby uwzględnić dane IMDb
         movieRepository.save(movie);
+    }
+
+    public List<MovieDto> getMoviesByImdbId(String imdbId){
+        return movieRepository.findAllByImdbId(imdbId).stream()
+                .map(MovieDtoMapper::map)
+                .toList();
+    }
+
+    public List<MovieDto> getMovieByGenre(String genre){
+        return movieRepository.findAllByGenreGenreType(genre).stream()
+                .map(MovieDtoMapper::map)
+                .toList();
     }
 }

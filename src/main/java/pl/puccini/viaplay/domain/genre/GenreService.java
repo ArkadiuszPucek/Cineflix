@@ -1,6 +1,10 @@
 package pl.puccini.viaplay.domain.genre;
 
 import org.springframework.stereotype.Service;
+import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDto;
+import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDtoMapper;
+
+import java.util.List;
 
 @Service
 public class GenreService {
@@ -9,5 +13,8 @@ public class GenreService {
 
     public GenreService(GenreRepository genreRepository) {
         this.genreRepository = genreRepository;
+    }
+    public List<Genre> getAllGenres(){
+        return genreRepository.findAll();
     }
 }

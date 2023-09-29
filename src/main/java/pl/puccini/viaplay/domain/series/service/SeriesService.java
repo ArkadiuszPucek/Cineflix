@@ -29,4 +29,10 @@ public class SeriesService {
                 .toList();
     }
 
+    public List<SeriesDto> getSeriesByGenre(String genre){
+        return seriesRepository.findAllByGenreGenreType(genre).stream()
+                .map(SeriesDtoMapper::map)
+                .toList();
+    }
+
 }

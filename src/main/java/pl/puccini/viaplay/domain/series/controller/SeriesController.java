@@ -2,25 +2,27 @@ package pl.puccini.viaplay.domain.series.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.puccini.viaplay.domain.imdb.IMDbApiService;
 import pl.puccini.viaplay.domain.imdb.IMDbData;
+import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDto;
 import pl.puccini.viaplay.domain.series.model.Series;
 import pl.puccini.viaplay.domain.series.repository.SeriesRepository;
+import pl.puccini.viaplay.domain.series.service.SeriesService;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/series")
 public class SeriesController {
     private final SeriesRepository seriesRepository;
+    private final SeriesService seriesService;
     private final IMDbApiService imdbApiService;
 
-    public SeriesController(SeriesRepository seriesRepository, IMDbApiService imdbApiService) {
+    public SeriesController(SeriesRepository seriesRepository, SeriesService seriesService, IMDbApiService imdbApiService) {
         this.seriesRepository = seriesRepository;
+        this.seriesService = seriesService;
         this.imdbApiService = imdbApiService;
     }
     @GetMapping
@@ -46,8 +48,14 @@ public class SeriesController {
         series.setImageUrl(imdbData.getImdbUrl());
         series.setImageUrl(imdbData.getImdbUrl());
         seriesRepository.save(series);
-
         return "redirect:/series";
     }
 
+    @GetMapping("/series/{genre}")
+    private String getSeriesByGenre(@PathVariable String genre, Model model){
+            List<SeriesDto> seriesByGenre = seriesService.getSeriesByGenre(genre);
+            model.addAttribute("genre", genre);
+            model.addAttribute("seriesByGenre", seriesByGenre);
+            return "redirect:/series/" + genre;
+        }
 }

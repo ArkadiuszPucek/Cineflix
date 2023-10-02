@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <title>ViaPlay</title>
     <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
-    <script src="/scripts/refreshFutureBox.js"></script>
+<!--    <script src="../static/scripts/app.4326857cf82bbcf6.js"></script>-->
+
 </head>
 <body>
 
@@ -123,8 +124,9 @@
                                                                 <span class="Divider-module-divider-U-3-- Divider-module-featurebox-lE8g3 Divider-module-genres-ezeLN">
                                                                     <a class="Genre-module-container-HcI4x Genre-module-featurebox-qQIAg Genre-module-link-kGNTi"
                                                                        tabindex="-1"
-                                                                       href="/series/drama" th:href="@{'/' + item.genre}"
-                                                                    th:text="${item.genre}">
+                                                                       href="/series/drama"
+                                                                       th:href="@{'/' + item.genre}"
+                                                                       th:text="${item.genre}">
                                                                         Seriale dramatyczne
                                                                     </a>
                                                                 </span>
@@ -132,10 +134,10 @@
                                                         </span>
                                                         <span class="Divider-module-divider-U-3-- Divider-module-featurebox-lE8g3">
                                                             <span class="Year-module-container-60QAr Year-module-featurebox-kwpHV"
-                                                            th:text="${item.releaseYear}">
+                                                                  th:text="${item.releaseYear}">
                                                                 2011
                                                             </span>
-<!--                                                            <meta itemprop="copyrightYear" content="2011">-->
+                                                            <!--                                                            <meta itemprop="copyrightYear" content="2011">-->
                                                         </span>
                                                         <span class="Divider-module-divider-U-3-- Divider-module-featurebox-lE8g3">
                                                             <span class="Seasons-module-container-ZM15y Seasons-module-featurebox-O9JXt"
@@ -162,7 +164,8 @@
                                                             </span>
                                                         </span>
                                                     </p>
-                                                    <p class="Frame-module-synopsis-Zx-xG" th:text="${item.description}">
+                                                    <p class="Frame-module-synopsis-Zx-xG"
+                                                       th:text="${item.description}">
                                                         Dołącz do weterana podróżującego na zachód w poszukiwaniu
                                                         zemsty.
                                                     </p>
@@ -255,6 +258,13 @@
                         </section>
                     </div>
 
+
+                    <div th:replace="~{fragments :: series-carousel(genreTitle=${dramaSeriesTitle}, genre=${dramaGenre}, series=${dramaSeries})}"></div>
+
+                    <div th:replace="~{fragments :: series-carousel(genreTitle=${comedySeriesTitle}, genre=${comedyGenre}, series=${comedySeries})}"></div>
+
+                    <div th:replace="~{fragments :: series-carousel(genreTitle=${actionSeriesTitle}, genre=${actionGenre}, series=${actionSeries})}"></div>
+
                     <!--                   MOVIE PROMOBOX-->
                     <div style="display: block;">
                         <div class="CarouselHeader-module-container-dBOIV">
@@ -295,127 +305,9 @@
                         </section>
                     </div>
 
+                    <div th:replace="~{fragments :: movies-carousel(genreTitle=${thrillerMoviesTitle}, genre=${thrillerGenre}, movies=${thrillerMovies})}"></div>
 
-                    <div class="Carousel-module-container-o-YFo" data-testhook="carousel-container">
-                        <div id="header-seriale-dramatyczne"
-                             class="CarouselHeader-module-container-dBOIV"
-                        data-testhook="carousel-header">
-                            <!--                             th:id="'header-' + ${comedySeries.get(1).getGenre().replace(' ', '-').toLowerCase()}"-->
-                            <section itemtype="">
-                                <div class="Scaffold-module-scaffold-F6aIC">
-                                    <header class="CarouselHeader-module-wrapper-B8ict">
-                                        <h2 class="Title-module-subheader--ZDhF Title-module-hasSeeMore-DEdTE"
-                                            data-testhook="carousel-title">
-<!--                                            th:text="${comedySeries.get(1).getGenre().replace(' ', '-').toLowerCase()}">-->
-                                            Seriale dramatyczne
-                                        </h2>
-                                        <a class="Title-module-seeMore-f3FXj"
-                                           data-testhook="carousel-see-more"
-                                           href="/series/drama">
-<!--                                            th:href="series/${comedySeries.get(1).getGenre().replace(' ', '-').toLowerCase()}">-->
-                                            Pokaż wszystko
-                                        </a>
-                                    </header>
-                                </div>
-                            </section>
-                        </div>
 
-                        <div data-testhook="carousel" class="Carousel-module-carousel-NbPjL"
-                             id="seriale-dramatyczne">
-<!--                             th:id="${comedySeries.get(1).getGenre().replace(' ', '-').toLowerCase()}">-->
-                            <div class="Carousel-module-wrapper-QhccC">
-                                <button class="Carousel-module-navigation-crAaj
-                                        Carousel-module-prev-EJuzt
-                                        Carousel-module-disabled-vHRrb"
-                                        data-testhook="carousel-prev-arrow-disabled">
-                                </button>
-                                <div class="Carousel-module-inner-4oa8u Carousel-module-useTransition-vWyzl"
-                                     style="transform: translateX(0px);">
-                                    <div style="display: block;">
-                                        <span>
-                                        <div th:each="seriesModel : ${comedySeries}"
-                                      class="Item-module-item-yTZtG
-                                        Item-module-carouselItem-Q3n9V
-                                        Item-module-landscapeItem-Sf-nw" data-testhook="item"
-                                             id="series-mary-kills-people-533de7c2-f10a-4289-84e1-eec7f147c0e0"\
-                                             th:id="${seriesModel.getTitle().replace(' ', '-').toLowerCase()}"
-                                             data-product-id="series-mary-kills-people"
-                                        th:data-product-id="${seriesModel.getTitle().replace(' ', '-').toLowerCase()}">
-                                            <div class="Item-module-box-4uBp3" data-testhook="series-item">
-                                                <a class="Item-module-link-Lms-C" data-testhook="item-product-page-link" tabindex="-1"
-                                                   th:href="@{/series/{seriesId}(seriesId=${seriesModel.getTitle().replace(' ', '-').toLowerCase()})}"
-                                                   href="/series/mary-kills-people">
-                                                </a>
-                                                <div class="Item-module-image-CGday"
-                                                     style="background-image: url(&quot;https://i-viaplay-com.akamaized.net/viaplay-prod/166/228/1692257738-4a3bed53cb4d0104ccc2f6de36dd6f87745536bb.jpg?width=448&amp;height=252&quot;);"
-                                                     th:style="'background-image: url(' + ${seriesModel.getImdbUrl()} + ');'"></div>
-                                                <a class="Item-module-link-Lms-C"
-                                                   data-testhook="item-product-page-link" tabindex="0"
-                                                   href="/series/mary-kills-people"
-                                                   th:href="@{/series/{seriesId}(seriesId=${seriesModel.getTitle().replace(' ', '-').toLowerCase()})}">
-                                                    <div class="PlayButton-module-container-RmQKd PlayButton-module-landscape-dCM5E"
-                                                         data-testhook="play-button" tabindex="-1">
-                                                        <figure class="PlayButton-module-icon-q3WfE"></figure>
-                                                    </div>
-                                                </a>
-                                                <div class="Item-module-curtain-EV2Ya">
-                                                    <div class="SeriesMeta-module-container-oFAL3 SeriesMeta-module-hasDefaultTypography-0GpSK" data-testhook="series-meta-first">
-                                                        <div class="SeriesMeta-module-metadata-8qwss">
-                                                            <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
-                                                                <a data-tracking-click="IMDB" data-testhook="imdb-link"
-                                                                   class="ImdbRating-module-link-yYfI- ImdbRating-module-hasDefaultTypography-luAjW"
-                                                                   href="http://www.imdb.com/title/tt6236572?ref_ext_viaplay"
-                                                                   th:href="@{${seriesModel.getImageUrl()}}"
-                                                                   target="_blank" rel="noopener noreferrer nofollow"
-                                                                   tabindex="-1"
-                                                                    th:text="${seriesModel.getImdbRating()}">
-                                                                    7.5
-                                                                </a>
-                                                            </span>
-                                                            <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
-                                                                <span class="Seasons-module-container-ZM15y Seasons-module-hasDefaultTypography-8No96"
-                                                                      data-testhook="series-meta-seasons">
-                                                                    <span th:text="${seriesModel.getSeasonsCount()} + ' ' + (seriesModel.getSeasonsCount() == 1 ? 'Sezon' : 'Sezony')">
-                                                                     5 Sezony</span>
-                                                                </span>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="InteractionIcons-module-container-apGgr"
-                                                         data-testhook="item-interaction-icons">
-                                                        <a class="TooltipButton-module-container-PfKnw TooltipButton-module-isItem-R6NdL"
-                                                           data-testhook="item-info"
-                                                           data-identifier="series-mary-kills-people-533de7c2-f10a-4289-84e1-eec7f147c0e0"
-                                                           tabindex="-1"
-                                                           href="/series/mary-kills-people"
-                                                           th:href="@{/series/{seriesId}(seriesId=${seriesModel.getTitle().replace(' ', '-').toLowerCase()})}">
-                                                        </a>
-                                                        <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"
-                                                             data-testhook="item-star">
-                                                        </div>
-                                                        <div class="RateButtons-module-container-oL7lm
-                                                        RateButtons-module-isItem-5vKa8
-                                                        RateButtons-module-rateUp-S4se-"
-                                                             data-testhook="item-rating-up">
-                                                        </div>
-                                                        <div class="RateButtons-module-container-oL7lm
-                                                        RateButtons-module-isItem-5vKa8
-                                                        RateButtons-module-rateDown-DblB1"
-                                                             data-testhook="item-rating-down">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
-                                        </div>
-                                        </span>
-                                    </div>
-                                    <button class="Carousel-module-navigation-crAaj Carousel-module-next-AXbEv"
-                                            data-testhook="carousel-next-arrow"></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 

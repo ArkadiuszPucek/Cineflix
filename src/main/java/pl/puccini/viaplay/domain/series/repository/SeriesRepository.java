@@ -1,6 +1,7 @@
 package pl.puccini.viaplay.domain.series.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import pl.puccini.viaplay.domain.genre.Genre;
 import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDto;
 import pl.puccini.viaplay.domain.series.model.Series;
 
@@ -12,5 +13,5 @@ public interface SeriesRepository extends CrudRepository<Series, Long> {
 
     List<Series> findAllByImdbId(String imdbId);
 
-    List<Series> findAllByGenreGenreType(String genre);
+    List<Series> findAllByGenre(Genre genre);
 }

@@ -3,6 +3,8 @@ package pl.puccini.viaplay.domain.series.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.puccini.viaplay.domain.genre.Genre;
+import pl.puccini.viaplay.domain.genre.GenreService;
 import pl.puccini.viaplay.domain.imdb.IMDbApiService;
 import pl.puccini.viaplay.domain.imdb.IMDbData;
 import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDto;
@@ -18,11 +20,13 @@ import java.util.List;
 public class SeriesController {
     private final SeriesRepository seriesRepository;
     private final SeriesService seriesService;
+    private final GenreService genreService;
     private final IMDbApiService imdbApiService;
 
-    public SeriesController(SeriesRepository seriesRepository, SeriesService seriesService, IMDbApiService imdbApiService) {
+    public SeriesController(SeriesRepository seriesRepository, SeriesService seriesService, GenreService genreService, IMDbApiService imdbApiService) {
         this.seriesRepository = seriesRepository;
         this.seriesService = seriesService;
+        this.genreService = genreService;
         this.imdbApiService = imdbApiService;
     }
     @GetMapping
@@ -53,7 +57,8 @@ public class SeriesController {
 
     @GetMapping("/series/{genre}")
     private String getSeriesByGenre(@PathVariable String genre, Model model){
-            List<SeriesDto> seriesByGenre = seriesService.getSeriesByGenre(genre);
+            Genre genreByType = genreService.getGenreByType(genre);
+            List<SeriesDto> seriesByGenre = seriesService.getSeriesByGenre(genreByType);
             model.addAttribute("genre", genre);
             model.addAttribute("seriesByGenre", seriesByGenre);
             return "redirect:/series/" + genre;

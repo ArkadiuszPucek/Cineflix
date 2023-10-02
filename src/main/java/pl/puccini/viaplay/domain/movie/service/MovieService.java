@@ -1,6 +1,7 @@
 package pl.puccini.viaplay.domain.movie.service;
 
 import org.springframework.stereotype.Service;
+import pl.puccini.viaplay.domain.genre.Genre;
 import pl.puccini.viaplay.domain.imdb.IMDbApiService;
 import pl.puccini.viaplay.domain.imdb.IMDbData;
 import pl.puccini.viaplay.domain.movie.dto.MovieDto;
@@ -53,8 +54,8 @@ public class MovieService {
                 .toList();
     }
 
-    public List<MovieDto> getMovieByGenre(String genre){
-        return movieRepository.findAllByGenreGenreType(genre).stream()
+    public List<MovieDto> getMovieByGenre(Genre genre){
+        return movieRepository.findAllByGenre(genre).stream()
                 .map(MovieDtoMapper::map)
                 .toList();
     }

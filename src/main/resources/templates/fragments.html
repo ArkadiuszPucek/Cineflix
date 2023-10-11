@@ -1,89 +1,48 @@
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
 
-<div th:fragment="series-carousel" class="Carousel-module-container-o-YFo" data-testhook="carousel-container">
-    <div th:id="'header-' + ${genre}"
-         class="CarouselHeader-module-container-dBOIV"
-         data-testhook="carousel-header">
-        <section itemtype="">
-            <div class="Scaffold-module-scaffold-F6aIC">
-                <header class="CarouselHeader-module-wrapper-B8ict">
-                    <h2 class="Title-module-subheader--ZDhF
-                    Title-module-hasSeeMore-DEdTE"
-                        data-testhook="carousel-title"
-                        th:text="${genreTitle}">
-                        Gatunek
-                    </h2>
-                    <a class="Title-module-seeMore-f3FXj"
-                       data-testhook="carousel-see-more"
-                       th:href="@{/series/{genre}(genre=${genre})}"
-                       href="/series/comedy">
-                        Pokaż wszystko
-                    </a>
-                </header>
-            </div>
-        </section>
+<div th:fragment="series-carousel" class="Carousel-module-container-o-YFo">
+    <div th:id="'header-' + ${genre}" class="CarouselHeader-module-container-dBOIV">
+        <div class="Scaffold-module-scaffold-F6aIC">
+            <header class="CarouselHeader-module-wrapper-B8ict">
+                <h2 class="Title-module-subheader--ZDhF Title-module-hasSeeMore-DEdTE" th:text="${genreTitle}">
+                    Gatunek
+                </h2>
+                <a class="Title-module-seeMore-f3FXj Title-module-show-ZApWL"
+                   th:href="@{/series/{genre}(genre=${genre})}">
+                    Pokaż wszystko
+                </a>
+            </header>
+        </div>
     </div>
-
-    <div data-testhook="carousel" class="Carousel-module-carousel-NbPjL"
-         th:id="${genre}">
+    <div class="Carousel-module-carousel-NbPjL" th:id="${genre}">
         <div class="Carousel-module-wrapper-QhccC">
-            <button class="Carousel-module-navigation-crAaj
-                        Carousel-module-prev-EJuzt"
-                    data-testhook="carousel-prev-arrow-disabled">
-            </button>
-            <div class="Carousel-module-inner-4oa8u Carousel-module-useTransition-vWyzl"
-                 style="transform: translateX(0px);">
-                <div style="display: block;">
+            <button type="button" class="Carousel-module-navigation-crAaj Carousel-module-prev-EJuzt"></button>
+            <div class="Carousel-module-inner-4oa8u Carousel-module-useTransition-vWyzl">
                         <span>
-                            <div th:each="seriesModel : ${series}" class="Item-module-item-yTZtG
-                                    Item-module-carouselItem-Q3n9V
-                                    Item-module-landscapeItem-Sf-nw" data-testhook="item"
-                                 th:id="${seriesModel.title.replace(' ', '-').toLowerCase()}"
-                                 th:data-product-id="${seriesModel.title.replace(' ', '-').toLowerCase()}">
-                                <div class="Item-module-box-4uBp3" data-testhook="series-item">
-                                    <a class="Item-module-link-Lms-C"
-                                       data-testhook="item-product-page-link"
-                                       tabindex="-1"
-                                       th:with="formattedTitle=${seriesModel.title.replace(' ', '-')}"
-                                       th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} "
-                                       href="/series/mary-kills-people">
+                            <div th:each="seriesModel : ${series}"
+                                 class="Item-module-item-yTZtG Item-module-carouselItem-Q3n9V Item-module-landscapeItem-Sf-nw">
+                                <div class="Item-module-box-4uBp3 Item-module-show-qrDtq">
+                                    <a class="Item-module-link-Lms-C" tabindex="-1"
+                                       th:with="formattedTitle=${seriesModel.title.toLowerCase().replace(' ', '-')}"
+                                       th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} ">
                                     </a>
                                     <div class="Item-module-image-CGday"
                                          th:style="'background-image: url(' + ${seriesModel.imageUrl} + ');'">
                                     </div>
-                                    <a class="Item-module-link-Lms-C"
-                                       data-testhook="item-product-page-link" tabindex="0"
-                                       th:with="formattedTitle=${seriesModel.title.replace(' ', '-')}"
-                                       th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} "
-                                       href="/series/mary-kills-people">
-                                        <div class="PlayButton-module-container-RmQKd
-                                        PlayButton-module-landscape-dCM5E"
-                                             data-testhook="play-button" tabindex="-1">
-                                            <figure class="PlayButton-module-icon-q3WfE"></figure>
-                                        </div>
-                                    </a>
                                     <div class="Item-module-curtain-EV2Ya">
-                                        <div class="SeriesMeta-module-container-oFAL3
-                                        SeriesMeta-module-hasDefaultTypography-0GpSK"
-                                             data-testhook="series-meta-first">
+                                        <div class="SeriesMeta-module-container-oFAL3">
                                             <div class="SeriesMeta-module-metadata-8qwss">
-                                                <span class="Divider-module-divider-U-3--
-                                                Divider-module-hasDefaultTypography-Uy4EO">
-                                                    <a data-tracking-click="IMDB"
-                                                       data-testhook="imdb-link"
-                                                       class="ImdbRating-module-link-yYfI- ImdbRating-module-hasDefaultTypography-luAjW"
-                                                       href="http://www.imdb.com/title/tt6236572?ref_ext_viaplay"
+                                                <span class="Divider-module-divider-U-3--">
+                                                    <a class="ImdbRating-module-link-yYfI- ImdbRating-module-hasDefaultTypography-luAjW"
                                                        th:href="@{${seriesModel.imdbUrl}}"
                                                        target="_blank"
-                                                       rel="noopener noreferrer nofollow"
                                                        tabindex="-1"
                                                        th:text="${seriesModel.imdbRating}">
                                                         ImdbRating
                                                     </a>
                                                 </span>
                                                 <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
-                                                    <span class="Seasons-module-container-ZM15y Seasons-module-hasDefaultTypography-8No96"
-                                                          data-testhook="series-meta-seasons">
+                                                    <span class="Seasons-module-container-ZM15y Seasons-module-hasDefaultTypography-8No96">
                                                         <span th:text="${seriesModel.seasonsCount} + ' ' + (seriesModel.seasonsCount == 1 ? 'Sezon' : 'Sezony')">
                                                             Ilość sezonów
                                                         </span>
@@ -91,151 +50,85 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="InteractionIcons-module-container-apGgr"
-                                             data-testhook="item-interaction-icons">
+                                        <div class="InteractionIcons-module-container-apGgr">
                                             <a class="TooltipButton-module-container-PfKnw TooltipButton-module-isItem-R6NdL"
-                                               data-testhook="item-info"
-                                               data-identifier="series-mary-kills-people-533de7c2-f10a-4289-84e1-eec7f147c0e0"
                                                tabindex="-1"
-                                               href="/series/mary-kills-people"
                                                th:with="formattedTitle=${seriesModel.title.replace(' ', '-')}"
                                                th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} ">
                                             </a>
-                                            <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"
-                                                 data-testhook="item-star">
-                                            </div>
-                                            <div class="RateButtons-module-container-oL7lm
-                                                        RateButtons-module-isItem-5vKa8
-                                                        RateButtons-module-rateUp-S4se-" data-testhook="item-rating-up">
-                                            </div>
-                                            <div class="RateButtons-module-container-oL7lm
-                                                        RateButtons-module-isItem-5vKa8
-                                                        RateButtons-module-rateDown-DblB1"
-                                                 data-testhook="item-rating-down">
-                                            </div>
+                                            <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"></div>
+                                            <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-"></div>
+                                            <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
                             </div>
                         </span>
-                </div>
-                <button class="Carousel-module-navigation-crAaj Carousel-module-next-AXbEv"
-                        data-testhook="carousel-next-arrow"></button>
+<!--                </div>-->
+                <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
             </div>
+            <button type="button" class="Carousel-module-navigation-crAaj Carousel-module-next-AXbEv"></button>
         </div>
     </div>
 </div>
 
-<!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
 
-<div th:fragment="movies-carousel" class="Carousel-module-container-o-YFo Carousel-module-hovered-CXqGL" data-testhook="carousel-container">
-    <div th:id="'header-' + ${genre}"
-         class="CarouselHeader-module-container-dBOIV"
-         data-testhook="carousel-header">
-        <section itemtype="">
-            <div class="Scaffold-module-scaffold-F6aIC">
-                <header class="CarouselHeader-module-wrapper-B8ict">
-                    <h2 class="Title-module-subheader--ZDhF
-                        Title-module-hasSeeMore-DEdTE"
-                        data-testhook="carousel-title"
-                        th:text="${genreTitle}">
-                        Gatunek
-                    </h2>
-                    <a class="Title-module-seeMore-f3FXj Title-module-show-ZApWL"
-                       data-testhook="carousel-see-more"
-                       th:href="@{/movies/{genre}(genre=${genre})}">
-                        Pokaż wszystko
-                    </a>
-                </header>
-            </div>
-        </section>
+<div th:fragment="movies-carousel" class="Carousel-module-container-o-YFo">
+    <div th:id="'header-' + ${genre}" class="CarouselHeader-module-container-dBOIV">
+        <div class="Scaffold-module-scaffold-F6aIC">
+            <header class="CarouselHeader-module-wrapper-B8ict">
+                <h2 class="Title-module-subheader--ZDhF Title-module-hasSeeMore-DEdTE" th:text="${genreTitle}">
+                    Gatunek
+                </h2>
+                <a class="Title-module-seeMore-f3FXj Title-module-show-ZApWL"
+                   th:href="@{/movies/{genre}(genre=${genre})}">
+                    Pokaż wszystko
+                </a>
+            </header>
+        </div>
     </div>
-    <div data-testhook="carousel" class="Carousel-module-carousel-NbPjL"
-         id="thrillery" th:id="${genre}">
+    <div class="Carousel-module-carousel-NbPjL" th:id="${genre}">
         <div class="Carousel-module-wrapper-QhccC">
-            <button class="Carousel-module-navigation-crAaj
-            Carousel-module-prev-EJuzt
-            Carousel-module-disabled-vHRrb"
-                    data-testhook="carousel-prev-arrow-disabled">
-            </button>
+            <button class="Carousel-module-navigation-crAaj Carousel-module-prev-EJuzt"></button>
             <div class="Carousel-module-inner-4oa8u Carousel-module-useTransition-vWyzl"
                  style="transform: translateX(0px);">
                 <div style="display: block;">
                     <span>
-                        <div th:each="movieModel : ${movies}" class="Item-module-item-yTZtG
-                        Item-module-carouselItem-Q3n9V
-                        Item-module-landscapeItem-Sf-nw" data-testhook="item"
-                             th:id="${movieModel.title.replace(' ', '-').toLowerCase()}"
-                             th:data-product-id="${movieModel.title.replace(' ', '-').toLowerCase()}">
-                            <div class="Item-module-box-4uBp3 Item-module-show-qrDtq"
-                                 data-testhook="movie-item">
-                                <div class="Item-module-image-CGday"
-                                     th:style="'background-image: url(' + ${movieModel.imageUrl} + ');'">
-                                </div>
-                                <a class="Item-module-link-Lms-C" data-testhook="item-product-page-link" tabindex="0"
-                                   th:with="formattedTitle=${movieModel.title.replace(' ', '-')}"
-                                   th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} "
-                                   href="/movies/piata-fala-2016">
-                                    <div class="PlayButton-module-container-RmQKd
-                                    PlayButton-module-show-B7cDu
-                                    PlayButton-module-landscape-dCM5E"
-                                         data-testhook="play-button"
-                                         tabindex="-1">
-                                        <figure class="PlayButton-module-icon-q3WfE"></figure>
-                                    </div>
+                        <div th:each="movieModel : ${movies}"
+                             class="Item-module-item-yTZtG Item-module-carouselItem-Q3n9V Item-module-landscapeItem-Sf-nw">
+                            <div class="Item-module-box-4uBp3 Item-module-show-qrDtq">
+                                <a class="Item-module-link-Lms-C" tabindex="0"
+                                   th:with="formattedTitle=${movieModel.title.toLowerCase().replace(' ', '-')}"
+                                   th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
                                 </a>
+                                <div class="Item-module-image-CGday"
+                                     th:style="'background-image: url(' + ${movieModel.imageUrl} + ');'"></div>
                                 <div class="Item-module-curtain-EV2Ya">
-                                    <div class="GenericMeta-module-container-JU38z
-                                    GenericMeta-module-hasDefaultTypography-rpvNG">
+                                    <div class="GenericMeta-module-container-JU38z">
                                         <div>
-                                            <span class="Divider-module-divider-U-3--
-                                            Divider-module-hasDefaultTypography-Uy4EO">
-                                                <a data-tracking-click="IMDB"
-                                                   data-testhook="imdb-link"
-                                                   class="ImdbRating-module-link-yYfI- ImdbRating-module-hasDefaultTypography-luAjW"
-                                                   href="http://www.imdb.com/title/tt2304933?ref_ext_viaplay"
+                                            <span class="Divider-module-divider-U-3--">
+                                                <a class="ImdbRating-module-link-yYfI-" target="_blank" tabindex="-1"
                                                    th:href="@{${movieModel.imdbUrl}}"
-                                                   target="_blank"
-                                                   rel="noopener noreferrer nofollow"
-                                                   tabindex="-1"
                                                    th:text="${movieModel.imdbRating}">
                                                     ImdbRating
                                                 </a>
                                             </span>
-                                            <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
-                                                <span th:text="${movieModel.releaseYear}"
-                                                      class="Year-module-container-60QAr
-                                                      Year-module-hasDefaultTypography-IO5bM">
+                                            <span class="Divider-module-divider-U-3--">
+                                                <span class="Year-module-container-60QAr" th:text="${movieModel.releaseYear}">
                                                     2016
                                                 </span>
-                                                <meta itemprop="copyrightYear" th:content="${movieModel.releaseYear}">
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="InteractionIcons-module-container-apGgr"
-                                         data-testhook="item-interaction-icons">
+                                    <div class="InteractionIcons-module-container-apGgr">
                                         <a class="TooltipButton-module-container-PfKnw TooltipButton-module-isItem-R6NdL"
-                                           data-testhook="item-info"
-                                           data-identifier="20761991-74088b03-a290-47ab-baa5-6834a3682d33"
                                            tabindex="-1"
-                                           href="/movies/piata-fala-2016"
-                                           th:with="formattedTitle=${movieModel.title.replace(' ', '-')}"
-                                           th:href="@{/moies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
+                                           th:with="formattedTitle=${movieModel.title.toLowerCase().replace(' ', '-')}"
+                                           th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
                                         </a>
-                                        <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"
-                                             data-testhook="item-star">
-                                        </div>
-                                    <div class="RateButtons-module-container-oL7lm
-                                    RateButtons-module-isItem-5vKa8
-                                    RateButtons-module-rateUp-S4se-"
-                                         data-testhook="item-rating-up">
-                                    </div>
-                                        <div class="RateButtons-module-container-oL7lm
-                                        RateButtons-module-isItem-5vKa8
-                                        RateButtons-module-rateDown-DblB1"
-                                             data-testhook="item-rating-down">
-                                        </div>
+                                        <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"></div>
+                                        <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-"></div>
+                                        <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1"></div>
                                     </div>
                                 </div>
                             </div>
@@ -243,8 +136,7 @@
                         </div>
                     </span>
                 </div>
-                <button class="Carousel-module-navigation-crAaj Carousel-module-next-AXbEv"
-                    data-testhook="carousel-next-arrow"></button>
+                <button class="Carousel-module-navigation-crAaj Carousel-module-next-AXbEv"></button>
             </div>
         </div>
     </div>

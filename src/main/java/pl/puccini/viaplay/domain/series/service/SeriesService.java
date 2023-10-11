@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.puccini.viaplay.domain.genre.Genre;
 import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDto;
 import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDtoMapper;
+import pl.puccini.viaplay.domain.series.model.Series;
 import pl.puccini.viaplay.domain.series.repository.SeriesRepository;
 
 import java.util.List;
@@ -36,4 +37,11 @@ public class SeriesService {
                 .toList();
     }
 
+    public SeriesDto findByTitle(String title) {
+        Series series = seriesRepository.findByTitleIgnoreCase(title);
+        if (series == null){
+            return null;
+        }
+        return SeriesDtoMapper.map(series);
+    }
 }

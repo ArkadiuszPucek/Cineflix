@@ -5804,28 +5804,28 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
     position: relative
 }
 
-.Scaffold-module-scaffold-F6aIC.Scaffold-module-defaultScaffold-96098 {
-    margin: 0
-}
+/*.Scaffold-module-scaffold-F6aIC.Scaffold-module-defaultScaffold-96098 {*/
+/*    margin: 0*/
+/*}*/
 
-@media screen and (min-width: 3500px) {
-    .Scaffold-module-scaffold-F6aIC {
-        margin: 0 3.336vw
-    }
-}
+/*@media screen and (min-width: 3500px) {*/
+/*    .Scaffold-module-scaffold-F6aIC {*/
+/*        margin: 0 3.336vw*/
+/*    }*/
+/*}*/
 
-@media screen and (min-width: 761px) and (max-width: 939px) {
-    .Scaffold-module-scaffold-F6aIC {
-        margin: 0 56px
-    }
-}
+/*@media screen and (min-width: 761px) and (max-width: 939px) {*/
+/*    .Scaffold-module-scaffold-F6aIC {*/
+/*        margin: 0 56px*/
+/*    }*/
+/*}*/
 
-@media screen and (max-width: 760px) {
-    .Scaffold-module-scaffold-F6aIC {
-        margin: 0 16px;
-        min-width: 288px
-    }
-}
+/*@media screen and (max-width: 760px) {*/
+/*    .Scaffold-module-scaffold-F6aIC {*/
+/*        margin: 0 16px;*/
+/*        min-width: 288px*/
+/*    }*/
+/*}*/
 
 .HeaderLogo-module-link-kdP1e {
     display: block;
@@ -12328,130 +12328,135 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     width: 100%
 }
 
-.Item-module-item-yTZtG.Item-module-promotionalItem-yghu7 .Item-module-box-4uBp3, .Item-module-item-yTZtG.Item-module-promotionalItem-yghu7 .Item-module-right-I41Bm {
-    width: 50%
-}
+/*.Item-module-item-yTZtG.Item-module-promotionalItem-yghu7 .Item-module-box-4uBp3, .Item-module-item-yTZtG.Item-module-promotionalItem-yghu7 .Item-module-right-I41Bm {*/
+/*    width: 50%*/
+/*}*/
 
 .Item-module-item-yTZtG.Item-module-carouselItem-Q3n9V {
     margin: 0 16px 0 0
 }
 
-.Item-module-item-yTZtG.Item-module-season-XKimH {
-    margin: 0 8px 16px 0;
-    padding-top: 16px
-}
+/*.Item-module-item-yTZtG.Item-module-season-XKimH {*/
+/*    margin: 0 8px 16px 0;*/
+/*    padding-top: 16px*/
+/*}*/
 
-.Item-module-item-yTZtG.Item-module-clipItem-ua8eb .Item-module-box-4uBp3:after, .Item-module-item-yTZtG.Item-module-hasProgress-r6MCx .Item-module-box-4uBp3:after, .Item-module-item-yTZtG.Item-module-sportsItem-T2QiQ .Item-module-box-4uBp3:after, .Item-module-item-yTZtG.Item-module-sportsMainItem-VlHX3 .Item-module-box-4uBp3:after {
-    background: linear-gradient(180deg, transparent 50%, rgba(29, 29, 39, .5));
-    content: "";
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 0
-}
+/*.Item-module-item-yTZtG.Item-module-clipItem-ua8eb .Item-module-box-4uBp3:after, .Item-module-item-yTZtG.Item-module-hasProgress-r6MCx .Item-module-box-4uBp3:after, .Item-module-item-yTZtG.Item-module-sportsItem-T2QiQ .Item-module-box-4uBp3:after, .Item-module-item-yTZtG.Item-module-sportsMainItem-VlHX3 .Item-module-box-4uBp3:after {*/
+/*    background: linear-gradient(180deg, transparent 50%, rgba(29, 29, 39, .5));*/
+/*    content: "";*/
+/*    height: 100%;*/
+/*    left: 0;*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    width: 100%;*/
+/*    z-index: 0*/
+/*}*/
 
-.Item-module-item-yTZtG.Item-module-bigRowItem-8iSSS:not(.Item-module-carouselItem-Q3n9V) {
-    margin-bottom: 56px
-}
+/*.Item-module-item-yTZtG.Item-module-bigRowItem-8iSSS:not(.Item-module-carouselItem-Q3n9V) {*/
+/*    margin-bottom: 56px*/
+/*}*/
 
-.Item-module-item-yTZtG:not(.Item-module-disabled-UisRM) .Item-module-curtain-EV2Ya {
-    opacity: 0;
-    transition: opacity .2s, height .3s, top .3s
-}
+/*.Item-module-item-yTZtG:not(.Item-module-disabled-UisRM) .Item-module-curtain-EV2Ya {*/
+/*    opacity: 0;*/
+/*    transition: opacity .2s, height .3s, top .3s*/
+/*}*/
 
-.Item-module-item-yTZtG.Item-module-disabled-UisRM .Item-module-box-4uBp3 {
-    cursor: default
-}
+/*.Item-module-item-yTZtG.Item-module-disabled-UisRM .Item-module-box-4uBp3 {*/
+/*    cursor: default*/
+/*}*/
 
-.Item-module-item-yTZtG.Item-module-disabled-UisRM .Item-module-box-4uBp3:after {
-    background: none
-}
+/*.Item-module-item-yTZtG.Item-module-disabled-UisRM .Item-module-box-4uBp3:after {*/
+/*    background: none*/
+/*}*/
 
-.Item-module-item-yTZtG.Item-module-disabled-UisRM .Item-module-box-4uBp3 .Item-module-curtain-EV2Ya {
-    background-color: rgba(29, 29, 39, .5);
-    z-index: 3
-}
+/*.Item-module-item-yTZtG.Item-module-disabled-UisRM .Item-module-box-4uBp3 .Item-module-curtain-EV2Ya {*/
+/*    background-color: rgba(29, 29, 39, .5);*/
+/*    z-index: 3*/
+/*}*/
 
-.Item-module-item-yTZtG.Item-module-disabled-UisRM .Item-module-box-4uBp3.Item-module-show-qrDtq .Item-module-curtain-EV2Ya:after {
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTI0IDBhMjQgMjQgMCAxIDAgMCA0OCAyNCAyNCAwIDAgMCAwLTQ4ek05LjQgOS40YTIwLjcgMjAuNyAwIDAgMSAyOC0xLjFsLTI5LjEgMjlDNSAzMy44IDMuMyAyOSAzLjMgMjRhMjEgMjEgMCAwIDEgNi0xNC42em0yOS4yIDI5LjJhMjAuNyAyMC43IDAgMCAxLTI4IDEuMWwyOS4xLTI5YTIwIDIwIDAgMCAxIDUgMTMuMyAyMSAyMSAwIDAgMS02IDE0LjZ6IiBvcGFjaXR5PSIuNyIvPjwvc3ZnPg==);
-    background-position: 50%;
-    background-repeat: no-repeat;
-    background-size: contain;
-    content: "";
-    height: 48px;
-    left: calc(50% - 24px);
-    position: absolute;
-    top: calc(50% - 24px);
-    width: 48px;
-    z-index: 3
-}
+/*.Item-module-item-yTZtG.Item-module-disabled-UisRM .Item-module-box-4uBp3.Item-module-show-qrDtq .Item-module-curtain-EV2Ya:after {*/
+/*    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTI0IDBhMjQgMjQgMCAxIDAgMCA0OCAyNCAyNCAwIDAgMCAwLTQ4ek05LjQgOS40YTIwLjcgMjAuNyAwIDAgMSAyOC0xLjFsLTI5LjEgMjlDNSAzMy44IDMuMyAyOSAzLjMgMjRhMjEgMjEgMCAwIDEgNi0xNC42em0yOS4yIDI5LjJhMjAuNyAyMC43IDAgMCAxLTI4IDEuMWwyOS4xLTI5YTIwIDIwIDAgMCAxIDUgMTMuMyAyMSAyMSAwIDAgMS02IDE0LjZ6IiBvcGFjaXR5PSIuNyIvPjwvc3ZnPg==);*/
+/*    background-position: 50%;*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: contain;*/
+/*    content: "";*/
+/*    height: 48px;*/
+/*    left: calc(50% - 24px);*/
+/*    position: absolute;*/
+/*    top: calc(50% - 24px);*/
+/*    width: 48px;*/
+/*    z-index: 3*/
+/*}*/
 
-.Item-module-item-yTZtG.Item-module-roundPeopleItem--PxmN {
-    margin: 0 16px 0 0
-}
+/*.Item-module-item-yTZtG.Item-module-roundPeopleItem--PxmN {*/
+/*    margin: 0 16px 0 0*/
+/*}*/
 
-.Item-module-item-yTZtG.Item-module-roundPeopleItem--PxmN .Item-module-box-4uBp3 {
-    border-radius: 50%
-}
+/*.Item-module-item-yTZtG.Item-module-roundPeopleItem--PxmN .Item-module-box-4uBp3 {*/
+/*    border-radius: 50%*/
+/*}*/
 
-.Item-module-item-yTZtG.Item-module-roundPeopleItem--PxmN .Item-module-image-CGday {
-    background-position: 50%
-}
+/*.Item-module-item-yTZtG.Item-module-roundPeopleItem--PxmN .Item-module-image-CGday {*/
+/*    background-position: 50%*/
+/*}*/
 
-.Item-module-item-yTZtG.Item-module-roundPeopleItem--PxmN .Item-module-below-BMw6u {
-    position: relative
-}
+/*.Item-module-item-yTZtG.Item-module-roundPeopleItem--PxmN .Item-module-below-BMw6u {*/
+/*    position: relative*/
+/*}*/
 
-.Item-module-item-yTZtG.Item-module-landscapePeopleItem-zf0FS .Item-module-box-4uBp3 {
-    margin-bottom: 32px
-}
+/*.Item-module-item-yTZtG.Item-module-landscapePeopleItem-zf0FS .Item-module-box-4uBp3 {*/
+/*    margin-bottom: 32px*/
+/*}*/
 
-.Item-module-item-yTZtG.Item-module-landscapePeopleItem-zf0FS .Item-module-box-4uBp3:before {
-    padding-top: 44%
-}
+/*.Item-module-item-yTZtG.Item-module-landscapePeopleItem-zf0FS .Item-module-box-4uBp3:before {*/
+/*    padding-top: 44%*/
+/*}*/
 
-.Item-module-item-yTZtG.Item-module-landscapePeopleItem-zf0FS .Item-module-image-CGday {
-    background-position: 0 50%;
-    background-size: 44%
-}
+/*.Item-module-item-yTZtG.Item-module-landscapePeopleItem-zf0FS .Item-module-image-CGday {*/
+/*    background-position: 0 50%;*/
+/*    background-size: 44%*/
+/*}*/
 
-.Item-module-item-yTZtG.Item-module-landscapePeopleItem-zf0FS .Item-module-below-BMw6u {
-    bottom: 0;
-    left: calc(44% + 20px);
-    position: absolute;
-    top: 0
-}
+/*.Item-module-item-yTZtG.Item-module-landscapePeopleItem-zf0FS .Item-module-below-BMw6u {*/
+/*    bottom: 0;*/
+/*    left: calc(44% + 20px);*/
+/*    position: absolute;*/
+/*    top: 0*/
+/*}*/
 
 .Item-module-box-4uBp3 {
     background-color: #2b2b35;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, .5);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
     cursor: pointer;
     display: block;
     overflow: hidden;
     position: relative;
     text-decoration: none;
-    width: 100%
-}
-
-.Item-module-box-4uBp3.Item-module-show-qrDtq .Item-module-image-CGday:before {
-    background-color: rgba(0, 0, 0, .5);
-    content: "";
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
     width: 100%;
-    z-index: 0
+    transition: box-shadow 0.3s ease-in-out;
 }
 
-.Item-module-box-4uBp3.Item-module-show-qrDtq .Item-module-image-CGday:after {
-    background-color: transparent;
-    background-image: none;
-    z-index: 0
+.Item-module-box-4uBp3:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
+
+/*.Item-module-box-4uBp3.Item-module-show-qrDtq .Item-module-image-CGday:before {*/
+/*    background-color: rgba(0, 0, 0, 0);*/
+/*    content: "";*/
+/*    height: 100%;*/
+/*    left: 0;*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    width: 100%;*/
+/*    z-index: 0*/
+/*}*/
+
+/*.Item-module-box-4uBp3.Item-module-show-qrDtq .Item-module-image-CGday:after {*/
+/*    background-color: transparent;*/
+/*    background-image: none;*/
+/*    z-index: 0*/
+/*}*/
 
 .Item-module-box-4uBp3.Item-module-show-qrDtq .Item-module-curtain-EV2Ya {
     height: 100%;
@@ -12475,13 +12480,13 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     width: 100%
 }
 
-.Item-module-image-CGday.Item-module-gradient-PlOql:after {
-    background-image: linear-gradient(180deg, transparent, rgba(29, 29, 39, .8));
-    content: "";
-    height: 100%;
-    position: absolute;
-    width: 100%
-}
+/*.Item-module-image-CGday.Item-module-gradient-PlOql:after {*/
+/*    background-image: linear-gradient(180deg, transparent, rgba(29, 29, 39, .8));*/
+/*    content: "";*/
+/*    height: 100%;*/
+/*    position: absolute;*/
+/*    width: 100%*/
+/*}*/
 
 .Item-module-curtain-EV2Ya {
     height: 120%;
@@ -12490,6 +12495,15 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     position: absolute;
     top: -10%;
     width: 100%
+}
+
+.Item-module-curtain-EV2Ya {
+    display: none;
+}
+
+.Item-module-box-4uBp3:hover .Item-module-curtain-EV2Ya {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .Item-module-below-BMw6u.Item-module-padding-kgN3F {
@@ -12516,25 +12530,25 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     box-shadow: inset 0 0 5px #1d1d27
 }
 
-.Item-module-signLanguageIcon-ffzNY {
-    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSI+PGcgY2xpcC1wYXRoPSJ1cmwoI2EpIj48cGF0aCBmaWxsPSIjRkZGIiBkPSJtMTQuODYuOTUtLjM3LS45NGMtLjk4LS4xNS0xLjM2Ljk1LTEuMzYgMS42MWE2IDYgMCAwIDAgLjI2IDEuNDVjLjE1LjYuMyAxLjE3LjE5IDEuNTQtLjI2LjktMS4xLjM3LTEuNjIuMDQtLjk2LS42Mi0xLjc5LTEuMi0yLjYzLTEuNzhMNy41MiAxLjYzYTQuMDcgNC4wNyAwIDAgMS0uMzgtLjI4QzYuNjUuOTggNi4wNy41NCA1LjUzLjY1YS44OC44OCAwIDAgMC0uNjQuOThjLjA0LjQ2LjUuNzUuOTIgMWwuMzIuMkw3LjU3IDMuOWwxLjM4IDEuMDJjLjA5LjA3LjIyLjE0LjM2LjIzLjQ0LjI1IDEuMDIuNTkgMSAuOS0uMDUuNi0uNjkuMjItMS4wNy0uMDFsLS4xLS4wNi0uMzgtLjIyLTMuNjUtMi4xNy0uNC0uMjVjLS40Mi0uMy0uOTEtLjYzLTEuMy0uNjEtLjUyLjAxLS45LjQ1LS44MiAxLjE3LjI1LjQyLjczLjcgMS4yLjk3bC4zNC4yYy42NS4zOSAxLjI1LjczIDEuODYgMS4wOEExMjYuMTMgMTI2LjEzIDAgMCAxIDcuODIgNy4yYy40OS4yNiAxLjM1LjcgMS4zMiAxLjA0LS4wNS41NC0uNTYuMjYtLjg4LjA5bC0uMS0uMDYtMS45MS0uOTJjLS42My0uMy0xLjI0LS41OC0xLjg1LS44OWEzLjEzIDMuMTMgMCAwIDEtLjM2LS4xOWMtLjQyLS4yMi0uODctLjQ3LTEuMjItLjQ1YS45LjkgMCAwIDAtLjc5IDEuMTNjLjExLjQ0LjY0LjY2IDEuMS44NmwuMy4xMkExMjkuMTcgMTI5LjE3IDAgMCAxIDYuOSA5LjZjLjQ2LjIgMS4xNi41IDEuMDguOS0uMDguNDItLjY1LjE5LTEuMDMuMDNsLS4xOC0uMDctMS4xNy0uNDMtLjE0LS4wNi0uNS0uMmE3Ljg2IDcuODYgMCAwIDAtMi4yNS0uNjNjLS4zMy4yLS42LjM2LS42LjgzIDAgLjU4LjU3LjgxIDEuMDYgMS4wMWwuMS4wNS44MS4zNCAyLjMyLjk4LjQ3LjIxYy4zOC4xOS44LjM5IDEuMS40My43OC4xMSAxLjYzLjA2IDIuNDYuMDEuNzQtLjA0IDEuNDYtLjA4IDIuMS0uMDEtLjItLjMyLS41MS0uNjItLjg1LS45NC0uNzQtLjcyLTEuNTgtMS41My0xLjQ5LTIuOC4wNi0uNzMuNjYtMS41OSAxLjQ3LTEuNS4yLjAyLjU3LjI4Ljg1LjQ4bC4xNy4xMiAxLjg4IDEuMzNBOTAuNTcgOTAuNTcgMCAwIDAgMTkuNDIgMTNoLjl2LTIuNzJjLS4yMy0uMjEtLjUtLjM3LS43Ni0uNTNsLS40LS4yNS0uMzQtLjIxYy0uMy0uMTgtLjY0LS4zOC0uODMtLjYyLS4yNy0uMzYtLjQ3LS45Mi0uNjYtMS40NWwtLjI0LS42N2MtLjc0LTEuOC0xLjUyLTMuNzgtMi4yMy01LjU5Wk0yMyAyMC40MlYxMy43aC0xLjc5Yy0uMTkgMC0uMzguMDItLjU4LjA0LS40LjA0LS44Mi4wOC0xLjIyIDAtLjItLjA0LS40Ni0uMjItLjcyLS40LS4xLS4wNy0uMi0uMTUtLjMtLjItMS42Mi0xLjAyLTMuMDMtMi00LjUxLTMuMDRsLS4zNS0uMjVjLS4yNC0uMTYtLjQ3LS4zNC0uNy0uNTJhNy4yMiA3LjIyIDAgMCAwLTEuMjItLjg0aC0uMDRjLS40Ny4wMS0uNjQuNzEtLjU2IDEuMjUuMS43NC43NiAxLjM0IDEuMzcgMS45LjU1LjUgMS4wNS45NSAxLjAzIDEuNDItLjAyLjc0LTEuMTEuNy0yIC42OWwtLjQtLjAxSDYuODZsLS41Mi0uMDFjLTEuMS0uMDMtMi4yMi0uMDYtMi4wMyAxLjA2LjExLjcxLjgzLjcxIDEuNzEuNzJoLjU0bDEuMjMuMDVhNzUuNzQgNzUuNzQgMCAwIDAgMi42OC4wNWMuNTQtLjAzIDEuMDctLjA2IDEuMDIuNDMtLjAzLjM2LS44Ny4zOS0xLjQyLjRsLS4yMy4wMi0yLjU4LjE0LTEuMzQuMDhjLS4yMS4wMi0uNDQuMDEtLjY2LjAxLS40NyAwLS45NSAwLTEuMjYuMTUtLjYyLjI5LS41NCAxLjQuMDQgMS42Mi4zMi4xMy44NC4wNyAxLjM1LjAybC41Ny0uMDYgMS44NS0uMSAyLjE0LS4xMi4yOS0uMDNjLjU2LS4wNiAxLjQzLS4xNiAxLjQ3LjI1LjA1LjQ2LS42NC41LTEuMjEuNTQtLjE1IDAtLjI5LjAyLS40LjAzYTcwIDcwIDAgMCAwLTIuMzIuMzRsLTEuNDkuMjMtLjE0LjAyYy0uODIuMTEtMS41Ni4yMi0xLjM2IDEuMTguMTcuOCAxLjA3LjY0IDEuOS41bC40Ny0uMDggMi43My0uMzYuNzMtLjFjLjEgMCAuMi0uMDIuMy0uMDQuNTctLjA5IDEuMTQtLjE4IDEuMS4zMS0uMDMuMjktLjYyLjQxLTEuMDcuNTFsLS4yNS4wNi0xLjU1LjM3LS42Mi4xM2MtLjkzLjE2LTEuOTMuMzQtMS44NiAxLjIzLjA3Ljk1IDEuMTYuNzMgMi4wNC41NWE3OC4yNSA3OC4yNSAwIDAgMSAuOTQtLjE5YzEuNDQtLjI5IDIuNzItLjU1IDQuMTMtLjgxIDEuNjgtLjMxIDMuMzYtLjYzIDQuNi0xLjMyLjE3LS4xLjM1LS4yMy41Mi0uMzYuMjMtLjE5LjQ2LS4zNy42OC0uNDMuMzUtLjEuNzctLjExIDEuMTctLjEzbC41Mi0uMDIgMS4xMS0uMS42Mi0uMDZaIi8+PC9nPjxkZWZzPjxjbGlwUGF0aCBpZD0iYSI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTAgMGgyNHYyNEgweiIvPjwvY2xpcFBhdGg+PC9kZWZzPjwvc3ZnPg==) 50% no-repeat;
-    bottom: 8px;
-    height: 24px;
-    left: 8px;
-    opacity: 0;
-    position: absolute;
-    transition: opacity .3s;
-    width: 24px;
-    z-index: 1
-}
+/*.Item-module-signLanguageIcon-ffzNY {*/
+/*    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSI+PGcgY2xpcC1wYXRoPSJ1cmwoI2EpIj48cGF0aCBmaWxsPSIjRkZGIiBkPSJtMTQuODYuOTUtLjM3LS45NGMtLjk4LS4xNS0xLjM2Ljk1LTEuMzYgMS42MWE2IDYgMCAwIDAgLjI2IDEuNDVjLjE1LjYuMyAxLjE3LjE5IDEuNTQtLjI2LjktMS4xLjM3LTEuNjIuMDQtLjk2LS42Mi0xLjc5LTEuMi0yLjYzLTEuNzhMNy41MiAxLjYzYTQuMDcgNC4wNyAwIDAgMS0uMzgtLjI4QzYuNjUuOTggNi4wNy41NCA1LjUzLjY1YS44OC44OCAwIDAgMC0uNjQuOThjLjA0LjQ2LjUuNzUuOTIgMWwuMzIuMkw3LjU3IDMuOWwxLjM4IDEuMDJjLjA5LjA3LjIyLjE0LjM2LjIzLjQ0LjI1IDEuMDIuNTkgMSAuOS0uMDUuNi0uNjkuMjItMS4wNy0uMDFsLS4xLS4wNi0uMzgtLjIyLTMuNjUtMi4xNy0uNC0uMjVjLS40Mi0uMy0uOTEtLjYzLTEuMy0uNjEtLjUyLjAxLS45LjQ1LS44MiAxLjE3LjI1LjQyLjczLjcgMS4yLjk3bC4zNC4yYy42NS4zOSAxLjI1LjczIDEuODYgMS4wOEExMjYuMTMgMTI2LjEzIDAgMCAxIDcuODIgNy4yYy40OS4yNiAxLjM1LjcgMS4zMiAxLjA0LS4wNS41NC0uNTYuMjYtLjg4LjA5bC0uMS0uMDYtMS45MS0uOTJjLS42My0uMy0xLjI0LS41OC0xLjg1LS44OWEzLjEzIDMuMTMgMCAwIDEtLjM2LS4xOWMtLjQyLS4yMi0uODctLjQ3LTEuMjItLjQ1YS45LjkgMCAwIDAtLjc5IDEuMTNjLjExLjQ0LjY0LjY2IDEuMS44NmwuMy4xMkExMjkuMTcgMTI5LjE3IDAgMCAxIDYuOSA5LjZjLjQ2LjIgMS4xNi41IDEuMDguOS0uMDguNDItLjY1LjE5LTEuMDMuMDNsLS4xOC0uMDctMS4xNy0uNDMtLjE0LS4wNi0uNS0uMmE3Ljg2IDcuODYgMCAwIDAtMi4yNS0uNjNjLS4zMy4yLS42LjM2LS42LjgzIDAgLjU4LjU3LjgxIDEuMDYgMS4wMWwuMS4wNS44MS4zNCAyLjMyLjk4LjQ3LjIxYy4zOC4xOS44LjM5IDEuMS40My43OC4xMSAxLjYzLjA2IDIuNDYuMDEuNzQtLjA0IDEuNDYtLjA4IDIuMS0uMDEtLjItLjMyLS41MS0uNjItLjg1LS45NC0uNzQtLjcyLTEuNTgtMS41My0xLjQ5LTIuOC4wNi0uNzMuNjYtMS41OSAxLjQ3LTEuNS4yLjAyLjU3LjI4Ljg1LjQ4bC4xNy4xMiAxLjg4IDEuMzNBOTAuNTcgOTAuNTcgMCAwIDAgMTkuNDIgMTNoLjl2LTIuNzJjLS4yMy0uMjEtLjUtLjM3LS43Ni0uNTNsLS40LS4yNS0uMzQtLjIxYy0uMy0uMTgtLjY0LS4zOC0uODMtLjYyLS4yNy0uMzYtLjQ3LS45Mi0uNjYtMS40NWwtLjI0LS42N2MtLjc0LTEuOC0xLjUyLTMuNzgtMi4yMy01LjU5Wk0yMyAyMC40MlYxMy43aC0xLjc5Yy0uMTkgMC0uMzguMDItLjU4LjA0LS40LjA0LS44Mi4wOC0xLjIyIDAtLjItLjA0LS40Ni0uMjItLjcyLS40LS4xLS4wNy0uMi0uMTUtLjMtLjItMS42Mi0xLjAyLTMuMDMtMi00LjUxLTMuMDRsLS4zNS0uMjVjLS4yNC0uMTYtLjQ3LS4zNC0uNy0uNTJhNy4yMiA3LjIyIDAgMCAwLTEuMjItLjg0aC0uMDRjLS40Ny4wMS0uNjQuNzEtLjU2IDEuMjUuMS43NC43NiAxLjM0IDEuMzcgMS45LjU1LjUgMS4wNS45NSAxLjAzIDEuNDItLjAyLjc0LTEuMTEuNy0yIC42OWwtLjQtLjAxSDYuODZsLS41Mi0uMDFjLTEuMS0uMDMtMi4yMi0uMDYtMi4wMyAxLjA2LjExLjcxLjgzLjcxIDEuNzEuNzJoLjU0bDEuMjMuMDVhNzUuNzQgNzUuNzQgMCAwIDAgMi42OC4wNWMuNTQtLjAzIDEuMDctLjA2IDEuMDIuNDMtLjAzLjM2LS44Ny4zOS0xLjQyLjRsLS4yMy4wMi0yLjU4LjE0LTEuMzQuMDhjLS4yMS4wMi0uNDQuMDEtLjY2LjAxLS40NyAwLS45NSAwLTEuMjYuMTUtLjYyLjI5LS41NCAxLjQuMDQgMS42Mi4zMi4xMy44NC4wNyAxLjM1LjAybC41Ny0uMDYgMS44NS0uMSAyLjE0LS4xMi4yOS0uMDNjLjU2LS4wNiAxLjQzLS4xNiAxLjQ3LjI1LjA1LjQ2LS42NC41LTEuMjEuNTQtLjE1IDAtLjI5LjAyLS40LjAzYTcwIDcwIDAgMCAwLTIuMzIuMzRsLTEuNDkuMjMtLjE0LjAyYy0uODIuMTEtMS41Ni4yMi0xLjM2IDEuMTguMTcuOCAxLjA3LjY0IDEuOS41bC40Ny0uMDggMi43My0uMzYuNzMtLjFjLjEgMCAuMi0uMDIuMy0uMDQuNTctLjA5IDEuMTQtLjE4IDEuMS4zMS0uMDMuMjktLjYyLjQxLTEuMDcuNTFsLS4yNS4wNi0xLjU1LjM3LS42Mi4xM2MtLjkzLjE2LTEuOTMuMzQtMS44NiAxLjIzLjA3Ljk1IDEuMTYuNzMgMi4wNC41NWE3OC4yNSA3OC4yNSAwIDAgMSAuOTQtLjE5YzEuNDQtLjI5IDIuNzItLjU1IDQuMTMtLjgxIDEuNjgtLjMxIDMuMzYtLjYzIDQuNi0xLjMyLjE3LS4xLjM1LS4yMy41Mi0uMzYuMjMtLjE5LjQ2LS4zNy42OC0uNDMuMzUtLjEuNzctLjExIDEuMTctLjEzbC41Mi0uMDIgMS4xMS0uMS42Mi0uMDZaIi8+PC9nPjxkZWZzPjxjbGlwUGF0aCBpZD0iYSI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTAgMGgyNHYyNEgweiIvPjwvY2xpcFBhdGg+PC9kZWZzPjwvc3ZnPg==) 50% no-repeat;*/
+/*    bottom: 8px;*/
+/*    height: 24px;*/
+/*    left: 8px;*/
+/*    opacity: 0;*/
+/*    position: absolute;*/
+/*    transition: opacity .3s;*/
+/*    width: 24px;*/
+/*    z-index: 1*/
+/*}*/
 
-.Item-module-signLanguageIcon-ffzNY.Item-module-hasProgress-r6MCx {
-    bottom: 20px
-}
+/*.Item-module-signLanguageIcon-ffzNY.Item-module-hasProgress-r6MCx {*/
+/*    bottom: 20px*/
+/*}*/
 
-.Item-module-signLanguageIcon-ffzNY.Item-module-show-qrDtq {
-    opacity: 1
-}
+/*.Item-module-signLanguageIcon-ffzNY.Item-module-show-qrDtq {*/
+/*    opacity: 1*/
+/*}*/
 
 .Item-module-mosaicGridItem-XKjcG {
     margin: 0;
@@ -12542,17 +12556,17 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     width: 100%
 }
 
-.Item-module-mosaicGridItem-XKjcG .Item-module-box-4uBp3 {
-    height: 100%
-}
+/*.Item-module-mosaicGridItem-XKjcG .Item-module-box-4uBp3 {*/
+/*    height: 100%*/
+/*}*/
 
 .Item-module-mosaicGridItem-XKjcG .Item-module-below-BMw6u {
     display: none
 }
 
-.Item-module-tvItem-pRRRZ .Item-module-box-4uBp3.Item-module-show-qrDtq .Item-module-curtain-EV2Ya:before {
-    background-color: rgba(0, 0, 0, .5)
-}
+/*.Item-module-tvItem-pRRRZ .Item-module-box-4uBp3.Item-module-show-qrDtq .Item-module-curtain-EV2Ya:before {*/
+/*    background-color: rgba(0, 0, 0, .5)*/
+/*}*/
 
 .Item-module-topListItem-t033x {
     background-color: #2b2b35;
@@ -12561,54 +12575,54 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     height: auto
 }
 
-.Item-module-topListItem-t033x .Item-module-below-BMw6u {
-    height: 164px
-}
+/*.Item-module-topListItem-t033x .Item-module-below-BMw6u {*/
+/*    height: 164px*/
+/*}*/
 
-.Item-module-isMyListExperiment-t19VB .Item-module-box-4uBp3 {
-    cursor: auto
-}
+/*.Item-module-isMyListExperiment-t19VB .Item-module-box-4uBp3 {*/
+/*    cursor: auto*/
+/*}*/
 
-.Item-module-isMyListExperiment-t19VB .Item-module-box-4uBp3.Item-module-show-qrDtq .Item-module-image-CGday:before {
-    background: none
-}
+/*.Item-module-isMyListExperiment-t19VB .Item-module-box-4uBp3.Item-module-show-qrDtq .Item-module-image-CGday:before {*/
+/*    background: none*/
+/*}*/
 
-.Item-module-sportsListItem-3-wzt {
-    margin: 0 16px 16px 0;
-    overflow: visible
-}
+/*.Item-module-sportsListItem-3-wzt {*/
+/*    margin: 0 16px 16px 0;*/
+/*    overflow: visible*/
+/*}*/
 
-.Item-module-sportsListItem-3-wzt .Item-module-image-CGday {
-    display: none
-}
+/*.Item-module-sportsListItem-3-wzt .Item-module-image-CGday {*/
+/*    display: none*/
+/*}*/
 
-.Item-module-sportsListItem-3-wzt .Item-module-box-4uBp3 {
-    background: #2b2b35;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, .5);
-    min-height: 168px;
-    position: relative
-}
+/*.Item-module-sportsListItem-3-wzt .Item-module-box-4uBp3 {*/
+/*    background: #2b2b35;*/
+/*    box-shadow: 0 2px 4px rgba(0, 0, 0, .5);*/
+/*    min-height: 168px;*/
+/*    position: relative*/
+/*}*/
 
-.Item-module-sportsListItem-3-wzt .Item-module-box-4uBp3.Item-module-show-qrDtq {
-    background: rgba(43, 43, 53, .7)
-}
+/*.Item-module-sportsListItem-3-wzt .Item-module-box-4uBp3.Item-module-show-qrDtq {*/
+/*    background: rgba(43, 43, 53, .7)*/
+/*}*/
 
-.Item-module-sportsListItem-3-wzt .Item-module-box-4uBp3.Item-module-show-qrDtq .Item-module-curtain-EV2Ya:before {
-    background-color: rgba(0, 0, 0, .5);
-    display: none
-}
+/*.Item-module-sportsListItem-3-wzt .Item-module-box-4uBp3.Item-module-show-qrDtq .Item-module-curtain-EV2Ya:before {*/
+/*    background-color: rgba(0, 0, 0, .5);*/
+/*    display: none*/
+/*}*/
 
-.Item-module-sportsListItem-3-wzt.Item-module-sportsRightsListItem-xJCnb .Item-module-box-4uBp3 {
-    min-height: 116px
-}
+/*.Item-module-sportsListItem-3-wzt.Item-module-sportsRightsListItem-xJCnb .Item-module-box-4uBp3 {*/
+/*    min-height: 116px*/
+/*}*/
 
-.Item-module-sportsListItem-3-wzt.Item-module-isLiveBroadcast-DXhkh .Item-module-box-4uBp3 {
-    background: #32323b
-}
+/*.Item-module-sportsListItem-3-wzt.Item-module-isLiveBroadcast-DXhkh .Item-module-box-4uBp3 {*/
+/*    background: #32323b*/
+/*}*/
 
-.Item-module-sportsListItem-3-wzt.Item-module-isLiveBroadcast-DXhkh .Item-module-box-4uBp3.Item-module-show-qrDtq {
-    background: rgba(50, 50, 59, .7)
-}
+/*.Item-module-sportsListItem-3-wzt.Item-module-isLiveBroadcast-DXhkh .Item-module-box-4uBp3.Item-module-show-qrDtq {*/
+/*    background: rgba(50, 50, 59, .7)*/
+/*}*/
 
 .Item-module-landscapeItem-Sf-nw .Item-module-box-4uBp3 .Item-module-link-Lms-C:after, .Item-module-landscapeItem-Sf-nw .Item-module-box-4uBp3:before {
     content: "";
@@ -12616,49 +12630,49 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     padding-top: 56.25%
 }
 
-.Item-module-landscapeItem-Sf-nw.Item-module-sportsListItem-3-wzt .Item-module-box-4uBp3 .Item-module-link-Lms-C:after, .Item-module-landscapeItem-Sf-nw.Item-module-sportsListItem-3-wzt .Item-module-box-4uBp3:before {
-    content: "";
-    display: none;
-    padding-top: 28.125%
-}
+/*.Item-module-landscapeItem-Sf-nw.Item-module-sportsListItem-3-wzt .Item-module-box-4uBp3 .Item-module-link-Lms-C:after, .Item-module-landscapeItem-Sf-nw.Item-module-sportsListItem-3-wzt .Item-module-box-4uBp3:before {*/
+/*    content: "";*/
+/*    display: none;*/
+/*    padding-top: 28.125%*/
+/*}*/
 
-.Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN .Item-module-box-4uBp3 .Item-module-link-Lms-C:after, .Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN .Item-module-box-4uBp3:before {
-    content: "";
-    display: block;
-    padding-top: 100%
-}
+/*.Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN .Item-module-box-4uBp3 .Item-module-link-Lms-C:after, .Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN .Item-module-box-4uBp3:before {*/
+/*    content: "";*/
+/*    display: block;*/
+/*    padding-top: 100%*/
+/*}*/
 
-.Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN .Item-module-box-4uBp3 .Item-module-link-Lms-C:focus-visible {
-    border-radius: 50%
-}
+/*.Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN .Item-module-box-4uBp3 .Item-module-link-Lms-C:focus-visible {*/
+/*    border-radius: 50%*/
+/*}*/
 
-.Item-module-portraitItem-y-zBj .Item-module-box-4uBp3 .Item-module-link-Lms-C:after, .Item-module-portraitItem-y-zBj .Item-module-box-4uBp3:before {
-    content: "";
-    display: block;
-    padding-top: 150%
-}
+/*.Item-module-portraitItem-y-zBj .Item-module-box-4uBp3 .Item-module-link-Lms-C:after, .Item-module-portraitItem-y-zBj .Item-module-box-4uBp3:before {*/
+/*    content: "";*/
+/*    display: block;*/
+/*    padding-top: 150%*/
+/*}*/
 
-.Item-module-portraitItem-y-zBj .Item-module-curtain-EV2Ya {
-    height: 110%;
-    top: -5%
-}
+/*.Item-module-portraitItem-y-zBj .Item-module-curtain-EV2Ya {*/
+/*    height: 110%;*/
+/*    top: -5%*/
+/*}*/
 
 @media screen and (min-width: 3500px) {
     .Item-module-box-4uBp3, .Item-module-image-CGday, .Item-module-item-yTZtG:before {
         border-radius: .3336vw
     }
 
-    .Item-module-signLanguageIcon-ffzNY {
-        background-size: cover;
-        bottom: .3336vw;
-        height: 1.0008vw;
-        left: .3336vw;
-        width: 1.0008vw
-    }
+    /*.Item-module-signLanguageIcon-ffzNY {*/
+    /*    background-size: cover;*/
+    /*    bottom: .3336vw;*/
+    /*    height: 1.0008vw;*/
+    /*    left: .3336vw;*/
+    /*    width: 1.0008vw*/
+    /*}*/
 
-    .Item-module-signLanguageIcon-ffzNY.Item-module-hasProgress-r6MCx {
-        bottom: .834vw
-    }
+    /*.Item-module-signLanguageIcon-ffzNY.Item-module-hasProgress-r6MCx {*/
+    /*    bottom: .834vw*/
+    /*}*/
 
     .Item-module-landscapeItem-Sf-nw {
         margin: 0 .5004vw 1.0008vw;
@@ -12680,61 +12694,61 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
         width: 100%
     }
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-sportsListItem-3-wzt {
-        margin: 0 1.0008vw 1.0008vw 0
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-sportsListItem-3-wzt {*/
+    /*    margin: 0 1.0008vw 1.0008vw 0*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN {
-        margin: 0 1.0008vw 0 0;
-        width: 8.332vw
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN {*/
+    /*    margin: 0 1.0008vw 0 0;*/
+    /*    width: 8.332vw*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-hasFewSportsRights-8P1Gn, .Item-module-landscapeItem-Sf-nw.Item-module-sportsMainItem-VlHX3 {
-        width: 22.3312vw
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-hasFewSportsRights-8P1Gn, .Item-module-landscapeItem-Sf-nw.Item-module-sportsMainItem-VlHX3 {*/
+    /*    width: 22.3312vw*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-bigRowItem-8iSSS, .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+10), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+11), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+3), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+4), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+5) {
-        width: calc(33.3333% - 1.0008vw)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-bigRowItem-8iSSS, .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+10), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+11), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+3), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+4), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+5) {*/
+    /*    width: calc(33.3333% - 1.0008vw)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+6), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+7), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+8), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+9) {
-        width: calc(25% - 1.0008vw)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+6), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+7), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+8), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+9) {*/
+    /*    width: calc(25% - 1.0008vw)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+1), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+2) {
-        width: calc(50% - 1.0008vw)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+1), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+2) {*/
+    /*    width: calc(50% - 1.0008vw)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj {
-        margin: 0 .5004vw 1.0008vw;
-        width: calc(14.2857% - 1.0008vw)
-    }
+    /*.Item-module-portraitItem-y-zBj {*/
+    /*    margin: 0 .5004vw 1.0008vw;*/
+    /*    width: calc(14.2857% - 1.0008vw)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V {
-        margin: 0 1.0008vw 0 0;
-        width: 12.33176vw
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V {*/
+    /*    margin: 0 1.0008vw 0 0;*/
+    /*    width: 12.33176vw*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V.Item-module-topListItem-t033x {
-        margin: 0 1.0008vw 1.3344vw 0;
-        width: 17.6648vw
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V.Item-module-topListItem-t033x {*/
+    /*    margin: 0 1.0008vw 1.3344vw 0;*/
+    /*    width: 17.6648vw*/
+    /*}*/
 
-    .Item-module-sportsListItem-3-wzt .Item-module-box-4uBp3 {
-        min-height: 7.0056vw
-    }
+    /*.Item-module-sportsListItem-3-wzt .Item-module-box-4uBp3 {*/
+    /*    min-height: 7.0056vw*/
+    /*}*/
 
-    .Item-module-sportsListItem-3-wzt.Item-module-sportsRightsListItem-xJCnb .Item-module-box-4uBp3 {
-        min-height: 4.8372vw
-    }
+    /*.Item-module-sportsListItem-3-wzt.Item-module-sportsRightsListItem-xJCnb .Item-module-box-4uBp3 {*/
+    /*    min-height: 4.8372vw*/
+    /*}*/
 
     .Item-module-below-BMw6u.Item-module-padding-kgN3F {
         min-height: 1.3344vw
     }
 
-    .Item-module-topListItem-t033x .Item-module-below-BMw6u {
-        height: 6.8388vw
-    }
+    /*.Item-module-topListItem-t033x .Item-module-below-BMw6u {*/
+    /*    height: 6.8388vw*/
+    /*}*/
 }
 
 @media screen and (min-width: 1695px) and (max-width: 3499px) {
@@ -12758,51 +12772,51 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
         width: 100%
     }
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-sportsListItem-3-wzt {
-        margin: 0 24px 24px 0
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-sportsListItem-3-wzt {*/
+    /*    margin: 0 24px 24px 0*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN {
-        margin: 0 24px 0 0;
-        width: calc(12.5vw - 44px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN {*/
+    /*    margin: 0 24px 0 0;*/
+    /*    width: calc(12.5vw - 44px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-hasFewSportsRights-8P1Gn, .Item-module-landscapeItem-Sf-nw.Item-module-sportsMainItem-VlHX3 {
-        width: calc(25vw - 64px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-hasFewSportsRights-8P1Gn, .Item-module-landscapeItem-Sf-nw.Item-module-sportsMainItem-VlHX3 {*/
+    /*    width: calc(25vw - 64px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-bigRowItem-8iSSS, .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+10), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+11), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+3), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+4), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+5) {
-        width: calc(33.3333% - 24px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-bigRowItem-8iSSS, .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+10), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+11), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+3), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+4), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+5) {*/
+    /*    width: calc(33.3333% - 24px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+6), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+7), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+8), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+9) {
-        width: calc(25% - 24px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+6), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+7), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+8), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+9) {*/
+    /*    width: calc(25% - 24px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+1), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+2) {
-        width: calc(50% - 24px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+1), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+2) {*/
+    /*    width: calc(50% - 24px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj {
-        margin: 0 12px 24px;
-        width: calc(14.2857% - 24px)
-    }
+    /*.Item-module-portraitItem-y-zBj {*/
+    /*    margin: 0 12px 24px;*/
+    /*    width: calc(14.2857% - 24px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V {
-        margin: 0 24px 0 0;
-        width: calc(14.2857vw - 46.8571px)
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V {*/
+    /*    margin: 0 24px 0 0;*/
+    /*    width: calc(14.2857vw - 46.8571px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V.Item-module-topListItem-t033x {
-        margin: 0 24px 32px 0;
-        width: calc(20vw - 56px)
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V.Item-module-topListItem-t033x {*/
+    /*    margin: 0 24px 32px 0;*/
+    /*    width: calc(20vw - 56px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-mosaicGridItem-XKjcG {
-        margin: 0;
-        padding: 0;
-        width: 100%
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-mosaicGridItem-XKjcG {*/
+    /*    margin: 0;*/
+    /*    padding: 0;*/
+    /*    width: 100%*/
+    /*}*/
 }
 
 @media screen and (min-width: 1441px) and (max-width: 1694px) {
@@ -12830,51 +12844,51 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
         width: 100%
     }
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-sportsListItem-3-wzt {
-        margin: 0 24px 24px 0
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-sportsListItem-3-wzt {*/
+    /*    margin: 0 24px 24px 0*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN {
-        margin: 0 24px 0 0;
-        width: calc(12.5vw - 44px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN {*/
+    /*    margin: 0 24px 0 0;*/
+    /*    width: calc(12.5vw - 44px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-bigRowItem-8iSSS {
-        width: calc(50% - 24px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-bigRowItem-8iSSS {*/
+    /*    width: calc(50% - 24px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+10), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+11), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+3), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+4), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+5) {
-        width: calc(33.3333% - 24px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+10), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+11), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+3), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+4), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+5) {*/
+    /*    width: calc(33.3333% - 24px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+6), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+7), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+8), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+9) {
-        width: calc(25% - 24px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+6), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+7), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+8), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+9) {*/
+    /*    width: calc(25% - 24px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+1), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+2) {
-        width: calc(50% - 24px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+1), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(12n+2) {*/
+    /*    width: calc(50% - 24px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj {
-        margin: 0 12px 24px;
-        width: calc(14.2858% - 24px)
-    }
+    /*.Item-module-portraitItem-y-zBj {*/
+    /*    margin: 0 12px 24px;*/
+    /*    width: calc(14.2858% - 24px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V {
-        margin: 0 24px 0 0;
-        width: calc(14.2857vw - 46.8571px)
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V {*/
+    /*    margin: 0 24px 0 0;*/
+    /*    width: calc(14.2857vw - 46.8571px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V.Item-module-topListItem-t033x {
-        margin: 0 24px 32px 0;
-        width: calc(25vw - 64px)
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V.Item-module-topListItem-t033x {*/
+    /*    margin: 0 24px 32px 0;*/
+    /*    width: calc(25vw - 64px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-mosaicGridItem-XKjcG {
-        margin: 0;
-        padding: 0;
-        width: 100%
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-mosaicGridItem-XKjcG {*/
+    /*    margin: 0;*/
+    /*    padding: 0;*/
+    /*    width: 100%*/
+    /*}*/
 }
 
 @media screen and (min-width: 1280px) and (max-width: 1440px) {
@@ -12900,40 +12914,40 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
         width: 100%
     }
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-bigRowItem-8iSSS {
-        width: calc(50% - 16px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-bigRowItem-8iSSS {*/
+    /*    width: calc(50% - 16px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN {
-        width: calc(12.5vw - 35px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN {*/
+    /*    width: calc(12.5vw - 35px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+1), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+2) {
-        width: calc(50% - 16px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+1), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+2) {*/
+    /*    width: calc(50% - 16px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+3), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+4) {
-        width: calc(33.3333% - 16px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+3), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+4) {*/
+    /*    width: calc(33.3333% - 16px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj {
-        width: calc(16.6667% - 16px)
-    }
+    /*.Item-module-portraitItem-y-zBj {*/
+    /*    width: calc(16.6667% - 16px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V {
-        width: calc(16.6667vw - 42.6666px)
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V {*/
+    /*    width: calc(16.6667vw - 42.6666px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V.Item-module-topListItem-t033x {
-        margin: 0 16px 32px 0;
-        width: calc(25vw - 56px)
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V.Item-module-topListItem-t033x {*/
+    /*    margin: 0 16px 32px 0;*/
+    /*    width: calc(25vw - 56px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-mosaicGridItem-XKjcG {
-        margin: 0;
-        padding: 0;
-        width: 100%
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-mosaicGridItem-XKjcG {*/
+    /*    margin: 0;*/
+    /*    padding: 0;*/
+    /*    width: 100%*/
+    /*}*/
 }
 
 @media screen and (min-width: 940px) and (max-width: 1279px) {
@@ -12955,44 +12969,44 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
         width: 100%
     }
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-bigRowItem-8iSSS {
-        width: calc(50% - 16px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-bigRowItem-8iSSS {*/
+    /*    width: calc(50% - 16px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN {
-        width: calc(16.6666vw - 42.6666px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN {*/
+    /*    width: calc(16.6666vw - 42.6666px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+1), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+2) {
-        width: calc(50% - 16px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+1), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+2) {*/
+    /*    width: calc(50% - 16px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+3), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+4) {
-        width: calc(33.3333% - 16px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+3), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+4) {*/
+    /*    width: calc(33.3333% - 16px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj {
-        width: calc(20% - 16px)
-    }
+    /*.Item-module-portraitItem-y-zBj {*/
+    /*    width: calc(20% - 16px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V {
-        width: calc(20vw - 48px)
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V {*/
+    /*    width: calc(20vw - 48px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V.Item-module-topListItem-t033x {
-        margin: 0 16px 32px 0;
-        width: calc(33.3333vw - 69.3333px)
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V.Item-module-topListItem-t033x {*/
+    /*    margin: 0 16px 32px 0;*/
+    /*    width: calc(33.3333vw - 69.3333px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-mosaicGridItem-XKjcG {
-        margin: 0;
-        padding: 0;
-        width: 100%
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-mosaicGridItem-XKjcG {*/
+    /*    margin: 0;*/
+    /*    padding: 0;*/
+    /*    width: 100%*/
+    /*}*/
 
-    .Item-module-topListItem-t033x .Item-module-below-BMw6u {
-        height: 134px
-    }
+    /*.Item-module-topListItem-t033x .Item-module-below-BMw6u {*/
+    /*    height: 134px*/
+    /*}*/
 }
 
 @media screen and (min-width: 761px) and (max-width: 939px) {
@@ -13014,40 +13028,40 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
         width: 100%
     }
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-bigRowItem-8iSSS {
-        width: calc(50% - 16px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-bigRowItem-8iSSS {*/
+    /*    width: calc(50% - 16px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN {
-        width: calc(20vw - 38.5px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN {*/
+    /*    width: calc(20vw - 38.5px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+1), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+2) {
-        width: calc(50% - 16px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+1), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+2) {*/
+    /*    width: calc(50% - 16px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+3), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+4) {
-        width: calc(33.3333% - 16px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+3), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(5n+4) {*/
+    /*    width: calc(33.3333% - 16px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj {
-        width: calc(25% - 16px)
-    }
+    /*.Item-module-portraitItem-y-zBj {*/
+    /*    width: calc(25% - 16px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V {
-        width: calc(25vw - 44px)
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V {*/
+    /*    width: calc(25vw - 44px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V.Item-module-topListItem-t033x {
-        margin: 0 16px 32px 0;
-        width: calc(33.3333vw - 53.3333px)
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V.Item-module-topListItem-t033x {*/
+    /*    margin: 0 16px 32px 0;*/
+    /*    width: calc(33.3333vw - 53.3333px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-mosaicGridItem-XKjcG {
-        margin: 0;
-        padding: 0;
-        width: 100%
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-mosaicGridItem-XKjcG {*/
+    /*    margin: 0;*/
+    /*    padding: 0;*/
+    /*    width: 100%*/
+    /*}*/
 
     .Item-module-topListItem-t033x .Item-module-below-BMw6u {
         height: 134px
@@ -13073,62 +13087,62 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
         width: 100%
     }
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-bigRowItem-8iSSS {
-        width: calc(100% - 16px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-bigRowItem-8iSSS {*/
+    /*    width: calc(100% - 16px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN {
-        width: calc(25vw - 24px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN {*/
+    /*    width: calc(25vw - 24px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(3n+1) {
-        width: calc(100% - 16px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(3n+1) {*/
+    /*    width: calc(100% - 16px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(3n), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(3n+2) {
-        width: calc(50% - 16px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(3n), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(3n+2) {*/
+    /*    width: calc(50% - 16px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-promotionalItem-yghu7 {
-        display: block;
-        margin: 0 8px 88px
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-promotionalItem-yghu7 {*/
+    /*    display: block;*/
+    /*    margin: 0 8px 88px*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-promotionalItem-yghu7 .Item-module-box-4uBp3, .Item-module-landscapeItem-Sf-nw.Item-module-promotionalItem-yghu7 .Item-module-right-I41Bm {
-        width: calc(100% - 16px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-promotionalItem-yghu7 .Item-module-box-4uBp3, .Item-module-landscapeItem-Sf-nw.Item-module-promotionalItem-yghu7 .Item-module-right-I41Bm {*/
+    /*    width: calc(100% - 16px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj {
-        width: calc(33.333% - 16px)
-    }
+    /*.Item-module-portraitItem-y-zBj {*/
+    /*    width: calc(33.333% - 16px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V {
-        width: calc(33.333vw - 21px)
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V {*/
+    /*    width: calc(33.333vw - 21px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V.Item-module-topListItem-t033x {
-        margin: 0 16px 32px 0;
-        width: calc(50vw - 27.3px)
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V.Item-module-topListItem-t033x {*/
+    /*    margin: 0 16px 32px 0;*/
+    /*    width: calc(50vw - 27.3px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-mosaicGridItem-XKjcG {
-        margin: 0;
-        padding: 0;
-        width: 100%
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-mosaicGridItem-XKjcG {*/
+    /*    margin: 0;*/
+    /*    padding: 0;*/
+    /*    width: 100%*/
+    /*}*/
 
-    .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2, .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2 .Item-module-curtain-EV2Ya, .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2 .Item-module-image-CGday, .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2.Item-module-show-qrDtq .Item-module-image-CGday:before {
-        border-radius: 8px
-    }
+    /*.Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2, .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2 .Item-module-curtain-EV2Ya, .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2 .Item-module-image-CGday, .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2.Item-module-show-qrDtq .Item-module-image-CGday:before {*/
+    /*    border-radius: 8px*/
+    /*}*/
 
-    .Item-module-topListItem-t033x .Item-module-below-BMw6u {
-        height: 134px
-    }
+    /*.Item-module-topListItem-t033x .Item-module-below-BMw6u {*/
+    /*    height: 134px*/
+    /*}*/
 
-    .Item-module-rightMeta-FwEIy {
-        display: block;
-        width: calc(100% - 16px)
-    }
+    /*.Item-module-rightMeta-FwEIy {*/
+    /*    display: block;*/
+    /*    width: calc(100% - 16px)*/
+    /*}*/
 }
 
 @media screen and (max-width: 480px) {
@@ -13152,73 +13166,73 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
         width: 100%
     }
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-sportsListItem-3-wzt {
-        margin: 0 8px 8px 0
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-sportsListItem-3-wzt {*/
+    /*    margin: 0 8px 8px 0*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-bigRowItem-8iSSS, .Item-module-landscapeItem-Sf-nw.Item-module-sportsListItem-3-wzt {
-        width: calc(100% - 8px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-bigRowItem-8iSSS, .Item-module-landscapeItem-Sf-nw.Item-module-sportsListItem-3-wzt {*/
+    /*    width: calc(100% - 8px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN {
-        margin: 0 8px 0 0;
-        width: calc(33.3333vw - 18.666px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN {*/
+    /*    margin: 0 8px 0 0;*/
+    /*    width: calc(33.3333vw - 18.666px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-landscapePeopleItem-zf0FS .Item-module-below-BMw6u {
-        left: calc(44% + 8px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-landscapePeopleItem-zf0FS .Item-module-below-BMw6u {*/
+    /*    left: calc(44% + 8px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(3n+1) {
-        width: calc(100% - 8px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(3n+1) {*/
+    /*    width: calc(100% - 8px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(3n), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(3n+2) {
-        width: calc(50% - 8px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(3n), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(3n+2) {*/
+    /*    width: calc(50% - 8px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-promotionalItem-yghu7 {
-        display: block;
-        margin: 0 8px 88px
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-promotionalItem-yghu7 {*/
+    /*    display: block;*/
+    /*    margin: 0 8px 88px*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-promotionalItem-yghu7 .Item-module-box-4uBp3, .Item-module-landscapeItem-Sf-nw.Item-module-promotionalItem-yghu7 .Item-module-right-I41Bm {
-        width: calc(100% - 16px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-promotionalItem-yghu7 .Item-module-box-4uBp3, .Item-module-landscapeItem-Sf-nw.Item-module-promotionalItem-yghu7 .Item-module-right-I41Bm {*/
+    /*    width: calc(100% - 16px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj {
-        margin: 0 4px 8px;
-        width: calc(33.3333% - 8px)
-    }
+    /*.Item-module-portraitItem-y-zBj {*/
+    /*    margin: 0 4px 8px;*/
+    /*    width: calc(33.3333% - 8px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V {
-        margin: 0 8px 0 0;
-        width: calc(33.3333vw - 21px)
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V {*/
+    /*    margin: 0 8px 0 0;*/
+    /*    width: calc(33.3333vw - 21px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V.Item-module-topListItem-t033x {
-        margin: 0 8px 32px 0;
-        width: calc(50vw - 27.3px)
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V.Item-module-topListItem-t033x {*/
+    /*    margin: 0 8px 32px 0;*/
+    /*    width: calc(50vw - 27.3px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-mosaicGridItem-XKjcG {
-        margin: 0;
-        padding: 0;
-        width: 100%
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-mosaicGridItem-XKjcG {*/
+    /*    margin: 0;*/
+    /*    padding: 0;*/
+    /*    width: 100%*/
+    /*}*/
 
-    .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2, .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2 .Item-module-curtain-EV2Ya, .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2 .Item-module-image-CGday, .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2.Item-module-show-qrDtq .Item-module-image-CGday:before {
-        border-radius: 8px
-    }
+    /*.Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2, .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2 .Item-module-curtain-EV2Ya, .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2 .Item-module-image-CGday, .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2.Item-module-show-qrDtq .Item-module-image-CGday:before {*/
+    /*    border-radius: 8px*/
+    /*}*/
 
-    .Item-module-topListItem-t033x .Item-module-below-BMw6u {
-        height: auto
-    }
+    /*.Item-module-topListItem-t033x .Item-module-below-BMw6u {*/
+    /*    height: auto*/
+    /*}*/
 
-    .Item-module-rightMeta-FwEIy {
-        display: block;
-        width: calc(100% - 16px)
-    }
+    /*.Item-module-rightMeta-FwEIy {*/
+    /*    display: block;*/
+    /*    width: calc(100% - 16px)*/
+    /*}*/
 }
 
 @media screen and (max-width: 320px) {
@@ -13242,65 +13256,65 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
         width: 100%
     }
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-sportsListItem-3-wzt {
-        margin: 0 8px 8px 0
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-sportsListItem-3-wzt {*/
+    /*    margin: 0 8px 8px 0*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-bigRowItem-8iSSS, .Item-module-landscapeItem-Sf-nw.Item-module-sportsListItem-3-wzt {
-        width: 288px
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-bigRowItem-8iSSS, .Item-module-landscapeItem-Sf-nw.Item-module-sportsListItem-3-wzt {*/
+    /*    width: 288px*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN {
-        margin: 0 8px 0 0;
-        width: calc(50vw - 24px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-roundPeopleItem--PxmN {*/
+    /*    margin: 0 8px 0 0;*/
+    /*    width: calc(50vw - 24px)*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(3n+1) {
-        width: 288px
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(3n+1) {*/
+    /*    width: 288px*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(3n), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(3n+2) {
-        width: 140px
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(3n), .Item-module-landscapeItem-Sf-nw.Item-module-patternGridItem-mG3fh:nth-child(3n+2) {*/
+    /*    width: 140px*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-promotionalItem-yghu7 {
-        display: block;
-        margin: 0 8px 88px
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-promotionalItem-yghu7 {*/
+    /*    display: block;*/
+    /*    margin: 0 8px 88px*/
+    /*}*/
 
-    .Item-module-landscapeItem-Sf-nw.Item-module-promotionalItem-yghu7 .Item-module-box-4uBp3, .Item-module-landscapeItem-Sf-nw.Item-module-promotionalItem-yghu7 .Item-module-right-I41Bm {
-        width: calc(100% - 16px)
-    }
+    /*.Item-module-landscapeItem-Sf-nw.Item-module-promotionalItem-yghu7 .Item-module-box-4uBp3, .Item-module-landscapeItem-Sf-nw.Item-module-promotionalItem-yghu7 .Item-module-right-I41Bm {*/
+    /*    width: calc(100% - 16px)*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj {
-        margin: 0 4px 8px;
-        width: 90px
-    }
+    /*.Item-module-portraitItem-y-zBj {*/
+    /*    margin: 0 4px 8px;*/
+    /*    width: 90px*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V {
-        margin: 0 8px 0 0;
-        width: 90px
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V {*/
+    /*    margin: 0 8px 0 0;*/
+    /*    width: 90px*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V.Item-module-topListItem-t033x {
-        margin: 0 8px 32px 0;
-        width: 140px
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-carouselItem-Q3n9V.Item-module-topListItem-t033x {*/
+    /*    margin: 0 8px 32px 0;*/
+    /*    width: 140px*/
+    /*}*/
 
-    .Item-module-portraitItem-y-zBj.Item-module-mosaicGridItem-XKjcG {
-        margin: 0;
-        padding: 0;
-        width: 100%
-    }
+    /*.Item-module-portraitItem-y-zBj.Item-module-mosaicGridItem-XKjcG {*/
+    /*    margin: 0;*/
+    /*    padding: 0;*/
+    /*    width: 100%*/
+    /*}*/
 
-    .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2, .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2 .Item-module-curtain-EV2Ya, .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2 .Item-module-image-CGday, .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2.Item-module-show-qrDtq .Item-module-image-CGday:before {
-        border-radius: 8px
-    }
+    /*.Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2, .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2 .Item-module-curtain-EV2Ya, .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2 .Item-module-image-CGday, .Item-module-mosaicGridItem-XKjcG .Item-module-kidsBox-w7PW2.Item-module-show-qrDtq .Item-module-image-CGday:before {*/
+    /*    border-radius: 8px*/
+    /*}*/
 
-    .Item-module-rightMeta-FwEIy {
-        display: block;
-        width: calc(100% - 16px)
-    }
+    /*.Item-module-rightMeta-FwEIy {*/
+    /*    display: block;*/
+    /*    width: calc(100% - 16px)*/
+    /*}*/
 }
 
 .Badge-module-viaplay-numerals-pGlq5 {
@@ -13508,25 +13522,25 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     }
 }
 
-@media screen and (max-width: 480px) {
-    .Badge-module-product-ysXxz .Badge-module-badge-Tv7H8 {
-        display: none
-    }
+/*@media screen and (max-width: 480px) {*/
+/*    .Badge-module-product-ysXxz .Badge-module-badge-Tv7H8 {*/
+/*        display: none*/
+/*    }*/
 
-    .Badge-module-time-CNBut {
-        font-size: 1rem;
-        font-weight: 700;
-        line-height: 1.8rem;
-        line-height: 2rem
-    }
-}
+/*    .Badge-module-time-CNBut {*/
+/*        font-size: 1rem;*/
+/*        font-weight: 700;*/
+/*        line-height: 1.8rem;*/
+/*        line-height: 2rem*/
+/*    }*/
+/*}*/
 
-@media screen and (max-width: 480px) and (min-width: 3500px) {
-    .Badge-module-time-CNBut {
-        font-size: .417vw;
-        line-height: .7506vw
-    }
-}
+/*@media screen and (max-width: 480px) and (min-width: 3500px) {*/
+/*    .Badge-module-time-CNBut {*/
+/*        font-size: .417vw;*/
+/*        line-height: .7506vw*/
+/*    }*/
+/*}*/
 
 .HdBadge-module-viaplay-numerals-RXa05 {
     font-family: MTG Sans Numerals, MTG Sans, Helvetica, Arial, sans-serif
@@ -13714,6 +13728,10 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 }
 
 .GenericMeta-module-container-JU38z {
+    color: #eee;
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 2rem;
     bottom: 8px;
     left: 8px;
     pointer-events: none;
@@ -13722,19 +13740,19 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     z-index: 1
 }
 
-.GenericMeta-module-hasDefaultTypography-rpvNG {
-    color: #eee;
-    font-size: 1.2rem;
-    font-weight: 400;
-    line-height: 2rem
-}
+/*.GenericMeta-module-hasDefaultTypography-rpvNG {*/
+/*    color: #eee;*/
+/*    font-size: 1.2rem;*/
+/*    font-weight: 400;*/
+/*    line-height: 2rem*/
+/*}*/
 
-@media (min-width: 3500px) {
-    .GenericMeta-module-hasDefaultTypography-rpvNG {
-        font-size: .5004vw;
-        line-height: .834vw
-    }
-}
+/*@media (min-width: 3500px) {*/
+/*    .GenericMeta-module-hasDefaultTypography-rpvNG {*/
+/*        font-size: .5004vw;*/
+/*        line-height: .834vw*/
+/*    }*/
+/*}*/
 
 .GenericMeta-module-hasProgress-D4Dkq {
     bottom: 20px
@@ -13943,39 +13961,42 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 .Divider-module-divider-U-3--:after {
     background-color: transparent;
     content: "|";
-    margin: 0 4px
+    margin: 0 4px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 2rem
 }
 
 .Divider-module-divider-U-3--:last-child:after {
     display: none
 }
 
-.Divider-module-divider-U-3--.Divider-module-isSportProduct-et0b3:after, .Divider-module-divider-U-3--.Divider-module-isSportPromoBlock-UvQ3n:after {
-    color: hsla(0, 0%, 93%, .7);
-    font-size: 1.6rem;
-    font-weight: 400;
-    line-height: 2.4rem
-}
+/*.Divider-module-divider-U-3--.Divider-module-isSportProduct-et0b3:after, .Divider-module-divider-U-3--.Divider-module-isSportPromoBlock-UvQ3n:after {*/
+/*    color: hsla(0, 0%, 93%, .7);*/
+/*    font-size: 1.6rem;*/
+/*    font-weight: 400;*/
+/*    line-height: 2.4rem*/
+/*}*/
 
-@media (min-width: 3500px) {
-    .Divider-module-divider-U-3--.Divider-module-isSportProduct-et0b3:after, .Divider-module-divider-U-3--.Divider-module-isSportPromoBlock-UvQ3n:after {
-        font-size: .6672vw;
-        line-height: 1.0008vw
-    }
-}
+/*@media (min-width: 3500px) {*/
+/*    .Divider-module-divider-U-3--.Divider-module-isSportProduct-et0b3:after, .Divider-module-divider-U-3--.Divider-module-isSportPromoBlock-UvQ3n:after {*/
+/*        font-size: .6672vw;*/
+/*        line-height: 1.0008vw*/
+/*    }*/
+/*}*/
 
-.Divider-module-hasDefaultTypography-Uy4EO:after {
-    font-size: 1.2rem;
-    font-weight: 400;
-    line-height: 2rem
-}
+/*.Divider-module-hasDefaultTypography-Uy4EO:after {*/
+/*    font-size: 1.2rem;*/
+/*    font-weight: 400;*/
+/*    line-height: 2rem*/
+/*}*/
 
-@media (min-width: 3500px) {
-    .Divider-module-hasDefaultTypography-Uy4EO:after {
-        font-size: .5004vw;
-        line-height: .834vw
-    }
-}
+/*@media (min-width: 3500px) {*/
+/*    .Divider-module-hasDefaultTypography-Uy4EO:after {*/
+/*        font-size: .5004vw;*/
+/*        line-height: .834vw*/
+/*    }*/
+/*}*/
 
 .Divider-module-featurebox-lE8g3:after {
     font-size: 2rem;
@@ -14361,18 +14382,18 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     opacity: .8
 }
 
-@media screen and (min-width: 3500px) {
-    .TooltipButton-module-isItem-R6NdL {
-        height: .6672vw;
-        width: .6672vw
-    }
-}
+/*@media screen and (min-width: 3500px) {*/
+/*    .TooltipButton-module-isItem-R6NdL {*/
+/*        height: .6672vw;*/
+/*        width: .6672vw*/
+/*    }*/
+/*}*/
 
-@media screen and (max-width: 760px) {
-    .TooltipButton-module-isItem-R6NdL {
-        display: none
-    }
-}
+/*@media screen and (max-width: 760px) {*/
+/*    .TooltipButton-module-isItem-R6NdL {*/
+/*        display: none*/
+/*    }*/
+/*}*/
 
 .PeopleImage-module-viaplay-numerals-Pk5By {
     font-family: MTG Sans Numerals, MTG Sans, Helvetica, Arial, sans-serif
@@ -15827,19 +15848,19 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     padding-right: 8px
 }
 
-.SeriesMeta-module-hasDefaultTypography-0GpSK {
-    color: #eee;
-    font-size: 1.2rem;
-    font-weight: 400;
-    line-height: 2rem
-}
+/*.SeriesMeta-module-hasDefaultTypography-0GpSK {*/
+/*    color: #eee;*/
+/*    font-size: 1.2rem;*/
+/*    font-weight: 400;*/
+/*    line-height: 2rem*/
+/*}*/
 
-@media (min-width: 3500px) {
-    .SeriesMeta-module-hasDefaultTypography-0GpSK {
-        font-size: .5004vw;
-        line-height: .834vw
-    }
-}
+/*@media (min-width: 3500px) {*/
+/*    .SeriesMeta-module-hasDefaultTypography-0GpSK {*/
+/*        font-size: .5004vw;*/
+/*        line-height: .834vw*/
+/*    }*/
+/*}*/
 
 .SeriesMeta-module-hasProgress-LqCYb {
     bottom: 20px
@@ -19723,7 +19744,6 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     display: inline-block;
     font-size: 1.6rem;
     font-weight: 400;
-    line-height: 2.4rem;
     line-height: 2.6rem;
     margin-left: 24px;
     opacity: 0;
@@ -19732,12 +19752,12 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     position: relative
 }
 
-@media (min-width: 3500px) {
-    .Title-module-seeMore-f3FXj {
-        font-size: .6672vw;
-        line-height: 1.0008vw
-    }
-}
+/*@media (min-width: 3500px) {*/
+/*    .Title-module-seeMore-f3FXj {*/
+/*        font-size: .6672vw;*/
+/*        line-height: 1.0008vw*/
+/*    }*/
+/*}*/
 
 .Title-module-seeMore-f3FXj:after {
     background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iI0VFRSIgZD0iTTguMyAxOC43YTEgMSAwIDAgMSAwLTEuNGw1LjMtNS4zLTUuMy01LjNhMSAxIDAgMCAxIDEuNC0xLjRsNiA2Yy40LjQuNCAxIDAgMS40bC02IDZhMSAxIDAgMCAxLTEuNCAwWiIvPjwvc3ZnPg==);
@@ -19759,6 +19779,16 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 .Title-module-show-ZApWL.Title-module-seeMore-f3FXj {
     animation: Title-module-moveSeeMore-8-wuO .3s;
     opacity: 1
+}
+
+.Title-module-show-ZApWL {
+    display: none;
+}
+
+
+.Carousel-module-container-o-YFo:hover .Title-module-show-ZApWL {
+    display: inline-block; /* Pokaż napis "Pokaż wszystko" */
+    color: #fff; /* Opcjonalnie zmień kolor tekstu */
 }
 
 .Title-module-mobile-BB8UT.Title-module-seeMore-f3FXj {
@@ -19911,9 +19941,9 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     padding-bottom: 16px
 }
 
-.CarouselHeader-module-container-dBOIV.CarouselHeader-module-promoHeader-RTm1V .CarouselHeader-module-wrapper-B8ict {
-    padding: 0
-}
+/*.CarouselHeader-module-container-dBOIV.CarouselHeader-module-promoHeader-RTm1V .CarouselHeader-module-wrapper-B8ict {*/
+/*    padding: 0*/
+/*}*/
 
 @media screen and (min-width: 3500px) {
     .CarouselHeader-module-container-dBOIV {
@@ -20048,9 +20078,9 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     white-space: nowrap
 }
 
-.Carousel-module-inner-4oa8u.Carousel-module-useTransition-vWyzl {
-    transition: transform .4s ease-out
-}
+/*.Carousel-module-inner-4oa8u.Carousel-module-useTransition-vWyzl {*/
+/*    transition: transform .4s ease-out*/
+/*}*/
 
 .Carousel-module-navigation-crAaj {
     background: rgba(29, 29, 39, .7) no-repeat 50%;
@@ -20064,6 +20094,20 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     top: 0;
     width: 80px;
     z-index: 1
+}
+
+.Carousel-module-navigation-crAaj {
+    display: none;
+}
+
+.Carousel-module-container-o-YFo:hover .Carousel-module-next-AXbEv,
+.Carousel-module-container-o-YFo:hover .Carousel-module-prev-EJuzt {
+    display: block;
+}
+
+
+.Carousel-module-container-o-YFo:hover .Carousel-module-navigation-crAaj {
+    display: block;
 }
 
 .Carousel-module-navigation-crAaj.Carousel-module-postplayPage-ifjrl {
@@ -20119,7 +20163,7 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     outline: none
 }
 
-.Carousel-module-container-o-YFo.Carousel-module-hovered-CXqGL .Carousel-module-navigation-crAaj:not(.Carousel-module-disabled-vHRrb) {
+.Carousel-module-container-o-YFo.Carousel-module-hovered-CXqGL {
     opacity: 1
 }
 
@@ -20144,6 +20188,7 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     right: 32px;
     transform: rotate(135deg)
 }
+
 
 .Carousel-module-wrapper-QhccC {
     box-sizing: border-box;
@@ -32920,5 +32965,4 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     }
 }
 
-/*# sourceMappingURL=app-m-afe27a2585cbc5db.css.map*/
 

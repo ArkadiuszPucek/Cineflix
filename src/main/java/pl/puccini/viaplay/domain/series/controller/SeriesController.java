@@ -8,6 +8,7 @@ import pl.puccini.viaplay.domain.genre.GenreService;
 import pl.puccini.viaplay.domain.imdb.IMDbApiService;
 import pl.puccini.viaplay.domain.imdb.IMDbData;
 import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDto;
+import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDtoMapper;
 import pl.puccini.viaplay.domain.series.model.Series;
 import pl.puccini.viaplay.domain.series.repository.SeriesRepository;
 import pl.puccini.viaplay.domain.series.service.SeriesService;
@@ -62,5 +63,20 @@ public class SeriesController {
             model.addAttribute("genre", genre);
             model.addAttribute("seriesByGenre", seriesByGenre);
             return "redirect:/series/" + genre;
+    }
+
+    @GetMapping("/{title}")
+    public String showSeriesPage(@PathVariable String title, Model model) {
+        String normalizedTitle = title.replace("-", " ").toLowerCase();
+        SeriesDto seriesDto = seriesService.findByTitle(normalizedTitle);
+        if (seriesDto == null) {
+            return "series-not-found"; //TO-DO
         }
+        String genre = seriesDto.getGenre();
+        model.addAttribute("genre", genre);
+        model.addAttribute("series", seriesDto);
+        return "series";
+    }
+
+
 }

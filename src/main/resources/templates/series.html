@@ -1,10 +1,506 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>ViaPlay</title>
+    <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+
 </head>
 <body>
+
+<div id="content-wrapper" class>
+    <div class="dockable"></div>
+    <div id="react-mount">
+        <div class="Layout-module-internal-page--krBv">
+            <header class="Navigation-module-container-2t2XT">
+                <div class="Navigation-module-wrapper-VDNDW">
+                    <div class="Navigation-module-sections-tzP7z">
+                        <div class="Navigation-module-left-FaRmB">
+                    <span>
+                        <div class="HeaderLogo-module-headerLogo-lWX4m">
+                            <a class="HeaderLogo-module-link-kdP1e" href="/">
+                                <img src="https://viaplay-web-frontend-assets.mtg-api.com/frontend-2023092141850/images/header-logo.png"
+                                     alt="Viaplay Start logo"
+                                     class="Logo-module-logo-pfYdr">
+                            </a>
+                        </div>
+                    </span>
+                        </div>
+                        <nav class="NavigationItems-module-center-cd-0t">
+                            <a class="NavigationItem-module-item-vXU--" href="/series">Seriale</a>
+                            <a class="NavigationItem-module-item-vXU--" href="/movies">Filmy</a>
+                            <a class="NavigationItem-module-item-vXU--" href="/sport">Sport</a>
+                            <a class="NavigationItem-module-item-vXU--" href="/kids">Dla dzieci</a>
+                            <!--                            <a class="NavigationItem-module-item-vXU&#45;&#45;" href="/channels">Kanały TV</a>-->
+                        </nav>
+                        <div class="Navigation-module-right-643YK">
+                            <div class="SearchButton-module-container-oHmID">
+                                <a class="SearchButton-module-icon-zn1mS" href="/#search="></a>
+                            </div>
+                            <a class="NavigationItem-module-item-vXU-- NavigationItem-module-library-E3ML5 NavigationItem-module-hide-n07a1"
+                               href="/library"></a>
+                            <div class="UserMenu-module-detailsAuthenticated-Ku3RE">
+                                <button class="UserMenu-module-toggle-mkB6K">
+                                    <div class="UserMenu-module-buttonbox-HF7RL">
+                                        <div class="ProfileAvatar-module-container-aV27r ProfileAvatar-module-small-HCZsN"
+                                             tabindex="-1">
+                                            <div class="ProfileAvatar-module-editContainer-mwkk5">
+                                                <img class="ProfileAvatar-module-avatar-2Qy4H" alt="avatar"
+                                                     src="https://i-viaplay-com.akamaized.net/viaplay-static-prod/profiles/avatars/adults/boombox.png?width=500&amp;height=500">
+                                                <div class="ProfileAvatar-module-editIcon-zlhbG"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                            <button class="Navigation-module-toggleNavigation-uQPGv" id="toggle-navigation"></button>
+                            <nav class="NavigationItems-module-navigation-AW08m NavigationItems-module-hide-bZgrX">
+                                <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA"
+                                   href="/series">Seriale</a>
+                                <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA"
+                                   href="/movies">Filmy</a>
+                                <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA"
+                                   href="/sport">Sport</a>
+                                <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA"
+                                   href="/kids">Dla dzieci</a>
+                                <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA"
+                                   href="/channels">Kanały TV</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="dockable"></div>
+            <div class="blocksEnsembleContainer-module-container-ZXS1I">
+                <div id="content" class="article" data-testhook="article">
+                    <div class="dockable"></div>
+                    <div class="blocksEnsembleContainer-module-container-ZXS1I">
+                        <div class="ProductPage-module-container-oTkLV">
+                            <div>
+                                <div class="Hero-module-wrapper-7yHRB">
+                                    <img class="Hero-module-image-NlipI Hero-module-hideImage-CCOEY Hero-module-showImage-09J4b"
+                                         th:src="${series.backgroundImageUrl}"
+                                         src="https://i-viaplay-com.akamaized.net/viaplay-prod/860/524/1663680490-c4afe3cb82566427165665da14bd23049d19166e.jpg?width=1600&amp;height=900">
+                                </div>
+                                <div class="Hero-module-backdrop-be6rg"></div>
+                                <div class="Hero-module-gradient-ieQvj"></div>
+                            </div>
+                            <section class="ProductPage-module-product-Him4n">
+                                <div class="Scaffold-module-scaffold-F6aIC">
+                                    <div class="ProductPage-module-upper-prt34">
+                                        <div class="ProductPage-module-left-xugw2">
+                                            <div>
+                                                <div class="Thumb-module-container-mWyvN">
+                                                    <img class="Thumb-module-poster-gpHtA"
+                                                         src="https://i-viaplay-com.akamaized.net/viaplay-prod/913/164/1662464116-4dc27f411bdf214820f0d930f61dfa762acf178e.jpg?width=400&amp;height=600"
+                                                         th:src="${series.imageUrl}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ProductPage-module-wrapper-WZR1p">
+                                            <div>
+                                                <h1 class="Title-module-container-WuaoJ" th:text="${series.title}">
+                                                    Szpital New Amsterdam
+                                                </h1>
+                                                <div class="ActionButton-module-container-iom96 ActionButton-module-product-qJKhU ActionButton-module-isLoggedIn-J00sd">
+                                                    <div class="ActionButton-module-wrapper-NdTTC">
+                                                        <div class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl Buttons-module-play-AAOaC"
+                                                             tabindex="0">
+                                                            <span>Sezon 1 - Odcinek 1</span>
+                                                        </div>
+                                                    </div>
+                                                    <a class="MyList-module-container-zkH2- Buttons-module-secondary-br7-v Buttons-module-icon-ODVKH"
+                                                       tabindex="0">
+                                                        <div class="MyList-module-myList-kmBI5"></div>
+                                                    </a>
+                                                    <a class="Rate-module-container-SmrTr Buttons-module-secondary-br7-v Buttons-module-icon-ODVKH"
+                                                       data-testhook="rate-button-no-rating" tabindex="0">
+                                                        <div class="Rate-module-rate-GCdtz undefined"></div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ProductPage-module-meta-wyb-3">
+                                        <div class="ProductPage-module-metaLeft-VrEtc">
+                                            <p class="Facts-module-container-dFnqo">
+                                                    <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
+                                                        <a class="ImdbRating-module-link-yYfI- ImdbRating-module-facts-DWrMz ImdbRating-module-hasDefaultTypography-luAjW"
+                                                           th:href="@{${series.imdbUrl}}" target="_blank"
+                                                           rel="noopener noreferrer nofollow" tabindex="-1"
+                                                           th:text="${series.imdbRating}">
+                                                            8.0
+                                                        </a>
+                                                    </span>
+                                                <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO Divider-module-genres-ezeLN">
+                                                        <a class="Genre-module-container-HcI4x Genre-module-hasDefaultTypography-VC0YE Genre-module-link-kGNTi"
+                                                           tabindex="-1" th:text="${series.genre}">
+                                                            Seriale dramatyczne
+                                                        </a>
+                                                    </span>
+                                                <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
+                                                        <span class="Year-module-container-60QAr Year-module-hasDefaultTypography-IO5bM"
+                                                              th:text="${series.releaseYear}">
+                                                            2018
+                                                        </span>
+                                                    </span>
+                                                <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
+                                                        <span class="ParentalRating-module-container-lxbzk ParentalRating-module-hasDefaultTypography-UP2B1">
+                                                            <span th:text="${series.ageLimit} + ' lat'">
+                                                                15 lat
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                            </p>
+                                            <div class="ProductSynopsis-module-container-aYPIz">
+                                                <div class="ProductSynopsis-module-synopsis-n5-Be">
+                                                    <div class="Group-module-group--XDAf">
+                                                        <div class="Synopsis-module-container-pmsNY Synopsis-module-hasDefaultTypography-5xyxY"
+                                                             itemprop="description" th:text="${series.description}">
+                                                            Opis
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ProductPage-module-metaRight-EZCO3">
+                                            <div class="ProductDetails-module-container-L6eB1">
+                                                <div class="ProductDetails-module-people-TMICK">
+                                                    <div class="Group-module-group--XDAf">
+                                                        <div class="">
+                                                            <div>
+                                                                <span class="PeopleList-module-title-voAAo">
+                                                                    Obsada
+                                                                </span>
+                                                                <div class="PeopleList-module-peoplearray-KNtVQ" th:text="${series.staff}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="Audio-module-container-OTfgl">
+                                                                <span class="Audio-module-title-57qKh">
+                                                                    <span>Język</span>
+                                                                </span>
+                                                            <span class="Audio-module-audio-VqD-r"
+                                                                  th:text="${series.languages}">
+                                                                    Polski
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="Season-module-wrapper-H0oVh" data-testhook="season">
+                            <div class="StickyDiv-module-mark-Me4XV StickyDiv-module-top-peA7i"
+                                 style="top: 0px;"></div>
+                            <div class="StickyDiv-module-container-Tiqyz SeasonsNavigation-module-season-FeQtK">
+                                <section data-testhook="season-navigation">
+                                    <div class="Scaffold-module-scaffold-F6aIC">
+                                        <div id="seasonPicker" class="SeasonsNavigation-module-wrapper-dfFTz">
+                                            <div class="SeasonsNavigation-module-container-PonSS">
+                                                <button class="SeasonsNavigation-module-button-vAD9n"
+                                                        data-testhook="season-button" tabindex="0">
+                                                    <span>Sezon 1</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="StickyDiv-module-mark-Me4XV StickyDiv-module-bot--lgll"
+                                 style="transform: translateY(-64px);"></div>
+                            <section>
+                                <div class="Scaffold-module-scaffold-F6aIC">
+                                    <div class="EpisodesListing-module-container-E8UOe episode"
+                                         data-testhook="season-episodes">
+                                        <div class="EpisodesListing-module-grid-yMq1a">
+                                            <div style="display: inline;">
+                                                <div class="Episode-module-item-ePwVa" data-product-id="20535919"
+                                                     data-testhook="episode">
+                                                    <div class="Episode-module-front-ksw4U">
+                                                        <div class="Episode-module-image-ND-Ju"
+                                                             style="background-image: url(&quot;https://i-viaplay-com.akamaized.net/viaplay-prod/865/124/1537345342-77e17b887f1011749eaf2ab4469c140b5ff30037.jpg?width=448&amp;height=252&quot;);"></div>
+                                                        <div class="Episode-module-backdrop-KXm-S"><a
+                                                                class="Item-module-link-Lms-C"
+                                                                data-testhook="item-product-page-link" tabindex="-1"
+                                                                href="/series/szpital-new-amsterdam/sezon-1/odcinek-1">
+                                                            <div class="PlayButton-module-container-RmQKd PlayButton-module-landscape-dCM5E PlayButton-module-forceHover-ubElK PlayButton-module-episode-IOzP7"
+                                                                 data-testhook="play-button" tabindex="0">
+                                                                <figure class="PlayButton-module-icon-q3WfE"></figure>
+                                                            </div>
+                                                        </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="Episode-module-labels-QC9tQ">
+                                                        <div data-testhook="episode-title"
+                                                             class="Episode-module-title-96shB">
+                                                            1. Pilot
+                                                        </div>
+                                                        <div class="Episode-module-duration-UBHxK">41 min.</div>
+                                                    </div>
+                                                    <div class="Episode-module-synopsis-tyC-h">
+                                                        Dr Max Goodwin to
+                                                        nowy dyrektor medyczny szpitala New Amsterdam, który robi
+                                                        wszystko, aby tchnąć nowe życie w tę niedofinansowaną i
+                                                        niedocenianą instytucję.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="Carousel-module-container-o-YFo" data-testhook="carousel-container">
+                            <div id="header-podobne-seriale" class="CarouselHeader-module-container-dBOIV"
+                                 data-testhook="carousel-header">
+                                <section itemtype="">
+                                    <div class="Scaffold-module-scaffold-F6aIC">
+                                        <header class="CarouselHeader-module-wrapper-B8ict">
+                                            <h2 class="Title-module-subheader--ZDhF undefined"
+                                                data-testhook="carousel-title">
+                                                Podobne seriale
+                                            </h2>
+                                        </header>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="Carousel-module-carousel-NbPjL" th:id="${series.genre.genreType}">
+                                <div class="Carousel-module-wrapper-QhccC">
+                                    <button type="button"
+                                            class="Carousel-module-navigation-crAaj Carousel-module-prev-EJuzt"></button>
+                                    <div class="Carousel-module-inner-4oa8u Carousel-module-useTransition-vWyzl">
+                                            <span>
+                                                <div th:each="relatedSeries : ${genre}"
+                                                     class="Item-module-item-yTZtG Item-module-carouselItem-Q3n9V Item-module-landscapeItem-Sf-nw">
+                                                    <div class="Item-module-box-4uBp3 Item-module-show-qrDtq">
+                                                        <a class="Item-module-link-Lms-C" tabindex="-1"
+                                                           th:href="@{'/series/' + ${relatedSeries.title.toLowerCase().replace(' ', '-')}}">
+                                                        </a>
+                                                        <div class="Item-module-image-CGday"
+                                                             th:style="'background-image: url(' + ${relatedSeries.imageUrl} + ');'">
+                                                        </div>
+                                                        <div class="Item-module-curtain-EV2Ya">
+                                                            <div class="SeriesMeta-module-container-oFAL3">
+                                                                <div class="SeriesMeta-module-metadata-8qwss">
+                                                                    <span class="Divider-module-divider-U-3--">
+                                                                        <a class="ImdbRating-module-link-yYfI- ImdbRating-module-hasDefaultTypography-luAjW"
+                                                                           th:href="@{${relatedSeries.imdbUrl}}"
+                                                                           target="_blank"
+                                                                           tabindex="-1"
+                                                                           th:text="${relatedSeries.imdbRating}">
+                                                                            ImdbRating
+                                                                        </a>
+                                                                    </span>
+                                                                    <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
+                                                                        <span class="Seasons-module-container-ZM15y Seasons-module-hasDefaultTypography-8No96">
+                                                                            <span th:text="${relatedSeries.seasonsCount} + ' ' + (relatedSeries.seasonsCount == 1 ? 'Sezon' : 'Sezony')">
+                                                                                Ilość sezonów
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="InteractionIcons-module-container-apGgr">
+                                                                <a class="TooltipButton-module-container-PfKnw TooltipButton-module-isItem-R6NdL"
+                                                                   tabindex="-1"
+                                                                   th:href="@{'/series/' + ${relatedSeries.title.toLowerCase().replace(' ', '-')}}">
+                                                                </a>
+                                                                <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"></div>
+                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-"></div>
+                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
+                                    </div>
+                                    <button type="button"
+                                            class="Carousel-module-navigation-crAaj Carousel-module-next-AXbEv"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer id="page-footer" class="Footer-module-footer-rUC1K">
+                    <div class="Footer-module-upper-BE4ds">
+                        <section class="Footer-module-upperscaffold-0uiqs" itemtype="">
+                            <div class="Scaffold-module-scaffold-F6aIC">
+                                <div class="Footer-module-logocolumn-2E6O5">
+                                    <a class="Footer-module-logo-l7-f-" data-href=""
+                                       data-testhook="footer-viaplay-logo"
+                                       href="/"
+                                       tabindex="-1">
+                                        <span>Viaplay</span>
+                                    </a>
+                                </div>
+                                <div class="Footer-module-tablecontainer-8X-RH">
+                                    <div class="Footer-module-table-MvQSs">
+                                        <div class="Footer-module-column-9P75e">
+                                            <div>
+                                                <h3 class="FooterColumn-module-header-X99Fv" tabindex="-1">
+                                                    VIAPLAY</h3>
+                                                <ul class="FooterColumn-module-list-EJzCV">
+                                                    <li class="FooterColumnLink-module-item-VsqhI"
+                                                        data-testhook="footer-section">
+                                                        <a class="FooterColumnLink-module-link-F0qFS"
+                                                           href="/series">
+                                                            <span>Seriale</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="FooterColumnLink-module-item-VsqhI"
+                                                        data-testhook="footer-section">
+                                                        <a class="FooterColumnLink-module-link-F0qFS"
+                                                           href="/movies">
+                                                            <span>Filmy</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="FooterColumnLink-module-item-VsqhI"
+                                                        data-testhook="footer-section">
+                                                        <a class="FooterColumnLink-module-link-F0qFS" href="/sport">
+                                                            <span>Sport</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="FooterColumnLink-module-item-VsqhI"
+                                                        data-testhook="footer-section">
+                                                        <a class="FooterColumnLink-module-link-F0qFS" href="/kids">
+                                                            <span>Dla dzieci</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="FooterColumnLink-module-item-VsqhI"
+                                                        data-testhook="footer-section">
+                                                        <a class="FooterColumnLink-module-link-F0qFS"
+                                                           href="/channels">
+                                                            <span>Kanały TV</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="Footer-module-column-9P75e">
+                                            <div>
+                                                <h3 class="FooterColumn-module-header-X99Fv" tabindex="-1">
+                                                    Informacje</h3>
+                                                <ul class="FooterColumn-module-list-EJzCV">
+                                                    <li class="FooterColumnLink-module-item-VsqhI"
+                                                        data-testhook="footer-section">
+                                                        <a class="FooterColumnLink-module-link-F0qFS"
+                                                           href="https://help.viaplay.com/pl">
+                                                            <span>Obsługa klienta</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="FooterColumnLink-module-item-VsqhI"
+                                                        data-testhook="footer-section">
+                                                        <a class="FooterColumnLink-module-link-F0qFS"
+                                                           href="/devices">
+                                                            <span>Nasze platformy</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="FooterColumnLink-module-item-VsqhI"
+                                                        data-testhook="footer-section">
+                                                        <a class="FooterColumnLink-module-link-F0qFS" href="/terms">
+                                                            <span>Regulamin serwisu Viaplay</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="FooterColumnLink-module-item-VsqhI"
+                                                        data-testhook="footer-section">
+                                                        <a class="FooterColumnLink-module-link-F0qFS"
+                                                           href="/privacy">
+                                                            <span>Polityka prywatności</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="FooterColumnLink-module-item-VsqhI"
+                                                        data-testhook="footer-section">
+                                                        <a class="FooterColumnLink-module-link-F0qFS"
+                                                           href="/cookies">
+                                                            <span>Pliki cookie</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="Footer-module-column-9P75e">
+                                            <div>
+                                                <h3 class="FooterColumn-module-header-X99Fv" tabindex="-1">O
+                                                    nas</h3>
+                                                <ul class="FooterColumn-module-list-EJzCV">
+                                                    <li class="FooterColumnLink-module-item-VsqhI"
+                                                        data-testhook="footer-section">
+                                                        <a class="FooterColumnLink-module-link-F0qFS"
+                                                           href="https://www.viaplaygroup.com/news">
+                                                            <span>Prasa i newsy</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="FooterColumnLink-module-item-VsqhI"
+                                                        data-testhook="footer-section">
+                                                        <a class="FooterColumnLink-module-link-F0qFS"
+                                                           href="https://careers.viaplaygroup.com/">
+                                                            <span>Oferty pracy</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="Footer-module-column-9P75e">
+                                            <div>
+                                                <h3 class="FooterColumn-module-header-X99Fv" tabindex="-1">Śledź
+                                                    nas</h3>
+                                                <ul class="FooterColumn-module-list-EJzCV">
+                                                    <li class="FooterColumnLink-module-item-VsqhI"
+                                                        data-testhook="footer-section">
+                                                        <a class="FooterColumnLink-module-link-F0qFS"
+                                                           href="https://www.facebook.com/viaplay/">
+                                                            <span>Facebook</span></a>
+                                                    </li>
+                                                    <li class="FooterColumnLink-module-item-VsqhI"
+                                                        data-testhook="footer-section">
+                                                        <a class="FooterColumnLink-module-link-F0qFS"
+                                                           href="https://www.linkedin.com/company/viaplay">
+                                                            <span>LinkedIn</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="FooterColumnLink-module-item-VsqhI"
+                                                        data-testhook="footer-section">
+                                                        <a class="FooterColumnLink-module-link-F0qFS"
+                                                           href="https://www.instagram.com/viaplay/">
+                                                            <span>Instagram</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="Footer-module-lower-ieG8u">
+                        <section itemtype="">
+                            <div class="Scaffold-module-scaffold-F6aIC">
+                                <span class="Footer-module-copyright-myMzS">© 2023 Viaplay Group Sweden AB (org.no: 556304-7041). All rights reserved.</span>
+                            </div>
+                        </section>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>-->
+<!--        <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>-->
+<!--        <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>-->
+<!--        &lt;!&ndash;<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>&ndash;&gt;-->
+<!--        <script type="text/javascript" src="/scripts/common.js"></script>-->
 
 </body>
 </html>

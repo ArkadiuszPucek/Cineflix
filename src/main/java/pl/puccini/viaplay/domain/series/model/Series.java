@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import pl.puccini.viaplay.domain.genre.Genre;
-import pl.puccini.viaplay.domain.series.model.Season;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +18,7 @@ public class Series {
     private String title;
     private int releaseYear;
     private String imageUrl;
+    private String backgroundImageUrl;
     private String description;
     private String staff;
     private String languages;

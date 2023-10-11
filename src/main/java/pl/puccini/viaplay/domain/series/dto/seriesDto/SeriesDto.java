@@ -12,6 +12,7 @@ public class SeriesDto {
     private String title;
     private int releaseYear;
     private String imageUrl;
+    private String backgroundImageUrl;
     private String description;
     private String staff;
     private String languages;

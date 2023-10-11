@@ -9,6 +9,7 @@ public class SeriesDtoMapper {
                 series.getTitle(),
                 series.getReleaseYear(),
                 series.getImageUrl(),
+                series.getBackgroundImageUrl(),
                 series.getDescription(),
                 series.getStaff(),
                 series.getLanguages(),

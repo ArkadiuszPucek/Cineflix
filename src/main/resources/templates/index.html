@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <meta charset="UTF-8">
     <title>ViaPlay</title>
     <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
-<!--    <script src="../static/scripts/app.4326857cf82bbcf6.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
 
 </head>
 <body>
@@ -33,7 +33,7 @@
                             <a class="NavigationItem-module-item-vXU--" href="/movies">Filmy</a>
                             <a class="NavigationItem-module-item-vXU--" href="/sport">Sport</a>
                             <a class="NavigationItem-module-item-vXU--" href="/kids">Dla dzieci</a>
-                            <a class="NavigationItem-module-item-vXU--" href="/channels">Kanały TV</a>
+<!--                            <a class="NavigationItem-module-item-vXU&#45;&#45;" href="/channels">Kanały TV</a>-->
                         </nav>
                         <div class="Navigation-module-right-643YK">
                             <div class="SearchButton-module-container-oHmID">
@@ -173,7 +173,7 @@
                                                         <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl Buttons-module-play-AAOaC"
                                                            tabindex="-1"
                                                            th:if="${item.getClass().simpleName == 'SeriesDto'}"
-                                                           th:with="formattedTitle=${item.title.replace(' ', '-')}"
+                                                           th:with="formattedTitle=${item.title.toLowerCase().replace(' ', '-')}"
                                                            th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} "
                                                            href="/series/hell-on-wheels-witaj-w-piekle/">
                                                             Obejrzyj
@@ -181,7 +181,7 @@
                                                         <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl"
                                                            tabindex="-1"
                                                            th:if="${item.getClass().simpleName == 'MovieDto'}"
-                                                           th:with="formattedTitle=${item.title.replace(' ', '-')}"
+                                                           th:with="formattedTitle=${item.title.toLowerCase().replace(' ', '-')}"
                                                            th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} "
                                                            href="/movie/to_do">
                                                             Obejrzyj
@@ -189,7 +189,7 @@
                                                         <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl"
                                                            tabindex="-1"
                                                            th:if="${item.getClass().simpleName == 'SeriesDto'}"
-                                                           th:with="formattedTitle=${item.title.replace(' ', '-')}"
+                                                           th:with="formattedTitle=${item.title.toLowerCase().replace(' ', '-')}"
                                                            th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} "
                                                            href="/series/hell-on-wheels-witaj-w-piekle">
                                                             Przeczytaj więcej
@@ -197,7 +197,7 @@
                                                         <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl"
                                                            tabindex="-1"
                                                            th:if="${item.getClass().simpleName == 'MovieDto'}"
-                                                           th:with="formattedTitle=${item.title.replace(' ', '-')}"
+                                                           th:with="formattedTitle=${item.title.toLowerCase().replace(' ', '-')}"
                                                            th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} "
                                                            href="movies/to_do">
                                                             Przeczytaj więcej
@@ -235,21 +235,52 @@
                             <div class="Scaffold-module-scaffold-F6aIC">
                                 <div class="MosaicLite-module-container-kmYfB MosaicLite-module-block5-iSivd">
                                     <div th:each="promoItem : ${seriesPromoBox}"
-                                         class="Item-module-item-yTZtG
-                                        Item-module-carouselItem-Q3n9V
-                                        Item-module-landscapeItem-Sf-nw
-                                        Item-module-mosaicGridItem-XKjcG"
+                                         class="Item-module-item-yTZtG Item-module-carouselItem-Q3n9V Item-module-landscapeItem-Sf-nw Item-module-mosaicGridItem-XKjcG"
                                          th:id="'series-' + ${promoItem.imdbId}"
                                          th:data-product-id="${promoItem.imdbId}">
-                                        <div class="Item-module-box-4uBp3">
+                                        <div class="Item-module-box-4uBp3 Item-module-show-qrDtq">
+                                            <div class="Item-module-image-CGday" th:style="'background-image: url(' + ${promoItem.imageUrl} + ');'"></div>
                                             <a class="Item-module-link-Lms-C"
                                                tabindex="-1"
                                                th:with="formattedTitle=${promoItem.title.replace(' ', '-')}"
                                                th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} ">
-                                                <div class="Item-module-image-CGday"
-                                                     th:style="'background-image: url(' + ${promoItem.imageUrl} + ');'">
-                                                </div>
                                             </a>
+                                            <div class="Item-module-curtain-EV2Ya">
+                                                <div class="GenericMeta-module-container-JU38z">
+                                                    <div>
+                                                        <span class="Divider-module-divider-U-3--">
+                                                            <a class="ImdbRating-module-link-yYfI-" target="_blank" tabindex="-1"
+                                                               th:text="${promoItem.imdbRating}">
+                                                                ImdbRating
+                                                            </a>
+                                                        </span>
+                                                        <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
+                                                            <span class="Seasons-module-container-ZM15y Seasons-module-hasDefaultTypography-8No96">
+                                                                <span th:text="${promoItem.seasonsCount} + ' ' + (promoItem.seasonsCount == 1 ? 'Sezon' : 'Sezony')">
+                                                                    Ilość sezonów
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="InteractionIcons-module-container-apGgr">
+                                                    <a class="TooltipButton-module-container-PfKnw TooltipButton-module-isItem-R6NdL"
+                                                       data-testhook="item-info" tabindex="-1"
+                                                       th:with="formattedTitle=${promoItem.title.replace(' ', '-')}"
+                                                       th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
+                                                    </a>
+                                                    <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"
+                                                         data-testhook="item-star">
+                                                    </div>
+                                                    <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-"
+                                                         data-testhook="item-rating-up">
+                                                    </div>
+                                                    <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1"
+                                                         data-testhook="item-rating-down">
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
                                         <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
                                     </div>
@@ -282,21 +313,51 @@
                             <div class="Scaffold-module-scaffold-F6aIC">
                                 <div class="MosaicLite-module-container-kmYfB MosaicLite-module-block5-iSivd">
                                     <div th:each="promoItem : ${moviePromoBox}"
-                                         class="Item-module-item-yTZtG
-                                        Item-module-carouselItem-Q3n9V
-                                        Item-module-landscapeItem-Sf-nw
-                                        Item-module-mosaicGridItem-XKjcG"
+                                         class="Item-module-item-yTZtG Item-module-carouselItem-Q3n9V Item-module-landscapeItem-Sf-nw Item-module-mosaicGridItem-XKjcG"
                                          th:id="'series-' + ${promoItem.imdbId}"
                                          th:data-product-id="${promoItem.imdbId}">
-                                        <div class="Item-module-box-4uBp3">
+                                        <div class="Item-module-box-4uBp3 Item-module-show-qrDtq">
+                                            <div class="Item-module-image-CGday"
+                                                 th:style="'background-image: url(' + ${promoItem.imageUrl} + ');'">
+                                            </div>
                                             <a class="Item-module-link-Lms-C"
                                                tabindex="-1"
                                                th:with="formattedTitle=${promoItem.title.replace(' ', '-')}"
                                                th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
-                                                <div class="Item-module-image-CGday"
-                                                     th:style="'background-image: url(' + ${promoItem.imageUrl} + ');'">
-                                                </div>
                                             </a>
+                                            <div class="Item-module-curtain-EV2Ya">
+                                                <div class="GenericMeta-module-container-JU38z">
+                                                    <div>
+                                                        <span class="Divider-module-divider-U-3--">
+                                                            <a class="ImdbRating-module-link-yYfI-" target="_blank" tabindex="-1"
+                                                               th:text="${promoItem.imdbRating}">
+                                                                ImdbRating
+                                                            </a>
+                                                        </span>
+                                                        <span class="Divider-module-divider-U-3--">
+                                                            <span th:text="${promoItem.releaseYear}" class="Year-module-container-60QAr">
+                                                                2016
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="InteractionIcons-module-container-apGgr">
+                                                    <a class="TooltipButton-module-container-PfKnw TooltipButton-module-isItem-R6NdL"
+                                                       data-testhook="item-info" tabindex="-1"
+                                                       th:with="formattedTitle=${promoItem.title.replace(' ', '-')}"
+                                                       th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
+                                                    </a>
+                                                    <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"
+                                                         data-testhook="item-star">
+                                                    </div>
+                                                    <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-"
+                                                         data-testhook="item-rating-up">
+                                                    </div>
+                                                    <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1"
+                                                         data-testhook="item-rating-down">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
                                     </div>
@@ -463,5 +524,13 @@
         </div>
     </div>
 </div>
+
+
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>-->
+<script type="text/javascript" src="/scripts/common.js"></script>
+
 </body>
 </html>

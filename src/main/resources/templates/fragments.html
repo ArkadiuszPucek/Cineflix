@@ -23,7 +23,7 @@
                                  class="Item-module-item-yTZtG Item-module-carouselItem-Q3n9V Item-module-landscapeItem-Sf-nw">
                                 <div class="Item-module-box-4uBp3 Item-module-show-qrDtq">
                                     <a class="Item-module-link-Lms-C" tabindex="-1"
-                                       th:with="formattedTitle=${seriesModel.title.toLowerCase().replace(' ', '-')}"
+                                       th:with="formattedTitle=${seriesModel.title.toLowerCase().replace(' ', '-')+'/sezon-1'}"
                                        th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} ">
                                     </a>
                                     <div class="Item-module-image-CGday"
@@ -53,7 +53,7 @@
                                         <div class="InteractionIcons-module-container-apGgr">
                                             <a class="TooltipButton-module-container-PfKnw TooltipButton-module-isItem-R6NdL"
                                                tabindex="-1"
-                                               th:with="formattedTitle=${seriesModel.title.replace(' ', '-')}"
+                                               th:with="formattedTitle=${seriesModel.title.replace(' ', '-')+'/sezon-1'}"
                                                th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} ">
                                             </a>
                                             <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"></div>

@@ -164,6 +164,13 @@ VALUES
 
     (1, 'The Good Doctor', 'Description of Episode 1 for Season 1 The Good Doctor', 'https://www.youtube.com/watch?v=lnY9FWUTY84&ab_channel=SonyPicturesEntertainment', 26, 28),
     (2, 'The Good Doctor', 'Description of Episode 2 for Season 1 The Good Doctor', 'https://www.youtube.com/watch?v=lnY9FWUTY84&ab_channel=SonyPicturesEntertainment', 43, 28),
+    (3, 'The Good Doctor', 'Description of Episode 3 for Season 1 The Good Doctor', 'https://www.youtube.com/watch?v=lnY9FWUTY84&ab_channel=SonyPicturesEntertainment', 40, 28),
+    (4, 'The Good Doctor', 'Description of Episode 4 for Season 1 The Good Doctor', 'https://www.youtube.com/watch?v=lnY9FWUTY84&ab_channel=SonyPicturesEntertainment', 46, 28),
+    (5, 'The Good Doctor', 'Description of Episode 5 for Season 1 The Good Doctor, Description of Episode 5 for Season 1 The Good Doctor, Description of Episode 5 for Season 1 The Good Doctor', 'https://www.youtube.com/watch?v=lnY9FWUTY84&ab_channel=SonyPicturesEntertainment', 51, 28),
+    (6, 'The Good Doctor', 'Description of Episode 6 for Season 1 The Good Doctor', 'https://www.youtube.com/watch?v=lnY9FWUTY84&ab_channel=SonyPicturesEntertainment', 41, 28),
+    (7, 'The Good Doctor', 'Description of Episode 7 for Season 1 The Good Doctor', 'https://www.youtube.com/watch?v=lnY9FWUTY84&ab_channel=SonyPicturesEntertainment', 51, 28),
+    (8, 'The Good Doctor', 'Description of Episode 8 for Season 1 The Good Doctor', 'https://www.youtube.com/watch?v=lnY9FWUTY84&ab_channel=SonyPicturesEntertainment', 47, 28),
+    (9, 'The Good Doctor', 'Description of Episode 9 for Season 1 The Good Doctor', 'https://www.youtube.com/watch?v=lnY9FWUTY84&ab_channel=SonyPicturesEntertainment', 56, 28),
 
     (1, 'The Good Doctor', 'Description of Episode 1 for Season 2 The Good Doctor', 'https://www.youtube.com/watch?v=lnY9FWUTY84&ab_channel=SonyPicturesEntertainment', 62, 29),
     (2, 'The Good Doctor', 'Description of Episode 2 for Season 2 The Good Doctor', 'https://www.youtube.com/watch?v=lnY9FWUTY84&ab_channel=SonyPicturesEntertainment', 61, 29),

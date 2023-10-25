@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class EpisodeDto {
     private Long id;
+    private int episodeNumber;
     private String episodeTitle;
     private String mediaUrl;
     private int durationMinutes;

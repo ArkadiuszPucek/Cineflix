@@ -21483,6 +21483,15 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     z-index: 8
 }
 
+.SeasonsNavigation-module-dropdownWrapper-kC57- {
+    display: none;
+}
+
+.SeasonsNavigation-module-button-vAD9n:hover + .SeasonsNavigation-module-dropdownWrapper-kC57-,
+.SeasonsNavigation-module-dropdownWrapper-kC57-:hover {
+    display: block;
+}
+
 .SeasonsNavigation-module-dropdown-Q3ieP {
     overflow-x: hidden;
     overflow-y: hidden;
@@ -21581,12 +21590,12 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 }
 
 .SeasonButton-module-season-fRUUl .SeasonButton-module-link-NG1PO {
-    border-bottom: 1px solid transparent;
+    border-bottom: none;
     color: #eee
 }
 
 .SeasonButton-module-season-fRUUl .SeasonButton-module-link-NG1PO:hover {
-    border-bottom: 1px solid #eee;
+    border-bottom: none;
     color: #eee;
     cursor: pointer;
     text-decoration: none
@@ -21612,9 +21621,11 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     opacity: .5
 }
 
+
+
 @media screen and (min-width: 1695px) {
     .EpisodesListing-module-grid-yMq1a {
-        margin: 0 -.8%
+        margin: 0 -.7%
     }
 }
 
@@ -21730,8 +21741,20 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     width: 100%
 }
 
+.Episode-module-image-ND-Ju iframe {
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    background-size: cover;
+}
+
+
 .Episode-module-item-ePwVa {
     display: inline-block;
+    width: 20%;
     margin-bottom: 10px;
     margin-top: 10px;
     padding-bottom: 30px;
@@ -21877,7 +21900,7 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 @media screen and (min-width: 1695px) {
     .Episode-module-item-ePwVa {
         margin: 0 .8% 1.6%;
-        width: 18.4%
+        width: 18.0%
     }
 }
 

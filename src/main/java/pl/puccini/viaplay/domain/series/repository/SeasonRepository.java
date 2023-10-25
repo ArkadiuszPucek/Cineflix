@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface SeasonRepository extends CrudRepository<Season, Long> {
     List<Season> findAllBy();
+
+    List<Season> findSeasonsBySeriesImdbId(String imdbId);
 }

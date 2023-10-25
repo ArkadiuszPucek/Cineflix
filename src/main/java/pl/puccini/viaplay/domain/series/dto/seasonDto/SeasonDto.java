@@ -10,4 +10,8 @@ import lombok.Setter;
 public class SeasonDto {
     private Long id;
     private int seasonNumber;
+
+    public SeasonDto() {
+
+    }
 }

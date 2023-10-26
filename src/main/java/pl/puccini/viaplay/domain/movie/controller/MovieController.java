@@ -64,4 +64,24 @@ public class MovieController {
         return "redirect:/movies/" + genre;
     }
 
+    @GetMapping
+    public String moviesPage(Model model){
+        List<Genre> allGenres = genreService.getAllGenres();
+        model.addAttribute("genres", allGenres);
+
+        String thrillerGenre =  "Thriller";
+        model.addAttribute("thrillerMoviesTitle", "Filmy akcji");
+        model.addAttribute("thrillerMovies", getMoviesByGenre(thrillerGenre));
+        model.addAttribute("thrillerGenre", thrillerGenre.toLowerCase());
+
+
+        return "movies";
+    }
+
+    private List<MovieDto> getMoviesByGenre(String genre) {
+        Genre genreByType = genreService.getGenreByType(genre);
+        return movieService.getMovieByGenre(genreByType);
+    }
+
+
 }

@@ -35,7 +35,26 @@ public class SeriesController {
         this.imdbApiService = imdbApiService;
     }
     @GetMapping
-    public String seriesPage(){
+    public String seriesPage(Model model){
+        List<Genre> allGenres = genreService.getAllGenres();
+        model.addAttribute("genres", allGenres);
+
+        String dramaGenre =  "Drama";
+        model.addAttribute("dramaSeriesTitle", "Seriale dramatyczne");
+        model.addAttribute("dramaSeries", getSeriesByGenre(dramaGenre));
+        model.addAttribute("dramaGenre", dramaGenre.toLowerCase());
+
+        String comedyGenre =  "Comedy";
+        model.addAttribute("comedySeriesTitle", "Seriale komediowe");
+        model.addAttribute("comedySeries", getSeriesByGenre(comedyGenre));
+        model.addAttribute("comedyGenre", comedyGenre.toLowerCase());
+
+        String actionGenre =  "Action";
+        model.addAttribute("actionSeriesTitle", "Seriale akcji");
+        model.addAttribute("actionSeries", getSeriesByGenre(actionGenre));
+        model.addAttribute("actionGenre", actionGenre.toLowerCase());
+
+
         return "series";
     }
 
@@ -112,4 +131,9 @@ public class SeriesController {
         return "series-title"; // Wyświetl widok serialu z epizodami wybranego sezonu
     }
 
+
+    private List<SeriesDto> getSeriesByGenre(String genre) {
+        Genre genreByType = genreService.getGenreByType(genre);
+        return seriesService.getSeriesByGenre(genreByType);
+    }
 }

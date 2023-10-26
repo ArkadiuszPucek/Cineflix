@@ -9,9 +9,10 @@
 
 </head>
 <body>
+
 <div id="content-wrapper" class>
     <div class="dockable"></div>
-    <div class="Layout_internal-page__Xqf7P">
+    <div id="react-mount">
         <div class="Layout-module-internal-page--krBv">
             <header class="Navigation-module-container-2t2XT">
                 <div class="Navigation-module-wrapper-VDNDW">
@@ -71,39 +72,57 @@
                     </div>
                 </div>
             </header>
-            <div id="content" class="section">
-                <div class="dockable"></div>
-                <div class="blocksEnsembleContainer_container__Muiqt" id="blockEsembleConainter">
-
-                    <div class="blocksEnsembleContainer-module-container-ZXS1I">
-                        <div class="StickyDiv_container__nuPFn SectionNavigation_stickyContainer__StFdJ">
-                            <nav class="SectionNavigation_container__3faPo" id="sectionNavigationContainer">
-                                <div class="SectionNavigation_wrapper__LILgk">
-                                    <div class="Scaffold_scaffold__TYqMC SectionNavigation_inner__1nMca">
-                                        <div class="SectionNavigation_category__5wOuu"
-                                             data-testhook="section-menu-dropdown">
-                                            <div class="">
-                                                <button data-testhook="category-picker"
-                                                        class="SectionNavigation_button__uYGbX">
-                                                    <span>Gatunek</span></button>
+            <div class="dockable"></div>
+            <div class="blocksEnsembleContainer-module-container-ZXS1I">
+                <div id="content" class="article" data-testhook="article">
+                    <div class="dockable"></div>
+                    <div class="Season-module-wrapper-H0oVh" data-testhook="season">
+                        <div class="StickyDiv-module-mark-Me4XV StickyDiv-module-top-peA7i" style="top: 0px;"></div>
+                        <div class="StickyDiv-module-container-Tiqyz SeasonsNavigation-module-season-FeQtK">
+                            <section data-testhook="season-navigation">
+                                <div class="Scaffold-module-scaffold-F6aIC">
+                                    <div id="genrePicker" class="SeasonsNavigation-module-wrapper-dfFTz">
+                                        <div class="SeasonsNavigation-module-container-PonSS">
+                                            <button class="SeasonsNavigation-module-button-vAD9n"
+                                                    data-testhook="genre-button" tabindex="0"
+                                                    style="text-decoration: none;">
+                                                <span>Gatunek</span>
+                                            </button>
+                                            <div class="SeasonsNavigation-module-dropdownWrapper-kC57-">
+                                                <ul th:each="genre : ${genres}"
+                                                    class="SeasonsNavigation-module-dropdown-Q3ieP"
+                                                    style="max-height: 480.438px;">
+                                                    <li class="SeasonButton-module-season-fRUUl"
+                                                        data-testhook="season-navigation-link" tabindex="0">
+                                                        <a th:href="@{'/series/' + ${genre.genreType.toLowerCase()}}">
+                                                            <span class="SeasonButton-module-link-NG1PO"
+                                                                  th:text="${genre.genreType}">Gatunek serialu</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </nav>
-                        </div>
-                    </div>
-
-                    <footer id="page-footer" class="Footer-module-footer-rUC1K">
-                        <div class="Footer-module-lower-ieG8u">
-                            <section itemtype="">
-                                <div class="Scaffold-module-scaffold-F6aIC">
-                                    <span class="Footer-module-copyright-myMzS">© 2023 Viaplay Group Sweden AB (org.no: 556304-7041). All rights reserved.</span>
-                                </div>
                             </section>
                         </div>
-                    </footer>
+                        <div class="StickyDiv-module-mark-Me4XV StickyDiv-module-bot--lgll"
+                             style="transform: translateY(-64px);"></div>
+                    </div>
+
+                    <div th:replace="~{fragments :: series-carousel(genreTitle=${dramaSeriesTitle}, genre=${dramaGenre}, series=${dramaSeries})}"></div>
+                    <div th:replace="~{fragments :: series-carousel(genreTitle=${comedySeriesTitle}, genre=${comedyGenre}, series=${comedySeries})}"></div>
+                    <div th:replace="~{fragments :: series-carousel(genreTitle=${actionSeriesTitle}, genre=${actionGenre}, series=${actionSeries})}"></div>
                 </div>
+                <footer id="page-footer" class="Footer-module-footer-rUC1K">
+                    <div class="Footer-module-lower-ieG8u">
+                        <section itemtype="">
+                            <div class="Scaffold-module-scaffold-F6aIC">
+                                <span class="Footer-module-copyright-myMzS">© 2023 Viaplay Group Sweden AB (org.no: 556304-7041). All rights reserved.</span>
+                            </div>
+                        </section>
+                    </div>
+                </footer>
             </div>
         </div>
     </div>

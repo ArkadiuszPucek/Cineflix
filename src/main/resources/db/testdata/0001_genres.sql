@@ -11,3 +11,4 @@ insert into genre (genre_type) values ('Sci-Fi');
 insert into genre (genre_type) values ('Horror');
 insert into genre (genre_type) values ('Crime');
 insert into genre (genre_type) values ('Action');
+insert into genre (genre_type) values ('Kids');

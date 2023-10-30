@@ -12333,7 +12333,7 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 /*}*/
 
 .Item-module-item-yTZtG.Item-module-carouselItem-Q3n9V {
-    margin: 0 16px 0 0
+    /*margin: 0 16px 0 0*/
 }
 
 /*.Item-module-item-yTZtG.Item-module-season-XKimH {*/
@@ -12751,14 +12751,18 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     /*}*/
 }
 
+.Item-module-item-yTZtG.Item-module-carouselItem-Q3n9V {
+     /*margin: 0 1px 0 0; */
+}
+
 @media screen and (min-width: 1695px) and (max-width: 3499px) {
     .Item-module-landscapeItem-Sf-nw {
-        margin: 0 12px 24px;
+        /*margin: 0 12px 24px;*/
         width: calc(20% - 24px)
     }
 
     .Item-module-landscapeItem-Sf-nw.Item-module-carouselItem-Q3n9V {
-        margin: 0 24px 0 0;
+        /*margin: 0 24px 0 0;*/
         width: calc(20vw - 56px)
     }
 

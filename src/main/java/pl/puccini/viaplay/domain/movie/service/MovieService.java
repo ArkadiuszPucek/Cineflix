@@ -8,11 +8,8 @@ import pl.puccini.viaplay.domain.movie.dto.MovieDto;
 import pl.puccini.viaplay.domain.movie.dto.MovieDtoMapper;
 import pl.puccini.viaplay.domain.movie.model.Movie;
 import pl.puccini.viaplay.domain.movie.repository.MovieRepository;
-import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDto;
-import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDtoMapper;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -58,5 +55,22 @@ public class MovieService {
         return movieRepository.findAllByGenre(genre).stream()
                 .map(MovieDtoMapper::map)
                 .toList();
+    }
+
+    public MovieDto findMovieByTitle(String title) {
+        Movie movie = movieRepository.findByTitleIgnoreCase(title);
+        if (movie == null){
+            return null;
+        }
+        return MovieDtoMapper.map(movie);
+    }
+
+    public MovieDto findMovieByTitleAndReleaseYear(String title, int releaseYear) {
+        Movie movie = movieRepository.findByTitleAndReleaseYear(title, releaseYear);
+        if(movie != null) {
+            return MovieDtoMapper.map(movie);
+        } else {
+            return null;
+        }
     }
 }

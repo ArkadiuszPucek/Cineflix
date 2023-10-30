@@ -17,6 +17,9 @@
             <column name="image_url" type="VARCHAR(2055)">
                 <constraints nullable="false"/>
             </column>
+            <column name="background_image_url" type="VARCHAR(2055)">
+                <constraints nullable="false"/>
+            </column>
             <column name="media_url" type="VARCHAR(2055)">
                 <constraints nullable="false"/>
             </column>

@@ -34,22 +34,23 @@ public class SeriesController {
         this.genreService = genreService;
         this.imdbApiService = imdbApiService;
     }
+
     @GetMapping
-    public String seriesPage(Model model){
+    public String seriesPage(Model model) {
         List<Genre> allGenres = genreService.getAllGenres();
         model.addAttribute("genres", allGenres);
 
-        String dramaGenre =  "Drama";
+        String dramaGenre = "Drama";
         model.addAttribute("dramaSeriesTitle", "Seriale dramatyczne");
         model.addAttribute("dramaSeries", getSeriesByGenre(dramaGenre));
         model.addAttribute("dramaGenre", dramaGenre.toLowerCase());
 
-        String comedyGenre =  "Comedy";
+        String comedyGenre = "Comedy";
         model.addAttribute("comedySeriesTitle", "Seriale komediowe");
         model.addAttribute("comedySeries", getSeriesByGenre(comedyGenre));
         model.addAttribute("comedyGenre", comedyGenre.toLowerCase());
 
-        String actionGenre =  "Action";
+        String actionGenre = "Action";
         model.addAttribute("actionSeriesTitle", "Seriale akcji");
         model.addAttribute("actionSeries", getSeriesByGenre(actionGenre));
         model.addAttribute("actionGenre", actionGenre.toLowerCase());
@@ -80,20 +81,28 @@ public class SeriesController {
     }
 
     @GetMapping("/{genre}")
-    private String getSeriesByGenre(@PathVariable String genre, Model model){
-            Genre genreByType = genreService.getGenreByType(genre);
-            List<SeriesDto> seriesByGenre = seriesService.getSeriesByGenre(genreByType);
-            model.addAttribute("genre", genre);
-            model.addAttribute("seriesByGenre", seriesByGenre);
-            return "redirect:/series/" + genre;
+    private String getSeriesByGenre(@PathVariable String genre, Model model) {
+        // Konwersja pierwszej litery parametru na wielką literę
+        String capitalizedGenre = Character.toUpperCase(genre.charAt(0)) + genre.substring(1);
+
+        Genre genreByType = genreService.getGenreByType(capitalizedGenre);
+        List<SeriesDto> seriesByGenre = seriesService.getSeriesByGenre(genreByType);
+
+        List<Genre> allGenres = genreService.getAllGenres();
+        model.addAttribute("genres", allGenres);
+
+        model.addAttribute("genre", capitalizedGenre);
+        model.addAttribute("seriesByGenre", seriesByGenre);
+        return "seriesByGenre";
     }
+
 
     @GetMapping("/{title}/sezon-{seasonNumber}")
     public String showSeriesPage(@PathVariable String title, @PathVariable int seasonNumber, Model model) {
         String normalizedTitle = title.replace("-", " ").toLowerCase();
         SeriesDto seriesDto = seriesService.findByTitle(normalizedTitle);
         if (seriesDto == null) {
-            return "series-not-found"; // Obsłuż przypadek, gdy serial nie istnieje
+            return "not-found"; // Obsłuż przypadek, gdy serial nie istnieje
         }
 
         // Pobierz informacje o sezonach serialu

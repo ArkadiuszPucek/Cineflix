@@ -58,7 +58,7 @@ class HomeController {
         model.addAttribute("actionGenre", actionGenre.toLowerCase());
 
         String thrillerGenre =  "Thriller";
-        model.addAttribute("thrillerMoviesTitle", "Seriale akcji");
+        model.addAttribute("thrillerMoviesTitle", "Filmy akcji");
         model.addAttribute("thrillerMovies", getMoviesByGenre(thrillerGenre));
         model.addAttribute("thrillerGenre", thrillerGenre.toLowerCase());
         return "index";

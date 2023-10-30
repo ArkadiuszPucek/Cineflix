@@ -15,6 +15,7 @@ public class Movie {
     private String title;
     private int releaseYear;
     private String imageUrl;
+    private String backgroundImageUrl;
     private String mediaUrl;
     private int timeline;
     private int ageLimit;

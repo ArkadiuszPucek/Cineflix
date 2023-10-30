@@ -11,4 +11,8 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
     List<Movie> findAllByPromotedIsTrue();
     List<Movie> findAllByImdbId(String imdbId);
     List<Movie> findAllByGenre(Genre genre);
+    Movie findByTitleIgnoreCase(String title);
+    Movie findByTitleAndReleaseYear(String title, int releaseYear);
+
+
 }

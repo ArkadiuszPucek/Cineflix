@@ -13,6 +13,7 @@ import pl.puccini.viaplay.domain.movie.repository.MovieRepository;
 import pl.puccini.viaplay.domain.movie.service.MovieService;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -55,13 +56,42 @@ public class MovieController {
         return "redirect:/movies";
     }
 
-    @GetMapping("/movies/{genre}")
-    private String getSeriesByGenre(@PathVariable String genre, Model model){
-        Genre genreByType = genreService.getGenreByType(genre);
-        List<MovieDto> moviesByGenre = movieService.getMovieByGenre(genreByType);
-        model.addAttribute("genre", genre);
-        model.addAttribute("moviesByGenre", moviesByGenre);
-        return "redirect:/movies/" + genre;
+//    @GetMapping("/{title}")
+//    public String showSeriesPage(@PathVariable String title, Model model) {
+//        String normalizedTitle = title.replace("-", " ").toLowerCase();
+//        MovieDto movieDto = movieService.findMovieByTitle(normalizedTitle);
+//        if (movieDto == null) {
+//            return "not-found";
+//        }
+//        model.addAttribute("title", title);
+//
+//        int releaseYear = movieDto.getReleaseYear();
+//
+//
+//        Genre genreByType = genreService.getGenreByType(movieDto.getGenre());
+//        List<MovieDto> movieByGenre = movieService.getMovieByGenre(genreByType);
+//        model.addAttribute("moviesByGenre", movieByGenre);
+//
+//        // Dodaj pozostałe informacje do modelu
+//        model.addAttribute("movie", movieDto);
+//
+//        return "movie-title"; // Wyświetl widok serialu z epizodami wybranego sezonu
+//    }
+
+    @GetMapping("/{genre}")
+    private String getMoviesByGenre(@PathVariable String genre, Model model){
+        // Konwersja pierwszej litery parametru na wielką literę
+        String capitalizedGenre = Character.toUpperCase(genre.charAt(0)) + genre.substring(1);
+        Genre genreByType = genreService.getGenreByType(capitalizedGenre);
+        model.addAttribute("genre", capitalizedGenre);
+
+        List<MovieDto> movieByGenre = movieService.getMovieByGenre(genreByType);
+        model.addAttribute("moviesByGenre", movieByGenre);
+
+        List<Genre> allGenres = genreService.getAllGenres();
+        model.addAttribute("genres", allGenres);
+
+        return "moviesByGenre";
     }
 
     @GetMapping
@@ -73,7 +103,6 @@ public class MovieController {
         model.addAttribute("thrillerMoviesTitle", "Filmy akcji");
         model.addAttribute("thrillerMovies", getMoviesByGenre(thrillerGenre));
         model.addAttribute("thrillerGenre", thrillerGenre.toLowerCase());
-
 
         return "movies";
     }

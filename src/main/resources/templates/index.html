@@ -14,70 +14,10 @@
     <div class="dockable"></div>
     <div id="react-mount">
         <div class="Layout-module-internal-page--krBv">
-            <header class="Navigation-module-container-2t2XT">
-                <div class="Navigation-module-wrapper-VDNDW">
-                    <div class="Navigation-module-sections-tzP7z">
-                        <div class="Navigation-module-left-FaRmB">
-                    <span>
-                        <div class="HeaderLogo-module-headerLogo-lWX4m">
-                            <a class="HeaderLogo-module-link-kdP1e" href="/">
-                                <img src="https://viaplay-web-frontend-assets.mtg-api.com/frontend-2023092141850/images/header-logo.png"
-                                     alt="Viaplay Start logo"
-                                     class="Logo-module-logo-pfYdr">
-                            </a>
-                        </div>
-                    </span>
-                        </div>
-                        <nav class="NavigationItems-module-center-cd-0t">
-                            <a class="NavigationItem-module-item-vXU--" href="/series">Seriale</a>
-                            <a class="NavigationItem-module-item-vXU--" href="/movies">Filmy</a>
-                            <a class="NavigationItem-module-item-vXU--" href="/sport">Sport</a>
-                            <a class="NavigationItem-module-item-vXU--" href="/kids">Dla dzieci</a>
-<!--                            <a class="NavigationItem-module-item-vXU&#45;&#45;" href="/channels">Kanały TV</a>-->
-                        </nav>
-                        <div class="Navigation-module-right-643YK">
-                            <div class="SearchButton-module-container-oHmID">
-                                <a class="SearchButton-module-icon-zn1mS" href="/#search="></a>
-                            </div>
-                            <a class="NavigationItem-module-item-vXU-- NavigationItem-module-library-E3ML5 NavigationItem-module-hide-n07a1"
-                               href="/library"></a>
-                            <div class="UserMenu-module-detailsAuthenticated-Ku3RE">
-                                <button class="UserMenu-module-toggle-mkB6K">
-                                    <div class="UserMenu-module-buttonbox-HF7RL">
-                                        <div class="ProfileAvatar-module-container-aV27r ProfileAvatar-module-small-HCZsN"
-                                             tabindex="-1">
-                                            <div class="ProfileAvatar-module-editContainer-mwkk5">
-                                                <img class="ProfileAvatar-module-avatar-2Qy4H" alt="avatar"
-                                                     src="https://i-viaplay-com.akamaized.net/viaplay-static-prod/profiles/avatars/adults/boombox.png?width=500&amp;height=500">
-                                                <div class="ProfileAvatar-module-editIcon-zlhbG"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </button>
-                            </div>
-                            <button class="Navigation-module-toggleNavigation-uQPGv" id="toggle-navigation"></button>
-                            <nav class="NavigationItems-module-navigation-AW08m NavigationItems-module-hide-bZgrX">
-                                <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA"
-                                   href="/series">Seriale</a>
-                                <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA"
-                                   href="/movies">Filmy</a>
-                                <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA"
-                                   href="/sport">Sport</a>
-                                <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA"
-                                   href="/kids">Dla dzieci</a>
-                                <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA"
-                                   href="/channels">Kanały TV</a>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
+            <div th:replace="~{header :: header}"></div>
             <div id="content" class="root">
-
                 <div class="dockable"></div>
                 <div class="blocksEnsembleContainer-module-container-ZXS1I" id="blockEnsembleContainer">
-
                     <!--                    FUTUREBOX-->
                     <div style="display: block;">
                         <section id="futureBoxContainer" class="FeatureBox-module-featurebox-k0Qb-" tabindex="-1">
@@ -217,7 +157,6 @@
                             </div>
                         </section>
                     </div>
-
                     <!--                   SERIES PROMOBOX-->
                     <div style="display: block;">
                         <div class="CarouselHeader-module-container-dBOIV">
@@ -372,15 +311,7 @@
                 </div>
             </div>
 
-            <footer id="page-footer" class="Footer-module-footer-rUC1K">
-                <div class="Footer-module-lower-ieG8u">
-                    <section itemtype="">
-                        <div class="Scaffold-module-scaffold-F6aIC">
-                            <span class="Footer-module-copyright-myMzS">© 2023 Viaplay Group Sweden AB (org.no: 556304-7041). All rights reserved.</span>
-                        </div>
-                    </section>
-                </div>
-            </footer>
+            <div th:replace="~{footer :: footer}"></div>
         </div>
     </div>
 </div>

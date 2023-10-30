@@ -10,6 +10,7 @@ public class MovieDtoMapper {
                 movie.getTitle(),
                 movie.getReleaseYear(),
                 movie.getImageUrl(),
+                movie.getBackgroundImageUrl(),
                 movie.getMediaUrl(),
                 movie.getTimeline(),
                 movie.getAgeLimit(),

@@ -6,6 +6,7 @@ public class SeriesDtoMapper {
     public static SeriesDto map(Series series) {
         return new SeriesDto(
                 series.getImdbId(),
+                series.getMediaType(),
                 series.getTitle(),
                 series.getReleaseYear(),
                 series.getImageUrl(),

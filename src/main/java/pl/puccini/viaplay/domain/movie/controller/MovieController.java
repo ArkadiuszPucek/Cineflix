@@ -1,8 +1,11 @@
 package pl.puccini.viaplay.domain.movie.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import pl.puccini.viaplay.domain.genre.Genre;
 import pl.puccini.viaplay.domain.genre.GenreService;
 import pl.puccini.viaplay.domain.imdb.IMDbApiService;
@@ -56,50 +59,48 @@ public class MovieController {
         return "redirect:/movies";
     }
 
-//    @GetMapping("/{title}")
-//    public String showSeriesPage(@PathVariable String title, Model model) {
-//        String normalizedTitle = title.replace("-", " ").toLowerCase();
-//        MovieDto movieDto = movieService.findMovieByTitle(normalizedTitle);
-//        if (movieDto == null) {
-//            return "not-found";
-//        }
-//        model.addAttribute("title", title);
-//
-//        int releaseYear = movieDto.getReleaseYear();
-//
-//
-//        Genre genreByType = genreService.getGenreByType(movieDto.getGenre());
-//        List<MovieDto> movieByGenre = movieService.getMovieByGenre(genreByType);
-//        model.addAttribute("moviesByGenre", movieByGenre);
-//
-//        // Dodaj pozostałe informacje do modelu
-//        model.addAttribute("movie", movieDto);
-//
-//        return "movie-title"; // Wyświetl widok serialu z epizodami wybranego sezonu
-//    }
+    @GetMapping("/{value}")
+    public String movieValueHandle(@PathVariable String value, Model model, HttpServletResponse response) {
+        String normalizedTitle = value.replace("-", " ").toLowerCase();
+        MovieDto movieDto = movieService.findMovieByTitle(normalizedTitle);
+        if (movieDto != null) {
+            model.addAttribute("title", value);
 
-    @GetMapping("/{genre}")
-    private String getMoviesByGenre(@PathVariable String genre, Model model){
-        // Konwersja pierwszej litery parametru na wielką literę
-        String capitalizedGenre = Character.toUpperCase(genre.charAt(0)) + genre.substring(1);
-        Genre genreByType = genreService.getGenreByType(capitalizedGenre);
-        model.addAttribute("genre", capitalizedGenre);
+            Genre genreByType = genreService.getGenreByType(movieDto.getGenre());
+            List<MovieDto> movieByGenre = movieService.getMovieByGenre(genreByType);
+            model.addAttribute("moviesByGenre", movieByGenre);
 
-        List<MovieDto> movieByGenre = movieService.getMovieByGenre(genreByType);
-        model.addAttribute("moviesByGenre", movieByGenre);
+            model.addAttribute("movie", movieDto);
 
-        List<Genre> allGenres = genreService.getAllGenres();
-        model.addAttribute("genres", allGenres);
+            response.setStatus(HttpServletResponse.SC_OK);
+            return "movie-title";
+        } else {
+            String capitalizedGenre = Character.toUpperCase(value.charAt(0)) + value.substring(1);
+            Genre genreByType = genreService.getGenreByType(capitalizedGenre);
 
-        return "moviesByGenre";
+            if (genreByType != null) {
+                model.addAttribute("genre", capitalizedGenre);
+
+                List<MovieDto> moviesByGenre = movieService.getMovieByGenre(genreByType);
+                model.addAttribute("moviesByGenre", moviesByGenre);
+
+                List<Genre> allGenres = genreService.getAllGenres();
+                model.addAttribute("genres", allGenres);
+                response.setStatus(HttpServletResponse.SC_OK);
+
+                return "moviesByGenre";
+            }
+        }
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        return "not-found";
     }
 
     @GetMapping
-    public String moviesPage(Model model){
+    public String moviesPage(Model model) {
         List<Genre> allGenres = genreService.getAllGenres();
         model.addAttribute("genres", allGenres);
 
-        String thrillerGenre =  "Thriller";
+        String thrillerGenre = "Thriller";
         model.addAttribute("thrillerMoviesTitle", "Filmy akcji");
         model.addAttribute("thrillerMovies", getMoviesByGenre(thrillerGenre));
         model.addAttribute("thrillerGenre", thrillerGenre.toLowerCase());

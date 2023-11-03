@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Nie znalezionu serialu</title>
+    <title>ViaPlay</title>
+    <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
 </head>
 <body>
-<h1>No i nie ma serialu</h1>
-</body>
+
+<div id="content-wrapper" class>
+    <div class="dockable"></div>
+    <div id="react-mount">
+        <div class="Layout-module-internal-page--krBv">
+            <div th:replace="~{header :: header}"></div>
+            <div class="dockable"></div>
+            <div class="blocksEnsembleContainer-module-container-ZXS1I">
+                <div id="content" class="article" data-testhook="article">
+                    <div class="dockable"></div>
+                    <div class="blocksEnsembleContainer-module-container-ZXS1I">
+                        <div class="no-results-container">
+                            <div class="no-results-background"></div>
+                            <div class="no-results-text">
+                                Przepraszamy, ale nie udało się odnaleźć strony.
+                            </div>
+                            <div class="ActionButton-module-wrapper-NdTTC">
+                                <div class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl"
+                                     tabindex="0">
+                                    <span onclick="window.location.href='/'">Strona główna</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div th:replace="~{footer :: footer}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
 </html>

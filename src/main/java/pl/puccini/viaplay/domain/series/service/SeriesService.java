@@ -2,6 +2,7 @@ package pl.puccini.viaplay.domain.series.service;
 
 import org.springframework.stereotype.Service;
 import pl.puccini.viaplay.domain.genre.Genre;
+import pl.puccini.viaplay.domain.movie.dto.MovieDtoMapper;
 import pl.puccini.viaplay.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.viaplay.domain.series.dto.episodeDto.EpisodeDtoMapper;
 import pl.puccini.viaplay.domain.series.dto.seasonDto.SeasonDto;
@@ -55,6 +56,16 @@ public class SeriesService {
             return null;
         }
         return SeriesDtoMapper.map(series);
+    }
+
+    public List<SeriesDto> searchSeries(String query) {
+        String loweredQuery = query.toLowerCase();
+        if (query == null || query.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return seriesRepository.findByTitleContainingIgnoreCaseOrStaffContainingIgnoreCase(loweredQuery, loweredQuery).stream()
+                .map(SeriesDtoMapper::map)
+                .toList();
     }
 
     public List<SeasonDto> getSeasonsForSeries(String imdbId) {

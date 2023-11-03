@@ -10,6 +10,7 @@ import pl.puccini.viaplay.domain.movie.model.Movie;
 import pl.puccini.viaplay.domain.movie.repository.MovieRepository;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -65,12 +66,16 @@ public class MovieService {
         return MovieDtoMapper.map(movie);
     }
 
-    public MovieDto findMovieByTitleAndReleaseYear(String title, int releaseYear) {
-        Movie movie = movieRepository.findByTitleAndReleaseYear(title, releaseYear);
-        if(movie != null) {
-            return MovieDtoMapper.map(movie);
-        } else {
-            return null;
+    public List<MovieDto> searchMovies(String query) {
+        String loweredQuery = query.toLowerCase();
+        if (query == null || query.isEmpty()) {
+            return Collections.emptyList();
         }
+        return movieRepository.findByTitleContainingIgnoreCaseOrStaffContainingIgnoreCaseOrDirectedByContainingIgnoreCase(loweredQuery , loweredQuery , loweredQuery).stream()
+                .map(MovieDtoMapper::map)
+                .toList();
     }
+
+
+
 }

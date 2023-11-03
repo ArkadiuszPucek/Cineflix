@@ -12,6 +12,7 @@ import pl.puccini.viaplay.domain.genre.Genre;
 public class Movie {
     @Id
     private String imdbId;
+    private String mediaType;
     private String title;
     private int releaseYear;
     private String imageUrl;

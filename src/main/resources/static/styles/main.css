@@ -25611,15 +25611,15 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 
 .Search-module-container-YLg3F .Search-module-input-WV9xu {
     background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUiIGhlaWdodD0iMjUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgZmlsbD0iI0VFRSI+PHBhdGggZD0iTTE1LjYgMTUuNmExIDEgMCAwIDEgMS40IDBsNi42IDYuNmExIDEgMCAwIDEtMS40IDEuNEwxNS42IDE3YTEgMSAwIDAgMSAwLTEuNFoiLz48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik05LjUgMTdhNy41IDcuNSAwIDEgMCAwLTE1IDcuNSA3LjUgMCAwIDAgMCAxNVptMCAyYTkuNSA5LjUgMCAxIDAgMC0xOSA5LjUgOS41IDAgMCAwIDAgMTlaIi8+PC9zdmc+);
-    background-position: 29px;
+    background-position: 25px;
     background-repeat: no-repeat;
     background-size: 16px 16px;
     font-size: 1.6rem;
     font-weight: 400;
-    height: 56px;
+    height: 49px;
     line-height: 2.4rem;
     padding-left: 56px;
-    width: 676px
+    width: 670px
 }
 
 @media (min-width: 3500px) {
@@ -32990,6 +32990,34 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
         display: block;
         padding: 4px 80px 4px 24px
     }
+}
+
+.no-results-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-results-background {
+    width: 300px;
+    height: 300px;
+    background-image: url('/images/no-results.png');
+    background-size: cover;
+    margin-bottom: 20px;
+}
+
+.no-results-text {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.no-results-text a {
+    text-decoration: none;
+    color: #337ab7; /* Kolor linku */
+    cursor: pointer;
 }
 
 

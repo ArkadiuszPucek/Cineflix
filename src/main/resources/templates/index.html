@@ -31,7 +31,6 @@
                                                 <div class="FeatureBoxVideo-module-container-8tmrB">
                                                     <div class="FeatureBoxVideo-module-wrapper-8UDKL">
                                                         <div class="FeatureBoxVideo-module-poster-SJpIi FeatureBoxVideo-module-visibleItem-85rzi FeatureBoxVideo-module-smoothVisibleItem-1w-S7"
-                                                             style="background-image: url(https://i-viaplay-com.akamaized.net/editorial-media/editorial_pages/featurebox/Series/hellonwheelsS1_webxdk.jpg?width=1920&height=1080);}"
                                                              th:style="'background-image: url(' + ${item.imageUrl} + ');'">
                                                         </div>
                                                     </div>
@@ -51,7 +50,6 @@
                                                             <span>
                                                                 <a data-tracking-click="IMDB"
                                                                    class="ImdbRating-module-link-yYfI- ImdbRating-module-featurebox-rOXSw"
-                                                                   href="http://www.imdb.com/title/tt1699748?ref_ext_viaplay"
                                                                    th:href="@{${item.imdbUrl}}" target="_blank"
                                                                    rel="noopener noreferrer nofollow" tabindex="-1"
                                                                    th:text="${item.imdbRating}">
@@ -64,8 +62,7 @@
                                                                 <span class="Divider-module-divider-U-3-- Divider-module-featurebox-lE8g3 Divider-module-genres-ezeLN">
                                                                     <a class="Genre-module-container-HcI4x Genre-module-featurebox-qQIAg Genre-module-link-kGNTi"
                                                                        tabindex="-1"
-                                                                       href="/series/drama"
-                                                                       th:href="@{'/' + item.genre}"
+                                                                       th:href="@{'/' + ${item.mediaType}+'/'+${item.genre}}"
                                                                        th:text="${item.genre}">
                                                                         Seriale dramatyczne
                                                                     </a>
@@ -113,9 +110,8 @@
                                                         <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl Buttons-module-play-AAOaC"
                                                            tabindex="-1"
                                                            th:if="${item.getClass().simpleName == 'SeriesDto'}"
-                                                           th:with="formattedTitle=${item.title.toLowerCase().replace(' ', '-')}"
-                                                           th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} "
-                                                           href="/series/hell-on-wheels-witaj-w-piekle/">
+                                                           th:with="formattedTitle=${item.title.toLowerCase().replace(' ', '-')+'/sezon-1'}"
+                                                           th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} ">
                                                             Obejrzyj
                                                         </a>
                                                         <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl"
@@ -129,7 +125,7 @@
                                                         <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl"
                                                            tabindex="-1"
                                                            th:if="${item.getClass().simpleName == 'SeriesDto'}"
-                                                           th:with="formattedTitle=${item.title.toLowerCase().replace(' ', '-')}"
+                                                           th:with="formattedTitle=${item.title.toLowerCase().replace(' ', '-')+'/sezon-1'}"
                                                            th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} "
                                                            href="/series/hell-on-wheels-witaj-w-piekle">
                                                             Przeczytaj więcej
@@ -261,7 +257,7 @@
                                             </div>
                                             <a class="Item-module-link-Lms-C"
                                                tabindex="-1"
-                                               th:with="formattedTitle=${promoItem.title.replace(' ', '-')}"
+                                               th:with="formattedTitle=${promoItem.title.toLowerCase().replace(' ', '-')}"
                                                th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
                                             </a>
                                             <div class="Item-module-curtain-EV2Ya">

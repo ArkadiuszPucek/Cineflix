@@ -42,7 +42,7 @@
                                                     <div class="Item-module-box-4uBp3 Item-module-show-qrDtq">
                                                         <a class="Item-module-link-Lms-C" tabindex="-1"
                                                            th:with="formattedTitle=${movieModel.title.toLowerCase().replace(' ', '-')}"
-                                                           th:href="@{/movie/{formattedTitle}(formattedTitle=${formattedTitle})} ">
+                                                           th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
                                                         </a>
                                                         <div class="Item-module-image-CGday"
                                                              th:style="'background-image: url(' + ${movieModel.imageUrl} + ');'">
@@ -72,7 +72,7 @@
                                                                 <a class="TooltipButton-module-container-PfKnw TooltipButton-module-isItem-R6NdL"
                                                                    tabindex="-1"
                                                                    th:with="formattedTitle=${movieModel.title.replace(' ', '-')}"
-                                                                   th:href="@{/movie/{formattedTitle}(formattedTitle=${formattedTitle})} ">
+                                                                   th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
 
                                                                 </a>
                                                                 <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"></div>

@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class SeriesDto {
     private String imdbId;
+    private String mediaType;
     private String title;
     private int releaseYear;
     private String imageUrl;

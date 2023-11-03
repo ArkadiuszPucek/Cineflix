@@ -15,6 +15,7 @@ import java.util.List;
 public class Series {
     @Id
     private String imdbId;
+    private String mediaType;
     private String title;
     private int releaseYear;
     private String imageUrl;

@@ -16,4 +16,8 @@ public interface SeriesRepository extends CrudRepository<Series, Long> {
     List<Series> findAllByGenre(Genre genre);
 
     Series findByTitleIgnoreCase(String title);
+
+    List<Series> findByTitleContainingIgnoreCaseOrStaffContainingIgnoreCase(String title, String actor);
+
+
 }

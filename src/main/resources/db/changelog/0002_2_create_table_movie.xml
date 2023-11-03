@@ -8,6 +8,9 @@
             <column name="imdb_id" type="VARCHAR(255)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="media_type" type="VARCHAR(100)" >
+                <constraints nullable="false"/>
+            </column>
             <column name="title" type="VARCHAR(100)" >
                 <constraints nullable="false"/>
             </column>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<aside th:fragment="sidebar" class="Admin-sidebar">
+    <ul class="DropDownUserMenu-module-dropdownList--L-em">
+        <ul>
+            <li>
+                        <span class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA NavigationItem-module-watched-mwewA">
+                            Filmy
+                        </span>
+                <ul class="sub-menu">
+                    <li><a th:href="@{/add-movie}">Dodaj film</a></li>
+                    <li><a th:href="@{/manage-movies}">Zarządzaj filmami</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                        <span class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA NavigationItem-module-watched-mwewA">
+                            Seriale
+                        </span>
+                <ul class="sub-menu">
+                    <li><a th:href="@{/add-series}">Dodaj serial</a></li>
+                    <li><a th:href="@{/manage-series}">Zarządzaj serialami</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                        <span class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA NavigationItem-module-watched-mwewA">
+                            Użytkownicy
+                        </span>
+                <ul class="sub-menu">
+                    <li><a th:href="@{/manage-users}">Zarządzaj użytkownikami</a></li>
+                </ul>
+            </li>
+        </ul>
+    </ul>
+</aside>
+</html>

@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>ViaPlay</title>
     <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
 </head>
 <body>
 
@@ -12,65 +14,18 @@
     <div id="react-mount">
         <div class="Layout-module-internal-page--krBv">
             <div th:replace="~{header :: header}"></div>
-            <div id="content" class="root">
-                <div class="dockable"></div>
-                <div class="blocksEnsembleContainer-module-container-ZXS1I" id="blockEnsembleContainer">
-                    <div class="Search-module-container-YLg3F" style="margin-top: 30px" data-testhook="search-window">
-                        <div class="Search-module-wrapper-vFahO">
-                            <form class="Search-module-form-5fLlq" action="/search" method="get">
-                                <input type="search" class="Search-module-input-WV9xu"
-                                       data-testhook="search-input-field"
-                                       name="query" placeholder="Wyszukaj według tytułu, aktora lub reżysera">
-                                <button type="submit"
-                                        class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl"
-                                        tabindex="0">Szukaj
-                                </button>
-                            </form>
-                            <div class="Search-module-results-EVu-r" style="margin-top: 20px">
-                                <section th:if="${searchQuery != null and !searchQuery.isEmpty()}">
-                                    <div class="Scaffold-module-scaffold-F6aIC">
-                                        <div>
-                                            <div class="SearchFilters-module-container-d0i8m">
-                                                <ul class="SearchFilters-module-list-P-HYT">
-                                                    <li class="SearchFilters-module-item-VQgVJ"><span>Pokaż: </span>
-                                                    </li>
-                                                    <li class="SearchFilters-module-item-VQgVJ"
-                                                        th:classappend="${activeFilter == 'all' ? 'SearchFilters-module-active-xbXxo' : ''}">
-                                                        <a class="SearchFilters-module-link-cRk6q"
-                                                           th:href="@{'/search?query=' + ${searchQuery} + '&filter=all'}"
-                                                           title="Wszystko">Wszystko</a>
-                                                    </li>
-
-                                                    <li class="SearchFilters-module-item-VQgVJ"
-                                                        th:classappend="${activeFilter == 'series' ? 'SearchFilters-module-active-xbXxo' : ''}">
-                                                        <a class="SearchFilters-module-link-cRk6q"
-                                                           th:href="@{'/search?query=' + ${searchQuery} + '&filter=series'}"
-                                                           title="Seriale">Seriale</a>
-                                                    </li>
-
-                                                    <li class="SearchFilters-module-item-VQgVJ"
-                                                        th:classappend="${activeFilter == 'movies' ? 'SearchFilters-module-active-xbXxo' : ''}">
-                                                        <a class="SearchFilters-module-link-cRk6q"
-                                                           th:href="@{'/search?query=' + ${searchQuery} + '&filter=movies'}"
-                                                           title="Filmy">Filmy</a>
-                                                    </li>
-
-                                                    <li class="SearchFilters-module-item-VQgVJ"
-                                                        th:classappend="${activeFilter == 'kids' ? 'SearchFilters-module-active-xbXxo' : ''}">
-                                                        <a class="SearchFilters-module-link-cRk6q"
-                                                           th:href="@{'/search?query=' + ${searchQuery} + '&filter=kids'}"
-                                                           title="Dla dzieci">Dla dzieci</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                                <section class="Grid-module-container-kIPZs">
-                                    <div class="Scaffold-module-scaffold-F6aIC" style="margin-top: 30px">
-                                        <div class="Grid-module-wrapper---F1s">
+            <div class="dockable"></div>
+            <div class="blocksEnsembleContainer-module-container-ZXS1I">
+                <div id="content" class="article" data-testhook="article">
+                    <div class="dockable"></div>
+                    <div class="Season-module-wrapper-H0oVh" data-testhook="season">
+                        <div class="StickyDiv-module-mark-Me4XV StickyDiv-module-top-peA7i" style="top: 0px;"></div>
+                        <div class="Search-module-results-EVu-r" style="margin-top: 60px">
+                            <section class="Grid-module-container-kIPZs" style="margin-top: 30px">
+                                <div class="Scaffold-module-scaffold-F6aIC">
+                                    <div class="Grid-module-wrapper---F1s">
+                                        <div style="display:inline">
                                             <div style="display:inline">
-                                                <div style="display:inline">
                                             <span>
                                                 <div th:each="itemModel : ${activeAttribute}"
                                                      class="Item-module-item-yTZtG Item-module-carouselItem-Q3n9V Item-module-landscapeItem-Sf-nw">
@@ -185,25 +140,27 @@
                                                     </div>
                                                 </div>
                                             </span>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </section>
-                            </div>
+                                </div>
+                            </section>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
-
+            <div th:replace="~{footer :: footer}"></div>
         </div>
     </div>
-    <div th:replace="~{footer :: footer}"></div>
 </div>
 </div>
-</div>
-</div>
+
+
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script type="text/javascript" src="/scripts/common.js"></script>
 
 </body>
 </html>

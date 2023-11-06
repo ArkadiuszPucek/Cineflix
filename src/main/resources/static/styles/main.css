@@ -406,6 +406,13 @@ input::placeholder, input:focus::placeholder {
     height: 64px
 }
 
+.page-header-admin {
+    height: 10px;
+    text-align: center;
+    padding-top: 10px;
+    margin-left: 250px;
+}
+
 .page-header img {
     padding: 14px 0
 }
@@ -23785,7 +23792,109 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     right: -20px;
     text-align: left;
     transition: opacity .3s ease 0s;
-    z-index: 15
+    z-index: 15;
+    display: none
+}
+
+.admin-panel {
+    display: flex;
+    min-height: 100vh; /* Wysokość całego widoku, jeśli chcesz */
+}
+
+.flex-container {
+    display: flex;
+    align-items: center; /* wyśrodkowanie w pionie */
+    justify-content: flex-start; /* wyśrodkowanie w poziomie */
+    padding-bottom: 6px;
+    font-size: 0.9em;
+    margin-left: 5px;
+
+}
+
+.checkbox-label {
+    margin-right: 180px; /* lub inną wartość, aby dopasować odstęp */
+}
+
+/* Jeśli chcesz, aby etykieta była wyśrodkowana względem elementów po lewej stronie, możesz potrzebować następującego kodu CSS: */
+td {
+    display: flex;
+    align-items: center; /* to spowoduje wyśrodkowanie tekstu etykiety w pionie */
+    height: 100%; /* ustawi pełną wysokość komórki tabeli */
+}
+
+.Admin-sidebar {
+    width: 280px;
+    height: auto;
+    overflow: hidden;
+    left: -20px;
+    text-align: left;
+    transition: opacity .3s ease 0s;
+    background-color: #2b2b35;
+    border-radius: 8px;
+    box-shadow: 0 0 8px 0 rgba(29, 29, 39, .2);
+    margin-top: 16px;
+}
+
+.sub-menu {
+    margin-left: 20px; /* Wcięcie dla podmenu */
+    list-style-type: none; /* Usunięcie punktorów */
+
+}
+
+.sub-menu li {
+    font-size: 0.9em; /* Mniejszy rozmiar czcionki dla podopcji */
+    margin-bottom: 3px; /* Odstęp między opcjami */
+    margin-top: 4px;
+}
+
+.sub-menu a {
+    /* Stylizacja linków, jeśli potrzebna */
+    display: block;
+    text-decoration: none; /* Usunięcie podkreślenia tekstu */
+   color: #979797;
+}
+
+.sub-menu a:hover {
+    /* Stylizacja linków przy najechaniu kursorem */
+    text-decoration: underline; /* Dodanie podkreślenia tekstu */
+}
+
+
+.main-content {
+    flex-grow: 1; /* Reszta przestrzeni zostanie tu wypełniona */
+    padding: 20px; /* Odstępy wewnątrz głównej treści */
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    padding-top: 60px;
+}
+
+.submit-button-movie-page{
+    display: flex;
+    justify-content: center; /* wyśrodkowanie poziome */
+    padding-top: 60px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Tworzy trzy kolumny */
+    grid-gap: 30px; /* Ustawia odstęp pomiędzy elementami */
+    max-width: 1000px; /* Maksymalna szerokość kontenera */
+    margin: 0 auto; /* Centruje kontener na stronie */
+}
+
+.text-input-style {
+
+    border-radius: 4px;
+    padding: 8px 12px;
+    width: 300px; /* lub inna szerokość */
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.UserMenu-module-detailsAuthenticated-Ku3RE:hover .DropDownUserMenu-module-dropdown-IuMOF {
+    display: block;
 }
 
 .DropDownUserMenu-module-dropdown-IuMOF:before {
@@ -23808,6 +23917,7 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     overflow: hidden;
     padding-top: 8px
 }
+
 
 .DropDownUserMenu-module-textItem-KCl5W:not(.DropDownUserMenu-module-library-UBRPc) a {
     padding: 8px 5px

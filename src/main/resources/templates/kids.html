@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>ViaPlay</title>
     <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
 </head>
 <body>
@@ -20,23 +19,112 @@
                     <div class="dockable"></div>
                     <div class="Season-module-wrapper-H0oVh" data-testhook="season">
                         <div class="StickyDiv-module-mark-Me4XV StickyDiv-module-top-peA7i" style="top: 0px;"></div>
-                        <div class="StickyDiv-module-container-Tiqyz SeasonsNavigation-module-season-FeQtK">
-                            <div class="Scaffold-module-scaffold-F6aIC">
-                                <header class="CarouselHeader-module-wrapper-B8ict">
-                                    <h2 class="Title-module-subheader--ZDhF Title-module-hasSeeMore-DEdTE">
-                                        Filmy dla najmłodszych
-                                    </h2>
-                                </header>
-                            </div>
-                        </div>
-                        <div class="StickyDiv-module-mark-Me4XV StickyDiv-module-bot--lgll"
-                             style="transform: translateY(-64px);"></div>
-                        <section class="Grid-module-container-kIPZs">
-                            <div class="Scaffold-module-scaffold-F6aIC">
-                                <div class="Grid-module-wrapper---F1s">
-                                    <div style="display:inline">
+                        <div class="Search-module-results-EVu-r" style="margin-top: 60px">
+                            <section>
+                                <div class="Scaffold-module-scaffold-F6aIC">
+                                    <div>
+                                        <div class="SearchFilters-module-container-d0i8m">
+                                            <ul class="SearchFilters-module-list-P-HYT">
+                                                <li class="SearchFilters-module-item-VQgVJ"><span>Pokaż: </span>
+                                                </li>
+                                                <li class="SearchFilters-module-item-VQgVJ"
+                                                    th:classappend="${activeFilter == 'all' ? 'SearchFilters-module-active-xbXxo' : ''}">
+                                                    <a class="SearchFilters-module-link-cRk6q"
+                                                       th:href="@{'/kids?filter=all'}"
+                                                       title="Wszystko">Wszystko</a>
+                                                </li>
+
+                                                <li class="SearchFilters-module-item-VQgVJ"
+                                                    th:classappend="${activeFilter == 'series' ? 'SearchFilters-module-active-xbXxo' : ''}">
+                                                    <a class="SearchFilters-module-link-cRk6q"
+                                                       th:href="@{'/kids?filter=series'}"
+                                                       title="Seriale">Seriale</a>
+                                                </li>
+
+                                                <li class="SearchFilters-module-item-VQgVJ"
+                                                    th:classappend="${activeFilter == 'movies' ? 'SearchFilters-module-active-xbXxo' : ''}">
+                                                    <a class="SearchFilters-module-link-cRk6q"
+                                                       th:href="@{'/kids?filter=movies'}"
+                                                       title="Filmy">Filmy</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="Grid-module-container-kIPZs" style="margin-top: 30px">
+                                <div class="Scaffold-module-scaffold-F6aIC">
+                                    <div class="Grid-module-wrapper---F1s">
                                         <div style="display:inline">
+                                            <div style="display:inline">
                                             <span>
+                                                <div th:each="itemModel : ${activeAttribute}"
+                                                     class="Item-module-item-yTZtG Item-module-carouselItem-Q3n9V Item-module-landscapeItem-Sf-nw">
+                                                    <div class="Item-module-box-4uBp3 Item-module-show-qrDtq">
+                                                        <a th:if="${itemModel.getClass().simpleName == 'SeriesDto'}"
+                                                           class="Item-module-link-Lms-C" tabindex="-1"
+                                                           th:with="formattedTitle=${itemModel.title.toLowerCase().replace(' ', '-')+'/sezon-1'}"
+                                                           th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} ">
+                                                        </a>
+                                                        <a th:if="${itemModel.getClass().simpleName == 'MovieDto'}"
+                                                           class="Item-module-link-Lms-C" tabindex="-1"
+                                                           th:with="formattedTitle=${itemModel.title.toLowerCase().replace(' ', '-')}"
+                                                           th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
+                                                        </a>
+                                                        <div class="Item-module-image-CGday"
+                                                             th:style="'background-image: url(' + ${itemModel.imageUrl} + ');'">
+                                                        </div>
+                                                        <div class="Item-module-curtain-EV2Ya">
+                                                            <div class="SeriesMeta-module-container-oFAL3">
+                                                                <div class="SeriesMeta-module-metadata-8qwss">
+                                                                    <span class="Divider-module-divider-U-3--">
+                                                                        <a class="ImdbRating-module-link-yYfI- ImdbRating-module-hasDefaultTypography-luAjW"
+                                                                           th:href="@{${itemModel.imdbUrl}}"
+                                                                           target="_blank"
+                                                                           tabindex="-1"
+                                                                           th:text="${itemModel.imdbRating}">
+                                                                            ImdbRating
+                                                                        </a>
+                                                                    </span>
+                                                                    <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
+                                                                        <span class="Seasons-module-container-ZM15y Seasons-module-hasDefaultTypography-8No96"
+                                                                              th:if="${itemModel.getClass().simpleName == 'SeriesDto'}">
+                                                                            <span th:text="${itemModel.seasonsCount} + ' ' + (itemModel.seasonsCount == 1 ? 'Sezon' : 'Sezony')">
+                                                                                5 Sezony
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class="Seasons-module-container-ZM15y Seasons-module-hasDefaultTypography-8No96"
+                                                                              th:if="${itemModel.getClass().simpleName == 'MovieDto'}">
+                                                                            <span th:if="${itemModel.timeline < 59}">
+                                                                                <span th:text="${itemModel.timeline} + ' min.'"></span>
+                                                                            </span>
+                                                                            <span th:if="${itemModel.timeline >= 60}">
+                                                                                <span th:text="${itemModel.timeline div 60 + ' godz.' + (itemModel.timeline % 60 > 0 ? ' ' + itemModel.timeline % 60 + ' min.' : '')}"></span>
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="InteractionIcons-module-container-apGgr">
+                                                                <a th:if="${itemModel.getClass().simpleName == 'SeriesDto'}"
+                                                                   class="TooltipButton-module-container-PfKnw TooltipButton-module-isItem-R6NdL"
+                                                                   tabindex="-1"
+                                                                   th:with="formattedTitle=${itemModel.title.replace(' ', '-')+'/sezon-1'}"
+                                                                   th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} ">
+                                                                </a>
+                                                                <a th:if="${itemModel.getClass().simpleName == 'MovieDto'}"
+                                                                   class="TooltipButton-module-container-PfKnw TooltipButton-module-isItem-R6NdL"
+                                                                   tabindex="-1"
+                                                                   th:with="formattedTitle=${itemModel.title.replace(' ', '-')}"
+                                                                   th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
+                                                                </a>
+                                                                <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"></div>
+                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-"></div>
+                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div th:each="movieModel : ${movies}"
                                                      class="Item-module-item-yTZtG Item-module-carouselItem-Q3n9V Item-module-landscapeItem-Sf-nw">
                                                     <div class="Item-module-box-4uBp3 Item-module-show-qrDtq">
@@ -83,78 +171,12 @@
                                                     </div>
                                                 </div>
                                             </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </section>
-                        <div class="StickyDiv-module-mark-Me4XV StickyDiv-module-top-peA7i" style="top: 0px;"></div>
-                        <div class="StickyDiv-module-container-Tiqyz SeasonsNavigation-module-season-FeQtK">
-                            <div class="Scaffold-module-scaffold-F6aIC">
-                                <header class="CarouselHeader-module-wrapper-B8ict">
-                                    <h2 class="Title-module-subheader--ZDhF Title-module-hasSeeMore-DEdTE">
-                                        Seriale dla najmłodszych
-                                    </h2>
-                                </header>
-                            </div>
+                            </section>
                         </div>
-                        <section class="Grid-module-container-kIPZs">
-                            <div class="Scaffold-module-scaffold-F6aIC">
-                                <div class="Grid-module-wrapper---F1s">
-                                    <div style="display:inline">
-                                        <div style="display:inline">
-                                            <span>
-                                                <div th:each="seriesModel : ${series}"
-                                                     class="Item-module-item-yTZtG Item-module-carouselItem-Q3n9V Item-module-landscapeItem-Sf-nw">
-                                                    <div class="Item-module-box-4uBp3 Item-module-show-qrDtq">
-                                                        <a class="Item-module-link-Lms-C" tabindex="-1"
-                                                           th:with="formattedTitle=${seriesModel.title.toLowerCase().replace(' ', '-')+'/sezon-1'}"
-                                                           th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} ">
-                                                        </a>
-                                                        <div class="Item-module-image-CGday"
-                                                             th:style="'background-image: url(' + ${seriesModel.imageUrl} + ');'">
-                                                        </div>
-                                                        <div class="Item-module-curtain-EV2Ya">
-                                                            <div class="SeriesMeta-module-container-oFAL3">
-                                                                <div class="SeriesMeta-module-metadata-8qwss">
-                                                                    <span class="Divider-module-divider-U-3--">
-                                                                        <a class="ImdbRating-module-link-yYfI- ImdbRating-module-hasDefaultTypography-luAjW"
-                                                                           th:href="@{${seriesModel.imdbUrl}}"
-                                                                           target="_blank"
-                                                                           tabindex="-1"
-                                                                           th:text="${seriesModel.imdbRating}">
-                                                                            ImdbRating
-                                                                        </a>
-                                                                    </span>
-                                                                    <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
-                                                                        <span class="Seasons-module-container-ZM15y Seasons-module-hasDefaultTypography-8No96">
-                                                                            <span th:text="${seriesModel.seasonsCount} + ' ' + (seriesModel.seasonsCount == 1 ? 'Sezon' : 'Sezony')">
-                                                                                Ilość sezonów
-                                                                            </span>
-                                                                        </span>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="InteractionIcons-module-container-apGgr">
-                                                                <a class="TooltipButton-module-container-PfKnw TooltipButton-module-isItem-R6NdL"
-                                                                   tabindex="-1"
-                                                                   th:with="formattedTitle=${seriesModel.title.replace(' ', '-')+'/sezon-1'}"
-                                                                   th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} ">
-
-                                                                </a>
-                                                                <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"></div>
-                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-"></div>
-                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
 
                     </div>
                 </div>
@@ -164,12 +186,5 @@
     </div>
 </div>
 </div>
-
-
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<script type="text/javascript" src="/scripts/common.js"></script>
-
 </body>
 </html>

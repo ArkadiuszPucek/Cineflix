@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ViaPlay</title>
+    <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+</head>
+<body>
+
+<div class="Layout-module-internal-page--krBv">
+    <div th:replace="~{header :: header}"></div>
+    <h1 class="page-header-admin">Panel administracyjny - dodaj film</h1>
+    <div id="content" class="admin-panel">
+        <div th:replace="~{admin/sidebar :: sidebar}"></div>
+        <div class="main-content">
+            <form th:action="@{/add-movie}" method="post">
+                <div class="grid-container">
+                    <tr>
+                        <td><input class="text-input-style" type="text" name="imdbId" pattern="^tt\d{5,8}$"
+                                   placeholder="IMDB ID" required></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text-input-style" type="text" name="title" placeholder="Tytuł" required></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text-input-style" type="text" name="releaseYear" pattern="\d{4}"
+                                   placeholder="Rok emisji" required></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text-input-style" type="text" name="imageUrl"
+                                   pattern="^(https?://www\.|https?://|www\.)\S+" placeholder="URL zdjęcia głownego"
+                                   required></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text-input-style" type="text" name="backgroundImageUrl"
+                                   pattern="^(https?://www\.|https?://|www\.)\S+" placeholder="URL zdjęcia w tle"
+                                   required></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text-input-style" type="text" name="mediaUrl"
+                                   pattern="^(https?://www\.|https?://|www\.)\S+" placeholder="URL do filmu" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input class="text-input-style" type="text" name="timeline"
+                                   pattern="^(?:[1-9]|[1-9][0-9]|1[0-9]{2}|2[0-3][0-9]|240)$"
+                                   placeholder="Czas trwania [min]" required></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text-input-style" type="text" name="ageLimit" pattern="^(?:[1-9]|[1-9][0-9])$"
+                                   placeholder="Ograniczenia wiekowe" required></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text-input-style" type="text" name="description" placeholder="Opis fimu"
+                                   required></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text-input-style" type="text" name="staff" placeholder="Obsada" required></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text-input-style" type="text" name="directedBy" placeholder="Reżyser"
+                                   required></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text-input-style" type="text" name="languages" placeholder="Dostępne języki"
+                                   required></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text-input-style" type="text" name="actors" placeholder="Aktorzy" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select name="genre" required>
+                                <option value="">Wybierz gatunek</option>
+                                <option th:each="genre : ${genres}"
+                                        th:value="${genre.genreType}"
+                                        th:text="${genre.genreType}">Gatunek
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="flex-container">
+                                <label for="promoted" class="checkbox-label">Promowanie:</label>
+                                <input type="checkbox" id="promoted" name="promoted">
+                            </div>
+                        </td>
+                    </tr>
+
+                </div>
+                <div class="submit-button-movie-page">
+                    <button type="submit"
+                            class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl"
+                            tabindex="0">Dodaj film
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div th:replace="~{footer :: footer}"></div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

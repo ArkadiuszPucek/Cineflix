@@ -7,7 +7,6 @@ public class MovieDtoMapper {
     public static MovieDto map(Movie movie) {
         return new MovieDto(
                 movie.getImdbId(),
-                movie.getMediaType(),
                 movie.getTitle(),
                 movie.getReleaseYear(),
                 movie.getImageUrl(),

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ViaPlay</title>
+    <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+</head>
+<body>
+
+<div class="Layout-module-internal-page--krBv">
+    <div th:replace="~{header :: header}"></div>
+    <h1 class="page-header-admin">Panel administracyjny - dodaj film</h1>
+    <div id="content" class="admin-panel">
+        <div th:replace="~{admin/sidebar :: sidebar}"></div>
+        <div class="main-content">
+            <h1 th:text="Film dodany pomyślnie"></h1>
+        </div>
+    </div>
+    <div th:replace="~{footer :: footer}"></div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

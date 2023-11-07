@@ -1,17 +1,16 @@
 package pl.puccini.viaplay.domain.movie.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import pl.puccini.viaplay.domain.genre.Genre;
 
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Getter
 @Setter
 public class MovieDto {
 
     private String imdbId;
-    private String mediaType;
     private String title;
     private int releaseYear;
     private String imageUrl;
@@ -27,4 +26,5 @@ public class MovieDto {
     private boolean promoted;
     private double imdbRating;
     private String imdbUrl;
+
 }

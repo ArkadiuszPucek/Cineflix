@@ -6,17 +6,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.puccini.viaplay.domain.genre.Genre;
 import pl.puccini.viaplay.domain.genre.GenreService;
-import pl.puccini.viaplay.domain.movie.model.Movie;
+import pl.puccini.viaplay.domain.movie.dto.MovieDto;
 import pl.puccini.viaplay.domain.movie.service.MovieService;
 import pl.puccini.viaplay.domain.series.service.SeriesService;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 @Controller
 public class AdminController {
-
     private final MovieService movieService;
+
     private final SeriesService seriesService;
     private final GenreService genreService;
 
@@ -26,23 +27,6 @@ public class AdminController {
         this.genreService = genreService;
     }
 
-
-//    @PostMapping("/add")
-//    public String addMovie(@ModelAttribute Movie movie) throws IOException, InterruptedException {
-//        if (movie.getImdbId() != null && !movie.getImdbId().isEmpty()) {
-//            // Pobierz dane IMDb na podstawie IMDb ID
-//            IMDbData imdbData = imdbApiService.fetchIMDbData(movie.getImdbId());
-//
-//            // Zaktualizuj dane filmu na podstawie danych IMDb
-//            movie.setImdbRating(imdbData.getImdbRating());
-//            movie.setImdbUrl(imdbData.getImdbUrl());
-//        }
-//
-//        movieRepository.save(movie);
-//
-//        return "redirect:/movies";
-//    }
-
     @GetMapping("/admin")
     public String getAdminPanel() {
 
@@ -50,6 +34,13 @@ public class AdminController {
     }
 
     @PostMapping("/add-movie")
+    public String addMovie(MovieDto movie) throws IOException, InterruptedException {
+        movieService.addMovie(movie);
+
+        return "admin/add-movie-success";
+    }
+
+    @GetMapping("/add-movie")
     public String showAddMovieForm(Model model) {
         List<Genre> allGenres = genreService.getAllGenres();
         model.addAttribute("genres", allGenres);
@@ -57,8 +48,10 @@ public class AdminController {
         List<Integer> ageLimits = Arrays.asList(3, 7, 12, 16, 18);
         model.addAttribute("ageLimits", ageLimits);
 
+        MovieDto movie = new MovieDto();
+        model.addAttribute("movie", movie);
 
-        return "admin/add-movie";
+        return "admin/add-movie-form";
     }
 
     @GetMapping("/manage-movies")

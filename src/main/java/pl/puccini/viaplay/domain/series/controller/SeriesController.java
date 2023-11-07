@@ -74,8 +74,8 @@ public class SeriesController {
         IMDbData imdbData = imdbApiService.fetchIMDbData(series.getImdbId());
 
         // Zaktualizuj dane serialu na podstawie danych IMDb
-        series.setImageUrl(imdbData.getImdbUrl());
-        series.setImageUrl(imdbData.getImdbUrl());
+//        series.setImageUrl(imdbData.getImdbUrl());
+//        series.setImageUrl(imdbData.getImdbUrl());
         seriesRepository.save(series);
         return "redirect:/series";
     }

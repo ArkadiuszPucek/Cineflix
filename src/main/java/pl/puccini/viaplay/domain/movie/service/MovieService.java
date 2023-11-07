@@ -2,6 +2,7 @@ package pl.puccini.viaplay.domain.movie.service;
 
 import org.springframework.stereotype.Service;
 import pl.puccini.viaplay.domain.genre.Genre;
+import pl.puccini.viaplay.domain.genre.GenreRepository;
 import pl.puccini.viaplay.domain.imdb.IMDbApiService;
 import pl.puccini.viaplay.domain.imdb.IMDbData;
 import pl.puccini.viaplay.domain.movie.dto.MovieDto;
@@ -18,10 +19,12 @@ public class MovieService {
 
     private final MovieRepository movieRepository;
     private final IMDbApiService imdbApiService;
+    private final GenreRepository genreRepository;
 
-    public MovieService(MovieRepository movieRepository, IMDbApiService imdbApiService) {
+    public MovieService(MovieRepository movieRepository, IMDbApiService imdbApiService, GenreRepository genreRepository) {
         this.movieRepository = movieRepository;
         this.imdbApiService = imdbApiService;
+        this.genreRepository = genreRepository;
     }
 
 
@@ -31,19 +34,28 @@ public class MovieService {
                 .toList();
     }
 
-    public void addMovie(Movie movie) throws IOException, InterruptedException {
-        // Zapisz film w bazie danych
+    public void addMovie(MovieDto movieDto) throws IOException, InterruptedException {
+        Movie movie = new Movie();
+        movie.setImdbId(movieDto.getImdbId());
+        movie.setTitle(movieDto.getTitle());
+        movie.setReleaseYear(movieDto.getReleaseYear());
+        movie.setImageUrl(movieDto.getImageUrl());
+        movie.setBackgroundImageUrl(movieDto.getBackgroundImageUrl());
+        movie.setMediaUrl(movieDto.getMediaUrl());
+        movie.setTimeline(movieDto.getTimeline());
+        movie.setAgeLimit(movieDto.getAgeLimit());
+        movie.setDescription(movieDto.getDescription());
+        movie.setStaff(movieDto.getStaff());
+        movie.setDirectedBy(movieDto.getDirectedBy());
+        movie.setLanguages(movieDto.getLanguages());
+        Genre genre = genreRepository.findByGenreTypeIgnoreCase(movieDto.getGenre());
+        movie.setGenre(genre);
+        movie.setPromoted(movieDto.isPromoted());
+        IMDbData imDbData = imdbApiService.fetchIMDbData(movieDto.getImdbId());
+        movie.setImdbRating(imDbData.getImdbRating());
+        movie.setImdbUrl(imDbData.getImdbUrl());
         movieRepository.save(movie);
 
-        // Pobierz dane IMDb na podstawie IMDb ID
-        IMDbData imdbData = imdbApiService.fetchIMDbData(movie.getImdbId());
-
-        // Zaktualizuj dane filmu na podstawie danych IMDb
-        movie.setImdbRating(imdbData.getImdbRating());
-        movie.setImdbUrl(imdbData.getImdbUrl());
-
-        // Ponownie zapisz film w bazie danych, aby uwzględnić dane IMDb
-        movieRepository.save(movie);
     }
 
     public List<MovieDto> getMoviesByImdbId(String imdbId){

@@ -60,11 +60,19 @@
                                                         <span class="Divider-module-divider-U-3-- Divider-module-featurebox-lE8g3">
                                                             <span>
                                                                 <span class="Divider-module-divider-U-3-- Divider-module-featurebox-lE8g3 Divider-module-genres-ezeLN">
-                                                                    <a class="Genre-module-container-HcI4x Genre-module-featurebox-qQIAg Genre-module-link-kGNTi"
+                                                                    <a th:if="${item.getClass().simpleName == 'SeriesDto'}"
+                                                                       class="Genre-module-container-HcI4x Genre-module-featurebox-qQIAg Genre-module-link-kGNTi"
                                                                        tabindex="-1"
-                                                                       th:href="@{'/' + ${item.mediaType}+'/'+${item.genre}}"
+                                                                       th:href="@{'/series/'+${item.genre}}"
                                                                        th:text="${item.genre}">
                                                                         Seriale dramatyczne
+                                                                    </a>
+                                                                    <a th:if="${item.getClass().simpleName == 'MovieDto'}"
+                                                                       class="Genre-module-container-HcI4x Genre-module-featurebox-qQIAg Genre-module-link-kGNTi"
+                                                                       tabindex="-1"
+                                                                       th:href="@{'/movies/'+${item.genre}}"
+                                                                       th:text="${item.genre}">
+                                                                        Filmy dramatyczne
                                                                     </a>
                                                                 </span>
                                                             </span>

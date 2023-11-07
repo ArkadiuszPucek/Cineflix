@@ -13,70 +13,64 @@
     <div id="content" class="admin-panel">
         <div th:replace="~{admin/sidebar :: sidebar}"></div>
         <div class="main-content">
-            <form th:action="@{/add-movie}" method="post">
+            <form th:action="@{/add-movie}" method="post" th:object="${movie}">
                 <div class="grid-container">
                     <tr>
                         <td>
-                            <input class="text-input-style" type="text" name="imdbId" pattern="^tt\d{5,8}$"
+                            <input class="text-input-style" type="text" name="imdbId" th:field="*{imdbId}" pattern="^tt\d{5,8}$"
                                    placeholder="Wpisz IMDB ID [tt642624]" required></td>
                     </tr>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="title" placeholder="Wpisz tytuł filmu" required></td>
+                        <td><input class="text-input-style" type="text" name="title" th:field="*{title}" placeholder="Wpisz tytuł filmu" required></td>
                     </tr>
-                    <select class="text-input-style" name="releaseYear" required>
-                        <option value="">Wybierz rok emisji</option>
+                    <select class="text-input-style" name="releaseYear" th:field="*{releaseYear}" required>
                         <option th:each="year : ${#numbers.sequence(1950, 2024)}"
                                 th:value="${year}"
                                 th:text="${year}">1900</option>
                     </select>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="imageUrl"
+                        <td><input class="text-input-style" type="text" name="imageUrl" th:field="*{imageUrl}"
                                    pattern="^(https?://www\.|https?://|www\.)\S+" placeholder="Wpisz adres URL zdjęcia głownego"
                                    required></td>
                     </tr>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="backgroundImageUrl"
+                        <td><input class="text-input-style" type="text" name="backgroundImageUrl" th:field="*{backgroundImageUrl}"
                                    pattern="^(https?://www\.|https?://|www\.)\S+" placeholder="Wpisz adres URL zdjęcia w tle"
                                    required></td>
                     </tr>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="mediaUrl"
+                        <td><input class="text-input-style" type="text" name="mediaUrl" th:field="*{mediaUrl}"
                                    pattern="^(https?://www\.|https?://|www\.)\S+" placeholder="Wpisz URL do filmu" required>
                         </td>
                     </tr>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="timeline"
+                        <td><input class="text-input-style" type="text" name="timeline" th:field="*{timeline}"
                                    pattern="^(?:[1-9]|[1-9][0-9]|1[0-9]{2}|2[0-3][0-9]|240)$"
                                    placeholder="Czas trwania [min]" required></td>
                     </tr>
-                    <select class="text-input-style" name="ageLimit" required>
-                        <option value="">Wybierz ograniczenie wiekowe</option>
+                    <select class="text-input-style" name="ageLimit" th:field="*{ageLimit}" required>
                         <option th:each="age : ${ageLimits}"
                                 th:value="${age}"
                                 th:text="${age}"></option>
                     </select>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="description" placeholder="Wpisz opis filmu"
+                        <td><input class="text-input-style" type="text" name="description" th:field="*{description}" placeholder="Wpisz opis filmu"
                                    required></td>
                     </tr>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="staff" placeholder="Wpisz obsadę filmu" required></td>
+                        <td><input class="text-input-style" type="text" name="staff" th:field="*{staff}" placeholder="Wpisz obsadę filmu" required></td>
                     </tr>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="directedBy" placeholder="Wpisz reżysera"
+                        <td><input class="text-input-style" type="text" name="directedBy" th:field="*{directedBy}" placeholder="Wpisz reżysera"
                                    required></td>
                     </tr>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="languages" placeholder="Wpisz dostępne języki"
+                        <td><input class="text-input-style" type="text" name="languages" th:field="*{languages}" placeholder="Wpisz dostępne języki"
                                    required></td>
-                    </tr>
-                    <tr>
-                        <td><input class="text-input-style" type="text" name="actors" placeholder="Wpisz aktorów" required>
-                        </td>
                     </tr>
                     <tr>
                         <td>
-                            <select class="text-input-style" name="genre" required>
+                            <select class="text-input-style" name="genre" th:field="*{genre}" required>
                                 <option value="">Wybierz gatunek</option>
                                 <option th:each="genre : ${genres}"
                                         th:value="${genre.genreType}"
@@ -89,11 +83,10 @@
                         <td>
                             <div class="flex-container">
                                 <label for="promoted" class="checkbox-label">Promowanie na stronie głównej:</label>
-                                <input type="checkbox" id="promoted" name="promoted">
+                                <input type="checkbox" id="promoted" name="promoted" th:field="*{promoted}">
                             </div>
                         </td>
                     </tr>
-
                 </div>
                 <div class="submit-button-movie-page">
                     <button type="submit"

@@ -23812,7 +23812,7 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 }
 
 .checkbox-label {
-    margin-right: 180px; /* lub inną wartość, aby dopasować odstęp */
+    margin-right: auto; /* lub inną wartość, aby dopasować odstęp */
 }
 
 /* Jeśli chcesz, aby etykieta była wyśrodkowana względem elementów po lewej stronie, możesz potrzebować następującego kodu CSS: */
@@ -23892,6 +23892,12 @@ td {
     margin-bottom: 10px;
     color: #555;
 }
+
+
+select.text-input-style {
+    color: #bbbbbb; /* Kolor tekstu dla select, dopasowany do inputów */
+}
+
 
 .UserMenu-module-detailsAuthenticated-Ku3RE:hover .DropDownUserMenu-module-dropdown-IuMOF {
     display: block;

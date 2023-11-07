@@ -3,12 +3,14 @@ package pl.puccini.viaplay.domain.web.admin;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import pl.puccini.viaplay.domain.genre.Genre;
 import pl.puccini.viaplay.domain.genre.GenreService;
 import pl.puccini.viaplay.domain.movie.model.Movie;
 import pl.puccini.viaplay.domain.movie.service.MovieService;
 import pl.puccini.viaplay.domain.series.service.SeriesService;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -47,10 +49,13 @@ public class AdminController {
         return "admin/admin";
     }
 
-    @GetMapping("/add-movie")
+    @PostMapping("/add-movie")
     public String showAddMovieForm(Model model) {
         List<Genre> allGenres = genreService.getAllGenres();
         model.addAttribute("genres", allGenres);
+
+        List<Integer> ageLimits = Arrays.asList(3, 7, 12, 16, 18);
+        model.addAttribute("ageLimits", ageLimits);
 
 
         return "admin/add-movie";

@@ -13,7 +13,7 @@
     <div id="content" class="admin-panel">
         <div th:replace="~{admin/sidebar :: sidebar}"></div>
         <div class="main-content">
-            <form th:action="@{/add-movie}" method="post" th:object="${movie}">
+            <form th:action="@{/add-movie-form}" method="post" th:object="${movie}">
                 <div class="grid-container">
                     <tr>
                         <td>
@@ -24,6 +24,7 @@
                         <td><input class="text-input-style" type="text" name="title" th:field="*{title}" placeholder="Wpisz tytuł filmu" required></td>
                     </tr>
                     <select class="text-input-style" name="releaseYear" th:field="*{releaseYear}" required>
+                        <option value="">Wybierz rok emisji</option>
                         <option th:each="year : ${#numbers.sequence(1950, 2024)}"
                                 th:value="${year}"
                                 th:text="${year}">1900</option>
@@ -49,6 +50,7 @@
                                    placeholder="Czas trwania [min]" required></td>
                     </tr>
                     <select class="text-input-style" name="ageLimit" th:field="*{ageLimit}" required>
+                        <option value="">Wybierz ograniczenie wiekowe</option>
                         <option th:each="age : ${ageLimits}"
                                 th:value="${age}"
                                 th:text="${age}"></option>

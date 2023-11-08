@@ -13,12 +13,12 @@ public class Movie {
     @Id
     private String imdbId;
     private String title;
-    private int releaseYear;
+    private Integer releaseYear;
     private String imageUrl;
     private String backgroundImageUrl;
     private String mediaUrl;
-    private int timeline;
-    private int ageLimit;
+    private Integer timeline;
+    private Integer ageLimit;
     private String description;
     private String staff;
     private String directedBy;

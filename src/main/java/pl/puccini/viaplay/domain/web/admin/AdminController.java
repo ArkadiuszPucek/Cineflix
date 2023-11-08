@@ -33,14 +33,14 @@ public class AdminController {
         return "admin/admin";
     }
 
-    @PostMapping("/add-movie")
+    @PostMapping("/add-movie-form")
     public String addMovie(MovieDto movie) throws IOException, InterruptedException {
         movieService.addMovie(movie);
 
         return "admin/add-movie-success";
     }
 
-    @GetMapping("/add-movie")
+    @GetMapping("/add-movie-form")
     public String showAddMovieForm(Model model) {
         List<Genre> allGenres = genreService.getAllGenres();
         model.addAttribute("genres", allGenres);

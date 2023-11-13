@@ -24,7 +24,7 @@ public class MovieDto {
     private String languages;
     private String genre;
     private boolean promoted;
-    private double imdbRating;
+    private Double imdbRating;
     private String imdbUrl;
 
 }

@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import pl.puccini.viaplay.domain.genre.Genre;
 import pl.puccini.viaplay.domain.genre.GenreRepository;
 import pl.puccini.viaplay.domain.imdb.IMDbApiService;
-import pl.puccini.viaplay.domain.imdb.IMDbData;
 import pl.puccini.viaplay.domain.movie.dto.MovieDto;
 import pl.puccini.viaplay.domain.movie.dto.MovieDtoMapper;
 import pl.puccini.viaplay.domain.movie.model.Movie;
@@ -34,7 +33,7 @@ public class MovieService {
                 .toList();
     }
 
-    public void addMovie(MovieDto movieDto) throws IOException, InterruptedException {
+    public void addMovieManual(MovieDto movieDto) throws IOException, InterruptedException {
         Movie movie = new Movie();
         movie.setImdbId(movieDto.getImdbId());
         movie.setTitle(movieDto.getTitle());
@@ -48,14 +47,34 @@ public class MovieService {
         movie.setStaff(movieDto.getStaff());
         movie.setDirectedBy(movieDto.getDirectedBy());
         movie.setLanguages(movieDto.getLanguages());
-        Genre genre = genreRepository.findByGenreTypeIgnoreCase(movieDto.getGenre());
-        movie.setGenre(genre);
+        movie.setGenre(genreRepository.findByGenreTypeIgnoreCase(movieDto.getGenre()));
+        movie.setImdbRating(movieDto.getImdbRating());
         movie.setPromoted(movieDto.isPromoted());
-        IMDbData imDbData = imdbApiService.fetchIMDbData(movieDto.getImdbId());
-        movie.setImdbRating(imDbData.getImdbRating());
-        movie.setImdbUrl(imDbData.getImdbUrl());
+        movie.setImdbUrl("https://www.imdb.com/title/"+movieDto.getImdbId());
         movieRepository.save(movie);
+    }
 
+    public Movie addMovieByApi(MovieDto movieDto) throws IOException, InterruptedException {
+        MovieDto movieApiDto = imdbApiService.fetchIMDbData(movieDto.getImdbId());
+        Movie movie = new Movie();
+        movie.setImdbId(movieApiDto.getImdbId());
+        movie.setTitle(movieApiDto.getTitle());
+        movie.setReleaseYear(movieApiDto.getReleaseYear());
+        movie.setImageUrl(movieApiDto.getImageUrl());
+        movie.setBackgroundImageUrl(movieApiDto.getBackgroundImageUrl());
+        movie.setMediaUrl(movieApiDto.getMediaUrl());
+        movie.setTimeline(movieApiDto.getTimeline());
+        movie.setAgeLimit(movieApiDto.getAgeLimit());
+        movie.setDescription(movieApiDto.getDescription());
+        movie.setStaff(movieApiDto.getStaff());
+        movie.setDirectedBy(movieApiDto.getDirectedBy());
+        movie.setLanguages(movieApiDto.getLanguages());
+        movie.setGenre(genreRepository.findByGenreTypeIgnoreCase(movieApiDto.getGenre()));
+        movie.setImdbRating(movieApiDto.getImdbRating());
+        movie.setPromoted(movieDto.isPromoted());
+        movie.setImdbUrl("https://www.imdb.com/title/"+movieDto.getImdbId());
+        movieRepository.save(movie);
+        return movie;
     }
 
     public List<MovieDto> getMoviesByImdbId(String imdbId){

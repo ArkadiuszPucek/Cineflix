@@ -15,18 +15,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Getter
 public class IMDbData {
 
-    @JsonProperty("ratings")
-    private double imdbRating;
-
-    @JsonProperty("title")
+    private String imdbId;
     private String title;
-
-    private String imdbUrl;
-
     private Integer releaseYear;
     private String imageUrl;
+    private String backgroundImageUrl;
+    private String mediaUrl;
     private Integer timeline;
+    private Integer ageLimit;
     private String description;
+    private String staff; // Nie widać w JSON, musisz określić jak to zapisywać
+    private String directedBy; // Nie widać w JSON, musisz określić jak to zapisywać
+    private String languages; // Nie widać w JSON, musisz określić jak to zapisywać
+    private String genre; // Z listy 'genres'
+    private boolean promoted;
+    private double imdbRating;
+    private String imdbUrl;
 
 
 }

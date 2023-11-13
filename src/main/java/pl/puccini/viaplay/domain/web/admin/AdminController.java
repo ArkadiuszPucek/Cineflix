@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import pl.puccini.viaplay.domain.genre.Genre;
 import pl.puccini.viaplay.domain.genre.GenreService;
 import pl.puccini.viaplay.domain.movie.dto.MovieDto;
+import pl.puccini.viaplay.domain.movie.model.Movie;
 import pl.puccini.viaplay.domain.movie.service.MovieService;
 import pl.puccini.viaplay.domain.series.service.SeriesService;
 
@@ -35,9 +36,10 @@ public class AdminController {
 
     @PostMapping("/add-movie-form")
     public String addMovie(MovieDto movie) throws IOException, InterruptedException {
-        movieService.addMovie(movie);
+        movieService.addMovieManual(movie);
+        String normalizedTitle = movie.getTitle().toLowerCase().replace(" ", "-");
 
-        return "admin/add-movie-success";
+        return "redirect:/movie/" + normalizedTitle;
     }
 
     @GetMapping("/add-movie-form")
@@ -53,6 +55,23 @@ public class AdminController {
 
         return "admin/add-movie-form";
     }
+
+    @PostMapping("/add-movie-api")
+    public String addMovieByApi(MovieDto movie) throws IOException, InterruptedException {
+        Movie movieFromApi = movieService.addMovieByApi(movie);
+        String normalizedTitle = movieFromApi.getTitle().toLowerCase().replace(" ", "-");
+
+        return "redirect:/movies/" + normalizedTitle;
+    }
+
+    @GetMapping("/add-movie-api")
+    public String showAddMovieApiForm(Model model) {
+        MovieDto movie = new MovieDto();
+        model.addAttribute("movie", movie);
+
+        return "admin/add-movie-api";
+    }
+
 
     @GetMapping("/manage-movies")
     public String showManageMovieForm(Model model) {

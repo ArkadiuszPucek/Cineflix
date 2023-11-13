@@ -23,7 +23,6 @@ public class MovieController {
         this.genreService = genreService;
     }
 
-
     @GetMapping("/{value}")
     public String movieValueHandle(@PathVariable String value, Model model, HttpServletResponse response) {
         String normalizedTitle = value.replace("-", " ").toLowerCase();

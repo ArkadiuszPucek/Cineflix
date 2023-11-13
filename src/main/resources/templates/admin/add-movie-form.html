@@ -82,6 +82,11 @@
                         </td>
                     </tr>
                     <tr>
+                        <td><input class="text-input-style" type="text" name="imdbRating" th:field="*{imdbRating}"
+                                   pattern="^(?:[1-9]|[1-9][0-9]|1[0-9]{2}|2[0-3][0-9]|240)$"
+                                   placeholder="Ocena filmu z IMDB" required></td>
+                    </tr>
+                    <tr>
                         <td>
                             <div class="flex-container">
                                 <label for="promoted" class="checkbox-label">Promowanie na stronie głównej:</label>

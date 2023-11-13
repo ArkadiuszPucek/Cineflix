@@ -71,7 +71,7 @@ public class SeriesController {
         seriesRepository.save(series);
 
         // Pobierz dane IMDb na podstawie IMDb ID
-        IMDbData imdbData = imdbApiService.fetchIMDbData(series.getImdbId());
+//        SeriesDto imdbData = imdbApiService.fetchIMDbData(series.getImdbId());
 
         // Zaktualizuj dane serialu na podstawie danych IMDb
 //        series.setImageUrl(imdbData.getImdbUrl());

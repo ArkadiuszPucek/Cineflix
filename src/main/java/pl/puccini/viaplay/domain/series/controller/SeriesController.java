@@ -54,31 +54,9 @@ public class SeriesController {
         model.addAttribute("actionSeriesTitle", "Seriale akcji");
         model.addAttribute("actionSeries", getSeriesByGenre(actionGenre));
         model.addAttribute("actionGenre", actionGenre.toLowerCase());
-
-
         return "series";
     }
 
-    @GetMapping("/add")
-    public String showAddSeriesForm(Model model) {
-        model.addAttribute("series", new Series());
-        return "add-series";
-    }
-
-    @PostMapping("/add")
-    public String addSeries(@ModelAttribute Series series) throws IOException, InterruptedException {
-        // Zapisz serial w bazie danych
-        seriesRepository.save(series);
-
-        // Pobierz dane IMDb na podstawie IMDb ID
-//        SeriesDto imdbData = imdbApiService.fetchIMDbData(series.getImdbId());
-
-        // Zaktualizuj dane serialu na podstawie danych IMDb
-//        series.setImageUrl(imdbData.getImdbUrl());
-//        series.setImageUrl(imdbData.getImdbUrl());
-        seriesRepository.save(series);
-        return "redirect:/series";
-    }
 
     @GetMapping("/{genre}")
     private String getSeriesByGenre(@PathVariable String genre, Model model) {
@@ -107,6 +85,7 @@ public class SeriesController {
 
         // Pobierz informacje o sezonach serialu
         List<SeasonDto> seasons = seriesService.getSeasonsForSeries(seriesDto.getImdbId());
+
         model.addAttribute("seasons", seasons);
         model.addAttribute("title", title);
 
@@ -121,7 +100,7 @@ public class SeriesController {
                 .orElse(null);
 
         if (selectedSeason == null) {
-            return "season-not-found"; // Obsłuż przypadek, gdy wybrany sezon nie istnieje
+            return "not-found"; // Obsłuż przypadek, gdy wybrany sezon nie istnieje
         }
 
         // Pobierz epizody wybranego sezonu

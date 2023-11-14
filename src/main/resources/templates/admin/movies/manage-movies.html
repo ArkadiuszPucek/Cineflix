@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ViaPlay</title>
+    <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+</head>
+<body>
+
+<div class="Layout-module-internal-page--krBv">
+    <div th:replace="~{header :: header}"></div>
+    <h1 class="page-header-admin">Panel administracyjny - zarządzaj filmami</h1>
+    <div th:if="${success}" th:text="${success}" class="alert manage-success"></div>
+    <div th:if="${error}" th:text="${error}" class="alert manage-error"></div>
+    <div id="content" class="admin-panel">
+        <div th:replace="~{admin/sidebar :: sidebar}"></div>
+        <div class="main-content">
+            <table class="movie-table">
+                <thead>
+                <tr>
+                    <th>Tytuł</th>
+                    <th>Rok wydania</th>
+                    <th>Limit wieku</th>
+                    <th>Opis filmu</th>
+                    <th>Obsada</th>
+                    <th>Reżyser</th>
+                    <th>Języki</th>
+                    <th>Gatunek</th>
+                    <th>Promowanie</th>
+                    <th>Ocena IMDb</th>
+                    <th>       </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="movie : ${allMoviesInService}">
+                    <td th:text="${movie.title}">Title</td>
+                    <td th:text="${movie.releaseYear}">Release Year</td>
+                    <td th:text="${movie.ageLimit}">Age limit</td>
+                    <td th:text="${movie.description}">Description</td>
+                    <td th:text="${movie.staff}">Staff</td>
+                    <td th:text="${movie.directedBy}">Directed By</td>
+                    <td th:text="${movie.languages}">Languages</td>
+                    <td th:text="${movie.genre}">Genre</td>
+                    <td th:text="${movie.promoted}">Is promoted</td>
+                    <td th:text="${movie.imdbRating}">Imdb Rating</td>
+                    <td>
+                        <a th:href="@{'/edit-movie/' + ${movie.imdbId}}" title="Edytuj" th:text="Edytuj">
+                        </a>
+                        <a th:href="@{'/delete-movie/' + ${movie.imdbId}}" title="Usuń" th:text="Usuń" th:onclick="'return confirm(\'Czy na pewno chcesz usunąć ten film?\');'">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div th:replace="~{footer :: footer}"></div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

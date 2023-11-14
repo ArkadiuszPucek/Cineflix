@@ -14,7 +14,8 @@
     <div th:replace="~{admin/sidebar :: sidebar}"></div>
     <div class="main-content">
       <form th:action="@{/add-movie-api}" method="post" th:object="${movie}">
-        <div class="grid-container" style="margin-left: auto">
+        <div th:if="${error}" th:text="${error}" class="alert alert-danger"></div>
+        <div class="api-grid-container">
           <tr>
             <td>
               <input class="text-input-style" type="text" name="imdbId" th:field="*{imdbId}" pattern="^tt\d{5,8}$"

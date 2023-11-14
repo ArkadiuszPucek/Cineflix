@@ -2,7 +2,7 @@ package pl.puccini.viaplay.domain.series.service;
 
 import org.springframework.stereotype.Service;
 import pl.puccini.viaplay.domain.genre.Genre;
-import pl.puccini.viaplay.domain.movie.dto.MovieDtoMapper;
+import pl.puccini.viaplay.domain.genre.GenreRepository;
 import pl.puccini.viaplay.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.viaplay.domain.series.dto.episodeDto.EpisodeDtoMapper;
 import pl.puccini.viaplay.domain.series.dto.seasonDto.SeasonDto;
@@ -15,6 +15,7 @@ import pl.puccini.viaplay.domain.series.model.Series;
 import pl.puccini.viaplay.domain.series.repository.SeasonRepository;
 import pl.puccini.viaplay.domain.series.repository.SeriesRepository;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,10 +26,12 @@ public class SeriesService {
 
     private final SeriesRepository seriesRepository;
     private final SeasonRepository seasonRepository;
+    private final GenreRepository genreRepository;
 
-    public SeriesService(SeriesRepository seriesRepository, SeasonRepository seasonRepository) {
+    public SeriesService(SeriesRepository seriesRepository, SeasonRepository seasonRepository, GenreRepository genreRepository) {
         this.seriesRepository = seriesRepository;
         this.seasonRepository = seasonRepository;
+        this.genreRepository = genreRepository;
     }
 
 
@@ -96,6 +99,29 @@ public class SeriesService {
         }
 
         return episodeDtos;
+    }
+
+    public boolean existsByImdbId(String imdbId) {
+        return seriesRepository.existsByImdbId(imdbId);
+    }
+
+    public void addSeriesManual(SeriesDto seriesDto) throws IOException, InterruptedException {
+        Series series = new Series();
+        series.setImdbId(seriesDto.getImdbId());
+        series.setTitle(seriesDto.getTitle());
+        series.setReleaseYear(seriesDto.getReleaseYear());
+        series.setImageUrl(seriesDto.getImageUrl());
+        series.setBackgroundImageUrl(seriesDto.getBackgroundImageUrl());
+        series.setDescription(seriesDto.getDescription());
+        series.setStaff(seriesDto.getStaff());
+        series.setLanguages(seriesDto.getLanguages());
+        series.setGenre(genreRepository.findByGenreTypeIgnoreCase(seriesDto.getGenre()));
+        series.setPromoted(seriesDto.isPromoted());
+        series.setAgeLimit(seriesDto.getAgeLimit());
+        series.setImdbRating(seriesDto.getImdbRating());
+        series.setImdbUrl("https://www.imdb.com/title/"+seriesDto.getImdbId());
+        series.setSeasonsCount(seriesDto.getSeasonsCount());
+        seriesRepository.save(series);
     }
 
 }

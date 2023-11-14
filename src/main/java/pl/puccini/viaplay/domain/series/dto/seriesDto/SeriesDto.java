@@ -2,16 +2,17 @@ package pl.puccini.viaplay.domain.series.dto.seriesDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class SeriesDto {
     private String imdbId;
-    private String mediaType;
     private String title;
-    private int releaseYear;
+    private Integer releaseYear;
     private String imageUrl;
     private String backgroundImageUrl;
     private String description;
@@ -19,8 +20,9 @@ public class SeriesDto {
     private String languages;
     private String genre;
     private boolean promoted;
-    private int ageLimit;
-    private double imdbRating;
+    private Integer ageLimit;
+    private Double imdbRating;
     private String imdbUrl;
-    private int seasonsCount;
+    private Integer seasonsCount;
+
 }

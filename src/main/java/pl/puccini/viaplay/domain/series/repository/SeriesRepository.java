@@ -20,4 +20,5 @@ public interface SeriesRepository extends CrudRepository<Series, Long> {
     List<Series> findByTitleContainingIgnoreCaseOrStaffContainingIgnoreCase(String title, String actor);
 
 
+    boolean existsByImdbId(String imdbId);
 }

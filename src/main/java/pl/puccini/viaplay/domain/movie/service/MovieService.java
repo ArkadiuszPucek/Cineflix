@@ -12,6 +12,7 @@ import pl.puccini.viaplay.domain.movie.repository.MovieRepository;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieService {
@@ -31,6 +32,10 @@ public class MovieService {
         return movieRepository.findAllByPromotedIsTrue().stream()
                 .map(MovieDtoMapper::map)
                 .toList();
+    }
+
+    public boolean existsByImdbId(String imdbId) {
+        return movieRepository.existsByImdbId(imdbId);
     }
 
     public void addMovieManual(MovieDto movieDto) throws IOException, InterruptedException {
@@ -97,6 +102,13 @@ public class MovieService {
         return MovieDtoMapper.map(movie);
     }
 
+    public List<MovieDto> findAllMoviesInService(){
+        return movieRepository.findAll().stream()
+                .map(MovieDtoMapper::map)
+                .toList();
+
+    }
+
     public List<MovieDto> searchMovies(String query) {
         String loweredQuery = query.toLowerCase();
         if (query == null || query.isEmpty()) {
@@ -107,6 +119,43 @@ public class MovieService {
                 .toList();
     }
 
+    public MovieDto findMovieByImdbId(String imdbId){
+        Movie movieByImdbId = movieRepository.findMovieByImdbId(imdbId);
+        return MovieDtoMapper.map(movieByImdbId);
+    }
 
+    public boolean updateMovie(MovieDto movieDto) {
+        Movie existingMovie = movieRepository.findMovieByImdbId(movieDto.getImdbId());
+
+        if (existingMovie != null) {
+            existingMovie.setTitle(movieDto.getTitle());
+            existingMovie.setReleaseYear(movieDto.getReleaseYear());
+            existingMovie.setImageUrl(movieDto.getImageUrl());
+            existingMovie.setBackgroundImageUrl(movieDto.getBackgroundImageUrl());
+            existingMovie.setMediaUrl(movieDto.getMediaUrl());
+            existingMovie.setTimeline(movieDto.getTimeline());
+            existingMovie.setAgeLimit(movieDto.getAgeLimit());
+            existingMovie.setDescription(movieDto.getDescription());
+            existingMovie.setStaff(movieDto.getStaff());
+            existingMovie.setDirectedBy(movieDto.getDirectedBy());
+            existingMovie.setLanguages(movieDto.getLanguages());
+            existingMovie.setGenre(genreRepository.findByGenreTypeIgnoreCase(movieDto.getGenre()));
+            existingMovie.setImdbRating(movieDto.getImdbRating());
+            existingMovie.setPromoted(movieDto.isPromoted());
+            movieRepository.save(existingMovie);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean deleteMovieByImdbId(String imdbId) {
+        Movie movieByImdbId = movieRepository.findMovieByImdbId(imdbId);
+        if (movieByImdbId != null) {
+            movieRepository.delete(movieByImdbId);
+            return true;
+        }
+        return false;
+    }
 
 }

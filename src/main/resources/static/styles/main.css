@@ -23811,28 +23811,127 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 
 }
 
+.alert-danger {
+    color: yellow; /* Kolor tekstu */
+    margin-top: 50px; /* Górny margines */
+    margin-bottom: 50px;
+    text-align: center; /* Wyśrodkowanie tekstu */
+    width: 100%; /* Szerokość elementu, aby wypełnił dostępną przestrzeń */
+    padding: 10px; /* Padding dla lepszego wyglądu */
+}
+
+.manage-success {
+    color: yellow; /* Kolor tekstu */
+    margin-top: 20px; /* Górny margines */
+    margin-left: 80px;
+    text-align: center; /* Wyśrodkowanie tekstu */
+    width: 100%; /* Szerokość elementu, aby wypełnił dostępną przestrzeń */
+    padding: 10px; /* Padding dla lepszego wyglądu */
+}
+.manage-error {
+    color: yellow; /* Kolor tekstu */
+    margin-top: 20px; /* Górny margines */
+    margin-left: 80px;
+    text-align: center; /* Wyśrodkowanie tekstu */
+    width: 100%; /* Szerokość elementu, aby wypełnił dostępną przestrzeń */
+    padding: 10px; /* Padding dla lepszego wyglądu */
+}
+
+
 .checkbox-label {
     margin-right: auto; /* lub inną wartość, aby dopasować odstęp */
 }
 
 /* Jeśli chcesz, aby etykieta była wyśrodkowana względem elementów po lewej stronie, możesz potrzebować następującego kodu CSS: */
 td {
-    display: flex;
+
     align-items: center; /* to spowoduje wyśrodkowanie tekstu etykiety w pionie */
     height: 100%; /* ustawi pełną wysokość komórki tabeli */
 }
+.movie-table td {
+    align-items: start; /* domyślne ustawienie dla komórek tabeli */
+    height: auto; /* pozwala komórkom ustawić wysokość na podstawie zawartości */
+    color: #ababab;
+}
+
+.movie-table {
+    width: auto; /* Ustaw pełną szerokość tabeli */
+    border-collapse: collapse; /* Usuń podwójne kreski */
+}
+
+.movie-table th, .movie-table td {
+    text-align: center; /* Wyśrodkuj tekst w komórkach */
+    border: 1px solid #8c8c8c; /* Ustaw delikatne kreski jako obramowanie */
+    padding: 6px; /* Dodaj trochę paddingu dla lepszego wyglądu */
+}
+
+.movie-table th {
+    background-color: rgba(141, 141, 141, 0.4); /* Dodaj przezroczyste tło */
+    font-weight: bold; /* Ustaw pogrubienie tekstu w nagłówkach */
+
+}
+
+.movie-table td:nth-of-type(1) {
+    color: #fafafa; /* czarny lub inny kolor dla kolumny "Tytuł" */
+}
+
+/* Określ szerokości poszczególnych kolumn */
+.movie-table th:nth-child(1) {
+    width: 12%; /* Na przykład 20% szerokości tabeli dla kolumny Tytuł */
+}
+
+.movie-table th:nth-child(2) {
+    width: 3%; /* 10% dla kolumny Rok wydania */
+}
+
+.movie-table th:nth-child(3) {
+    width: 3%; /* 5% dla kolumny Limit wieku */
+}
+
+.movie-table th:nth-child(4) {
+    width: 13%; /* 5% dla kolumny Limit wieku */
+}
+
+.movie-table th:nth-child(5) {
+    width: 10%; /* 5% dla kolumny Limit wieku */
+}
+
+.movie-table th:nth-child(6) {
+    width: 6%; /* 5% dla kolumny Limit wieku */
+}
+
+.movie-table th:nth-child(7) {
+    width: 5%; /* 5% dla kolumny Limit wieku */
+}
+
+.movie-table th:nth-child(8) {
+    width: 6%; /* 5% dla kolumny Limit wieku */
+}
+
+.movie-table th:nth-child(9) {
+    width: 3%; /* 5% dla kolumny Limit wieku */
+}
+
+.movie-table th:nth-child(10) {
+    width: 3%; /* 5% dla kolumny Limit wieku */
+}
+
+.movie-table th:nth-child(11) {
+    width: 4%; /* 5% dla kolumny Limit wieku */
+}
+
+
 
 .Admin-sidebar {
     width: 280px;
     height: auto;
-    overflow: hidden;
     left: -20px;
     text-align: left;
     transition: opacity .3s ease 0s;
     background-color: #2b2b35;
     border-radius: 8px;
     box-shadow: 0 0 8px 0 rgba(29, 29, 39, .2);
-    margin-top: 16px;
+    margin-top: 40px;
 }
 
 .sub-menu {
@@ -23864,9 +23963,10 @@ td {
     flex-grow: 1; /* Reszta przestrzeni zostanie tu wypełniona */
     padding: 20px; /* Odstępy wewnątrz głównej treści */
     overflow: auto;
+    width: 80%;
     display: flex;
     justify-content: center;
-    padding-top: 60px;
+    padding-top: 40px;
 }
 
 .submit-button-movie-page{
@@ -23882,6 +23982,15 @@ td {
     max-width: 1000px; /* Maksymalna szerokość kontenera */
     margin: 0 auto; /* Centruje kontener na stronie */
 }
+
+.api-grid-container {
+    display: grid;
+    grid-gap: 30px; /* Ustawia odstęp pomiędzy elementami */
+    max-width: 1000px; /* Maksymalna szerokość kontenera */
+    margin: 0 auto; /* Centruje kontener na stronie */
+    justify-content: space-around;
+}
+
 
 .text-input-style {
 

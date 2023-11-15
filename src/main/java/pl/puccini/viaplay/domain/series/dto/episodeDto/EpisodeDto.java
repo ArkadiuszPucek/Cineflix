@@ -2,9 +2,11 @@ package pl.puccini.viaplay.domain.series.dto.episodeDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class EpisodeDto {
@@ -14,4 +16,5 @@ public class EpisodeDto {
     private String mediaUrl;
     private int durationMinutes;
     private String episodeDescription;
+
 }

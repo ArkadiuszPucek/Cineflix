@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ViaPlay</title>
+    <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+</head>
+<body>
+
+<div class="Layout-module-internal-page--krBv">
+    <div th:replace="~{header :: header}"></div>
+    <h1 class="page-header-admin">Panel administracyjny - dodaj serial</h1>
+    <div id="content" class="admin-panel">
+        <div th:replace="~{admin/sidebar :: sidebar}"></div>
+        <div class="main-content">
+            <div id="customDialogOverlay" class="custom-dialog-overlay">
+                <div id="customDialogBox" class="custom-dialog-box">
+                    <p>Czy chcesz dodać kolejny odcinek do tego sezonu?</p>
+                    <button onclick="submitForm('addEpisode')">Dodaj odcinek</button>
+                    <button onclick="submitForm('addSeason')">Zakończ sezon</button>
+                </div>
+            </div>
+            <form id="episodeForm" th:action="@{/add-episode/{seriesId}/{seasonNumber}/{episodeNumber}(seriesId=${seriesId}, seasonNumber=${seasonNumber}, episodeNumber=${episodeNumber})}" method="post" th:object="${episode}">
+                <div th:if="${#message}" th:text="${message}" class="alert alert-danger"></div>
+                <div class="grid-container">
+                    <input type="hidden" name="seasonsCount" th:value="${seasonsCount}">
+                    <tr>
+                        <td><input class="text-input-style" type="text" name="episodeTitle" th:field="*{episodeTitle}" placeholder="Tytuł epizodu" required></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text-input-style" type="text" name="mediaUrl" th:field="*{mediaUrl}" placeholder="URL mediów" required></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text-input-style" type="number" name="durationMinutes" th:field="*{durationMinutes}" placeholder="Czas trwania (minuty)" required></td>
+                    </tr>
+                    <tr>
+                        <td><textarea class="text-input-style" name="episodeDescription" th:field="*{episodeDescription}" placeholder="Opis epizodu" rows="4" required></textarea></td>
+                    </tr>
+                </div>
+                <div class="submit-button-movie-page">
+                    <button type="button" onclick="showConfirmDialog()" class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl" tabindex="0">Dodaj</button>
+                    <input type="hidden" id="action" name="action" value="">
+
+
+                    <!--                    <button type="submit" name="action" value="addEpisode"-->
+<!--                            class="PlayButtonText-module-container-tunCR Buttons-module-primary&#45;&#45;YHdl"-->
+<!--                            tabindex="0">Dodaj epizod</button>-->
+<!--                    <button type="submit" name="action" value="addSeason"-->
+<!--                            class="PlayButtonText-module-container-tunCR Buttons-module-primary&#45;&#45;YHdl"-->
+<!--                            tabindex="0">Dodaj sezon</button>-->
+                </div>
+            </form>
+        </div>
+    </div>
+    <div th:replace="~{footer :: footer}"></div>
+</div>
+</div>
+</div>
+
+</body>
+<script>
+    function showConfirmDialog() {
+        document.getElementById("customDialogOverlay").classList.add("custom-dialog-shown");
+    }
+
+    function submitForm(actionValue) {
+        document.getElementById("action").value = actionValue;
+        document.getElementById("episodeForm").submit();
+        document.getElementById("customDialogOverlay").classList.remove("custom-dialog-shown");
+    }
+</script>
+
+
+
+</html>

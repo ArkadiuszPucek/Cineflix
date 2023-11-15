@@ -12,6 +12,7 @@ public interface SeriesRepository extends CrudRepository<Series, Long> {
     List<Series> findAllByPromotedIsTrue();
 
     List<Series> findAllByImdbId(String imdbId);
+    Series findByImdbId(String imdbId);
 
     List<Series> findAllByGenre(Genre genre);
 

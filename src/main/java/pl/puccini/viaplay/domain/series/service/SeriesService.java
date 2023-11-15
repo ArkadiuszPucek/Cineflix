@@ -3,6 +3,9 @@ package pl.puccini.viaplay.domain.series.service;
 import org.springframework.stereotype.Service;
 import pl.puccini.viaplay.domain.genre.Genre;
 import pl.puccini.viaplay.domain.genre.GenreRepository;
+import pl.puccini.viaplay.domain.imdb.IMDbApiService;
+import pl.puccini.viaplay.domain.movie.dto.MovieDto;
+import pl.puccini.viaplay.domain.movie.model.Movie;
 import pl.puccini.viaplay.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.viaplay.domain.series.dto.episodeDto.EpisodeDtoMapper;
 import pl.puccini.viaplay.domain.series.dto.seasonDto.SeasonDto;
@@ -26,11 +29,13 @@ public class SeriesService {
 
     private final SeriesRepository seriesRepository;
     private final SeasonRepository seasonRepository;
+    private final IMDbApiService imdbApiService;
     private final GenreRepository genreRepository;
 
-    public SeriesService(SeriesRepository seriesRepository, SeasonRepository seasonRepository, GenreRepository genreRepository) {
+    public SeriesService(SeriesRepository seriesRepository, SeasonRepository seasonRepository, IMDbApiService imdbApiService, GenreRepository genreRepository) {
         this.seriesRepository = seriesRepository;
         this.seasonRepository = seasonRepository;
+        this.imdbApiService = imdbApiService;
         this.genreRepository = genreRepository;
     }
 
@@ -105,7 +110,7 @@ public class SeriesService {
         return seriesRepository.existsByImdbId(imdbId);
     }
 
-    public void addSeriesManual(SeriesDto seriesDto) throws IOException, InterruptedException {
+    public Series addSeriesManual(SeriesDto seriesDto) throws IOException, InterruptedException {
         Series series = new Series();
         series.setImdbId(seriesDto.getImdbId());
         series.setTitle(seriesDto.getTitle());
@@ -122,6 +127,33 @@ public class SeriesService {
         series.setImdbUrl("https://www.imdb.com/title/"+seriesDto.getImdbId());
         series.setSeasonsCount(seriesDto.getSeasonsCount());
         seriesRepository.save(series);
+        return series;
     }
+
+    public Series addSeriesByApi(SeriesDto seriesDto) throws IOException, InterruptedException {
+        SeriesDto seriesApiDto = imdbApiService.fetchIMDbDataForSeries(seriesDto.getImdbId());
+        Series series = new Series();
+
+//        movie.setImdbId(movieApiDto.getImdbId());
+//        movie.setTitle(movieApiDto.getTitle());
+//        movie.setReleaseYear(movieApiDto.getReleaseYear());
+//        movie.setImageUrl(movieApiDto.getImageUrl());
+//        movie.setBackgroundImageUrl(movieApiDto.getBackgroundImageUrl());
+//        movie.setMediaUrl(movieApiDto.getMediaUrl());
+//        movie.setTimeline(movieApiDto.getTimeline());
+//        movie.setAgeLimit(movieApiDto.getAgeLimit());
+//        movie.setDescription(movieApiDto.getDescription());
+//        movie.setStaff(movieApiDto.getStaff());
+//        movie.setDirectedBy(movieApiDto.getDirectedBy());
+//        movie.setLanguages(movieApiDto.getLanguages());
+//        movie.setGenre(genreRepository.findByGenreTypeIgnoreCase(movieApiDto.getGenre()));
+//        movie.setImdbRating(movieApiDto.getImdbRating());
+//        movie.setPromoted(movieDto.isPromoted());
+//        movie.setImdbUrl("https://www.imdb.com/title/"+movieDto.getImdbId());
+        seriesRepository.save(series);
+        return series;
+    }
+
+
 
 }

@@ -1,18 +1,23 @@
 package pl.puccini.viaplay.domain.web.admin;
 
+import jakarta.servlet.http.HttpSession;
+import org.apache.coyote.http11.HttpOutputBuffer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.puccini.viaplay.domain.genre.Genre;
 import pl.puccini.viaplay.domain.genre.GenreService;
 import pl.puccini.viaplay.domain.movie.dto.MovieDto;
 import pl.puccini.viaplay.domain.movie.model.Movie;
 import pl.puccini.viaplay.domain.movie.service.MovieService;
+import pl.puccini.viaplay.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDto;
+import pl.puccini.viaplay.domain.series.model.Episode;
+import pl.puccini.viaplay.domain.series.model.Season;
+import pl.puccini.viaplay.domain.series.model.Series;
+import pl.puccini.viaplay.domain.series.service.EpisodeService;
+import pl.puccini.viaplay.domain.series.service.SeasonService;
 import pl.puccini.viaplay.domain.series.service.SeriesService;
 
 import java.io.IOException;
@@ -24,11 +29,15 @@ public class AdminController {
     private final MovieService movieService;
 
     private final SeriesService seriesService;
+    private final EpisodeService episodeService;
+    private final SeasonService seasonService;
     private final GenreService genreService;
 
-    public AdminController(MovieService movieService, SeriesService seriesService, GenreService genreService) {
+    public AdminController(MovieService movieService, SeriesService seriesService, EpisodeService episodeService, SeasonService seasonService, GenreService genreService) {
         this.movieService = movieService;
         this.seriesService = seriesService;
+        this.episodeService = episodeService;
+        this.seasonService = seasonService;
         this.genreService = genreService;
     }
 
@@ -142,62 +151,26 @@ public class AdminController {
 
 //SERIES
 
-//    @PostMapping("/add-series")
-//    public String addSeries(@ModelAttribute SeriesDto seriesDto, Model model, RedirectAttributes redirectAttributes) {
-//        try {
-//            // Tworzenie obiektu Series bez szczegółów sezonów
-//            seriesService.addSeriesManual(seriesDto);
-//            // Przekierowanie do dodawania informacji o sezonach
-//            return "redirect:/admin/add-season/" + seriesDto.getImdbId() + "/1"; // Przekierowanie do sezonu 1
-//        } catch (Exception e) {
-//            redirectAttributes.addFlashAttribute("error", "Błąd podczas dodawania serialu: " + e.getMessage());
-//            return "redirect:/admin/add-series";
-//        }
-//    }
-//    @PostMapping("/add-series-form")
-//    public String addSeriesManual(SeriesDto series, RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
-//        if (seriesService.existsByImdbId(series.getImdbId())) {
-//            redirectAttributes.addFlashAttribute("error", "Serial o podanym IMDb id istnieje w serwisie!");
-//            return "redirect:/add-series-form";
-//        }
-//        seriesService.addSeriesManual(series);
-//        String normalizedTitle = series.getTitle().toLowerCase().replace(" ", "-");
-//
-//        return "redirect:/series/" + normalizedTitle +"/sezon-1";
-//    }
-
 
     @PostMapping("/add-series-form")
-    public String addSeriesManual(@ModelAttribute SeriesDto series, Model model, RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
+    public String addSeriesManual(@ModelAttribute SeriesDto series, RedirectAttributes redirectAttributes, HttpSession session) {
         if (seriesService.existsByImdbId(series.getImdbId())) {
-            redirectAttributes.addFlashAttribute("error", "Serial o podanym IMDb id istnieje w serwisie!");
+            redirectAttributes.addFlashAttribute("message", "Film o podanym IMDb id istnieje w serwisie!");
             return "redirect:/add-series-form";
         }
+
         try {
-            // Tworzenie obiektu Series bez szczegółów sezonów
             seriesService.addSeriesManual(series);
-            // Przekierowanie do dodawania informacji o sezonach
-            return "redirect:/admin/add-season/" + series.getImdbId() + "/1"; // Przekierowanie do sezonu 1
-        } catch (Exception e) {
+            session.setAttribute("seasonsCount", series.getSeasonsCount());
+            session.setAttribute("title", series.getTitle());
+            redirectAttributes.addFlashAttribute("seasonsCount", series.getSeasonsCount());
+            redirectAttributes.addFlashAttribute("message", "Serial został dodany.");
+            return "redirect:/add-episode/"+series.getImdbId()+"/1/1";
+        } catch (IOException | InterruptedException e) {
             redirectAttributes.addFlashAttribute("error", "Błąd podczas dodawania serialu: " + e.getMessage());
-            return "redirect:/admin/add-series";
+            return "redirect:/add-series-form";
         }
     }
-
-    @PostMapping("/add-season/{imdbId}/{seasonNumber}")
-    public String addSeason(@PathVariable String imdbId, @PathVariable int seasonNumber, @ModelAttribute SeasonDto seasonDto, RedirectAttributes redirectAttributes) {
-        // Logika dodawania sezonu do serialu
-        // ...
-        // Sprawdzenie, czy to był ostatni sezon
-        if (seasonNumber == seriesService.getSeasonsCount(imdbId)) {
-            // Przekierowanie do listy seriali
-            redirectAttributes.addFlashAttribute("success", "Wszystkie sezony zostały dodane.");
-            return "redirect:/admin/manage-series";
-        } else {
-            // Przekierowanie do dod
-        }
-    }
-
     @GetMapping("/add-series-form")
     public String showAddSeriesManualForm(Model model) {
         List<Genre> allGenres = genreService.getAllGenres();
@@ -212,6 +185,84 @@ public class AdminController {
         return "admin/series/add-series-form";
     }
 
+    @GetMapping("/add-episode/{seriesId}/{seasonNumber}/{episodeNumber}")
+    public String showAddEpisodeForm(@PathVariable String seriesId,
+                                     @PathVariable int seasonNumber,
+                                     @PathVariable int episodeNumber,
+                                     Model model) {
+        EpisodeDto episodeDto = new EpisodeDto();
+        model.addAttribute("episode", episodeDto);
+        model.addAttribute("seriesId", seriesId);
+        model.addAttribute("seasonNumber", seasonNumber);
+        model.addAttribute("episodeNumber", episodeNumber);
+        return "admin/series/add-episode-form";
+    }
+
+    @PostMapping("/add-episode/{seriesId}/{seasonNumber}/{episodeNumber}")
+    public String addEpisode(@ModelAttribute EpisodeDto episodeDto,
+                             @PathVariable String seriesId,
+                             @PathVariable int seasonNumber,
+                             @PathVariable int episodeNumber,
+                             HttpSession session,
+                             @RequestParam String action,
+                             RedirectAttributes redirectAttributes) {
+        try {
+            Integer seasonsCount = (Integer) session.getAttribute("seasonsCount");
+            String seriesTitle = (String) session.getAttribute("title");
+            String normalizedTitle = seriesTitle.toLowerCase().replace(" ", "-");
+
+            if (seasonsCount == null) {
+                redirectAttributes.addFlashAttribute("message", "Wystąpił błąd podczas dodawnia liczby sezonów");
+                return "redirect:/admin";
+            }
+
+            episodeDto.setEpisodeNumber(episodeNumber);
+            if (seasonNumber <= seasonsCount) {
+                Episode episode = episodeService.addEpisode(episodeDto, seriesId, seasonNumber);
+                redirectAttributes.addFlashAttribute("message", "Epizod został dodany pomyślnie.");
+
+                if ("addEpisode".equals(action)) {
+                    redirectAttributes.addFlashAttribute("message", "Epizod został dodany pomyślnie");
+                    return "redirect:/add-episode/" + seriesId + "/" + seasonNumber + "/" + (episodeNumber + 1);
+                } else {
+                    redirectAttributes.addFlashAttribute("message", "Sezon został dodany pomyślnie.");
+                    if (seasonNumber < seasonsCount) {
+                        return "redirect:/add-episode/" + seriesId + "/" + (seasonNumber + 1) + "/1";
+                    } else {
+                        redirectAttributes.addFlashAttribute("message", "Wszystkie sezon zostały już dodane.");
+                        return "redirect:/series/" + normalizedTitle +"/sezon-1"; // lub inna strona końcowa
+                    }
+                }
+            } else {
+                redirectAttributes.addFlashAttribute("message", "Wszystkie sezon zostały już dodane.");
+                return "redirect:/series/" + normalizedTitle +"/sezon-1"; // lub inna strona końcowa
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", "Wystąpił błąd: " + e.getMessage());
+            return "redirect:/admin/add-episode/" + seriesId + "/" + seasonNumber + "/" + episodeNumber;
+        }
+    }
+
+
+    @PostMapping("/add-series-api")
+    public String addSeriesByApi(SeriesDto series, RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
+        if (seriesService.existsByImdbId(series.getImdbId())) {
+            redirectAttributes.addFlashAttribute("error", "Serial o podanym IMDb id istnieje w serwisie!");
+            return "redirect:/add-series-api";
+        }
+        Series seriesFromApi = seriesService.addSeriesByApi(series);
+        String normalizedTitle = seriesFromApi.getTitle().toLowerCase().replace(" ", "-");
+
+        return "redirect:/series/" + normalizedTitle +"/sezon-1";
+    }
+
+    @GetMapping("/add-series-api")
+    public String showAddSeriesApiForm(Model model) {
+        SeriesDto seriesDto = new SeriesDto();
+        model.addAttribute("series", seriesDto);
+
+        return "admin/series/add-series-api";
+    }
 
     @GetMapping("/manage-users")
     public String showManageUsersForm(Model model) {

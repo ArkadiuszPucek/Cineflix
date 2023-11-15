@@ -17,6 +17,58 @@
     animation: fadeIn .2s ease-in-out forwards
 }
 
+.custom-dialog-overlay {
+    display: none; /* Ukryty domyślnie */
+    position: fixed; /* Pozycjonowanie względem okna przeglądarki */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Półprzezroczyste tło */
+    z-index: 1000; /* Upewnij się, że jest na wierzchu */
+}
+
+.custom-dialog-box {
+    background-color: rgba(80, 80, 80, 0.75); /* Jasnoszary kolor tła */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    width: 500px; /* Szerokość okna dialogowego */
+    position: fixed;
+    top: 50%; /* Centrowanie w pionie */
+    left: 50%; /* Centrowanie w poziomie */
+    transform: translate(-50%, -50%); /* Ajustowanie do środka */
+    z-index: 1001; /* Upewnij się, że jest na wierzchu tła */
+    text-align: center;
+}
+
+.custom-dialog-box button {
+    background-color: #e53156;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: #eee;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    height: 48px;
+    line-height: 48px;
+    padding: 0 48px;
+    position: relative;
+    text-decoration: none;
+    white-space: nowrap;
+    margin: 10px; /* Dodatkowy margines dla przestrzeni pomiędzy przyciskami */
+}
+
+.custom-dialog-shown {
+    display: block; /* Wyświetla okienko dialogowe */
+}
+
+
 @keyframes showTooltip {
     0% {
         opacity: 0;

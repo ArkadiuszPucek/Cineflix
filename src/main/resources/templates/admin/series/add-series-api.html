@@ -1,10 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>ViaPlay</title>
+    <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
 </head>
 <body>
+
+<div class="Layout-module-internal-page--krBv">
+    <div th:replace="~{header :: header}"></div>
+    <h1 class="page-header-admin">Panel administracyjny - dodaj serial</h1>
+    <div id="content" class="admin-panel">
+        <div th:replace="~{admin/sidebar :: sidebar}"></div>
+        <div class="main-content">
+            <form th:action="@{/add-series-api}" method="post" th:object="${series}">
+                <div th:if="${error}" th:text="${error}" class="alert alert-danger"></div>
+                <div class="api-grid-container">
+                    <tr>
+                        <td>
+                            <input class="text-input-style" type="text" name="imdbId" th:field="*{imdbId}" pattern="^tt\d{5,8}$"
+                                   placeholder="Wpisz IMDB ID [tt642624]" required></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="flex-container">
+                                <label for="promoted" class="checkbox-label">Promowanie na stronie głównej:</label>
+                                <input type="checkbox" id="promoted" name="promoted" th:field="*{promoted}">
+                            </div>
+                        </td>
+                    </tr>
+                </div>
+                <div class="submit-button-movie-page">
+                    <button type="submit"
+                            class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl"
+                            tabindex="0">Dodaj serial
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div th:replace="~{footer :: footer}"></div>
+</div>
+</div>
+</div>
 
 </body>
 </html>

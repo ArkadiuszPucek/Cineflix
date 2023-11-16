@@ -66,7 +66,11 @@ public class EpisodeService {
             season = new Season();
             season.setSeries(series);
             season.setSeasonNumber(seasonNumber);
-            seasonRepository.save(season);
+            season = seasonRepository.save(season);
+
+            // Dodaj sezon do listy sezonów w serialu i zapisz zmiany
+            series.getSeasons().add(season);
+            seriesRepository.save(series); // Zapisanie zmian w serialu
         }
 
         return season;

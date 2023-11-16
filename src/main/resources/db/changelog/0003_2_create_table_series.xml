@@ -26,9 +26,6 @@
             <column name="staff" type="VARCHAR(1000)">
                 <constraints nullable="false"/>
             </column>
-            <column name="languages" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
             <column name="genre_type" type="VARCHAR(100)">
                 <constraints nullable="false"
                              foreignKeyName="fk_series_genre"

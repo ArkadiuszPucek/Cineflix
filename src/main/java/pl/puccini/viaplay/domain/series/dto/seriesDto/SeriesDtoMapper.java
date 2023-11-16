@@ -12,7 +12,7 @@ public class SeriesDtoMapper {
                 series.getBackgroundImageUrl(),
                 series.getDescription(),
                 series.getStaff(),
-                series.getLanguages(),
+
                 series.getGenre().getGenreType(),
                 series.isPromoted(),
                 series.getAgeLimit(),

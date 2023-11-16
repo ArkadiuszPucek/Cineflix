@@ -10,9 +10,44 @@
 <div class="Layout-module-internal-page--krBv">
     <div th:replace="~{header :: header}"></div>
     <h1 class="page-header-admin">Panel administracyjny - zarządzaj serialami</h1>
+    <div th:if="${success}" th:text="${success}" class="alert manage-success"></div>
+    <div th:if="${error}" th:text="${error}" class="alert manage-error"></div>
     <div id="content" class="admin-panel">
         <div th:replace="~{admin/sidebar :: sidebar}"></div>
         <div class="main-content">
+            <table class="movie-table">
+                <thead>
+                <tr>
+                    <th>Tytuł</th>
+                    <th>Rok wydania</th>
+                    <th>Limit wieku</th>
+                    <th>Opis filmu</th>
+                    <th>Obsada</th>
+                    <th>Gatunek</th>
+                    <th>Promowanie</th>
+                    <th>Ocena IMDb</th>
+                    <th>       </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="series : ${allSeriesInService}">
+                    <td th:text="${series.title}">Title</td>
+                    <td th:text="${series.releaseYear}">Release Year</td>
+                    <td th:text="${series.ageLimit}">Age limit</td>
+                    <td th:text="${series.description}">Description</td>
+                    <td th:text="${series.staff}">Staff</td>
+                    <td th:text="${series.genre}">Genre</td>
+                    <td th:text="${series.promoted}">Is promoted</td>
+                    <td th:text="${series.imdbRating}">Imdb Rating</td>
+                    <td>
+                        <a th:href="@{'/edit-series/' + ${series.imdbId}}" title="Edytuj" th:text="Edytuj">
+                        </a>
+                        <a th:href="@{'/delete-series/' + ${series.imdbId}}" title="Usuń" th:text="Usuń" th:onclick="'return confirm(\'Czy na pewno chcesz usunąć ten serial?\');'">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div th:replace="~{footer :: footer}"></div>

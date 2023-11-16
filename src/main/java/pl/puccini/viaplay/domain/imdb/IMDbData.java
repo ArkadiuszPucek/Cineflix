@@ -24,10 +24,10 @@ public class IMDbData {
     private Integer timeline;
     private Integer ageLimit;
     private String description;
-    private String staff; // Nie widać w JSON, musisz określić jak to zapisywać
-    private String directedBy; // Nie widać w JSON, musisz określić jak to zapisywać
-    private String languages; // Nie widać w JSON, musisz określić jak to zapisywać
-    private String genre; // Z listy 'genres'
+    private String staff;
+    private String directedBy;
+    private String languages;
+    private String genre;
     private boolean promoted;
     private double imdbRating;
     private String imdbUrl;

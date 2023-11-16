@@ -79,7 +79,8 @@
                                                     </span>
                                                 <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO Divider-module-genres-ezeLN">
                                                         <a class="Genre-module-container-HcI4x Genre-module-hasDefaultTypography-VC0YE Genre-module-link-kGNTi"
-                                                           tabindex="-1" th:text="${series.genre}" th:href="@{'/series/'+${series.genre.toLowerCase()}}">
+                                                           tabindex="-1" th:text="${series.genre}"
+                                                           th:href="@{'/series/'+${series.genre.toLowerCase()}}">
                                                             Genre type
                                                         </a>
                                                     </span>
@@ -123,15 +124,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="Audio-module-container-OTfgl">
-                                                                <span class="Audio-module-title-57qKh">
-                                                                    <span>Język</span>
-                                                                </span>
-                                                            <span class="Audio-module-audio-VqD-r"
-                                                                  th:text="${series.languages}">
-                                                                    Polski
-                                                            </span>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -149,7 +141,8 @@
                                     <div class="Scaffold-module-scaffold-F6aIC">
                                         <div id="seasonPicker" class="SeasonsNavigation-module-wrapper-dfFTz">
                                             <div class="SeasonsNavigation-module-container-PonSS">
-                                                <button class="SeasonsNavigation-module-button-vAD9n" data-testhook="season-button" tabindex="0"
+                                                <button class="SeasonsNavigation-module-button-vAD9n"
+                                                        data-testhook="season-button" tabindex="0"
                                                         style="text-decoration: none;">
                                                     <span>Sezon [[${seasonDto.seasonNumber}]]</span>
                                                 </button>
@@ -178,29 +171,39 @@
                                          data-testhook="season-episodes">
                                         <div class="EpisodesListing-module-grid-yMq1a">
                                             <div style="display: inline;" th:each="episode : ${episodes}">
-                                                    <!-- Poniżej wyświetl epizody dla wybranego sezonu -->
-                                                    <div class="Episode-module-item-ePwVa"
-                                                         data-product-id="${episode.id}" data-testhook="episode">
-                                                        <div class="Episode-module-front-ksw4U">
-                                                            <div class="Episode-module-image-ND-Ju">
-                                                                <iframe th:src="@{'https://www.youtube.com/embed/' + ${#strings.substringAfter(media_url, 'v=')}}" allowfullscreen></iframe>
-                                                            </div>
-                                                            <div class="Episode-module-backdrop-KXm-S">
-                                                                <a class="Item-module-link-Lms-C"
-                                                                   data-testhook="item-product-page-link" tabindex="-1"
-                                                                   th:href="${episode.mediaUrl}">
-                                                                </a>
-                                                            </div>
+                                                <!-- Poniżej wyświetl epizody dla wybranego sezonu -->
+                                                <div class="Episode-module-item-ePwVa"
+                                                     data-product-id="${episode.id}" data-testhook="episode">
+                                                    <div class="Episode-module-front-ksw4U">
+                                                        <div class="Episode-module-image-ND-Ju"
+                                                             th:style="'background-image: url(&quot;' + ${episode.mediaUrl} + '&quot;);'">
                                                         </div>
-                                                        <div class="Episode-module-labels-QC9tQ">
-                                                            <div data-testhook="episode-title" class="Episode-module-title-96shB"
-                                                                 th:text="${episode.episodeNumber} +'. ' + ${episode.episodeTitle}">
+                                                        <div class="Episode-module-backdrop-KXm-S">
+                                                            <a class="Item-module-link-Lms-C"
+                                                                data-testhook="item-product-page-link" tabindex="-1"
+                                                                th:href="${episode.mediaUrl}">
+                                                            <div class="PlayButton-module-container-RmQKd
+                                                            PlayButton-module-show-B7cDu
+                                                            PlayButton-module-landscape-dCM5E
+                                                            PlayButton-module-forceHover-ubElK
+                                                            PlayButton-module-episode-IOzP7"
+                                                                 data-testhook="play-button" tabindex="0">
+                                                                <figure class="PlayButton-module-icon-q3WfE"></figure>
                                                             </div>
-                                                            <div class="Episode-module-duration-UBHxK"
-                                                                 th:text="${episode.durationMinutes} +' min.'"></div>
+                                                        </a>
                                                         </div>
-                                                        <div class="Episode-module-synopsis-tyC-h" th:text="${episode.episodeDescription}"></div>
                                                     </div>
+                                                    <div class="Episode-module-labels-QC9tQ">
+                                                        <div data-testhook="episode-title"
+                                                             class="Episode-module-title-96shB"
+                                                             th:text="${episode.episodeNumber} +'. ' + ${episode.episodeTitle}">
+                                                        </div>
+                                                        <div class="Episode-module-duration-UBHxK"
+                                                             th:text="${episode.durationMinutes} +' min.'"></div>
+                                                    </div>
+                                                    <div class="Episode-module-synopsis-tyC-h"
+                                                         th:text="${episode.episodeDescription}"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -287,10 +290,10 @@
     </div>
 </div>
 
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script type="text/javascript" src="/scripts/common.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script type="text/javascript" src="/scripts/common.js"></script>
 
 
 </body>

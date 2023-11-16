@@ -264,10 +264,20 @@ public class AdminController {
         return "admin/series/add-series-api";
     }
 
+    @GetMapping("/manage-series")
+    public String showManageSeriesForm(Model model) {
+        List<SeriesDto> allSeriesInService = seriesService.findAllMoviesInService();
+        model.addAttribute("allSeriesInService", allSeriesInService);
+
+        return "admin/series/manage-series";
+    }
+
     @GetMapping("/manage-users")
     public String showManageUsersForm(Model model) {
 
         return "admin/series/manage-users";
     }
+
+
 
 }

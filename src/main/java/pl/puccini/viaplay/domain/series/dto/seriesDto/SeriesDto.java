@@ -17,7 +17,6 @@ public class SeriesDto {
     private String backgroundImageUrl;
     private String description;
     private String staff;
-    private String languages;
     private String genre;
     private boolean promoted;
     private Integer ageLimit;

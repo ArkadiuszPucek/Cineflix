@@ -28,6 +28,14 @@
     z-index: 1000; /* Upewnij się, że jest na wierzchu */
 }
 
+.PlayButton-module-hidden {
+    display: none; /* Ukrywa przycisk domyślnie */
+}
+
+.Episode-module-item-ePwVa:hover .PlayButton-module-hidden {
+    display: block; /* Pokazuje przycisk podczas najechania myszką */
+}
+
 .custom-dialog-box {
     background-color: rgba(80, 80, 80, 0.75); /* Jasnoszary kolor tła */
     padding: 20px;

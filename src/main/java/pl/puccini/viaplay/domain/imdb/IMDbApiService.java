@@ -1,12 +1,16 @@
 package pl.puccini.viaplay.domain.imdb;
 
+import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import pl.puccini.viaplay.domain.genre.Genre;
 import pl.puccini.viaplay.domain.genre.GenreRepository;
 import pl.puccini.viaplay.domain.movie.dto.MovieDto;
+import pl.puccini.viaplay.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDto;
+import pl.puccini.viaplay.domain.series.model.Series;
+import pl.puccini.viaplay.domain.series.service.EpisodeService;
 
 import java.io.IOException;
 import java.net.URI;
@@ -18,14 +22,14 @@ import java.util.*;
 public class IMDbApiService {
 
     private final GenreRepository genreRepository;
+    private final EpisodeService episodeService;
     private static final String RAPID_API_KEY = "a036483fe6mshaed22ea9f1c82e1p101240jsn943f47197fbe";
     private static final String RAPID_API_HOST = "mdblist.p.rapidapi.com";
     private static final String RAPID_API_MDA_HOST = "movie-database-alternative.p.rapidapi.com";
     private static final String RAPID_API_IMDb_HOST = "imdb8.p.rapidapi.com";
-    private static final String RAPID_API_MTVD_HOST = "movies-tv-shows-database.p.rapidapi.com";
-
-    public IMDbApiService(GenreRepository genreRepository) {
+    public IMDbApiService(GenreRepository genreRepository, EpisodeService episodeService) {
         this.genreRepository = genreRepository;
+        this.episodeService = episodeService;
     }
 
     public MovieDto fetchIMDbData(String imdbId) throws IOException, InterruptedException {
@@ -52,7 +56,6 @@ public class IMDbApiService {
         HttpResponse<String> mdaApiResponse = client.send(mdaApiRequest, HttpResponse.BodyHandlers.ofString());
 
         ObjectMapper objectMapper = new ObjectMapper();
-
         JsonNode mdblistApiRootNode = objectMapper.readTree(mdblistApiResponse.body());
         JsonNode mdaApiRootNode = objectMapper.readTree(mdaApiResponse.body());
 
@@ -133,8 +136,7 @@ public class IMDbApiService {
         String mdbListUrl = "https://mdblist.p.rapidapi.com/?i=" + imdbId;
         String overDetailsIMDbURL = "https://imdb8.p.rapidapi.com/title/get-overview-details?tconst=" + imdbId + "&currentCountry=US";
         String getSeasonsIMDbURL = "https://imdb8.p.rapidapi.com/title/get-seasons?tconst=" + imdbId;
-        String mtsdURL = "https://movies-tv-shows-database.p.rapidapi.com/?seriesid=" + imdbId;
-        String getDetailsImdbURL = "https://imdb8.p.rapidapi.com/title/get-details?tconst=" + episodeImdbId;
+        String autoCompleteIMDbURL = "https://imdb8.p.rapidapi.com/auto-complete?q=" + imdbId;
 
 
         HttpRequest mdblistApiRequest = HttpRequest.newBuilder()
@@ -158,33 +160,27 @@ public class IMDbApiService {
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
 
-        HttpRequest getDetailsIMDbApiRequest = HttpRequest.newBuilder()
-                .uri(URI.create(getDetailsImdbURL))
+        HttpRequest getAutoCompleteIMDbApiRequest = HttpRequest.newBuilder()
+                .uri(URI.create(autoCompleteIMDbURL))
                 .header("X-RapidAPI-Key", RAPID_API_KEY)
                 .header("X-RapidAPI-Host", RAPID_API_IMDb_HOST)
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
 
-        HttpRequest getDetailsByIdMtsdApiRequest = HttpRequest.newBuilder()
-                .uri(URI.create(mtsdURL))
-                .header("Type", "get-show-details")
-                .header("X-RapidAPI-Key", RAPID_API_KEY)
-                .header("X-RapidAPI-Host", RAPID_API_MTVD_HOST)
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
+
+
 
         HttpClient client = HttpClient.newHttpClient();
         HttpResponse<String> mdblistApiResponse = client.send(mdblistApiRequest, HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> overDetailsIMDbApiResponse = client.send(getOverDetailsIMDbApiRequest, HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> seasonsIMDbApiResponse = client.send(getSeasonsIMDbApiRequest, HttpResponse.BodyHandlers.ofString());
-        HttpResponse<String> seriesDetailsMTSDApiResponse = client.send(getDetailsByIdMtsdApiRequest, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> autoCompleteIMDbApiResponse = client.send(getAutoCompleteIMDbApiRequest, HttpResponse.BodyHandlers.ofString());
 
         ObjectMapper objectMapper = new ObjectMapper();
-
         JsonNode mdblistApiRootNode = objectMapper.readTree(mdblistApiResponse.body());
         JsonNode overDetailsIMDbApiRootNode = objectMapper.readTree(overDetailsIMDbApiResponse.body());
         JsonNode seasonsIMDbApiRootNode = objectMapper.readTree(seasonsIMDbApiResponse.body());
-        JsonNode seriesDetailsMTSDApiRootNode = objectMapper.readTree(seriesDetailsMTSDApiResponse.body());
+        JsonNode autoCompleteIMDbApiRootNode = objectMapper.readTree(autoCompleteIMDbApiResponse.body());
 
         SeriesDto seriesDto = new SeriesDto();
 
@@ -193,8 +189,7 @@ public class IMDbApiService {
         String imageUrl = mdblistApiRootNode.path("poster").asText(null);
         String backgroundImageUrl = mdblistApiRootNode.path("backdrop").asText("https://creativity103.com/collections/Surreal/blurredcolours3780.jpg");
         String description = mdblistApiRootNode.path("description").asText(null);
-        JsonNode starsNode = seriesDetailsMTSDApiRootNode.path("stars"); //WERYFIKACJA
-        JsonNode languagesNode = seriesDetailsMTSDApiRootNode.path("language");
+        String staff = autoCompleteIMDbApiRootNode.path("d").get(0).path("s").asText(" ");
         JsonNode genresNode = overDetailsIMDbApiRootNode.path("genres");
         int ageLimit = mdblistApiRootNode.path("age_rating").asInt(16);
         JsonNode ratingsNode = overDetailsIMDbApiRootNode.path("ratings");
@@ -204,16 +199,6 @@ public class IMDbApiService {
             double rating = ratingsNode.path("rating").asDouble(5.0);
             seriesDto.setImdbRating(rating);
         }
-
-
-        List<String> starsList = new ArrayList<>();
-        if (starsNode.isArray()) {
-            for (final JsonNode starNode : starsNode) {
-                starsList.add(starNode.asText());
-                if (starsList.size() == 5) break;
-            }
-        }
-        String stars = String.join(", ", starsList);
 
         List<String> genresList = new ArrayList<>();
         if (genresNode.isArray()) {
@@ -229,60 +214,6 @@ public class IMDbApiService {
             seriesDto.setGenre("Nieznany gatunek");
         }
 
-        List<String> languagesList = new ArrayList<>();
-        if (languagesNode.isArray()) {
-            languagesNode.forEach(lang -> {
-                String langStr = lang.asText();
-                if (!langStr.matches("^[a-zA-Z]{2}$")) {
-                    languagesList.add(langStr);
-                }
-            });
-        }
-        String languages = String.join(", ", languagesList);
-
-        String getDetailsImdbURL = "https://imdb8.p.rapidapi.com/title/get-details?tconst=" + episodeImdbId;
-
-        for (JsonNode seasonNode : seriesDetailsMTSDApiRootNode) {
-            int seasonNumber = seasonNode.path("season").asInt();
-            JsonNode episodesNode = seasonNode.path("episodes");
-
-            if (episodesNode.isArray()) {
-                for (JsonNode episodeNode : episodesNode) {
-                    int episodeNumber = episodeNode.path("episode").asInt();
-                    String episodeTitle = episodeNode.path("title").asText();
-                    // Tutaj możesz tworzyć epizody i dodawać je do sezonu
-                }
-            }
-        }
-
-//
-//        if (title == null || title.isEmpty()) {
-//            title = mdaApiRootNode.path("Title").asText(); // Zwróć uwagę na wielkość liter w JSON
-//        }
-//
-//        if (releaseYear == -1) {
-//            releaseYear = mdaApiRootNode.path("Year").asInt(); // Zwróć uwagę na wielkość liter w JSON
-//        }
-//
-//        if (imageUrl == null || imageUrl.isEmpty()) {
-//            imageUrl = mdaApiRootNode.path("Poster").asText(); // Zwróć uwagę na wielkość liter w JSON
-//        }
-//
-//        if (description == null || description.isEmpty()) {
-//            description = mdaApiRootNode.path("Plot").asText(); // Zwróć uwagę na wielkość liter w JSON
-//        }
-//        if (imdbRating == -1) {
-//            JsonNode ratingsArray = mdblistApiRootNode.path("ratings");
-//            if (ratingsArray.isArray()) {
-//                for (JsonNode ratingElement : ratingsArray) {
-//                    if ("imdb".equals(ratingElement.path("source").asText())) {
-////                        movieDto.setImdbRating(ratingElement.path("value").asDouble());
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-//
         seriesDto.setImdbId(imdbId);
         seriesDto.setTitle(title);
         seriesDto.setReleaseYear(releaseYear);
@@ -290,12 +221,79 @@ public class IMDbApiService {
         seriesDto.setBackgroundImageUrl(backgroundImageUrl);
         seriesDto.setAgeLimit(ageLimit);
         seriesDto.setDescription(description);
-        seriesDto.setStaff(stars);
-        seriesDto.setLanguages(languages);
+        seriesDto.setStaff(staff);
         matchedGenre.ifPresent(genre -> seriesDto.setGenre(genre.getGenreType()));
         seriesDto.setImdbUrl("https://www.imdb.com/title/" + imdbId);
         seriesDto.setSeasonsCount(seasonsIMDbApiRootNode.size());
 
         return seriesDto;
     }
+
+//    private void addSeasonsAndEpisodesToSeries(Series series, String imdbId) throws IOException, InterruptedException {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        HttpClient client = HttpClient.newHttpClient();
+//        String getSeasonsIMDbURL = "https://imdb8.p.rapidapi.com/title/get-seasons?tconst=" + imdbId;
+//        HttpRequest getSeasonsIMDbApiRequest = HttpRequest.newBuilder()
+//                .uri(URI.create(getSeasonsIMDbURL))
+//                .header("X-RapidAPI-Key", RAPID_API_KEY)
+//                .header("X-RapidAPI-Host", RAPID_API_IMDb_HOST)
+//                .method("GET", HttpRequest.BodyPublishers.noBody())
+//                .build();
+//
+//        HttpResponse<String> seasonsIMDbApiResponse = client.send(getSeasonsIMDbApiRequest, HttpResponse.BodyHandlers.ofString());
+//        JsonNode seasonsIMDbApiRootNode = objectMapper.readTree(seasonsIMDbApiResponse.body());
+//        for (JsonNode seasonNode : seasonsIMDbApiRootNode) {
+//            int seasonNumber = seasonNode.path("season").asInt();
+//            JsonNode episodesNode = seasonNode.path("episodes");
+//
+//            if (episodesNode.isArray()) {
+//                for (JsonNode episodeNode : episodesNode) {
+//                    // Informacje o epizodzie
+//                    int episodeNumber = episodeNode.path("episode").asInt();
+//                    String episodeTitle = episodeNode.path("title").asText();
+//                    String episodeImdbId = extractImdbId(episodeNode.path("id").asText());
+//
+//                    // Ładowanie dodatkowych informacji o epizodzie używając episodeImdbId
+//                    EpisodeDto episodeDto = loadEpisodeData(episodeImdbId);
+//                    episodeDto.setEpisodeNumber(episodeNumber);
+//                    episodeDto.setEpisodeTitle(episodeTitle);
+//
+//                    // Dodawanie epizodu do sezonu
+//                    episodeService.addEpisode(episodeDto, imdbId, seasonNumber);
+//                }
+//            }
+//        }
+//    }
+//
+//
+//    private String extractImdbId(String id) {
+//        String[] parts = id.split("/");
+//        return parts[parts.length - 1];
+//    }
+//
+//    private EpisodeDto loadEpisodeData(String episodeImdbId) throws IOException, InterruptedException {
+//        HttpClient client = HttpClient.newHttpClient();
+//        ObjectMapper objectMapper = new ObjectMapper();
+//
+//        String getDetailsImdbURL = "https://imdb8.p.rapidapi.com/title/get-details?tconst=" + episodeImdbId;
+//        HttpRequest getDetailsIMDbApiRequest = HttpRequest.newBuilder()
+//                .uri(URI.create(getDetailsImdbURL))
+//                .header("X-RapidAPI-Key", RAPID_API_KEY)
+//                .header("X-RapidAPI-Host", RAPID_API_IMDb_HOST)
+//                .method("GET", HttpRequest.BodyPublishers.noBody())
+//                .build();
+//        HttpResponse<String> getDetailsIMDbApiResponse = client.send(getDetailsIMDbApiRequest, HttpResponse.BodyHandlers.ofString());
+//        JsonNode detailsIMDbApiRootNode = objectMapper.readTree(getDetailsIMDbApiResponse.body());
+//
+//        EpisodeDto episodeDto = new EpisodeDto();
+//
+//        int runningTimeInMinutes = detailsIMDbApiRootNode.path("runningTimeInMinutes").asInt(43);
+//        episodeDto.setDurationMinutes(runningTimeInMinutes);
+//
+//        String imageUrl = detailsIMDbApiRootNode.path("image").path("url").asText("https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Solid_white_bordered.svg/600px-Solid_white_bordered.svg.png");
+//        episodeDto.setMediaUrl(imageUrl);
+//
+//        return episodeDto;
+//
+//    }
 }

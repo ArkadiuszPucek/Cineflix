@@ -21,7 +21,6 @@ public class Series {
     private String backgroundImageUrl;
     private String description;
     private String staff;
-    private String languages;
     private boolean promoted;
     private int ageLimit;
     private double imdbRating;

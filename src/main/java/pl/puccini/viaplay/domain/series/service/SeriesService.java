@@ -134,22 +134,21 @@ public class SeriesService {
         SeriesDto seriesApiDto = imdbApiService.fetchIMDbDataForSeries(seriesDto.getImdbId());
         Series series = new Series();
 
-//        movie.setImdbId(movieApiDto.getImdbId());
-//        movie.setTitle(movieApiDto.getTitle());
-//        movie.setReleaseYear(movieApiDto.getReleaseYear());
-//        movie.setImageUrl(movieApiDto.getImageUrl());
-//        movie.setBackgroundImageUrl(movieApiDto.getBackgroundImageUrl());
-//        movie.setMediaUrl(movieApiDto.getMediaUrl());
-//        movie.setTimeline(movieApiDto.getTimeline());
-//        movie.setAgeLimit(movieApiDto.getAgeLimit());
-//        movie.setDescription(movieApiDto.getDescription());
-//        movie.setStaff(movieApiDto.getStaff());
-//        movie.setDirectedBy(movieApiDto.getDirectedBy());
-//        movie.setLanguages(movieApiDto.getLanguages());
-//        movie.setGenre(genreRepository.findByGenreTypeIgnoreCase(movieApiDto.getGenre()));
-//        movie.setImdbRating(movieApiDto.getImdbRating());
-//        movie.setPromoted(movieDto.isPromoted());
-//        movie.setImdbUrl("https://www.imdb.com/title/"+movieDto.getImdbId());
+        series.setImdbId(seriesDto.getImdbId());
+        series.setTitle(seriesApiDto.getTitle());
+        series.setReleaseYear(seriesApiDto.getReleaseYear());
+        series.setImageUrl(seriesApiDto.getImageUrl());
+        series.setBackgroundImageUrl(seriesApiDto.getBackgroundImageUrl());
+        series.setDescription(seriesApiDto.getDescription());
+        series.setStaff(seriesApiDto.getStaff());
+        series.setLanguages(seriesApiDto.getLanguages());
+        series.setGenre(genreRepository.findByGenreTypeIgnoreCase(seriesDto.getGenre()));
+        series.setPromoted(seriesDto.isPromoted());
+        series.setAgeLimit(seriesApiDto.getAgeLimit());
+        series.setImdbRating(seriesDto.getImdbRating());
+        series.setImdbUrl(seriesApiDto.getImdbUrl());
+        series.setSeasonsCount(seriesDto.getSeasonsCount());
+
         seriesRepository.save(series);
         return series;
     }

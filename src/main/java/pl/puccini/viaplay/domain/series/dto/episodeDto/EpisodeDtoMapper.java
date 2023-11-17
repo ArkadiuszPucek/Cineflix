@@ -9,6 +9,7 @@ public class EpisodeDtoMapper {
                 episode.getEpisodeNumber(),
                 episode.getEpisodeTitle(),
                 episode.getMediaUrl(),
+                episode.getImageUrl(),
                 episode.getDurationMinutes(),
                 episode.getEpisodeDescription()
         );

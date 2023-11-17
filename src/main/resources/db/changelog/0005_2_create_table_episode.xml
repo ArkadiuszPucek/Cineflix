@@ -12,6 +12,7 @@
             <column name="episode_number" type="INT"/>
             <column name="episode_title" type="VARCHAR(255)"/>
             <column name="media_url" type="VARCHAR(255)"/>
+            <column name="image_url" type="VARCHAR(255)"/>
             <column name="duration_minutes" type="INT"/>
             <column name="episode_description" type="VARCHAR(555)"/>
             <column name="season_id" type="BIGINT">

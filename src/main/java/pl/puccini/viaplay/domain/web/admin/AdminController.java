@@ -272,6 +272,55 @@ public class AdminController {
         return "admin/series/manage-series";
     }
 
+    @GetMapping("/edit-series/{imdbId}")
+    public String showEditSeriesForm(@PathVariable String imdbId, Model model) {
+        SeriesDto seriesByImdbId = seriesService.findSeriesByImdbId(imdbId);
+
+        model.addAttribute("series", seriesByImdbId);
+        List<Genre> allGenres = genreService.getAllGenres();
+        model.addAttribute("genres", allGenres);
+        List<Integer> ageLimits = Arrays.asList(3, 7, 12, 16, 18);
+        model.addAttribute("ageLimits", ageLimits);
+
+        return "admin/series/edit-series-form";
+    }
+
+    @PostMapping("/update-series")
+    public String updateSeries(@ModelAttribute("series") SeriesDto seriesDto, RedirectAttributes redirectAttributes) {
+        try {
+            boolean updateResult = seriesService.updateSeries(seriesDto);
+
+            if (updateResult) {
+                redirectAttributes.addFlashAttribute("success", "Serial został pomyślnie zaktualizowany.");
+                return "redirect:/manage-series";
+            } else {
+                redirectAttributes.addFlashAttribute("error", "Nie znaleziono serialu do aktualizacji.");
+                return "redirect:/edit-series/" + seriesDto.getImdbId();
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas aktualizacji serialu: " + e.getMessage());
+            return "redirect:/edit-series/" + seriesDto.getImdbId();
+        }
+    }
+
+    @GetMapping("/delete-series/{imdbId}")
+    public String deleteSeries(@PathVariable String imdbId, RedirectAttributes redirectAttributes) {
+        try {
+            boolean deleted = seriesService.deleteSeriesByImdbId(imdbId);
+            if (deleted) {
+                redirectAttributes.addFlashAttribute("success", "Serial został pomyślnie usunięty.");
+            } else {
+                redirectAttributes.addFlashAttribute("error", "Nie znaleziono serialu do usunięcia.");
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas usuwania serialu: " + e.getMessage());
+        }
+        return "redirect:/manage-series";
+    }
+
+
+
+
     @GetMapping("/manage-users")
     public String showManageUsersForm(Model model) {
 

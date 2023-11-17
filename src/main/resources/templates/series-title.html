@@ -176,12 +176,12 @@
                                                      data-product-id="${episode.id}" data-testhook="episode">
                                                     <div class="Episode-module-front-ksw4U">
                                                         <div class="Episode-module-image-ND-Ju"
-                                                             th:style="'background-image: url(&quot;' + ${episode.mediaUrl} + '&quot;);'">
+                                                             th:style="'background-image: url(&quot;' + ${episode.imageUrl} + '&quot;);'">
                                                         </div>
                                                         <div class="Episode-module-backdrop-KXm-S">
                                                             <a class="Item-module-link-Lms-C"
                                                                 data-testhook="item-product-page-link" tabindex="-1"
-                                                                th:href="${episode.mediaUrl}">
+                                                               th:href="@{/play-episode/{episodeId}(episodeId=${episode.id})}">
                                                             <div class="PlayButton-module-container-RmQKd
                                                             PlayButton-module-show-B7cDu
                                                             PlayButton-module-landscape-dCM5E

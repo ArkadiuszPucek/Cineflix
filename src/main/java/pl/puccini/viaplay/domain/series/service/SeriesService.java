@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import pl.puccini.viaplay.domain.genre.Genre;
 import pl.puccini.viaplay.domain.genre.GenreRepository;
 import pl.puccini.viaplay.domain.imdb.IMDbApiService;
+import pl.puccini.viaplay.domain.movie.dto.MovieDto;
 import pl.puccini.viaplay.domain.movie.dto.MovieDtoMapper;
+import pl.puccini.viaplay.domain.movie.model.Movie;
 import pl.puccini.viaplay.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.viaplay.domain.series.dto.episodeDto.EpisodeDtoMapper;
 import pl.puccini.viaplay.domain.series.dto.seasonDto.SeasonDto;
@@ -242,10 +244,11 @@ public class SeriesService {
         episodeDto.setDurationMinutes(runningTimeInMinutes);
 
         String imageUrl = detailsIMDbApiRootNode.path("image").path("url").asText("https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Solid_white_bordered.svg/600px-Solid_white_bordered.svg.png");
-        episodeDto.setMediaUrl(imageUrl);
+        episodeDto.setImageUrl(imageUrl);
 
         String plotOutline = overDetailsIMDbApiRootNode.path("plotOutline").path("text").asText();
         episodeDto.setEpisodeDescription(plotOutline);
+        episodeDto.setMediaUrl("https://www.youtube.com/watch?v=hQqBsvIB40E&ab_channel=jurak");
 
         return episodeDto;
 
@@ -256,5 +259,42 @@ public class SeriesService {
         return seriesRepository.findAll().stream()
                 .map(SeriesDtoMapper::map)
                 .toList();
+    }
+
+
+    public SeriesDto findSeriesByImdbId(String imdbId) {
+        Series seriesByImdbId = seriesRepository.findSeriesByImdbId(imdbId);
+        return SeriesDtoMapper.map(seriesByImdbId);
+    }
+
+
+    public boolean updateSeries(SeriesDto seriesDto) {
+        Series existingSeries = seriesRepository.findSeriesByImdbId(seriesDto.getImdbId());
+
+        if (existingSeries != null) {
+            existingSeries.setTitle(seriesDto.getTitle());
+            existingSeries.setReleaseYear(seriesDto.getReleaseYear());
+            existingSeries.setImageUrl(seriesDto.getImageUrl());
+            existingSeries.setBackgroundImageUrl(seriesDto.getBackgroundImageUrl());
+            existingSeries.setDescription(seriesDto.getDescription());
+            existingSeries.setStaff(seriesDto.getStaff());
+            existingSeries.setGenre(genreRepository.findByGenreTypeIgnoreCase(seriesDto.getGenre()));
+            existingSeries.setPromoted(seriesDto.isPromoted());
+            existingSeries.setAgeLimit(seriesDto.getAgeLimit());
+            existingSeries.setImdbRating(seriesDto.getImdbRating());
+            seriesRepository.save(existingSeries);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean deleteSeriesByImdbId(String imdbId) {
+        Series seriesByImdbId = seriesRepository.findSeriesByImdbId(imdbId);
+        if (seriesByImdbId != null) {
+            seriesRepository.delete(seriesByImdbId);
+            return true;
+        }
+        return false;
     }
 }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>ViaPlay</title>
+  <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+</head>
+<body>
+
+<div class="Layout-module-internal-page--krBv">
+  <div th:replace="~{header :: header}"></div>
+  <div id="content" class="admin-panel">
+    <div class="main-content-episode">
+      <div class="episode-info">
+        <h1 th:text="${serialTitle}"></h1>
+        <h2>Sezon <span th:text="${seasonNumber}"></span>, Epizod <span th:text="${episodeNumber}"></span></h2>
+      </div>
+      <div class="responsive-iframe-container">
+        <iframe th:src="${mediaUrl}" frameborder="0" allowfullscreen></iframe>
+      </div>
+
+    </div>
+  </div>
+  <div th:replace="~{footer :: footer}"></div>
+</div>
+</div>
+</div>
+</body>
+</html>

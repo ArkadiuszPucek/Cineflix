@@ -9,7 +9,7 @@
 
 <div class="Layout-module-internal-page--krBv">
     <div th:replace="~{header :: header}"></div>
-    <h1 class="page-header-admin">Panel administracyjny - dodaj film</h1>
+    <h1 class="page-header-admin">Panel administracyjny - edytuj film</h1>
     <div id="content" class="admin-panel">
         <div th:replace="~{admin/sidebar :: sidebar}"></div>
         <div class="main-content">
@@ -18,8 +18,7 @@
                 <div class="grid-container">
                     <tr>
                         <td>
-                            <input class="text-input-style" type="text" name="imdbId" th:field="*{imdbId}" pattern="^tt\d{5,8}$"
-                                   placeholder="Wpisz IMDB ID [tt642624]" required></td>
+                            <input class="text-input-style" type="hidden" name="imdbId" th:field="*{imdbId}" pattern="^tt\d{5,8}$" required></td>
                     </tr>
                     <tr>
                         <td><input class="text-input-style" type="text" name="title" th:field="*{title}" placeholder="Wpisz tytuł filmu" required></td>

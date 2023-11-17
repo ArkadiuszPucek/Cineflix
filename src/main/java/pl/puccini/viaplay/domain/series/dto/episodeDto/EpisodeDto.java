@@ -14,6 +14,7 @@ public class EpisodeDto {
     private int episodeNumber;
     private String episodeTitle;
     private String mediaUrl;
+    private String imageUrl;
     private int durationMinutes;
     private String episodeDescription;
 

@@ -3,6 +3,7 @@ package pl.puccini.viaplay.domain.series.service;
 import org.springframework.stereotype.Service;
 import pl.puccini.viaplay.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.viaplay.domain.series.dto.episodeDto.EpisodeDtoMapper;
+import pl.puccini.viaplay.domain.series.dto.episodeDto.EpisodeInfoDto;
 import pl.puccini.viaplay.domain.series.model.Season;
 import pl.puccini.viaplay.domain.series.model.Series;
 import pl.puccini.viaplay.domain.series.repository.EpisodeRepository;
@@ -30,31 +31,27 @@ public class EpisodeService {
     }
 
     public List<EpisodeDto> getEpisodesForSeason(Long seasonId) {
-        // Przyjmuję, że EpisodeRepository ma metodę do pobierania epizodów dla danego sezonu
         List<Episode> episodes = episodeRepository.findBySeasonId(seasonId);
 
-        // Następnie możesz przekształcić encje Episode na obiekty EpisodeDto za pomocą mappera
         List<EpisodeDto> episodeDtos = episodes.stream()
-                .map(EpisodeDtoMapper::map) // Wykorzystaj swojego mappera
+                .map(EpisodeDtoMapper::map)
                 .collect(Collectors.toList());
 
         return episodeDtos;
     }
 
     public Episode addEpisode(EpisodeDto episodeDto, String seriesId, int seasonNumber) {
-        // Znajdź lub utwórz sezon
         Season season = findOrCreateSeason(seriesId, seasonNumber);
 
-        // Utwórz nowy epizod z danych DTO
         Episode episode = new Episode();
         episode.setEpisodeNumber(episodeDto.getEpisodeNumber());
         episode.setEpisodeTitle(episodeDto.getEpisodeTitle());
         episode.setMediaUrl(episodeDto.getMediaUrl());
+        episode.setImageUrl(episodeDto.getImageUrl());
         episode.setDurationMinutes(episodeDto.getDurationMinutes());
         episode.setEpisodeDescription(episodeDto.getEpisodeDescription());
         episode.setSeason(season);
 
-        // Zapisz epizod w bazie danych
         return episodeRepository.save(episode);
     }
 
@@ -68,31 +65,33 @@ public class EpisodeService {
             season.setSeasonNumber(seasonNumber);
             season = seasonRepository.save(season);
 
-            // Dodaj sezon do listy sezonów w serialu i zapisz zmiany
             series.getSeasons().add(season);
-            seriesRepository.save(series); // Zapisanie zmian w serialu
+            seriesRepository.save(series);
         }
 
         return season;
     }
 
-//    public void addEpisode(EpisodeDto episodeDto, Long seasonId) throws Exception {
-//        // Pobranie sezonu na podstawie seasonId
-//        Season season = seasonRepository.findById(seasonId)
-//                .orElseThrow(() -> new Exception("Sezon o podanym ID nie został znaleziony"));
-//
-//        // Tworzenie nowego epizodu
-//        Episode episode = new Episode();
-//        episode.setEpisodeNumber(episodeDto.getEpisodeNumber());
-//        episode.setEpisodeTitle(episodeDto.getEpisodeTitle());
-//        episode.setMediaUrl(episodeDto.getMediaUrl());
-//        episode.setDurationMinutes(episodeDto.getDurationMinutes());
-//        episode.setEpisodeDescription(episodeDto.getEpisodeDescription());
-//
-//        // Ustawienie relacji z sezonem
-//        episode.setSeason(season);
-//
-//        // Zapisanie epizodu w bazie danych
-//        episodeRepository.save(episode);
-//    }
+    public EpisodeDto getEpisodeById(Long episodeId) {
+        Episode episode = episodeRepository.findEpisodeById(episodeId);
+        return EpisodeDtoMapper.map(episode);
+    }
+
+    public EpisodeInfoDto getEpisodeInfo(Long episodeId) {
+        Episode episode = episodeRepository.findById(episodeId).orElse(null);
+        if (episode == null) {
+            return null; // Możesz też rzucić wyjątek, jeśli to preferujesz
+        }
+
+        Season season = episode.getSeason();
+        Series series = season != null ? season.getSeries() : null;
+
+        EpisodeInfoDto episodeInfoDto = new EpisodeInfoDto();
+        episodeInfoDto.setSerialTitle(series != null ? series.getTitle() : "Nieznany serial");
+        episodeInfoDto.setSeasonNumber(season != null ? season.getSeasonNumber() : -1);
+        episodeInfoDto.setEpisodeNumber(episode.getEpisodeNumber());
+        episodeInfoDto.setMediaUrl(episode.getMediaUrl());
+
+        return episodeInfoDto;
+    }
 }

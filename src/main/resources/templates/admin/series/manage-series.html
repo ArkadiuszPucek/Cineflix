@@ -15,13 +15,14 @@
     <div id="content" class="admin-panel">
         <div th:replace="~{admin/sidebar :: sidebar}"></div>
         <div class="main-content">
-            <table class="movie-table">
+            <table class="series-table">
                 <thead>
                 <tr>
                     <th>Tytuł</th>
+                    <th>Sezony</th>
                     <th>Rok wydania</th>
                     <th>Limit wieku</th>
-                    <th>Opis filmu</th>
+                    <th>Opis serialu</th>
                     <th>Obsada</th>
                     <th>Gatunek</th>
                     <th>Promowanie</th>
@@ -32,6 +33,7 @@
                 <tbody>
                 <tr th:each="series : ${allSeriesInService}">
                     <td th:text="${series.title}">Title</td>
+                    <td th:text="${series.seasonsCount}">Title</td>
                     <td th:text="${series.releaseYear}">Release Year</td>
                     <td th:text="${series.ageLimit}">Age limit</td>
                     <td th:text="${series.description}">Description</td>
@@ -40,10 +42,10 @@
                     <td th:text="${series.promoted}">Is promoted</td>
                     <td th:text="${series.imdbRating}">Imdb Rating</td>
                     <td>
-                        <a th:href="@{'/edit-series/' + ${series.imdbId}}" title="Edytuj" th:text="Edytuj">
-                        </a>
-                        <a th:href="@{'/delete-series/' + ${series.imdbId}}" title="Usuń" th:text="Usuń" th:onclick="'return confirm(\'Czy na pewno chcesz usunąć ten serial?\');'">
-                        </a>
+                        <a th:href="@{'/edit-series/' + ${series.imdbId}}" title="Edytuj" th:text="Edytuj"></a>
+                        <a th:href="@{'/delete-series/' + ${series.imdbId}}" title="Usuń" th:text="Usuń" th:onclick="'return confirm(\'Czy na pewno chcesz usunąć ten serial?\');'"></a>
+                        <a th:href="@{'/edit-series-seasons/' + ${series.imdbId}}" title="Edytuj-sezon" th:text="sezony"></a>
+
                     </td>
                 </tr>
                 </tbody>

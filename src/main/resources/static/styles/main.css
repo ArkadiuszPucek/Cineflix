@@ -23981,6 +23981,79 @@ td {
 }
 
 
+.series-table td {
+    align-items: start; /* domyślne ustawienie dla komórek tabeli */
+    height: auto; /* pozwala komórkom ustawić wysokość na podstawie zawartości */
+    color: #ababab;
+}
+
+.series-table {
+    width: auto; /* Ustaw pełną szerokość tabeli */
+    border-collapse: collapse; /* Usuń podwójne kreski */
+}
+
+.series-table th, .series-table td {
+    text-align: center; /* Wyśrodkuj tekst w komórkach */
+    border: 1px solid #8c8c8c; /* Ustaw delikatne kreski jako obramowanie */
+    padding: 6px; /* Dodaj trochę paddingu dla lepszego wyglądu */
+}
+
+.series-table th {
+    background-color: rgba(141, 141, 141, 0.4); /* Dodaj przezroczyste tło */
+    font-weight: bold; /* Ustaw pogrubienie tekstu w nagłówkach */
+
+}
+
+.series-table td:nth-of-type(1) {
+    color: #fafafa; /* czarny lub inny kolor dla kolumny "Tytuł" */
+}
+
+/* Określ szerokości poszczególnych kolumn */
+.series-table th:nth-child(1) {
+    width: 12%; /* Na przykład 20% szerokości tabeli dla kolumny Tytuł */
+}
+
+.series-table th:nth-child(2) {
+    width: 2%; /* 10% dla kolumny Rok wydania */
+}
+
+.series-table th:nth-child(3) {
+    width: 2%; /* 5% dla kolumny Limit wieku */
+}
+
+.series-table th:nth-child(4) {
+    width: 2%; /* 5% dla kolumny Limit wieku */
+}
+
+.series-table th:nth-child(5) {
+    width: 12%; /* 5% dla kolumny Limit wieku */
+}
+
+.series-table th:nth-child(6) {
+    width: 8%; /* 5% dla kolumny Limit wieku */
+}
+
+.series-table th:nth-child(7) {
+    width: 5%; /* 5% dla kolumny Limit wieku */
+}
+
+.series-table th:nth-child(8) {
+    width: 6%; /* 5% dla kolumny Limit wieku */
+}
+
+.series-table th:nth-child(9) {
+    width: 3%; /* 5% dla kolumny Limit wieku */
+}
+
+.series-table th:nth-child(10) {
+    width: 3%; /* 5% dla kolumny Limit wieku */
+}
+
+.series-table th:nth-child(11) {
+    width: 4%; /* 5% dla kolumny Limit wieku */
+}
+
+
 
 .Admin-sidebar {
     width: 280px;
@@ -33299,10 +33372,45 @@ select.text-input-style {
     margin-bottom: 10px;
 }
 
+
 .no-results-text a {
     text-decoration: none;
     color: #337ab7; /* Kolor linku */
     cursor: pointer;
 }
+
+.episode-info {
+    text-align: center;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.responsive-iframe-container {
+    position: relative;
+    width: 80%;
+    padding-bottom: 38%;
+    margin: auto;
+    height: 0;
+}
+
+.responsive-iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.4);
+}
+
+.main-content-episode {
+    flex-grow: 1; /* Reszta przestrzeni zostanie tu wypełniona */
+    padding: 20px; /* Odstępy wewnątrz głównej treści */
+    overflow: auto;
+    width: 80%;
+    justify-content: center;
+    padding-top: 40px;
+}
+
 
 

@@ -25,4 +25,6 @@ public interface SeriesRepository extends CrudRepository<Series, Long> {
 
 
     boolean existsByImdbId(String imdbId);
+
+    Series findSeriesByImdbId(String imdbId);
 }

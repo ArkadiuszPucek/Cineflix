@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ViaPlay</title>
+    <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+</head>
+<body>
+
+<div class="Layout-module-internal-page--krBv">
+    <div th:replace="~{header :: header}"></div>
+    <h1 class="page-header-admin" th:text="'Panel administracyjny - zarządzaj sezonami serialu: ' + ${series.title}">
+        Panel administracyjny - zarządzaj sezonami </h1>
+    <div th:if="${message}" th:text="${message}" class="alert manage-success"></div>
+    <div id="content" class="admin-panel">
+        <div th:replace="~{admin/sidebar :: sidebar}"></div>
+        <div class="main-content-seasons">
+            <div id="customDialogOverlay" class="custom-dialog-overlay">
+                <div id="customDialogBox" class="custom-dialog-box">
+                    <p>Czy na pewno chcesz usunąć ten epizod?</p>
+                    <button onclick="submitForm('deleteEpisode')">Tak</button>
+                    <button onclick="submitForm('dontDeleteEpisode')">Nie</button>
+                </div>
+            </div>
+
+            <input type="hidden" id="action" value="">
+            <div class="seasons-tables-style" th:each="season : ${seasons}">
+                <h2 class="season-table-header">Sezon <span th:text="${season.seasonNumber}"></span></h2>
+                <table class="seasons-tables">
+                    <thead>
+                    <tr>
+                        <th>Numer</th>
+                        <th>Tytuł</th>
+                        <th>URL okładki</th>
+                        <th>URL filmu</th>
+                        <th>Czas trwania</th>
+                        <th>Opis epizodu</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="epizode : ${season.episodes}">
+                        <td th:text="${epizode.episodeNumber}">Title</td>
+                        <td th:text="${epizode.episodeTitle}">Title</td>
+                        <td th:text="${epizode.mediaUrl}">Release Year</td>
+                        <td th:text="${epizode.mediaUrl}">Age limit</td>
+                        <td th:text="${epizode.durationMinutes}">Description</td>
+                        <td th:text="${epizode.episodeDescription}">Staff</td>
+                        <td>
+                            <a th:href="@{'/edit-episode/' + ${epizode.id}}" title="Edytuj" th:text="Edytuj"></a>
+                            <a href="#" title="Usuń" th:text="Usuń" id="deleteEpisode" th:onclick="showConfirmDialog()" th:attr="data-id=${epizode.id}"></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{footer :: footer}"></div>
+</div>
+</div>
+</div>
+<script>
+    function showConfirmDialog() {
+        var episodeId = event.target.getAttribute('data-id');
+        document.getElementById("action").value = episodeId;
+        document.getElementById("customDialogOverlay").classList.add("custom-dialog-shown");
+    }
+
+    function submitForm(confirmAction) {
+        if (confirmAction === 'deleteEpisode') {
+            var episodeId = document.getElementById("action").value;
+            window.location.href = '/delete-episode/' + episodeId + '?action=deleteEpisode';
+        } else {
+            document.getElementById("customDialogOverlay").classList.remove("custom-dialog-shown");
+        }
+    }
+</script>
+
+</body>
+</html>

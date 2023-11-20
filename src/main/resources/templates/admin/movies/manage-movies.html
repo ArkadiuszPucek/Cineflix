@@ -15,6 +15,14 @@
     <div id="content" class="admin-panel">
         <div th:replace="~{admin/sidebar :: sidebar}"></div>
         <div class="main-content">
+            <div id="customDialogOverlay" class="custom-dialog-overlay">
+                <div id="customDialogBox" class="custom-dialog-box">
+                    <p>Czy na pewno chcesz usunąć ten film?</p>
+                    <button onclick="submitForm('deleteMovie')">Tak</button>
+                    <button onclick="submitForm('dontDeleteMovie')">Nie</button>
+                </div>
+            </div>
+            <input type="hidden" id="action" value="">
             <table class="movie-table">
                 <thead>
                 <tr>
@@ -46,7 +54,7 @@
                     <td>
                         <a th:href="@{'/edit-movie/' + ${movie.imdbId}}" title="Edytuj" th:text="Edytuj">
                         </a>
-                        <a th:href="@{'/delete-movie/' + ${movie.imdbId}}" title="Usuń" th:text="Usuń" th:onclick="'return confirm(\'Czy na pewno chcesz usunąć ten film?\');'">
+                        <a href="#" title="Usuń" th:text="Usuń" id="deleteMovie" th:onclick="showConfirmDialog()" th:attr="data-imdbId=${movie.imdbId}"></a>
                         </a>
                     </td>
                 </tr>
@@ -58,6 +66,22 @@
 </div>
 </div>
 </div>
+<script>
+    function showConfirmDialog() {
+        var imdbId = event.target.getAttribute('data-imdbId');
+        document.getElementById("action").value = imdbId;
+        document.getElementById("customDialogOverlay").classList.add("custom-dialog-shown");
+    }
+
+    function submitForm(confirmAction) {
+        if (confirmAction === 'deleteMovie') {
+            var imdbId = document.getElementById("action").value;
+            window.location.href = '/delete-movie/' + imdbId + '?action=deleteMovie';
+        } else {
+            document.getElementById("customDialogOverlay").classList.remove("custom-dialog-shown");
+        }
+    }
+</script>
 
 </body>
 </html>

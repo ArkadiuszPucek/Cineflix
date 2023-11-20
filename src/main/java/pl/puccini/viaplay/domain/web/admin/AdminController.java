@@ -1,11 +1,14 @@
 package pl.puccini.viaplay.domain.web.admin;
 
 import jakarta.servlet.http.HttpSession;
-import org.apache.coyote.http11.HttpOutputBuffer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.puccini.viaplay.domain.exceptions.EpisodeNotFoundException;
+import pl.puccini.viaplay.domain.exceptions.SeriesAlreadyExistsException;
+import pl.puccini.viaplay.domain.exceptions.SeriesNotFoundException;
+import pl.puccini.viaplay.domain.exceptions.SeriesUpdateException;
 import pl.puccini.viaplay.domain.genre.Genre;
 import pl.puccini.viaplay.domain.genre.GenreService;
 import pl.puccini.viaplay.domain.movie.dto.MovieDto;
@@ -14,32 +17,28 @@ import pl.puccini.viaplay.domain.movie.service.MovieService;
 import pl.puccini.viaplay.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDto;
 import pl.puccini.viaplay.domain.series.model.Episode;
-import pl.puccini.viaplay.domain.series.model.Season;
 import pl.puccini.viaplay.domain.series.model.Series;
 import pl.puccini.viaplay.domain.series.service.EpisodeService;
-import pl.puccini.viaplay.domain.series.service.SeasonService;
 import pl.puccini.viaplay.domain.series.service.SeriesService;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+
 
 @Controller
 public class AdminController {
     private final MovieService movieService;
-
     private final SeriesService seriesService;
     private final EpisodeService episodeService;
-    private final SeasonService seasonService;
     private final GenreService genreService;
 
-    public AdminController(MovieService movieService, SeriesService seriesService, EpisodeService episodeService, SeasonService seasonService, GenreService genreService) {
+    public AdminController(MovieService movieService, SeriesService seriesService, EpisodeService episodeService, GenreService genreService) {
         this.movieService = movieService;
         this.seriesService = seriesService;
         this.episodeService = episodeService;
-        this.seasonService = seasonService;
         this.genreService = genreService;
     }
+
 
     @GetMapping("/admin")
     public String getAdminPanel() {
@@ -134,16 +133,18 @@ public class AdminController {
     }
 
     @GetMapping("/delete-movie/{imdbId}")
-    public String deleteMovie(@PathVariable String imdbId, RedirectAttributes redirectAttributes) {
-        try {
+    public String deleteMovie(@PathVariable String imdbId,
+                              RedirectAttributes redirectAttributes,
+                              @RequestParam String action) {
+        if ("deleteMovie".equals(action)) {
             boolean deleted = movieService.deleteMovieByImdbId(imdbId);
             if (deleted) {
                 redirectAttributes.addFlashAttribute("success", "Film został pomyślnie usunięty.");
             } else {
                 redirectAttributes.addFlashAttribute("error", "Nie znaleziono filmu do usunięcia.");
             }
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas usuwania filmu: " + e.getMessage());
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas usuwania filmu");
         }
         return "redirect:/manage-movies";
     }
@@ -209,7 +210,6 @@ public class AdminController {
         try {
             Integer seasonsCount = (Integer) session.getAttribute("seasonsCount");
             String seriesTitle = (String) session.getAttribute("title");
-            String normalizedTitle = seriesTitle.toLowerCase().replace(" ", "-");
 
             if (seasonsCount == null) {
                 redirectAttributes.addFlashAttribute("message", "Wystąpił błąd podczas dodawnia liczby sezonów");
@@ -217,26 +217,8 @@ public class AdminController {
             }
 
             episodeDto.setEpisodeNumber(episodeNumber);
-            if (seasonNumber <= seasonsCount) {
-                Episode episode = episodeService.addEpisode(episodeDto, seriesId, seasonNumber);
-                redirectAttributes.addFlashAttribute("message", "Epizod został dodany pomyślnie.");
-
-                if ("addEpisode".equals(action)) {
-                    redirectAttributes.addFlashAttribute("message", "Epizod został dodany pomyślnie");
-                    return "redirect:/add-episode/" + seriesId + "/" + seasonNumber + "/" + (episodeNumber + 1);
-                } else {
-                    redirectAttributes.addFlashAttribute("message", "Sezon został dodany pomyślnie.");
-                    if (seasonNumber < seasonsCount) {
-                        return "redirect:/add-episode/" + seriesId + "/" + (seasonNumber + 1) + "/1";
-                    } else {
-                        redirectAttributes.addFlashAttribute("message", "Wszystkie sezon zostały już dodane.");
-                        return "redirect:/series/" + normalizedTitle +"/sezon-1"; // lub inna strona końcowa
-                    }
-                }
-            } else {
-                redirectAttributes.addFlashAttribute("message", "Wszystkie sezon zostały już dodane.");
-                return "redirect:/series/" + normalizedTitle +"/sezon-1"; // lub inna strona końcowa
-            }
+            String redirectUrl = episodeService.processEpisodeAddition(episodeDto, seriesId, seasonNumber, episodeNumber, seasonsCount, action, seriesTitle);
+            return "redirect:" + redirectUrl;
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", "Wystąpił błąd: " + e.getMessage());
             return "redirect:/admin/add-episode/" + seriesId + "/" + seasonNumber + "/" + episodeNumber;
@@ -245,15 +227,19 @@ public class AdminController {
 
 
     @PostMapping("/add-series-api")
-    public String addSeriesByApi(SeriesDto series, RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
-        if (seriesService.existsByImdbId(series.getImdbId())) {
-            redirectAttributes.addFlashAttribute("error", "Serial o podanym IMDb id istnieje w serwisie!");
+    public String addSeriesByApi(SeriesDto series, RedirectAttributes redirectAttributes) {
+        try {
+            Series seriesFromApi = seriesService.addSeriesIfNotExist(series);
+            String normalizedTitle = seriesService.getNormalizedSeriesTitle(seriesFromApi.getTitle());
+
+            return "redirect:/series/" + normalizedTitle +"/sezon-1";
+        } catch (SeriesAlreadyExistsException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/add-series-api";
+        } catch (IOException | InterruptedException e) {
+            redirectAttributes.addFlashAttribute("error", "Wystąpił błąd: " + e.getMessage());
             return "redirect:/add-series-api";
         }
-        Series seriesFromApi = seriesService.addSeriesByApi(series);
-        String normalizedTitle = seriesFromApi.getTitle().toLowerCase().replace(" ", "-");
-
-        return "redirect:/series/" + normalizedTitle +"/sezon-1";
     }
 
     @GetMapping("/add-series-api")
@@ -288,15 +274,12 @@ public class AdminController {
     @PostMapping("/update-series")
     public String updateSeries(@ModelAttribute("series") SeriesDto seriesDto, RedirectAttributes redirectAttributes) {
         try {
-            boolean updateResult = seriesService.updateSeries(seriesDto);
-
-            if (updateResult) {
-                redirectAttributes.addFlashAttribute("success", "Serial został pomyślnie zaktualizowany.");
-                return "redirect:/manage-series";
-            } else {
-                redirectAttributes.addFlashAttribute("error", "Nie znaleziono serialu do aktualizacji.");
-                return "redirect:/edit-series/" + seriesDto.getImdbId();
-            }
+            seriesService.updateSeries(seriesDto);
+            redirectAttributes.addFlashAttribute("success", "Serial został pomyślnie zaktualizowany.");
+            return "redirect:/manage-series";
+        } catch (SeriesNotFoundException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/manage-series";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas aktualizacji serialu: " + e.getMessage());
             return "redirect:/edit-series/" + seriesDto.getImdbId();
@@ -304,18 +287,79 @@ public class AdminController {
     }
 
     @GetMapping("/delete-series/{imdbId}")
-    public String deleteSeries(@PathVariable String imdbId, RedirectAttributes redirectAttributes) {
-        try {
+    public String deleteSeries(@PathVariable String imdbId,
+                               RedirectAttributes redirectAttributes,
+                               @RequestParam String action) {
+
+        if ("deleteSeries".equals(action)) {
             boolean deleted = seriesService.deleteSeriesByImdbId(imdbId);
             if (deleted) {
                 redirectAttributes.addFlashAttribute("success", "Serial został pomyślnie usunięty.");
             } else {
                 redirectAttributes.addFlashAttribute("error", "Nie znaleziono serialu do usunięcia.");
             }
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas usuwania serialu: " + e.getMessage());
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas usuwania serialu: ");
         }
         return "redirect:/manage-series";
+    }
+
+    @GetMapping("/edit-series-seasons/{imdbId}")
+    public String showManageSeasonsForm(@PathVariable String imdbId, Model model, HttpSession session) {
+        Series series = seriesService.findSeriesByImdbIdSeriesType(imdbId);
+        session.setAttribute("imdbId", imdbId);
+
+        if (series == null){
+            return "redirect:/manage-series";
+        }
+
+        model.addAttribute("series", series);
+        model.addAttribute("seasons", series.getSeasons());
+        return "admin/series/manage-seasons";
+    }
+
+    @GetMapping("/edit-episode/{episodeId}")
+    public String showEpisodeEditForm(@PathVariable Long episodeId, Model model) {
+        EpisodeDto episodeById = episodeService.getEpisodeById(episodeId);
+        model.addAttribute("episode", episodeById);
+        return "admin/series/edit-episode-form";
+    }
+
+    @PostMapping("/update-episode")
+    public String updateSeries(@ModelAttribute("episode") EpisodeDto episodeDto,
+                               RedirectAttributes redirectAttributes) {
+
+
+        try {
+            Episode updatedEpisode = episodeService.updateEpisode(episodeDto);
+            String seriesImdbId = updatedEpisode.getSeason().getSeries().getImdbId();
+            redirectAttributes.addFlashAttribute("message", "Epizod został pomyślnie zaktualizowany.");
+            return "redirect:/edit-series-seasons/" + seriesImdbId;
+        } catch (EpisodeNotFoundException e) {
+            redirectAttributes.addFlashAttribute("message", "Wystąpił błąd podczas edytowania epizodu " + e.getMessage());
+            return "redirect:/manage-series";
+        }
+    }
+
+    @GetMapping("/delete-episode/{episodeId}")
+    public String deleteEpisode(@PathVariable Long episodeId,
+                               RedirectAttributes redirectAttributes,
+                               @RequestParam String action) {
+
+        try{
+            if ("deleteEpisode".equals(action)){
+                Episode episodeToDelete = episodeService.deleteEpisodeById(episodeId);
+                String imdbId = episodeToDelete.getSeason().getSeries().getImdbId();
+                redirectAttributes.addFlashAttribute("message", "Epizod został pomyślnie usunięty.");
+                return "redirect:/edit-series-seasons/" + imdbId;
+            }else {
+                redirectAttributes.addFlashAttribute("message", "Epizod nie został usunięty.");
+                return "redirect:/manage-series";
+            }
+        } catch (EpisodeNotFoundException e) {
+            redirectAttributes.addFlashAttribute("message", "Wystąpił błąd podczas edytowania epizodu " + e.getMessage());
+            return "redirect:/manage-series";
+        }
     }
 
 

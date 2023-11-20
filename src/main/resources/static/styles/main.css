@@ -5897,7 +5897,7 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
 .HeaderLogo-module-link-kdP1e {
     display: block;
     margin-top: 8px;
-    padding: 8px 8px 0
+    padding: 1px 3px 0
 }
 
 .HeaderLogo-module-headerLogo-lWX4m {
@@ -5947,8 +5947,8 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
 }
 
 .Logo-module-logo-pfYdr {
-    height: 24px;
-    width: 98px
+    height: 40px;
+    width: 147px
 }
 
 .Logo-module-logo-pfYdr.Logo-module-isLoggedOutStart-n-vL- {
@@ -18777,7 +18777,8 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 .Hero-module-backdrop-be6rg, .Hero-module-gradient-ieQvj, .Hero-module-sportRightGradient-CLm8y, .Hero-module-video-2JJTm {
     left: 0;
     position: absolute;
-    top: 0
+    top: 0;
+    height: 100%;
 }
 
 .Hero-module-backdrop-be6rg, .Hero-module-gradient-ieQvj, .Hero-module-image-NlipI, .Hero-module-sportRightGradient-CLm8y, .Hero-module-video-2JJTm {
@@ -18788,6 +18789,80 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     content: "";
     display: block;
     padding-top: calc(56.25% + 1px)
+}
+
+/*Zdjęcie serialu i filmu ma mieć 1600x900*/
+.Hero-module-image-NlipI {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.seasons-tables-style {
+    display: block;
+    margin-bottom: 20px; /* dodaje margines na dole każdego kontenera sezonu */
+}
+
+
+.seasons-tables td {
+    align-items: start; /* domyślne ustawienie dla komórek tabeli */
+    height: auto; /* pozwala komórkom ustawić wysokość na podstawie zawartości */
+    color: #ababab;
+}
+
+.seasons-tables {
+    width: auto; /* Ustaw pełną szerokość tabeli */
+    border-collapse: collapse; /* Usuń podwójne kreski */
+}
+
+.seasons-tables th, .seasons-tables td {
+    text-align: center; /* Wyśrodkuj tekst w komórkach */
+    border: 1px solid #8c8c8c; /* Ustaw delikatne kreski jako obramowanie */
+    padding: 6px; /* Dodaj trochę paddingu dla lepszego wyglądu */
+}
+
+.seasons-tables th {
+    background-color: rgba(141, 141, 141, 0.4); /* Dodaj przezroczyste tło */
+    font-weight: bold; /* Ustaw pogrubienie tekstu w nagłówkach */
+
+}
+
+
+/* Określ szerokości poszczególnych kolumn */
+.seasons-tables th:nth-child(1) {
+    width: 7%; /* Na przykład 20% szerokości tabeli dla kolumny Tytuł */
+}
+
+.seasons-tables th:nth-child(2) {
+    width: 20%; /* 10% dla kolumny Rok wydania */
+}
+
+.seasons-tables th:nth-child(3) {
+    width: 15%; /* 5% dla kolumny Limit wieku */
+}
+
+.seasons-tables th:nth-child(4) {
+    width: 15%; /* 5% dla kolumny Limit wieku */
+}
+
+.seasons-tables th:nth-child(5) {
+    width: 7%; /* 5% dla kolumny Limit wieku */
+}
+
+.seasons-tables th:nth-child(6) {
+    width: 25%; /* 5% dla kolumny Limit wieku */
+}
+
+.seasons-tables th:nth-child(7) {
+    width: 7%; /* 5% dla kolumny Limit wieku */
+}
+
+.season-table-header{
+    text-align: center; /* Wyśrodkowanie tekstu */
+    width: 100%; /* Ustawienie szerokości na 100% kontenera */
+    margin-top: 40px; /* Dodanie marginesu na górze dla odstępu */
+    margin-bottom: 40px;
 }
 
 .Hero-module-gradient-ieQvj {
@@ -18821,8 +18896,10 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 .Hero-module-wrapper-7yHRB {
     left: 0;
     position: absolute;
-    top: 0;
-    width: 100%
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* To zapobiegnie wyświetlaniu się części obrazka poza kontenerem */
 }
 
 .HiddenObjectsScoreBoard-module-viaplay-numerals-YUci- {
@@ -23861,6 +23938,17 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     min-height: 100vh; /* Wysokość całego widoku, jeśli chcesz */
 }
 
+.main-content-seasons {
+    flex-grow: 1;
+    padding: 20px;
+    overflow: auto;
+    width: 80%;
+    display: flex;
+    flex-direction: column; /* To sprawia, że elementy wewnątrz są układane w pionie */
+    align-items: center; /* Opcjonalnie, aby wyśrodkować elementy w pionie */
+    padding-top: 40px;
+}
+
 .flex-container {
     display: flex;
     align-items: center; /* wyśrodkowanie w pionie */
@@ -24046,12 +24134,9 @@ td {
 }
 
 .series-table th:nth-child(10) {
-    width: 3%; /* 5% dla kolumny Limit wieku */
+    width: 7%; /* 5% dla kolumny Limit wieku */
 }
 
-.series-table th:nth-child(11) {
-    width: 4%; /* 5% dla kolumny Limit wieku */
-}
 
 
 

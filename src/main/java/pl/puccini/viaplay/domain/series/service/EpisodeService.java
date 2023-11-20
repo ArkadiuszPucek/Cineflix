@@ -1,15 +1,16 @@
 package pl.puccini.viaplay.domain.series.service;
 
 import org.springframework.stereotype.Service;
+import pl.puccini.viaplay.domain.exceptions.EpisodeNotFoundException;
+import pl.puccini.viaplay.domain.exceptions.SeriesNotFoundException;
 import pl.puccini.viaplay.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.viaplay.domain.series.dto.episodeDto.EpisodeDtoMapper;
 import pl.puccini.viaplay.domain.series.dto.episodeDto.EpisodeInfoDto;
+import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDto;
 import pl.puccini.viaplay.domain.series.model.Season;
 import pl.puccini.viaplay.domain.series.model.Series;
 import pl.puccini.viaplay.domain.series.repository.EpisodeRepository;
 import pl.puccini.viaplay.domain.series.model.Episode;
-import pl.puccini.viaplay.domain.series.repository.SeasonRepository;
-import pl.puccini.viaplay.domain.series.repository.SeriesRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,31 +18,31 @@ import java.util.stream.Collectors;
 @Service
 public class EpisodeService {
     private final EpisodeRepository episodeRepository;
-    private final SeasonRepository seasonRepository;
-    private final SeriesRepository seriesRepository;
+    private final SeasonService seasonService;
 
-    public EpisodeService(EpisodeRepository episodeRepository, SeasonRepository seasonRepository, SeriesRepository seriesRepository) {
+    public EpisodeService(EpisodeRepository episodeRepository, SeasonService seasonService) {
         this.episodeRepository = episodeRepository;
-        this.seasonRepository = seasonRepository;
-        this.seriesRepository = seriesRepository;
+        this.seasonService = seasonService;
     }
 
-    List<Episode> getAllEpisodes(){
-        return episodeRepository.findAllBy();
-    }
 
-    public List<EpisodeDto> getEpisodesForSeason(Long seasonId) {
-        List<Episode> episodes = episodeRepository.findBySeasonId(seasonId);
+//    List<Episode> getAllEpisodes(){
+//        return episodeRepository.findAllBy();
+//    }
 
-        List<EpisodeDto> episodeDtos = episodes.stream()
-                .map(EpisodeDtoMapper::map)
-                .collect(Collectors.toList());
-
-        return episodeDtos;
-    }
+//    public List<EpisodeDto> getEpisodesForSeason(Long seasonId) {
+//        List<Episode> episodes = episodeRepository.findBySeasonId(seasonId);
+//
+//        List<EpisodeDto> episodeDtos = episodes.stream()
+//                .map(EpisodeDtoMapper::map)
+//                .collect(Collectors.toList());
+//
+//        return episodeDtos;
+//    }
 
     public Episode addEpisode(EpisodeDto episodeDto, String seriesId, int seasonNumber) {
-        Season season = findOrCreateSeason(seriesId, seasonNumber);
+        Season season = seasonService.findOrCreateSeason(seriesId, seasonNumber);
+//        Season season = findOrCreateSeason(seriesId, seasonNumber);
 
         Episode episode = new Episode();
         episode.setEpisodeNumber(episodeDto.getEpisodeNumber());
@@ -55,22 +56,22 @@ public class EpisodeService {
         return episodeRepository.save(episode);
     }
 
-    private Season findOrCreateSeason(String seriesId, int seasonNumber) {
-        Series series = seriesRepository.findByImdbId(seriesId);
-        Season season = seasonRepository.findBySeriesAndSeasonNumber(series, seasonNumber);
-
-        if (season == null) {
-            season = new Season();
-            season.setSeries(series);
-            season.setSeasonNumber(seasonNumber);
-            season = seasonRepository.save(season);
-
-            series.getSeasons().add(season);
-            seriesRepository.save(series);
-        }
-
-        return season;
-    }
+//    private Season findOrCreateSeason(String seriesId, int seasonNumber) {
+//        Series series = seriesRepository.findByImdbId(seriesId);
+//        Season season = seasonRepository.findBySeriesAndSeasonNumber(series, seasonNumber);
+//
+//        if (season == null) {
+//            season = new Season();
+//            season.setSeries(series);
+//            season.setSeasonNumber(seasonNumber);
+//            season = seasonRepository.save(season);
+//
+//            series.getSeasons().add(season);
+//            seriesRepository.save(series);
+//        }
+//
+//        return season;
+//    }
 
     public EpisodeDto getEpisodeById(Long episodeId) {
         Episode episode = episodeRepository.findEpisodeById(episodeId);
@@ -94,4 +95,58 @@ public class EpisodeService {
 
         return episodeInfoDto;
     }
+
+    public String processEpisodeAddition(EpisodeDto episodeDto, String seriesId, int seasonNumber, int episodeNumber, int seasonsCount, String action, String seriesTitle) {
+        String normalizedTitle = normalizeTitle(seriesTitle);
+        if (seasonNumber <= seasonsCount) {
+            addEpisode(episodeDto, seriesId, seasonNumber);
+
+            if ("addEpisode".equals(action)) {
+                return "/add-episode/" + seriesId + "/" + seasonNumber + "/" + (episodeNumber + 1);
+            } else {
+                if (seasonNumber < seasonsCount) {
+                    return "/add-episode/" + seriesId + "/" + (seasonNumber + 1) + "/1";
+                } else {
+                    return "/series/" + normalizedTitle + "/sezon-1";
+                }
+            }
+        } else {
+            return "/series/" + normalizedTitle + "/sezon-1";
+        }
+    }
+
+    private String normalizeTitle(String title) {
+        return title.toLowerCase().replace(" ", "-");
+    }
+
+    public Episode updateEpisode(EpisodeDto episodeDto) {
+        Episode existingEpisode = episodeRepository.findEpisodeById(episodeDto.getId());
+
+        if (existingEpisode == null) {
+            throw new EpisodeNotFoundException("Nie znaleziono epizodu o ID: " + episodeDto.getId());
+        }
+        existingEpisode.setEpisodeNumber(episodeDto.getEpisodeNumber());
+        existingEpisode.setEpisodeTitle(episodeDto.getEpisodeTitle());
+        existingEpisode.setImageUrl(episodeDto.getImageUrl());
+        existingEpisode.setMediaUrl(episodeDto.getMediaUrl());
+        existingEpisode.setDurationMinutes(episodeDto.getDurationMinutes());
+        existingEpisode.setEpisodeDescription(episodeDto.getEpisodeDescription());
+        episodeRepository.save(existingEpisode);
+        return existingEpisode;
+    }
+
+
+
+
+    public Episode deleteEpisodeById(Long episodeId) {
+        Episode episodeById = episodeRepository.findEpisodeById(episodeId);
+        if (episodeById != null){
+            episodeRepository.delete(episodeById);
+            return episodeById;
+        }else {
+            throw new EpisodeNotFoundException("Nie znaleziono epizodu o ID: " + episodeId);
+        }
+    }
 }
+
+

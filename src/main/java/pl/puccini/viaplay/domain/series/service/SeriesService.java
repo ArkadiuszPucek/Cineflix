@@ -3,6 +3,8 @@ package pl.puccini.viaplay.domain.series.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
+import pl.puccini.viaplay.domain.exceptions.SeriesAlreadyExistsException;
+import pl.puccini.viaplay.domain.exceptions.SeriesNotFoundException;
 import pl.puccini.viaplay.domain.genre.Genre;
 import pl.puccini.viaplay.domain.genre.GenreRepository;
 import pl.puccini.viaplay.domain.imdb.IMDbApiService;
@@ -58,13 +60,13 @@ public class SeriesService {
                 .toList();
     }
 
-    public List<SeriesDto> getSeriesByImdbId(String imdbId){
+    public List<SeriesDto> getSeriesByImdbId(String imdbId) {
         return seriesRepository.findAllByImdbId(imdbId).stream()
                 .map(SeriesDtoMapper::map)
                 .toList();
     }
 
-    public List<SeriesDto> getSeriesByGenre(Genre genre){
+    public List<SeriesDto> getSeriesByGenre(Genre genre) {
         return seriesRepository.findAllByGenre(genre).stream()
                 .map(SeriesDtoMapper::map)
                 .toList();
@@ -72,7 +74,7 @@ public class SeriesService {
 
     public SeriesDto findByTitle(String title) {
         Series series = seriesRepository.findByTitleIgnoreCase(title);
-        if (series == null){
+        if (series == null) {
             return null;
         }
         return SeriesDtoMapper.map(series);
@@ -135,7 +137,7 @@ public class SeriesService {
         series.setPromoted(seriesDto.isPromoted());
         series.setAgeLimit(seriesDto.getAgeLimit());
         series.setImdbRating(seriesDto.getImdbRating());
-        series.setImdbUrl("https://www.imdb.com/title/"+seriesDto.getImdbId());
+        series.setImdbUrl("https://www.imdb.com/title/" + seriesDto.getImdbId());
         series.setSeasonsCount(seriesDto.getSeasonsCount());
         seriesRepository.save(series);
         return series;
@@ -178,11 +180,9 @@ public class SeriesService {
                 .build();
 
 
-
         HttpResponse<String> seasonsIMDbApiResponse = client.send(getSeasonsIMDbApiRequest, HttpResponse.BodyHandlers.ofString());
 
         JsonNode seasonsIMDbApiRootNode = objectMapper.readTree(seasonsIMDbApiResponse.body());
-
 
 
         for (JsonNode seasonNode : seasonsIMDbApiRootNode) {
@@ -267,27 +267,30 @@ public class SeriesService {
         return SeriesDtoMapper.map(seriesByImdbId);
     }
 
+    public Series findSeriesByImdbIdSeriesType(String imdbId) {
+        return seriesRepository.findSeriesByImdbId(imdbId);
+    }
 
-    public boolean updateSeries(SeriesDto seriesDto) {
+
+    public void updateSeries(SeriesDto seriesDto) {
         Series existingSeries = seriesRepository.findSeriesByImdbId(seriesDto.getImdbId());
 
-        if (existingSeries != null) {
-            existingSeries.setTitle(seriesDto.getTitle());
-            existingSeries.setReleaseYear(seriesDto.getReleaseYear());
-            existingSeries.setImageUrl(seriesDto.getImageUrl());
-            existingSeries.setBackgroundImageUrl(seriesDto.getBackgroundImageUrl());
-            existingSeries.setDescription(seriesDto.getDescription());
-            existingSeries.setStaff(seriesDto.getStaff());
-            existingSeries.setGenre(genreRepository.findByGenreTypeIgnoreCase(seriesDto.getGenre()));
-            existingSeries.setPromoted(seriesDto.isPromoted());
-            existingSeries.setAgeLimit(seriesDto.getAgeLimit());
-            existingSeries.setImdbRating(seriesDto.getImdbRating());
-            seriesRepository.save(existingSeries);
-            return true;
-        } else {
-            return false;
+        if (existingSeries == null) {
+            throw new SeriesNotFoundException("Nie znaleziono serialu o ID: " + seriesDto.getImdbId());
         }
+        existingSeries.setTitle(seriesDto.getTitle());
+        existingSeries.setReleaseYear(seriesDto.getReleaseYear());
+        existingSeries.setImageUrl(seriesDto.getImageUrl());
+        existingSeries.setBackgroundImageUrl(seriesDto.getBackgroundImageUrl());
+        existingSeries.setDescription(seriesDto.getDescription());
+        existingSeries.setStaff(seriesDto.getStaff());
+        existingSeries.setGenre(genreRepository.findByGenreTypeIgnoreCase(seriesDto.getGenre()));
+        existingSeries.setPromoted(seriesDto.isPromoted());
+        existingSeries.setAgeLimit(seriesDto.getAgeLimit());
+        existingSeries.setImdbRating(seriesDto.getImdbRating());
+        seriesRepository.save(existingSeries);
     }
+
 
     public boolean deleteSeriesByImdbId(String imdbId) {
         Series seriesByImdbId = seriesRepository.findSeriesByImdbId(imdbId);
@@ -297,4 +300,17 @@ public class SeriesService {
         }
         return false;
     }
+
+    public Series addSeriesIfNotExist(SeriesDto seriesDto) throws IOException, InterruptedException {
+        if (existsByImdbId(seriesDto.getImdbId())) {
+            throw new SeriesAlreadyExistsException("Serial o podanym IMDb id istnieje w serwisie!");
+        }
+        return addSeriesByApi(seriesDto);
+    }
+
+    public String getNormalizedSeriesTitle(String title) {
+        return title.toLowerCase().replace(" ", "-");
+    }
+
+
 }

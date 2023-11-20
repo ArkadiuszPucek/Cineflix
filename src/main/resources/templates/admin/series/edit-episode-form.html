@@ -9,30 +9,28 @@
 
 <div class="Layout-module-internal-page--krBv">
     <div th:replace="~{header :: header}"></div>
-    <h1 class="page-header-admin">Panel administracyjny - dodaj serial</h1>
+    <h1 class="page-header-admin">Panel administracyjny - edytuj epizod</h1>
     <div id="content" class="admin-panel">
         <div th:replace="~{admin/sidebar :: sidebar}"></div>
         <div class="main-content">
-            <div id="customDialogOverlay" class="custom-dialog-overlay">
-                <div id="customDialogBox" class="custom-dialog-box">
-                    <p>Czy chcesz dodać kolejny odcinek do tego sezonu?</p>
-                    <button onclick="submitForm('addEpisode')">Dodaj odcinek</button>
-                    <button onclick="submitForm('addSeason')">Zakończ sezon</button>
-                </div>
-            </div>
-            <form id="episodeForm" th:action="@{/add-episode/{seriesId}/{seasonNumber}/{episodeNumber}(seriesId=${seriesId}, seasonNumber=${seasonNumber}, episodeNumber=${episodeNumber})}" method="post" th:object="${episode}">
+            <form th:action="@{/update-episode}" method="post" th:object="${episode}">
                 <div th:if="${#message}" th:text="${message}" class="alert alert-danger"></div>
                 <div class="grid-container">
-                    <input type="hidden" name="seasonsCount" th:value="${seasonsCount}">
-                    <tr>
-                        <td><input class="text-input-style" type="text" name="episodeTitle" th:field="*{episodeTitle}" placeholder="Tytuł epizodu" required></td>
+                    <td>
+                        <input class="text-input-style" type="hidden" name="imdbId" th:field="*{id}" required></td>
                     </tr>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="mediaUrl" th:field="*{mediaUrl}" placeholder="URL mediów" pattern="^(https?://www\.|https?://|www\.)\S+" required></td>
+                        <td><input class="text-input-style" type="text" name="episodeTitle" th:field="*{episodeNumber}" placeholder="Numer epizodu" required></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text-input-style" type="text" name="episodeTitle" th:field="*{episodeTitle}" placeholder="Wpisz tytuł epizodu" required></td>
                     </tr>
                     <tr>
                         <td><input class="text-input-style" type="text" name="mediaUrl" th:field="*{imageUrl}" pattern="^(https?://www\.|https?://|www\.)\S+" placeholder="Wpisz adres URL zdjęcia epizodu"
                                    required></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text-input-style" type="text" name="mediaUrl" th:field="*{mediaUrl}" placeholder="URL mediów" pattern="^(https?://www\.|https?://|www\.)\S+" required></td>
                     </tr>
                     <tr>
                         <td><input class="text-input-style" type="text" name="durationMinutes" th:field="*{durationMinutes}" placeholder="Czas trwania [min]" required pattern="^(?:[1-9]|[1-9][0-9]|1[0-9]{2}|2[0-3][0-9]|240)$"></td>
@@ -42,8 +40,7 @@
                     </tr>
                 </div>
                 <div class="submit-button-movie-page">
-                    <button type="button" onclick="showConfirmDialog()" class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl" tabindex="0">Dodaj</button>
-                    <input type="hidden" id="action" name="action" value="">
+                    <button type="submit" class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl" tabindex="0">Edytuj epizod</button>
                 </div>
             </form>
         </div>

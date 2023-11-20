@@ -15,6 +15,14 @@
     <div id="content" class="admin-panel">
         <div th:replace="~{admin/sidebar :: sidebar}"></div>
         <div class="main-content">
+            <div id="customDialogOverlay" class="custom-dialog-overlay">
+                <div id="customDialogBox" class="custom-dialog-box">
+                    <p>Czy na pewno chcesz usunąć ten serial?</p>
+                    <button onclick="submitForm('deleteSeries')">Tak</button>
+                    <button onclick="submitForm('dontDeleteSeries')">Nie</button>
+                </div>
+            </div>
+            <input type="hidden" id="action" value="">
             <table class="series-table">
                 <thead>
                 <tr>
@@ -43,8 +51,8 @@
                     <td th:text="${series.imdbRating}">Imdb Rating</td>
                     <td>
                         <a th:href="@{'/edit-series/' + ${series.imdbId}}" title="Edytuj" th:text="Edytuj"></a>
-                        <a th:href="@{'/delete-series/' + ${series.imdbId}}" title="Usuń" th:text="Usuń" th:onclick="'return confirm(\'Czy na pewno chcesz usunąć ten serial?\');'"></a>
-                        <a th:href="@{'/edit-series-seasons/' + ${series.imdbId}}" title="Edytuj-sezon" th:text="sezony"></a>
+                        <a href="#" title="Usuń" th:text="Usuń" id="deleteSeries" th:onclick="showConfirmDialog()" th:attr="data-imdbId=${series.imdbId}"></a>
+                        <a th:href="@{'/edit-series-seasons/' + ${series.imdbId}}" title="Zarządzaj_sezonami" th:text="'Zarządzaj sezonami'"></a>
 
                     </td>
                 </tr>
@@ -56,6 +64,22 @@
 </div>
 </div>
 </div>
+<script>
+    function showConfirmDialog() {
+        var imdbId = event.target.getAttribute('data-imdbId');
+        document.getElementById("action").value = imdbId;
+        document.getElementById("customDialogOverlay").classList.add("custom-dialog-shown");
+    }
+
+    function submitForm(confirmAction) {
+        if (confirmAction === 'deleteSeries') {
+            var imdbId = document.getElementById("action").value;
+            window.location.href = '/delete-series/' + imdbId + '?action=deleteSeries';
+        } else {
+            document.getElementById("customDialogOverlay").classList.remove("custom-dialog-shown");
+        }
+    }
+</script>
 
 </body>
 </html>

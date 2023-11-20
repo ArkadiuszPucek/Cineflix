@@ -15,7 +15,7 @@ public class Episode {
     private String episodeTitle;
     private String mediaUrl;
     private String imageUrl;
-    private int durationMinutes;
+    private Integer durationMinutes;
     private String episodeDescription;
 
     @ManyToOne

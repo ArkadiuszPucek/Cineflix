@@ -13,7 +13,7 @@
     <div id="content" class="admin-panel">
         <div th:replace="~{admin/sidebar :: sidebar}"></div>
         <div class="main-content">
-            <form th:action="@{/add-series-form}" method="post" th:object="${series}">
+            <form th:action="@{/admin/add-series-form}" method="post" th:object="${series}">
                 <div th:if="${message}" th:text="${message}" class="alert alert-danger"></div>
                 <div class="grid-container">
                     <tr>

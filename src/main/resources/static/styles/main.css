@@ -28,6 +28,16 @@
     z-index: 1000; /* Upewnij się, że jest na wierzchu */
 }
 
+.HeaderLogo-loginPage-ldwa21{
+    display: flex;
+    margin-top: 25px;
+    margin-bottom: 20px;
+    padding: 1px 3px 0;
+    position: relative;
+    justify-content: center;
+    z-index: 1;
+}
+
 .PlayButton-module-hidden {
     display: none; /* Ukrywa przycisk domyślnie */
 }
@@ -5947,6 +5957,11 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
 }
 
 .Logo-module-logo-pfYdr {
+    height: 40px;
+    width: 147px
+}
+
+.Logo-login-page-faFjw {
     height: 40px;
     width: 147px
 }
@@ -18870,6 +18885,11 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     overflow-x: hidden
 }
 
+.Login-background-gradient-Fg3tK {
+    background-image: linear-gradient(0deg, #1d1d27, transparent 80%), linear-gradient(180deg, rgba(29, 29, 39, .2), transparent 20%);
+    overflow-x: hidden;
+}
+
 .Hero-module-gradient-ieQvj.Hero-module-sportRight-CeOsX {
     display: none
 }
@@ -18894,6 +18914,15 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 }
 
 .Hero-module-wrapper-7yHRB {
+    left: 0;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* To zapobiegnie wyświetlaniu się części obrazka poza kontenerem */
+}
+
+.Login-background-wrapper-f2K31 {
     left: 0;
     position: absolute;
     top: 0px;
@@ -22663,6 +22692,14 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     min-height: 100vh
 }
 
+
+.Layout-module-login-page-f11Sa {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    flex-direction: column;
+}
+
 .StickyMessage-module-viaplay-numerals-oVLBj {
     font-family: MTG Sans Numerals, MTG Sans, Helvetica, Arial, sans-serif
 }
@@ -24187,11 +24224,101 @@ td {
     padding-top: 40px;
 }
 
+.Login-page-main-content {
+    flex-grow: 1; /* Reszta przestrzeni zostanie tu wypełniona */
+    padding: 20px; /* Odstępy wewnątrz głównej treści */
+    overflow: auto;
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 150px;
+    z-index: 3;
+}
+
+.Modal_modalBody__2_aM7{
+    width: 80%;
+}
+
 .submit-button-movie-page{
     display: flex;
     justify-content: center; /* wyśrodkowanie poziome */
     padding-top: 60px;
 }
+
+
+.algin-text-login-page{
+    margin-top: 3px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.font-bold{
+    font-weight: 700;
+}
+
+
+.submit-button-login-page{
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.Modal_modalWrapper__GBKNS{
+    position: fixed;
+    z-index: 50;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    width: 580px;
+    height: 440px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    border-radius: 0.9rem;
+    --tw-bg-opacity: 1;
+    background-color: rgb(43 43 53/var(--tw-bg-opacity));
+    align-content: center;
+}
+
+.h1-login-form-header-HD2dE{
+    font-weight: 900;
+    font-size: 32px;
+    line-height: 40px;
+    margin-bottom: 1.5rem;
+    --tw-text-opacity: 1;
+    --tw-bg-opacity: 1;
+    text-align: center;
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+.login-form-windows{
+    flex-direction: column;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+}
+
+.Input-login-window{
+    position: relative;
+    margin-bottom: 1rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.Input_input__cDdvD{
+    height: 2.5rem;
+    width: 100%;
+    border-radius: .5rem;
+    padding: .5rem 1rem;
+    caret-color: #eee;
+}
+
 
 .grid-container {
     display: grid;
@@ -33089,7 +33216,6 @@ select.text-input-style {
     font-size: 1.2rem;
     font-weight: 400;
     line-height: 2rem;
-    margin-right: 140px;
     position: relative
 }
 

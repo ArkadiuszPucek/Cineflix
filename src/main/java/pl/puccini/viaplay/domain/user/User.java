@@ -1,37 +1,34 @@
-//package pl.puccini.viaplay.domain.user;
+package pl.puccini.viaplay.domain.user;
 
 import jakarta.persistence.*;
-
 import lombok.Getter;
 import lombok.Setter;
-import pl.puccini.viaplay.domain.movie.model.Movie;
-//import pl.puccini.viaplay.domain.movie.model.MovieRating;
-import pl.puccini.viaplay.domain.series.model.Series;
-//import pl.puccini.viaplay.domain.series.model.SeriesRating;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
-//@Entity
-//@Table(name = "users")
-//@Getter
-//@Setter
-//public class User {
-//
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
-//
-//    @Column(nullable = false, unique = true)
-//    private String username;
-//
-//    @Column(nullable = false)
-//    private String password;
 
-//    @ManyToOne
-//    @JoinColumn(name = "avatar_id")
-//    private Avatar avatar;
+@Entity
+@Table(name = "users")
+@Getter
+@Setter
+public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String email;
+    private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
+    private Set<UserRole> roles = new HashSet<>();
+//
 //    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JoinTable(
 //            name = "user_watchlist_movies",
@@ -54,12 +51,12 @@ import java.util.Set;
 //
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private Set<SeriesRating> seriesRatings;
-
-    // Historię obejrzanych można zaimplementować jako relację wiele do wielu z dodatkowymi informacjami, np. datą obejrzenia
+//
+////     Historię obejrzanych można zaimplementować jako relację wiele do wielu z dodatkowymi informacjami, np. datą obejrzenia
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private Set<WatchedMovie> watchedMovies;
 //
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private Set<WatchedSeries> watchedSeries;
 
-//}
+}

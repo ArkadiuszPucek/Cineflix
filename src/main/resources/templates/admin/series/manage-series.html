@@ -50,9 +50,9 @@
                     <td th:text="${series.promoted}">Is promoted</td>
                     <td th:text="${series.imdbRating}">Imdb Rating</td>
                     <td>
-                        <a th:href="@{'/edit-series/' + ${series.imdbId}}" title="Edytuj" th:text="Edytuj"></a>
+                        <a th:href="@{'/admin/edit-series/' + ${series.imdbId}}" title="Edytuj" th:text="Edytuj"></a>
                         <a href="#" title="Usuń" th:text="Usuń" id="deleteSeries" th:onclick="showConfirmDialog()" th:attr="data-imdbId=${series.imdbId}"></a>
-                        <a th:href="@{'/edit-series-seasons/' + ${series.imdbId}}" title="Zarządzaj_sezonami" th:text="'Zarządzaj sezonami'"></a>
+                        <a th:href="@{'/admin/edit-series-seasons/' + ${series.imdbId}}" title="Zarządzaj_sezonami" th:text="'Zarządzaj sezonami'"></a>
 
                     </td>
                 </tr>
@@ -74,7 +74,7 @@
     function submitForm(confirmAction) {
         if (confirmAction === 'deleteSeries') {
             var imdbId = document.getElementById("action").value;
-            window.location.href = '/delete-series/' + imdbId + '?action=deleteSeries';
+            window.location.href = '/admin/delete-series/' + imdbId + '?action=deleteSeries';
         } else {
             document.getElementById("customDialogOverlay").classList.remove("custom-dialog-shown");
         }

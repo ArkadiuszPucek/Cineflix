@@ -52,7 +52,7 @@
                     <td th:text="${movie.promoted}">Is promoted</td>
                     <td th:text="${movie.imdbRating}">Imdb Rating</td>
                     <td>
-                        <a th:href="@{'/edit-movie/' + ${movie.imdbId}}" title="Edytuj" th:text="Edytuj">
+                        <a th:href="@{'/admin/edit-movie/' + ${movie.imdbId}}" title="Edytuj" th:text="Edytuj">
                         </a>
                         <a href="#" title="Usuń" th:text="Usuń" id="deleteMovie" th:onclick="showConfirmDialog()" th:attr="data-imdbId=${movie.imdbId}"></a>
                         </a>
@@ -76,7 +76,7 @@
     function submitForm(confirmAction) {
         if (confirmAction === 'deleteMovie') {
             var imdbId = document.getElementById("action").value;
-            window.location.href = '/delete-movie/' + imdbId + '?action=deleteMovie';
+            window.location.href = '/admin/delete-movie/' + imdbId + '?action=deleteMovie';
         } else {
             document.getElementById("customDialogOverlay").classList.remove("custom-dialog-shown");
         }

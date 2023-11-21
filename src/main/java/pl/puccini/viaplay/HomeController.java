@@ -3,7 +3,6 @@ package pl.puccini.viaplay;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import pl.puccini.viaplay.domain.genre.Genre;
 import pl.puccini.viaplay.domain.genre.GenreService;
 import pl.puccini.viaplay.domain.movie.service.MovieService;
@@ -12,9 +11,7 @@ import pl.puccini.viaplay.domain.series.service.SeriesService;
 import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDto;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

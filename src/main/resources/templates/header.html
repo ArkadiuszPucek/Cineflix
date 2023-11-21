@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <header th:fragment="header" class="Navigation-module-container-2t2XT">
     <div class="Navigation-module-wrapper-VDNDW">
@@ -87,7 +88,7 @@
                                     </li>
                                 </ul>
                                 <ul>
-                                    <li>
+                                    <li sec:authorize="hasAnyRole('ADMIN', 'EDITOR')">
                                         <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA NavigationItem-module-watched-mwewA"
                                            th:href="@{/admin}">
                                             <span>Strona administratorska</span>

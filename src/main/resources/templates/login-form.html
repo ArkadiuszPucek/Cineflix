@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ViaPlay</title>
+    <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+</head>
+<body>
+
+<div class="Layout-module-login-page-f11Sa">
+    <div id="content" >
+        <div class="HeaderLogo-loginPage-ldwa21">
+            <img th:src="@{/images/cineflix.png}" class="Logo-login-page-faFjw">
+        </div>
+        <div>
+            <div class="Login-background-wrapper-f2K31">
+                <img class="Hero-module-image-NlipI Hero-module-hideImage-CCOEY Hero-module-showImage-09J4b"
+                     th:src="@{/images/cineflix-background-login-gradien.png}">
+            </div>
+
+            <div class="Login-background-gradient-Fg3tK"></div>
+        </div>
+        <div>
+            <div class="Modal_modalWrapper__GBKNS" role="dialog">
+                <div class="Modal_modalBody__2_aM7">
+                    <div class="flex flex-col items-center">
+                        <h1 class="h1-login-form-header-HD2dE">Logowanie</h1>
+                        <form action="/login" th:action="@{/login}" method="post" class="login-form-windows" data-testid="login-form" name="login">
+                            <p th:if="${param.error}"
+                               th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
+                               class="algin-text-login-page">
+                                Błąd logowania.
+                            </p>
+                            <p th:if="${param.logout}" class="algin-text-login-page">
+                                Zostałeś wylogowany, możesz zalogować się ponownie.
+                            </p>
+                            <div class="Input-login-window">
+                                <input type="email" aria-describedby="show-password" id="username" placeholder="E-mail"
+                                       required="" class="Input_input__cDdvD w-full" autocomplete="username"
+                                       data-testid="login-email" name="username">
+                            </div>
+                            <div class="Input-login-window">
+                                <input type="password" aria-describedby="show-password" placeholder="Hasło" required="" id="password"
+                                       class="Input_input__cDdvD Input_visibilityOption__KuDsP"
+                                       autocomplete="current-password" data-testid="login-password" name="password">
+                                <label class="sr-only" for="password" hidden>Hasło</label>
+                            </div>
+                            <div class="submit-button-login-page">
+                                <button type="submit"
+                                        class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl"
+                                        tabindex="0">Logowanie
+                                </button>
+                            </div>
+                        </form>
+                        <div class="algin-text-login-page">
+                            <a href="https://account.viaplay.pl/forgot-password">Nie pamiętasz hasła?</a>
+                        </div>
+                        <div class="algin-text-login-page">
+                        <span>Nie masz konta Viaplay?
+                            <a href="https://checkout.viaplay.pl" class="algin-text-login-page font-bold">Uzyskaj je tutaj</a>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{footer :: footer}"></div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

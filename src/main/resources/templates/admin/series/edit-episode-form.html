@@ -13,7 +13,7 @@
     <div id="content" class="admin-panel">
         <div th:replace="~{admin/sidebar :: sidebar}"></div>
         <div class="main-content">
-            <form th:action="@{/update-episode}" method="post" th:object="${episode}">
+            <form th:action="@{/admin/update-episode}" method="post" th:object="${episode}">
                 <div th:if="${#message}" th:text="${message}" class="alert alert-danger"></div>
                 <div class="grid-container">
                     <td>

@@ -20,7 +20,7 @@
                     <button onclick="submitForm('addSeason')">Zakończ sezon</button>
                 </div>
             </div>
-            <form id="episodeForm" th:action="@{/add-episode/{seriesId}/{seasonNumber}/{episodeNumber}(seriesId=${seriesId}, seasonNumber=${seasonNumber}, episodeNumber=${episodeNumber})}" method="post" th:object="${episode}">
+            <form id="episodeForm" th:action="@{/admin/add-episode/{seriesId}/{seasonNumber}/{episodeNumber}(seriesId=${seriesId}, seasonNumber=${seasonNumber}, episodeNumber=${episodeNumber})}" method="post" th:object="${episode}">
                 <div th:if="${#message}" th:text="${message}" class="alert alert-danger"></div>
                 <div class="grid-container">
                     <input type="hidden" name="seasonsCount" th:value="${seasonsCount}">

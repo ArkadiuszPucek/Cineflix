@@ -102,10 +102,10 @@ public class EpisodeService {
             addEpisode(episodeDto, seriesId, seasonNumber);
 
             if ("addEpisode".equals(action)) {
-                return "/add-episode/" + seriesId + "/" + seasonNumber + "/" + (episodeNumber + 1);
+                return "/admin/add-episode/" + seriesId + "/" + seasonNumber + "/" + (episodeNumber + 1);
             } else {
                 if (seasonNumber < seasonsCount) {
-                    return "/add-episode/" + seriesId + "/" + (seasonNumber + 1) + "/1";
+                    return "/admin/add-episode/" + seriesId + "/" + (seasonNumber + 1) + "/1";
                 } else {
                     return "/series/" + normalizedTitle + "/sezon-1";
                 }

@@ -10,10 +10,12 @@
     <include file="0003_2_create_table_series.xml" relativeToChangelogFile="true" />
     <include file="0004_2_create_table_season.xml" relativeToChangelogFile="true" />
     <include file="0005_2_create_table_episode.xml" relativeToChangelogFile="true" />
+    <include file="0006_1_create_tables_users_and_role.xml" relativeToChangelogFile="true" />
 
     <include file="../testdata/0001_genres.sql" relativeToChangelogFile="true" context="dev"/>
     <include file="../testdata/0002_movies.sql" relativeToChangelogFile="true" context="dev"/>
     <include file="../testdata/0003_series.sql" relativeToChangelogFile="true" context="dev"/>
     <include file="../testdata/0004_season.sql" relativeToChangelogFile="true" context="dev"/>
     <include file="../testdata/0005_episode.sql" relativeToChangelogFile="true" context="dev"/>
+    <include file="../testdata/0006_users_and_roles.sql" relativeToChangelogFile="true" context="dev"/>
 </databaseChangeLog>

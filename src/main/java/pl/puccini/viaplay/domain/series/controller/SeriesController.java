@@ -6,16 +6,13 @@ import org.springframework.web.bind.annotation.*;
 import pl.puccini.viaplay.domain.genre.Genre;
 import pl.puccini.viaplay.domain.genre.GenreService;
 import pl.puccini.viaplay.domain.imdb.IMDbApiService;
-import pl.puccini.viaplay.domain.imdb.IMDbData;
 import pl.puccini.viaplay.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.viaplay.domain.series.dto.seasonDto.SeasonDto;
 import pl.puccini.viaplay.domain.series.dto.seriesDto.SeriesDto;
-import pl.puccini.viaplay.domain.series.model.Series;
 import pl.puccini.viaplay.domain.series.repository.SeriesRepository;
 import pl.puccini.viaplay.domain.series.service.EpisodeService;
 import pl.puccini.viaplay.domain.series.service.SeriesService;
 
-import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -80,7 +77,7 @@ public class SeriesController {
         String normalizedTitle = title.replace("-", " ").toLowerCase();
         SeriesDto seriesDto = seriesService.findByTitle(normalizedTitle);
         if (seriesDto == null) {
-            return "not-found"; // Obsłuż przypadek, gdy serial nie istnieje
+            return "error/not-found"; // Obsłuż przypadek, gdy serial nie istnieje
         }
 
         // Pobierz informacje o sezonach serialu
@@ -100,7 +97,7 @@ public class SeriesController {
                 .orElse(null);
 
         if (selectedSeason == null) {
-            return "not-found"; // Obsłuż przypadek, gdy wybrany sezon nie istnieje
+            return "error/not-found"; // Obsłuż przypadek, gdy wybrany sezon nie istnieje
         }
 
         // Pobierz epizody wybranego sezonu

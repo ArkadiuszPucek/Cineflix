@@ -56,7 +56,7 @@ public class MovieController {
             }
         }
         response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        return "not-found";
+        return "error/not-found";
     }
 
     @GetMapping

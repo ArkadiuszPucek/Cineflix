@@ -28,13 +28,13 @@
     z-index: 1000; /* Upewnij się, że jest na wierzchu */
 }
 
-.HeaderLogo-loginPage-ldwa21{
+.HeaderLogo-loginPage-ldwa21 {
     display: flex;
+    justify-content: center;
     margin-top: 25px;
     margin-bottom: 20px;
     padding: 1px 3px 0;
     position: relative;
-    justify-content: center;
     z-index: 1;
 }
 
@@ -5962,8 +5962,25 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
 }
 
 .Logo-login-page-faFjw {
-    height: 40px;
-    width: 147px
+    height: auto; /* Zapewnia responsywność wysokości */
+    width: 210px; /* Domyślna szerokość */
+    max-width: 100%; /* Zapewnia, że logo nie przekroczy szerokości kontenera */
+}
+
+/* Zapytania mediowe dla różnych rozdzielczości ekranów */
+
+/* Dla małych ekranów (np. smartfony) */
+@media (max-width: 600px) {
+    .Logo-login-page-faFjw {
+        width: 150px; /* Mniejsza szerokość dla mniejszych ekranów */
+    }
+}
+
+/* Dla średnich ekranów (np. tablety) */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .Logo-login-page-faFjw {
+        width: 180px; /* Nieco większa szerokość dla średnich ekranów */
+    }
 }
 
 .Logo-module-logo-pfYdr.Logo-module-isLoggedOutStart-n-vL- {
@@ -24263,15 +24280,16 @@ td {
     justify-content: center;
     padding-top: 20px;
 }
-
-.Modal_modalWrapper__GBKNS{
+.Modal_modalWrapper__GBKNS {
     position: fixed;
     z-index: 50;
     margin-left: auto;
     margin-right: auto;
     display: flex;
-    width: 580px;
-    height: 440px;
+    width: 90%; /* Szerokość początkowa */
+    max-width: 580px; /* Maksymalna szerokość */
+    height: auto; /* Wysokość automatyczna */
+    max-height: 90vh; /* Maksymalna wysokość */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -24282,6 +24300,31 @@ td {
     --tw-bg-opacity: 1;
     background-color: rgb(43 43 53/var(--tw-bg-opacity));
     align-content: center;
+    justify-content: center;
+}
+
+/* Zapytania mediowe dla różnych rozdzielczości ekranów */
+
+/* Dla małych ekranów (np. smartfony) */
+@media (max-width: 600px) {
+    .Modal_modalWrapper__GBKNS {
+        width: 95%;
+        max-height: 80vh;
+    }
+}
+
+/* Dla średnich ekranów (np. tablety) */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .Modal_modalWrapper__GBKNS {
+        width: 70%;
+    }
+}
+
+/* Dla dużych ekranów */
+@media (min-width: 1025px) {
+    .Modal_modalWrapper__GBKNS {
+        width: 50%;
+    }
 }
 
 .h1-login-form-header-HD2dE{

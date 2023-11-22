@@ -26,7 +26,7 @@ public class EpisodeController {
     public String playEpisode(@PathVariable Long episodeId, Model model) {
         EpisodeDto episodeDto = episodeService.getEpisodeById(episodeId);
         if (episodeDto == null) {
-            return "not-found";
+            return "error/not-found";
         }
         EpisodeInfoDto episodeInfo = episodeService.getEpisodeInfo(episodeId);
 

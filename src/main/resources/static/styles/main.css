@@ -38,6 +38,10 @@
     z-index: 1;
 }
 
+.login-bottom-text-HD21d{
+    margin-bottom: 10px;
+}
+
 .PlayButton-module-hidden {
     display: none; /* Ukrywa przycisk domyślnie */
 }
@@ -24030,6 +24034,14 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     width: 100%; /* Szerokość elementu, aby wypełnił dostępną przestrzeń */
     padding: 10px; /* Padding dla lepszego wyglądu */
 }
+
+.manage-message-login {
+    font-size: 12px;
+    text-align: center; /* Wyśrodkowanie tekstu */
+    width: 100%; /* Szerokość elementu, aby wypełnił dostępną przestrzeń */
+    margin-bottom: 13px;
+}
+
 .manage-error {
     color: yellow; /* Kolor tekstu */
     margin-top: 20px; /* Górny margines */
@@ -24280,6 +24292,14 @@ td {
     justify-content: center;
     padding-top: 20px;
 }
+
+.submit-button-register-page{
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+    padding-bottom: 30px;
+}
+
 .Modal_modalWrapper__GBKNS {
     position: fixed;
     z-index: 50;
@@ -24331,12 +24351,11 @@ td {
     font-weight: 900;
     font-size: 32px;
     line-height: 40px;
-    margin-bottom: 1.5rem;
     --tw-text-opacity: 1;
     --tw-bg-opacity: 1;
     text-align: center;
     margin-top: 35px;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
 }
 
 .login-form-windows{

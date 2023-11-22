@@ -26,11 +26,8 @@
                     <div class="flex flex-col items-center">
                         <h1 class="h1-login-form-header-HD2dE">Logowanie</h1>
                         <form action="/login" th:action="@{/login}" method="post" class="login-form-windows" data-testid="login-form" name="login">
-                            <p th:if="${param.error}"
-                               th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
-                               class="algin-text-login-page">
-                                Błąd logowania.
-                            </p>
+                            <div th:if="${message}" th:text="${message}" class="manage-message-login"></div>
+                            <p th:if="${loginError}" class="manage-message-login" th:text="${loginError}"></p>
                             <p th:if="${param.logout}" class="algin-text-login-page">
                                 Zostałeś wylogowany, możesz zalogować się ponownie.
                             </p>
@@ -52,14 +49,16 @@
                                 </button>
                             </div>
                         </form>
+                        <div class="login-bottom-text-HD21d">
                         <div class="algin-text-login-page">
                             <a href="https://account.viaplay.pl/forgot-password">Nie pamiętasz hasła?</a>
                         </div>
                         <div class="algin-text-login-page">
-                        <span>Nie masz konta Viaplay?
-                            <a href="https://checkout.viaplay.pl" class="algin-text-login-page font-bold">Uzyskaj je tutaj</a>
+                        <span>Nie masz konta Cineflix?
+                            <a th:href="@{/register}" class="algin-text-login-page font-bold">Załóż je tutaj</a>
                         </span>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>

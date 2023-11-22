@@ -31,6 +31,7 @@ public class CustomSecurityConfig {
                         .requestMatchers("/images/**", "/styles/**", "/scripts/**").permitAll()
                         .requestMatchers("/admin/**").hasAnyRole(EDITOR_ROLE, ADMIN_ROLE)
                         .requestMatchers("/master/**").hasRole(ADMIN_ROLE)
+                        .requestMatchers("/register/**").permitAll()
                         .anyRequest().authenticated()
 
                 )

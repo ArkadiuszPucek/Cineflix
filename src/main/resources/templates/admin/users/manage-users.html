@@ -1,24 +1,84 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>ViaPlay</title>
-  <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+    <meta charset="UTF-8">
+    <title>ViaPlay</title>
+    <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
 </head>
 <body>
 
 <div class="Layout-module-internal-page--krBv">
-  <div th:replace="~{header :: header}"></div>
-  <h1 class="page-header-admin">Panel administracyjny - zarządzaj użytkownikami</h1>
-  <div id="content" class="admin-panel">
-    <div th:replace="~{admin/sidebar :: sidebar}"></div>
-    <div class="main-content">
+    <div th:replace="~{header :: header}"></div>
+    <h1 class="page-header-admin">Panel administracyjny - zarządzaj użytkownikami</h1>
+    <div id="content" class="admin-panel">
+        <div th:replace="~{admin/sidebar :: sidebar}"></div>
+        <div class="main-content">
+            <div id="customDialogOverlay" class="custom-dialog-overlay">
+                <div id="customDialogBox" class="custom-dialog-box">
+                    <p>Czy na pewno chcesz usunąć tego użytkownika?</p>
+                    <button onclick="submitForm('deleteUser')">Tak</button>
+                    <button onclick="submitForm('dontDeleteUser')">Nie</button>
+                </div>
+            </div>
+            <input type="hidden" id="action" value="">
+            <table class="users-table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>E-mail</th>
+                    <th>Rola</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}">Id</td>
+                    <td th:text="${user.email}">E-mail</td>
+                    <td th:text="${user.getRoleNames()}">Rola</td>
+                    <td>
+                        <form th:action="@{/master/change-role(user=${user.id})}" method="post"
+                              class="users-change-role-form">
+                            <select name="newRole" class="role-select">
+                                <option value="USER">User</option>
+                                <option value="EDITOR">Editor</option>
+                                <option value="ADMIN">Admin</option>
+                            </select>
+                            <button type="submit"
+                                    class="Buttons-module-primary--YHdl"
+                                    tabindex="0">Zmień
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <a href="#" title="Usuń" th:text="Usuń" id="deleteMovie" th:onclick="showConfirmDialog()"
+                           th:attr="data-id=${user.id}"></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-  </div>
-  <div th:replace="~{footer :: footer}"></div>
+    <div th:replace="~{footer :: footer}"></div>
 </div>
 </div>
 </div>
+<script>
+    function showConfirmDialog() {
+        var imdbId = event.target.getAttribute('data-id');
+        document.getElementById("action").value = imdbId;
+        document.getElementById("customDialogOverlay").classList.add("custom-dialog-shown");
+    }
+
+    function submitForm(confirmAction) {
+        if (confirmAction === 'deleteUser') {
+            var userId = document.getElementById("action").value;
+            window.location.href = '/master/delete-user/' + userId + '?action=deleteUser';
+        } else {
+            document.getElementById("customDialogOverlay").classList.remove("custom-dialog-shown");
+        }
+    }
+</script>
 
 </body>
 </html>

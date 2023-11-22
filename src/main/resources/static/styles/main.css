@@ -4845,6 +4845,28 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
     white-space: nowrap
 }
 
+
+.Buttons-module-dark-Di3pP, .Buttons-module-primary--YHdl, .Buttons-module-secondary-br7-v {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: #eee;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    height: 48px;
+    line-height: 2.4rem;
+    line-height: 48px;
+    padding: 0 48px;
+    position: relative;
+    text-decoration: none;
+    white-space: nowrap
+}
+
 @media (min-width: 3500px) {
     .Buttons-module-dark-Di3pP, .Buttons-module-primary--YHdl, .Buttons-module-secondary-br7-v {
         font-size: .6672vw;
@@ -16733,6 +16755,8 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     margin: 0 16px 16px 0
 }
 
+
+
 @media screen and (max-width: 480px) {
     .PlayButtonText-module-container-tunCR {
         margin: 0 0 8px;
@@ -24203,6 +24227,99 @@ td {
     width: 7%; /* 5% dla kolumny Limit wieku */
 }
 
+.movie-table td {
+    align-items: start; /* domyślne ustawienie dla komórek tabeli */
+    height: auto; /* pozwala komórkom ustawić wysokość na podstawie zawartości */
+    color: #ababab;
+}
+
+.users-table {
+    width: auto; /* Ustaw pełną szerokość tabeli */
+    border-collapse: collapse; /* Usuń podwójne kreski */
+    height: fit-content;
+}
+
+.users-table th, .users-table td {
+    text-align: center; /* Wyśrodkuj tekst w komórkach */
+    border: 1px solid #8c8c8c; /* Ustaw delikatne kreski jako obramowanie */
+    padding: 6px; /* Dodaj trochę paddingu dla lepszego wyglądu */
+}
+
+.users-table th {
+    background-color: rgba(141, 141, 141, 0.4); /* Dodaj przezroczyste tło */
+    font-weight: bold; /* Ustaw pogrubienie tekstu w nagłówkach */
+
+}
+
+.users-table td:nth-of-type(1) {
+    color: #fafafa; /* czarny lub inny kolor dla kolumny "Tytuł" */
+}
+
+/* Określ szerokości poszczególnych kolumn */
+.users-table th:nth-child(1) {
+    width: 5%; /* Na przykład 20% szerokości tabeli dla kolumny Tytuł */
+}
+
+.users-table th:nth-child(2) {
+    width: 20%; /* 10% dla kolumny Rok wydania */
+}
+
+.users-table th:nth-child(3) {
+    width: 20%; /* 5% dla kolumny Limit wieku */
+}
+
+.users-table th:nth-child(4) {
+    width: 25%; /* 5% dla kolumny Limit wieku */
+}
+
+.users-table th:nth-child(5) {
+    width: 20%; /* 5% dla kolumny Limit wieku */
+}
+
+.users-table th:nth-child(6) {
+    width: 15%; /* 5% dla kolumny Limit wieku */
+
+}
+
+
+.users-change-role{
+    width: 100%;
+}
+
+.users-change-role-form {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Odstęp między elementami */
+}
+
+.users-change-role-form select {
+    width: 100%; /* Szerokość selecta, możesz dostosować do potrzeb */
+    min-width: 150px; /* Minimalna szerokość selecta */
+}
+
+.submit-button-user-page {
+    display: flex;
+    align-items: center; /* Wyrównanie buttona do wysokości selecta */
+}
+
+button {
+    margin: 0;
+    padding: 0.5em 1em; /* Dostosuj padding przycisku */
+}
+
+/* Dodanie stylów dla przycisku aby pasował do reszty interfejsu */
+button {
+    background-color: #e53156; /* Kolor tła przycisku */
+    color: white; /* Kolor tekstu */
+    border: none; /* Usunięcie obramowania */
+    border-radius: 4px; /* Zaokrąglenie rogów */
+    cursor: pointer; /* Kursor wskazujący możliwość kliknięcia */
+    transition: background-color 0.3s; /* Animacja zmiany koloru tła */
+}
+
+.role-select {
+    text-align: center;
+}
 
 
 
@@ -24291,6 +24408,12 @@ td {
     display: flex;
     justify-content: center;
     padding-top: 20px;
+}
+
+.submit-button-user-page{
+    display: flex;
+    justify-content: center;
+    padding-top: 16px;
 }
 
 .submit-button-register-page{

@@ -19,6 +19,9 @@ import pl.puccini.cineflix.domain.series.model.Episode;
 import pl.puccini.cineflix.domain.series.model.Series;
 import pl.puccini.cineflix.domain.series.service.EpisodeService;
 import pl.puccini.cineflix.domain.series.service.SeriesService;
+import pl.puccini.cineflix.domain.user.User;
+import pl.puccini.cineflix.domain.user.UserDto;
+import pl.puccini.cineflix.domain.user.UserService;
 
 import java.io.IOException;
 import java.util.*;
@@ -31,11 +34,14 @@ public class AdminController {
     private final EpisodeService episodeService;
     private final GenreService genreService;
 
-    public AdminController(MovieService movieService, SeriesService seriesService, EpisodeService episodeService, GenreService genreService) {
+    private final UserService userService;
+
+    public AdminController(MovieService movieService, SeriesService seriesService, EpisodeService episodeService, GenreService genreService, UserService userService) {
         this.movieService = movieService;
         this.seriesService = seriesService;
         this.episodeService = episodeService;
         this.genreService = genreService;
+        this.userService = userService;
     }
 
 
@@ -92,14 +98,6 @@ public class AdminController {
     }
 
 
-    @GetMapping("/admin/manage-movies")
-    public String showManageMovieForm(Model model) {
-        List<MovieDto> allMoviesInService = movieService.findAllMoviesInService();
-        model.addAttribute("allMoviesInService", allMoviesInService);
-
-        return "admin/movies/manage-movies";
-    }
-
     @GetMapping("/admin/edit-movie/{imdbId}")
     public String showEditMovieForm(@PathVariable String imdbId, Model model) {
         MovieDto movieByImdbId = movieService.findMovieByImdbId(imdbId);
@@ -146,6 +144,14 @@ public class AdminController {
             redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas usuwania filmu");
         }
         return "redirect:/admin/manage-movies";
+    }
+
+    @GetMapping("/admin/manage-movies")
+    public String showManageMovieForm(Model model) {
+        List<MovieDto> allMoviesInService = movieService.findAllMoviesInService();
+        model.addAttribute("allMoviesInService", allMoviesInService);
+
+        return "admin/movies/manage-movies";
     }
 
 
@@ -366,8 +372,74 @@ public class AdminController {
 
     @GetMapping("/master/manage-users")
     public String showManageUsersForm(Model model) {
+        List<User> allUsersInService = userService.getAllUsersInService();
+        model.addAttribute("users", allUsersInService);
+
 
         return "admin/users/manage-users";
+    }
+
+    @PostMapping("/master/change-role")
+    public String changeUserRole(@RequestParam Long user, @RequestParam String newRole, RedirectAttributes redirectAttributes) {
+        try {
+            userService.changeUserRole(user, newRole);
+            redirectAttributes.addFlashAttribute("message", "Rola użytkownika została zmieniona.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", "Wystąpił błąd: " + e.getMessage());
+        }
+        return "redirect:/master/manage-users";
+    }
+
+
+    @GetMapping("/master/edit-user/{userId}")
+    public String showEditUserForm(@PathVariable String userId, Model model) {
+//        MovieDto movieByImdbId = movieService.findMovieByImdbId(imdbId);
+//
+//        model.addAttribute("movie", movieByImdbId);
+//        List<Genre> allGenres = genreService.getAllGenres();
+//        model.addAttribute("genres", allGenres);
+//        List<Integer> ageLimits = Arrays.asList(3, 7, 12, 16, 18);
+//        model.addAttribute("ageLimits", ageLimits);
+//
+//        return "admin/movies/edit-movie-form";
+        return null;
+    }
+
+    @PostMapping("/master/update-user")
+    public String updateUser(@ModelAttribute("user") UserDto userDto, RedirectAttributes redirectAttributes) {
+//        try {
+//            boolean updateResult = movieService.updateMovie(movieDto);
+//
+//            if (updateResult) {
+//                redirectAttributes.addFlashAttribute("success", "Film został pomyślnie zaktualizowany.");
+//                return "redirect:/admin/manage-movies";
+//            } else {
+//                redirectAttributes.addFlashAttribute("error", "Nie znaleziono filmu do aktualizacji.");
+//                return "redirect:/admin/edit-movie/" + movieDto.getImdbId();
+//            }
+//        } catch (Exception e) {
+//            redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas aktualizacji filmu: " + e.getMessage());
+//            return "redirect:/admin/edit-movie/" + movieDto.getImdbId();
+        return null;
+//        }
+    }
+
+
+    @GetMapping("/master/delete-user/{userId}")
+    public String deleteUser(@PathVariable Long userId,
+                              RedirectAttributes redirectAttributes,
+                              @RequestParam String action) {
+        if ("deleteUser".equals(action)) {
+            boolean deleted = userService.deleteUserById(userId);
+            if (deleted) {
+                redirectAttributes.addFlashAttribute("message", "Film został pomyślnie usunięty.");
+            } else {
+                redirectAttributes.addFlashAttribute("message", "Nie znaleziono filmu do usunięcia.");
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Wystąpił błąd podczas usuwania filmu");
+        }
+        return "redirect:/master/manage-users";
     }
 
 

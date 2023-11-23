@@ -1,4 +1,4 @@
-package pl.puccini.cineflix.domain.user;
+package pl.puccini.cineflix.domain.user.service;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

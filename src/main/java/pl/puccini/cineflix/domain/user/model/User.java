@@ -1,11 +1,11 @@
-package pl.puccini.cineflix.domain.user;
+package pl.puccini.cineflix.domain.user.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,6 +21,7 @@ public class User {
     private Long id;
 
     private String email;
+    @Length(min = 8, message = "Hasło musi mieć co najmniej 8 znaków.")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)

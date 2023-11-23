@@ -39,13 +39,13 @@
                     <td>
                         <form th:action="@{/master/change-role(user=${user.id})}" method="post"
                               class="users-change-role-form">
-                            <select name="newRole" class="role-select">
+                            <select name="newRole" onchange="confirmRoleChange(this, '${user.id}', '${user.currentRole}')">
                                 <option value="USER">User</option>
                                 <option value="EDITOR">Editor</option>
                                 <option value="ADMIN">Admin</option>
                             </select>
                             <button type="submit"
-                                    class="Buttons-module-primary--YHdl"
+                                    class="Buttons-module-primary--YHdl change-role-button"
                                     tabindex="0">Zmień
                             </button>
                         </form>

@@ -1,4 +1,4 @@
-package pl.puccini.cineflix.web;
+package pl.puccini.cineflix.web.user;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -8,8 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.support.RequestContextUtils;
-import pl.puccini.cineflix.domain.exceptions.UsernameExistsException;
-//import pl.puccini.cineflix.domain.user.CustomUserDetailsService;
+//import pl.puccini.cineflix.domain.user.service.CustomUserDetailsService;
 
 import java.util.Map;
 

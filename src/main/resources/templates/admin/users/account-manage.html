@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ViaPlay</title>
+    <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+</head>
+<body>
+
+<div class="Layout-module-internal-page--krBv">
+    <div th:replace="~{header :: header}"></div>
+    <div id="content" class="admin-panel">
+        <div id="customDialogOverlay" class="custom-dialog-overlay">
+            <div id="customDialogBox" class="custom-dialog-box">
+                <p>Czy na pewno chcesz usunąć swoje konto?</p>
+                <button onclick="submitForm('deleteAccount')">Tak</button>
+                <button onclick="submitForm('dontDeleteAccount')">Nie</button>
+            </div>
+        </div>
+        <div class="section-wrapper">
+            <main id="overview-article" class="page-info">
+                <div class="overview-page-container">
+                    <div id="page-title" class="page-title page-title--bordered page-title-overview">
+                        <div th:if="${error}">
+                            <div class="manage-message-user-manage-page" th:text="${error}"></div>
+                        </div>
+                        <div th:if="${success}">
+                            <div class="manage-message-user-manage-page" th:text="${success}"></div>
+                        </div>
+                        <h1 class="page-title__header">Moje konto</h1></div>
+                    <div class="page-info-container">
+                        <div id="e-mail-section" class="overview-widget user-section nls_protected">
+                            <div class="overview-widget__column overview-widget__name">
+                                <h2 class="overview-widget__title">E-mail</h2>
+                            </div>
+                            <div class="overview-widget__column overview-widget__content" th:each="users : ${user}">
+                                <div id="email-info" class="widget-data">
+                                    <div class="user-email long-text" th:text="${users.email}">
+                                        arkadiusz.pucek@gmail.com
+                                    </div>
+                                    <ul class="widget-links">
+                                        <li>
+                                            <a th:href="@{/change-email}">Zmień e-mail</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="password-section" class="overview-widget user-section nls_protected">
+                            <div class="overview-widget__column overview-widget__name">
+                                <h2 class="overview-widget__title">Hasło</h2>
+                            </div>
+                            <div class="overview-widget__column overview-widget__content" th:each="users : ${user}">
+                                <div id="password-info" class="widget-data">
+                                    <ul class="widget-links">
+                                        <li>
+                                            <a th:href="@{/change-password}">Zmień hasło</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="delete-section" class="overview-widget user-section nls_protected">
+                            <div class="overview-widget__column overview-widget__name">
+                                <h2 class="overview-widget__title">Usuń konto</h2>
+                            </div>
+                            <div class="overview-widget__column overview-widget__content">
+                                <div id="delete-info" class="widget-data">
+                                    <ul class="widget-links">
+                                        <li>
+                                            <a href="#" title="Usuń" th:text="Usuń" id="deleteAccount"
+                                               onclick="showConfirmDialog()">Usuń</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <div th:replace="~{footer :: footer}"></div>
+</div>
+</div>
+</div>
+<script>
+    function showConfirmDialog() {
+        document.getElementById("customDialogOverlay").classList.add("custom-dialog-shown");
+    }
+
+    function submitForm(confirmAction) {
+        if (confirmAction === 'deleteAccount') {
+            // Bezpośrednie przekierowanie do ścieżki usunięcia konta
+            window.location.href = '/login';
+        } else {
+            document.getElementById("customDialogOverlay").classList.remove("custom-dialog-shown");
+        }
+    }
+</script>
+</body>
+</html>

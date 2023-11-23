@@ -24066,6 +24066,182 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     margin-bottom: 13px;
 }
 
+.hidden {
+    display: none;
+}
+
+.manage-message-user-manage-page {
+    font-size: 13px;
+    text-align: center; /* Wyśrodkowanie tekstu */
+    width: 100%; /* Szerokość elementu, aby wypełnił dostępną przestrzeń */
+    margin-bottom: 13px;
+    color: #005900;
+}
+
+.register-message-login {
+    font-size: 12px;
+    text-align: center; /* Wyśrodkowanie tekstu */
+    width: 100%; /* Szerokość elementu, aby wypełnił dostępną przestrzeń */
+    margin-bottom: 13px;
+    color: #e5e530;
+}
+
+.page-title__header{
+    font-size: 30px;
+    line-height: 1.2;
+    font-weight: bold;
+    letter-spacing: normal;
+    text-decoration: none;
+}
+
+.page-container--no-padding{
+    padding-top: 0;
+}
+
+.page-container{
+    max-width: 340px;
+    margin: auto;
+    padding-top: 32px;
+}
+
+@media only screen and (min-width: 768px) {
+    .form-max-width, .narrow-form {
+        max-width: 360px;
+    }
+}
+
+.form-elem-wrap.double-margin {
+    margin-bottom: 30px;
+}
+
+.form-elem-wrap {
+    margin: 0 0 15px;
+    position: relative;
+}
+
+.form-elem-wrap .form-elem {
+    display: block;
+    width: 100%;
+    font-size: 13px;
+    color: #b4b4b4;
+}
+
+.label-placeholder {
+    opacity: 0;
+    z-index: -1;
+    position: absolute;
+    top: 10px;
+    left: 14px;
+    color: #F1F0FA;
+    font-size: 11px;
+    line-height: 13px;
+    letter-spacing: 0;
+    font-weight: 400;
+    -moz-transition: all 150ms ease;
+    -webkit-transition: all 150ms ease;
+    -ms-transition: all 150ms ease;
+    -o-transition: all 150ms ease;
+    transition: all 150ms ease;
+}
+
+.form-elem {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    height: 50px;
+    padding: 0 14px;
+    margin: 0;
+    background: #484851;
+    border: 0;
+    font-size: 16px;
+    line-height: normal;
+    letter-spacing: 0;
+    font-weight: 400;
+    color: #F1F0FA;
+}
+
+.input-helper-text {
+    font-size: 12px;
+    color: #F1F0FA;
+    padding-left: 14px;
+    margin-top: 2px;
+    margin-bottom: 9px;
+}
+
+.form-button-space-account {
+    padding-top: 54px;
+}
+
+.form-button-space {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-button-space__cancel {
+    flex: 0 0 50%;
+    padding-right: 10px;
+}
+
+.btn.full-width {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.full-width {
+    width: 90%;
+}
+
+.form-button-space__submit {
+    flex: 0 0 50%;
+    padding-left: 10px;
+}
+
+.btn-red {
+    color: #F1F0FA;
+    background-color: #fe365f;
+}
+
+.btn {
+    display: inline-block;
+    height: 42px;
+    min-width: 100px;
+    padding: 0 50px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    -moz-transition: background-color 300ms ease;
+    -webkit-transition: background-color 300ms ease;
+    -ms-transition: background-color 300ms ease;
+    -o-transition: background-color 300ms ease;
+    transition: background-color 300ms ease;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 42px;
+    letter-spacing: 0;
+    font-weight: 700;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    text-decoration: none;
+}
+
+.btn-bordered, .btn-bordered-transparent {
+    background-color: transparent;
+    -webkit-box-shadow: inset 0 0 0 2px #8a8c90;
+    -moz-box-shadow: inset 0 0 0 2px #8a8c90;
+    box-shadow: inset 0 0 0 2px #8a8c90;
+    color: #F1F0FA;
+}
+
 .manage-error {
     color: yellow; /* Kolor tekstu */
     margin-top: 20px; /* Górny margines */
@@ -24320,6 +24496,69 @@ button {
 .role-select {
     text-align: center;
 }
+
+.section-wrapper{
+    display: table;
+    width: 100%;
+    background: #1D1D27;
+}
+
+.page-info, .vcm-section{
+    padding: 32px 60px 40px;
+    position: relative;
+}
+
+.overview-page-container{
+    max-width: 700px;
+    margin: auto;
+}
+.page-title--bordered{
+    border-bottom: 1px solid #c0c1c4;
+}
+
+.page-title{
+    padding-bottom: 30px;
+    position: relative;
+    text-align: center;
+}
+
+.page-info-container{
+    padding-bottom: 60px;
+}
+
+.overview-widget{
+    display: flex;
+    flex-flow: wrap;
+    padding-top: 24px;
+    padding-bottom: 23px;
+    border-bottom: 1px solid #EAEAEA;
+}
+
+.overview-widget__column{
+    flex: 0 0 50%;
+    width: 50%;
+    min-width: 0;
+    margin: auto;
+}
+
+.overview-widget__title{
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: bold;
+    color: #F1F0FA;
+}
+.user-email{
+    font-style: italic;
+    font-size: 14px;
+}
+
+.widget-links{
+    font-size: 15px;
+}
+
+
+
+
 
 
 

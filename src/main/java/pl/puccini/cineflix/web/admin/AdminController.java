@@ -19,9 +19,9 @@ import pl.puccini.cineflix.domain.series.model.Episode;
 import pl.puccini.cineflix.domain.series.model.Series;
 import pl.puccini.cineflix.domain.series.service.EpisodeService;
 import pl.puccini.cineflix.domain.series.service.SeriesService;
-import pl.puccini.cineflix.domain.user.User;
-import pl.puccini.cineflix.domain.user.UserDto;
-import pl.puccini.cineflix.domain.user.UserService;
+import pl.puccini.cineflix.domain.user.model.User;
+import pl.puccini.cineflix.domain.user.dto.UserDto;
+import pl.puccini.cineflix.domain.user.service.UserService;
 
 import java.io.IOException;
 import java.util.*;
@@ -368,7 +368,7 @@ public class AdminController {
     }
 
 
-
+//USERS
 
     @GetMapping("/master/manage-users")
     public String showManageUsersForm(Model model) {

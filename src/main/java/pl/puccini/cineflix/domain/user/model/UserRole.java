@@ -1,4 +1,4 @@
-package pl.puccini.cineflix.domain.user;
+package pl.puccini.cineflix.domain.user.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;

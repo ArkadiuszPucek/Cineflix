@@ -1,4 +1,4 @@
-package pl.puccini.cineflix;
+package pl.puccini.cineflix.web.user;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

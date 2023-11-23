@@ -1,13 +1,14 @@
-package pl.puccini.cineflix.domain.user;
+package pl.puccini.cineflix.domain.user.service;
 
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.puccini.cineflix.domain.exceptions.UserNotFoundException;
-import pl.puccini.cineflix.domain.exceptions.UserRoleNotFoundException;
-import pl.puccini.cineflix.domain.exceptions.UsernameExistsException;
-import pl.puccini.cineflix.domain.movie.model.Movie;
+import pl.puccini.cineflix.domain.exceptions.*;
 import pl.puccini.cineflix.domain.user.dto.UserCredentialsDto;
+import pl.puccini.cineflix.domain.user.dto.UserDto;
+import pl.puccini.cineflix.domain.user.model.User;
+import pl.puccini.cineflix.domain.user.model.UserRole;
+import pl.puccini.cineflix.domain.user.repository.UserRepository;
+import pl.puccini.cineflix.domain.user.repository.UserRoleRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -79,4 +80,37 @@ public class UserService {
             return false;
         }
     }
+
+    public void changePassword(String oldPassword, String newPassword, String confirmPassword, User user)
+            throws InvalidPasswordException, PasswordConfirmationException, PasswordFormatException {
+
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new InvalidPasswordException("Stare hasło jest niepoprawne.");
+        }
+
+        if (!newPassword.equals(confirmPassword)) {
+            throw new PasswordConfirmationException("Hasła nie są identyczne.");
+        }
+
+        String passwordRegex = "^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\\d).{8,}$";
+        if (!newPassword.matches(passwordRegex)) {
+            throw new PasswordFormatException("Hasło musi zawierać co najmniej jedną dużą literę, jedną cyfrę, jeden znak specjalny i musi mieć co najmniej 8 znaków.");
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
+
+    public User findByUsername(String currentUserName) {
+        return userRepository.findByEmail(currentUserName).orElseThrow(()->new UserNotFoundException("Nie znaleziono użytkownika"));
+    }
+
+    public void deleteUserByEmail(String email) {
+        User user = findByUsername(email);
+        userRepository.delete(user);
+    }
+
+//    public void changeAvatar(Long userId, MultipartFile avatarFile) {
+//        // Logika zmiany avatara
+//    }
 }

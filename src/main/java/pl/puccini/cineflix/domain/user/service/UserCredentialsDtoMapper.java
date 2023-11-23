@@ -1,5 +1,7 @@
-package pl.puccini.cineflix.domain.user;
+package pl.puccini.cineflix.domain.user.service;
 
+import pl.puccini.cineflix.domain.user.model.User;
+import pl.puccini.cineflix.domain.user.model.UserRole;
 import pl.puccini.cineflix.domain.user.dto.UserCredentialsDto;
 
 import java.util.Set;

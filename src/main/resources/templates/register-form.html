@@ -1,61 +1,66 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>ViaPlay</title>
-  <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+    <meta charset="UTF-8">
+    <title>ViaPlay</title>
+    <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
 </head>
 <body>
 
 <div class="Layout-module-login-page-f11Sa">
-  <div id="content" >
-    <div class="HeaderLogo-loginPage-ldwa21">
-      <img th:src="@{/images/cineflix.png}" class="Logo-login-page-faFjw">
-    </div>
-    <div>
-      <div class="Login-background-wrapper-f2K31">
-        <img class="Hero-module-image-NlipI Hero-module-hideImage-CCOEY Hero-module-showImage-09J4b"
-             th:src="@{/images/cineflix-backgroud-loginpage-stronggradinet.png}">
-      </div>
+    <div id="content">
+        <div class="HeaderLogo-loginPage-ldwa21">
+            <img th:src="@{/images/cineflix.png}" class="Logo-login-page-faFjw">
+        </div>
+        <div>
+            <div class="Login-background-wrapper-f2K31">
+                <img class="Hero-module-image-NlipI Hero-module-hideImage-CCOEY Hero-module-showImage-09J4b"
+                     th:src="@{/images/cineflix-backgroud-loginpage-stronggradinet.png}">
+            </div>
 
-      <div class="Login-background-gradient-Fg3tK"></div>
-    </div>
-    <div>
-      <div class="Modal_modalWrapper__GBKNS" role="dialog">
-        <div class="Modal_modalBody__2_aM7">
-          <div class="flex flex-col items-center">
-            <h1 class="h1-login-form-header-HD2dE">Utwórz konto</h1>
-            <form th:action="@{/register}" method="post" th:object="${user}" class="login-form-windows" data-testid="login-form" name="register">
-              <div th:if="${message}" th:text="${message}" class="manage-message-login"></div>
-              <div class="Input-login-window">
-                <input type="email" id="username" placeholder="E-mail" th:field="*{username}"
-                       required="" class="Input_input__cDdvD w-full" autocomplete="username"
-                       data-testid="login-email" name="username">
-              </div>
-              <div class="Input-login-window">
-                <input type="password" placeholder="Hasło" required="" id="password" th:field="*{password}"
-                       class="Input_input__cDdvD Input_visibilityOption__KuDsP"
-                       autocomplete="current-password" data-testid="login-password" name="password">
-                <label class="sr-only" for="password" hidden>Utwórz hasło</label>
-              </div>
-              <div class="submit-button-register-page">
-                <button type="submit" class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl" tabindex="0">
-                  Zarejsetruj się
-                </button>
-              </div>
-              <div class="login-bottom-text-HD21d">
-                <div class="algin-text-login-page">
+            <div class="Login-background-gradient-Fg3tK"></div>
+        </div>
+        <div>
+            <div class="Modal_modalWrapper__GBKNS" role="dialog">
+                <div class="Modal_modalBody__2_aM7">
+                    <div class="flex flex-col items-center">
+                        <h1 class="h1-login-form-header-HD2dE">Utwórz konto</h1>
+                        <form th:action="@{/register}" method="post" th:object="${user}" class="login-form-windows"
+                              data-testid="login-form" name="register">
+                            <div th:if="${message}" th:text="${message}" class="manage-message-login"></div>
+                            <div class="Input-login-window">
+                                <input type="email" id="username" placeholder="E-mail" th:field="*{username}"
+                                       required="" class="Input_input__cDdvD w-full" autocomplete="username"
+                                       data-testid="login-email" name="username">
+                            </div>
+                            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="register-message-login">Hasło musi składać się co najmniej ośmiu znaków</div>
+                            <div class="Input-login-window">
+                                <input type="password" placeholder="Hasło" required="" id="password"
+                                       th:field="*{password}"
+                                       class="Input_input__cDdvD Input_visibilityOption__KuDsP"
+                                       autocomplete="current-password" data-testid="login-password" name="password">
+                                <label class="sr-only" for="password" hidden>Utwórz hasło</label>
+                            </div>
+                            <div class="submit-button-register-page">
+                                <button type="submit"
+                                        class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl"
+                                        tabindex="0">
+                                    Zarejsetruj się
+                                </button>
+                            </div>
+                            <div class="login-bottom-text-HD21d">
+                                <div class="algin-text-login-page">
                   <span>Nasz już konto?
                     <a th:href="@{/login}" class="algin-text-login-page font-bold">Zaloguj się</a>
                   </span>
+                                </div>
+                        </form>
+                    </div>
                 </div>
-            </form>
-          </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <div th:replace="~{footer :: footer}"></div>
+    <div th:replace="~{footer :: footer}"></div>
 </div>
 </div>
 </div>

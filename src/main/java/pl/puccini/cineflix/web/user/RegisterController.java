@@ -1,17 +1,19 @@
-package pl.puccini.cineflix.web;
+package pl.puccini.cineflix.web.user;
 
+import jakarta.validation.Valid;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.puccini.cineflix.domain.exceptions.UsernameExistsException;
-import pl.puccini.cineflix.domain.user.UserDto;
-import pl.puccini.cineflix.domain.user.UserService;
+import pl.puccini.cineflix.domain.user.dto.UserDto;
+import pl.puccini.cineflix.domain.user.service.UserService;
 
 @Controller
 public class RegisterController {
@@ -35,8 +37,12 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public String registerUserAccount(@ModelAttribute("user") UserDto userDto,
+    public String registerUserAccount(@Valid @ModelAttribute("user") UserDto userDto,
+                                      BindingResult bindingResult,
                                       RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            return "register-form";
+        }
         try {
             userService.registerNewUserAccount(userDto);
             redirectAttributes.addFlashAttribute("message", "Rejestracja przebiegła pomyślnie.");

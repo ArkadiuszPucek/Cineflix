@@ -19,7 +19,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String email;
     @Length(min = 8, message = "Hasło musi mieć co najmniej 8 znaków.")
     private String password;

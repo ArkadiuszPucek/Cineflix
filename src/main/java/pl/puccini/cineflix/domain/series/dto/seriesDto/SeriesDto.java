@@ -23,5 +23,5 @@ public class SeriesDto {
     private Double imdbRating;
     private String imdbUrl;
     private Integer seasonsCount;
-
+    private boolean onUserList;
 }

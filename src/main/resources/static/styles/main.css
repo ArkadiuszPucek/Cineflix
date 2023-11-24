@@ -24575,12 +24575,32 @@ button {
 
 }
 
+.StarButton-module-container-sGC0y.StarButton-module-isStarred-v2AtG {
+    animation: StarButton-module-popIcon-UtyCf .2s;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iI0VFRSIgZD0iTTIuNDIgMTMuOTRhMSAxIDAgMCAxIDEuNDIgMGw1LjQyIDUuNDJMMjAuOCA3LjhhMSAxIDAgMSAxIDEuNDEgMS40MUw5Ljk2IDIxLjQ4YTEgMSAwIDAgMS0xLjQxIDBsLTYuMTMtNi4xM2ExIDEgMCAwIDEgMC0xLjQxWiIvPjwvc3ZnPg==);
+}
+
+
 .avatars {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 50px;
     margin-top: 30px;
+}
+
+.StarButton-module-container-sGC0y.checked {
+    /* Zmiana koloru tła */
+    background-color: green;
+
+    /* Zmiana koloru ikony wewnątrz przycisku */
+    color: white;
+
+    /* Dodanie cienia dla efektu "wciśniętego" przycisku */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+    /* Dodatkowe style, jak np. zmiana kursora */
+    cursor: pointer;
 }
 
 .avatars label {

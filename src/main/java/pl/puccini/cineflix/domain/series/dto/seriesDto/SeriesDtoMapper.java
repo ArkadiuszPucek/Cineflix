@@ -4,21 +4,21 @@ import pl.puccini.cineflix.domain.series.model.Series;
 
 public class SeriesDtoMapper {
     public static SeriesDto map(Series series) {
-        return new SeriesDto(
-                series.getImdbId(),
-                series.getTitle(),
-                series.getReleaseYear(),
-                series.getImageUrl(),
-                series.getBackgroundImageUrl(),
-                series.getDescription(),
-                series.getStaff(),
-
-                series.getGenre().getGenreType(),
-                series.isPromoted(),
-                series.getAgeLimit(),
-                series.getImdbRating(),
-                series.getImdbUrl(),
-                series.getSeasonsCount()
-        );
+        SeriesDto seriesDto = new SeriesDto();
+        seriesDto.setImdbId(series.getImdbId());
+        seriesDto.setTitle(series.getTitle());
+        seriesDto.setReleaseYear(series.getReleaseYear());
+        seriesDto.setImageUrl(series.getImageUrl());
+        seriesDto.setBackgroundImageUrl(series.getBackgroundImageUrl());
+        seriesDto.setDescription(series.getDescription());
+        seriesDto.setStaff(series.getStaff());
+        seriesDto.setGenre(series.getGenre().getGenreType());
+        seriesDto.setPromoted(series.isPromoted());
+        seriesDto.setAgeLimit(series.getAgeLimit());
+        seriesDto.setImdbRating(series.getImdbRating());
+        seriesDto.setImdbUrl(series.getImdbUrl());
+        seriesDto.setSeasonsCount(seriesDto.getSeasonsCount());
+        seriesDto.setOnUserList(false);
+        return seriesDto;
     }
 }

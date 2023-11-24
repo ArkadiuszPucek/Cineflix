@@ -25,5 +25,5 @@ public class MovieDto {
     private boolean promoted;
     private Double imdbRating;
     private String imdbUrl;
-
+    private boolean onUserList;
 }

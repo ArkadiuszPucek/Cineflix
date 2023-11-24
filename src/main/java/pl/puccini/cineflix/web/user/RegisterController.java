@@ -3,6 +3,7 @@ package pl.puccini.cineflix.web.user;
 import jakarta.validation.Valid;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,8 +31,8 @@ public class RegisterController {
         UserDto userDto = new UserDto();
         model.addAttribute("user", userDto);
 
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        userUtils.addAvatarUrlToModel(authentication, model);
+        Authentication login = SecurityContextHolder.getContext().getAuthentication();
+        userUtils.addAvatarUrlToModel(login, model);
 
         if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
             return "redirect:/";

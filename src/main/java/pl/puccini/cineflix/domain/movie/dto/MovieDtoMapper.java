@@ -4,23 +4,24 @@ import pl.puccini.cineflix.domain.movie.model.Movie;
 
 public class MovieDtoMapper {
     public static MovieDto map(Movie movie) {
-        return new MovieDto(
-                movie.getImdbId(),
-                movie.getTitle(),
-                movie.getReleaseYear(),
-                movie.getImageUrl(),
-                movie.getBackgroundImageUrl(),
-                movie.getMediaUrl(),
-                movie.getTimeline(),
-                movie.getAgeLimit(),
-                movie.getDescription(),
-                movie.getStaff(),
-                movie.getDirectedBy(),
-                movie.getLanguages(),
-                movie.getGenre().getGenreType(),
-                movie.isPromoted(),
-                movie.getImdbRating(),
-                movie.getImdbUrl()
-        );
+        MovieDto movieDto = new MovieDto();
+        movieDto.setImdbId(movie.getImdbId());
+        movieDto.setTitle(movie.getTitle());
+        movieDto.setReleaseYear(movie.getReleaseYear());
+        movieDto.setImageUrl(movie.getImageUrl());
+        movieDto.setBackgroundImageUrl(movie.getBackgroundImageUrl());
+        movieDto.setMediaUrl(movie.getMediaUrl());
+        movieDto.setTimeline(movie.getTimeline());
+        movieDto.setAgeLimit(movie.getAgeLimit());
+        movieDto.setDescription(movie.getDescription());
+        movieDto.setStaff(movie.getStaff());
+        movieDto.setDirectedBy(movie.getDirectedBy());
+        movieDto.setLanguages(movie.getLanguages());
+        movieDto.setGenre(movie.getGenre().getGenreType());
+        movieDto.setPromoted(movie.isPromoted());
+        movieDto.setImdbRating(movie.getImdbRating());
+        movieDto.setImdbUrl(movie.getImdbUrl());
+        movieDto.setOnUserList(false);
+        return movieDto;
     }
 }

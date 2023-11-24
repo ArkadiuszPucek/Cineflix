@@ -51,7 +51,7 @@ public class SeriesService {
     }
 
 
-    public List<SeriesDto> findAllPromotedMovies() {
+    public List<SeriesDto> findAllPromotedSeries() {
         return seriesRepository.findAllByPromotedIsTrue().stream()
                 .map(SeriesDtoMapper::map)
                 .toList();

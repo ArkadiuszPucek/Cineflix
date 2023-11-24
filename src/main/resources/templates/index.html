@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
 
 </head>
 <body>
@@ -82,7 +85,6 @@
                                                                   th:text="${item.releaseYear}">
                                                                 2011
                                                             </span>
-                                                            <!--                                                            <meta itemprop="copyrightYear" content="2011">-->
                                                         </span>
                                                         <span class="Divider-module-divider-U-3-- Divider-module-featurebox-lE8g3">
                                                             <span class="Seasons-module-container-ZM15y Seasons-module-featurebox-O9JXt"
@@ -209,11 +211,12 @@
                                                 <div class="InteractionIcons-module-container-apGgr">
                                                     <a class="TooltipButton-module-container-PfKnw TooltipButton-module-isItem-R6NdL"
                                                        data-testhook="item-info" tabindex="-1"
-                                                       th:with="formattedTitle=${promoItem.title.replace(' ', '-')}"
-                                                       th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
+                                                       th:with="formattedTitle=${promoItem.title.toLowerCase().replace(' ', '-')+'/sezon-1'}"
+                                                       th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} ">
                                                     </a>
                                                     <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"
-                                                         data-testhook="item-star">
+                                                         data-testhook="item-star" th:classappend="${promoItem.onUserList ? 'StarButton-module-isStarred-v2AtG' : ''}"
+                                                         th:attr="data-imdb-id=${promoItem.imdbId}">
                                                     </div>
                                                     <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-"
                                                          data-testhook="item-rating-up">
@@ -291,7 +294,8 @@
                                                        th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
                                                     </a>
                                                     <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"
-                                                         data-testhook="item-star">
+                                                         data-testhook="item-star" th:classappend="${promoItem.onUserList ? 'StarButton-module-isStarred-v2AtG' : ''}"
+                                                         th:attr="data-imdb-id=${promoItem.imdbId}">
                                                     </div>
                                                     <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-"
                                                          data-testhook="item-rating-up">
@@ -320,7 +324,35 @@
     </div>
 </div>
 
+<script>
+    document.querySelectorAll('.StarButton-module-container-sGC0y').forEach(button => {
+        button.addEventListener('click', function() {
+            var imdbId = this.getAttribute('data-imdb-id');
 
+            // Pobierz token CSRF
+            var csrfToken = document.querySelector('meta[name="_csrf"]').content;
+            var csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
+
+            // Utwórz nagłówki z tokenem CSRF
+            var headers = new Headers();
+            headers.append(csrfHeader, csrfToken);
+
+            // Wyślij żądanie do serwera z odpowiednimi nagłówkami
+            fetch('library/add-to-list/' + imdbId, {
+                method: 'POST',
+                headers: headers
+            })
+                .then(response => {
+                    if(response.ok) {
+                        // Zmiana wyglądu przycisku na "dodano"
+                        this.classList.add('StarButton-module-isStarred-v2AtG');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    });
+
+</script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>

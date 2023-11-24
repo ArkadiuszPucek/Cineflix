@@ -32,8 +32,8 @@ public class CustomSecurityConfig {
                         .requestMatchers("/admin/**").hasAnyRole(EDITOR_ROLE, ADMIN_ROLE)
                         .requestMatchers("/master/**").hasRole(ADMIN_ROLE)
                         .requestMatchers("/register/**").permitAll()
+                        .requestMatchers("/library/**").hasAnyRole(ADMIN_ROLE, EDITOR_ROLE, USER_ROLE)
                         .anyRequest().authenticated()
-
                 )
                 .formLogin(login -> login
                         .loginPage("/login")
@@ -47,7 +47,6 @@ public class CustomSecurityConfig {
                         .invalidateHttpSession(true)
                         .permitAll()
                 );
-
         return http.build();
     }
 

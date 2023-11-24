@@ -13,22 +13,27 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.puccini.cineflix.domain.exceptions.InvalidPasswordException;
 import pl.puccini.cineflix.domain.exceptions.PasswordConfirmationException;
 import pl.puccini.cineflix.domain.exceptions.PasswordFormatException;
+import pl.puccini.cineflix.domain.exceptions.UserNotFoundException;
 import pl.puccini.cineflix.domain.user.model.User;
 import pl.puccini.cineflix.domain.user.service.UserService;
+import pl.puccini.cineflix.domain.user.service.UserUtils;
 
 @Controller
 public class AccountController {
 
     private final UserService userService;
+    private final UserUtils userUtils;
 
-    public AccountController(UserService userService) {
+    public AccountController(UserService userService, UserUtils userUtils) {
         this.userService = userService;
+        this.userUtils = userUtils;
     }
 
     @GetMapping("/account")
     public String account(Model model, Authentication authentication) {
         if (authentication != null) {
             String currentUserName = authentication.getName();
+            userUtils.addAvatarUrlToModel(authentication, model);
 
             User user = userService.findByUsername(currentUserName);
             model.addAttribute("user", user);
@@ -37,7 +42,8 @@ public class AccountController {
     }
 
     @GetMapping("/change-password")
-    public String changePasswordForm() {
+    public String changePasswordForm(Model model, Authentication authentication) {
+        userUtils.addAvatarUrlToModel(authentication, model);
         return "/admin/users/change-password-form";
     }
 
@@ -60,33 +66,52 @@ public class AccountController {
     }
 
     @GetMapping("/delete-account")
-    public String deleteAccount(Authentication authentication) {
+    public String deleteAccount(Authentication authentication,
+                                HttpServletRequest request,
+                                HttpServletResponse response,
+                                RedirectAttributes redirectAttributes,
+                                Model model) {
         if (authentication != null) {
-            String userEmail = authentication.getName();
-            userService.deleteUserByEmail(userEmail);
+            userService.deleteUserByEmail(authentication.getName());
+            userUtils.addAvatarUrlToModel(authentication, model);
+
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (auth != null) {
+                new SecurityContextLogoutHandler().logout(request, response, auth);
+            }
+            redirectAttributes.addFlashAttribute("message", "Konto usunięte");
         }
-        return "redirect:/login";
+        return "redirect:/login?accountDeleted\"";
 
     }
-    @PostMapping("/delete-account")
-    public String deleteAccount(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
-        userService.deleteUserByEmail(authentication.getName());
 
-        // Wylogowanie użytkownika
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
-
-        // Przekierowanie na stronę logowania z komunikatem
-        return "redirect:/login?accountDeleted";
+    @GetMapping("/change-email")
+    public String changeEmailForm(Authentication authentication, Model model) {
+        User user = userService.findByUsername(authentication.getName());
+        userUtils.addAvatarUrlToModel(authentication, model);
+        model.addAttribute("user", user);
+        return "/admin/users/change-email-form";
     }
 
-    @PostMapping("/change-avatar")
-    public String changeAvatar(@RequestParam("avatar") MultipartFile avatarFile,
-                               RedirectAttributes redirectAttributes) {
-        // Logika zmiany avatara
-        return "redirect:/account";
+    @PostMapping("/change-email")
+    public String changeEmail(@RequestParam String newEmail,
+                                 Authentication authentication,
+                              HttpServletRequest request,
+                              HttpServletResponse response,
+                                 RedirectAttributes redirectAttributes) {
+
+        try {
+            userService.changeEmail(authentication.getName(), newEmail);
+            redirectAttributes.addFlashAttribute("message", "Email został zmieniony, zaloguj się ponownie.");
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (auth != null) {
+                new SecurityContextLogoutHandler().logout(request, response, auth);
+            }
+            return "redirect:/login";
+        } catch (UserNotFoundException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/change-email";
+        }
     }
 }
 

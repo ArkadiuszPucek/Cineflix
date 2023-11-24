@@ -1,9 +1,9 @@
 insert into
-    users (email, password)
+    users (email, password, avatar)
 values
-    ('admin@example.com', '{noop}adminpass'),
-    ('user@example.com', '{noop}userpass'),
-    ('editor@example.com', '{noop}editorpass');
+    ('admin@example.com', '{noop}Adminpass12!', '/images/avatars/wilk2.png'),
+    ('user@example.com', '{noop}Userpass12!', '/images/avatars/Fox.png'),
+    ('editor@example.com', '{noop}Editorpass12!', '/images/avatars/wilk2.png');
 
 insert into
     user_role (name, description)

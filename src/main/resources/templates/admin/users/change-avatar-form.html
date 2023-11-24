@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>ViaPlay</title>
+  <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+</head>
+<body>
+
+<div class="Layout-module-internal-page--krBv">
+  <div th:replace="~{header :: header}"></div>
+  <div id="content" class="admin-panel">
+    <div id="customDialogOverlay" class="custom-dialog-overlay">
+      <div id="customDialogBox" class="custom-dialog-box">
+        <p>Czy na pewno chcesz usunąć swoje konto?</p>
+        <button onclick="submitForm('deleteAccount')">Tak</button>
+        <button onclick="submitForm('dontDeleteAccount')">Nie</button>
+      </div>
+    </div>
+    <div class="section-wrapper">
+      <main id="overview-article" class="page-info">
+        <div class="overview-page-container">
+          <div id="page-title" class="page-title page-title--bordered page-title-overview">
+            <div th:if="${error}">
+              <div class="manage-message-user-manage-page" th:text="${error}"></div>
+            </div>
+            <div th:if="${success}">
+              <div class="manage-message-user-manage-page" th:text="${success}"></div>
+            </div>
+            <h1 class="page-title__header">Zmień avatar</h1></div>
+          <div class="page-info-container">
+            <div class="avatar-selection">
+              <form th:action="@{/change-avatar}" method="post">
+                <div class="avatars">
+                  <div th:each="avatar, iterStat : ${avatars}">
+                    <label>
+                      <input type="radio" name="selectedAvatar" th:value="${avatar}" th:id="${'avatar' + iterStat.index}" />
+                      <img th:src="@{${avatar}}" th:alt="${avatar}" />
+                    </label>
+                  </div>
+                </div>
+                <div class="submit-button-login-page">
+                  <button type="submit"
+                          class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl"
+                          tabindex="0">Zmień avatar
+                  </button>
+                </div>
+              </form>
+            </div>
+            <script>
+              document.querySelectorAll('.avatars input[type=radio]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                  document.querySelectorAll('.avatars img').forEach(img => img.classList.remove('selected'));
+                  this.nextElementSibling.classList.add('selected');
+                });
+              });
+            </script>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <div th:replace="~{footer :: footer}"></div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

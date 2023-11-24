@@ -1,5 +1,6 @@
 package pl.puccini.cineflix.domain.series.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +9,7 @@ import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeInfoDto;
 import pl.puccini.cineflix.domain.series.service.EpisodeService;
 import pl.puccini.cineflix.domain.series.service.SeriesService;
+import pl.puccini.cineflix.domain.user.service.UserUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,15 +17,16 @@ import java.util.regex.Pattern;
 @Controller
 public class EpisodeController {
     private final EpisodeService episodeService;
-    private final SeriesService seriesService;
+    private final UserUtils userUtils;
 
-    public EpisodeController(EpisodeService episodeService, SeriesService seriesService) {
+    public EpisodeController(EpisodeService episodeService, SeriesService seriesService, UserUtils userUtils) {
         this.episodeService = episodeService;
-        this.seriesService = seriesService;
+        this.userUtils = userUtils;
     }
 
     @GetMapping("/play-episode/{episodeId}")
-    public String playEpisode(@PathVariable Long episodeId, Model model) {
+    public String playEpisode(@PathVariable Long episodeId, Authentication authentication, Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
         EpisodeDto episodeDto = episodeService.getEpisodeById(episodeId);
         if (episodeDto == null) {
             return "error/not-found";

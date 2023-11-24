@@ -1,5 +1,6 @@
 package pl.puccini.cineflix.web.user;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import pl.puccini.cineflix.domain.movie.service.MovieService;
 import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
 import pl.puccini.cineflix.domain.series.model.Series;
 import pl.puccini.cineflix.domain.series.service.SeriesService;
+import pl.puccini.cineflix.domain.user.service.UserUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,19 +23,24 @@ public class SearchController {
     private final MovieService movieService;
     private final SeriesService seriesService;
     private final KidsContentService kidsContentService;
+    private final UserUtils userUtils;
 
 
-    public SearchController(MovieService movieService, SeriesService seriesService, KidsContentService kidsContentService) {
+    public SearchController(MovieService movieService, SeriesService seriesService, KidsContentService kidsContentService, UserUtils userUtils) {
         this.movieService = movieService;
         this.seriesService = seriesService;
         this.kidsContentService = kidsContentService;
+        this.userUtils = userUtils;
     }
 
     @GetMapping("/search")
     public String search(
             @RequestParam(name = "query", required = false) String query,
             @RequestParam(name = "filter", defaultValue = "all") String filter,
-            Model model) {
+            Model model, Authentication authentication) {
+
+        userUtils.addAvatarUrlToModel(authentication, model);
+
 
         if(query != null && !query.isEmpty()) {
             String loweredQuery = query.toLowerCase();

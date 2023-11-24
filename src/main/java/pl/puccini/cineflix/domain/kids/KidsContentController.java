@@ -1,5 +1,6 @@
 package pl.puccini.cineflix.domain.kids;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.puccini.cineflix.domain.movie.model.Movie;
 import pl.puccini.cineflix.domain.series.model.Series;
+import pl.puccini.cineflix.domain.user.service.UserUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,15 +18,19 @@ import java.util.List;
 @RequestMapping("/kids")
 public class KidsContentController {
     private final KidsContentService kidsContentService;
+    private final UserUtils userUtils;
 
-    public KidsContentController(KidsContentService kidsContentService) {
+    public KidsContentController(KidsContentService kidsContentService, UserUtils userUtils) {
         this.kidsContentService = kidsContentService;
+        this.userUtils = userUtils;
     }
 
     @GetMapping()
     public String search(
             @RequestParam(name = "filter", defaultValue = "all") String filter,
+            Authentication authentication,
             Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
 
         List<Movie> allKidsMovies = kidsContentService.getAllKidsMovies();
         List<Series> allKidsSeries = kidsContentService.getAllKidsSeries();

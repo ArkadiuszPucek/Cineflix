@@ -1,6 +1,7 @@
 package pl.puccini.cineflix.web.admin;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ import pl.puccini.cineflix.domain.series.service.SeriesService;
 import pl.puccini.cineflix.domain.user.model.User;
 import pl.puccini.cineflix.domain.user.dto.UserDto;
 import pl.puccini.cineflix.domain.user.service.UserService;
+import pl.puccini.cineflix.domain.user.service.UserUtils;
 
 import java.io.IOException;
 import java.util.*;
@@ -33,20 +35,22 @@ public class AdminController {
     private final SeriesService seriesService;
     private final EpisodeService episodeService;
     private final GenreService genreService;
-
     private final UserService userService;
+    private final UserUtils userUtils;
 
-    public AdminController(MovieService movieService, SeriesService seriesService, EpisodeService episodeService, GenreService genreService, UserService userService) {
+    public AdminController(MovieService movieService, SeriesService seriesService, EpisodeService episodeService, GenreService genreService, UserService userService, UserUtils userUtils) {
         this.movieService = movieService;
         this.seriesService = seriesService;
         this.episodeService = episodeService;
         this.genreService = genreService;
         this.userService = userService;
+        this.userUtils = userUtils;
     }
 
 
     @GetMapping("/admin")
-    public String getAdminPanel() {
+    public String getAdminPanel(Authentication authentication, Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
 
         return "admin/admin";
     }
@@ -64,7 +68,8 @@ public class AdminController {
     }
 
     @GetMapping("/admin/add-movie-form")
-    public String showAddMovieManualForm(Model model) {
+    public String showAddMovieManualForm(Authentication authentication ,Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
         List<Genre> allGenres = genreService.getAllGenres();
         model.addAttribute("genres", allGenres);
 
@@ -90,7 +95,8 @@ public class AdminController {
     }
 
     @GetMapping("/admin/add-movie-api")
-    public String showAddMovieApiForm(Model model) {
+    public String showAddMovieApiForm(Authentication authentication, Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
         MovieDto movie = new MovieDto();
         model.addAttribute("movie", movie);
 
@@ -99,7 +105,8 @@ public class AdminController {
 
 
     @GetMapping("/admin/edit-movie/{imdbId}")
-    public String showEditMovieForm(@PathVariable String imdbId, Model model) {
+    public String showEditMovieForm(@PathVariable String imdbId, Authentication authentication, Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
         MovieDto movieByImdbId = movieService.findMovieByImdbId(imdbId);
 
         model.addAttribute("movie", movieByImdbId);
@@ -132,7 +139,10 @@ public class AdminController {
     @GetMapping("/admin/delete-movie/{imdbId}")
     public String deleteMovie(@PathVariable String imdbId,
                               RedirectAttributes redirectAttributes,
-                              @RequestParam String action) {
+                              @RequestParam String action,
+                              Authentication authentication,
+                              Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
         if ("deleteMovie".equals(action)) {
             boolean deleted = movieService.deleteMovieByImdbId(imdbId);
             if (deleted) {
@@ -147,7 +157,8 @@ public class AdminController {
     }
 
     @GetMapping("/admin/manage-movies")
-    public String showManageMovieForm(Model model) {
+    public String showManageMovieForm(Authentication authentication, Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
         List<MovieDto> allMoviesInService = movieService.findAllMoviesInService();
         model.addAttribute("allMoviesInService", allMoviesInService);
 
@@ -178,7 +189,8 @@ public class AdminController {
         }
     }
     @GetMapping("/admin/add-series-form")
-    public String showAddSeriesManualForm(Model model) {
+    public String showAddSeriesManualForm(Authentication authentication, Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
         List<Genre> allGenres = genreService.getAllGenres();
         model.addAttribute("genres", allGenres);
 
@@ -195,7 +207,9 @@ public class AdminController {
     public String showAddEpisodeForm(@PathVariable String seriesId,
                                      @PathVariable int seasonNumber,
                                      @PathVariable int episodeNumber,
+                                     Authentication authentication,
                                      Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
         EpisodeDto episodeDto = new EpisodeDto();
         model.addAttribute("episode", episodeDto);
         model.addAttribute("seriesId", seriesId);
@@ -248,7 +262,8 @@ public class AdminController {
     }
 
     @GetMapping("/admin/add-series-api")
-    public String showAddSeriesApiForm(Model model) {
+    public String showAddSeriesApiForm(Authentication authentication, Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
         SeriesDto seriesDto = new SeriesDto();
         model.addAttribute("series", seriesDto);
 
@@ -256,7 +271,8 @@ public class AdminController {
     }
 
     @GetMapping("/admin/manage-series")
-    public String showManageSeriesForm(Model model) {
+    public String showManageSeriesForm(Authentication authentication, Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
         List<SeriesDto> allSeriesInService = seriesService.findAllMoviesInService();
         model.addAttribute("allSeriesInService", allSeriesInService);
 
@@ -264,7 +280,8 @@ public class AdminController {
     }
 
     @GetMapping("/admin/edit-series/{imdbId}")
-    public String showEditSeriesForm(@PathVariable String imdbId, Model model) {
+    public String showEditSeriesForm(@PathVariable String imdbId, Authentication authentication, Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
         SeriesDto seriesByImdbId = seriesService.findSeriesByImdbId(imdbId);
 
         model.addAttribute("series", seriesByImdbId);
@@ -294,7 +311,10 @@ public class AdminController {
     @GetMapping("/admin/delete-series/{imdbId}")
     public String deleteSeries(@PathVariable String imdbId,
                                RedirectAttributes redirectAttributes,
-                               @RequestParam String action) {
+                               @RequestParam String action,
+                               Authentication authentication,
+                               Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
 
         if ("deleteSeries".equals(action)) {
             boolean deleted = seriesService.deleteSeriesByImdbId(imdbId);
@@ -310,7 +330,8 @@ public class AdminController {
     }
 
     @GetMapping("/admin/edit-series-seasons/{imdbId}")
-    public String showManageSeasonsForm(@PathVariable String imdbId, Model model, HttpSession session) {
+    public String showManageSeasonsForm(@PathVariable String imdbId, Model model, HttpSession session, Authentication authentication) {
+        userUtils.addAvatarUrlToModel(authentication, model);
         Series series = seriesService.findSeriesByImdbIdSeriesType(imdbId);
         session.setAttribute("imdbId", imdbId);
 
@@ -324,7 +345,8 @@ public class AdminController {
     }
 
     @GetMapping("/admin/edit-episode/{episodeId}")
-    public String showEpisodeEditForm(@PathVariable Long episodeId, Model model) {
+    public String showEpisodeEditForm(@PathVariable Long episodeId, Authentication authentication, Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
         EpisodeDto episodeById = episodeService.getEpisodeById(episodeId);
         model.addAttribute("episode", episodeById);
         return "admin/series/edit-episode-form";
@@ -349,7 +371,10 @@ public class AdminController {
     @GetMapping("/admin/delete-episode/{episodeId}")
     public String deleteEpisode(@PathVariable Long episodeId,
                                RedirectAttributes redirectAttributes,
-                               @RequestParam String action) {
+                               @RequestParam String action,
+                                Authentication authentication,
+                                Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
 
         try{
             if ("deleteEpisode".equals(action)){
@@ -371,7 +396,8 @@ public class AdminController {
 //USERS
 
     @GetMapping("/master/manage-users")
-    public String showManageUsersForm(Model model) {
+    public String showManageUsersForm(Authentication authentication, Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
         List<User> allUsersInService = userService.getAllUsersInService();
         model.addAttribute("users", allUsersInService);
 
@@ -391,8 +417,8 @@ public class AdminController {
     }
 
 
-    @GetMapping("/master/edit-user/{userId}")
-    public String showEditUserForm(@PathVariable String userId, Model model) {
+//    @GetMapping("/master/edit-user/{userId}")
+//    public String showEditUserForm(@PathVariable String userId, Model model) {
 //        MovieDto movieByImdbId = movieService.findMovieByImdbId(imdbId);
 //
 //        model.addAttribute("movie", movieByImdbId);
@@ -402,11 +428,11 @@ public class AdminController {
 //        model.addAttribute("ageLimits", ageLimits);
 //
 //        return "admin/movies/edit-movie-form";
-        return null;
-    }
+//        return null;
+//    }
 
-    @PostMapping("/master/update-user")
-    public String updateUser(@ModelAttribute("user") UserDto userDto, RedirectAttributes redirectAttributes) {
+//    @PostMapping("/master/update-user")
+//    public String updateUser(@ModelAttribute("user") UserDto userDto, RedirectAttributes redirectAttributes) {
 //        try {
 //            boolean updateResult = movieService.updateMovie(movieDto);
 //
@@ -420,15 +446,18 @@ public class AdminController {
 //        } catch (Exception e) {
 //            redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas aktualizacji filmu: " + e.getMessage());
 //            return "redirect:/admin/edit-movie/" + movieDto.getImdbId();
-        return null;
+//        return null;
 //        }
-    }
+//    }
 
 
     @GetMapping("/master/delete-user/{userId}")
     public String deleteUser(@PathVariable Long userId,
                               RedirectAttributes redirectAttributes,
-                              @RequestParam String action) {
+                              @RequestParam String action,
+                             Authentication authentication,
+                             Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
         if ("deleteUser".equals(action)) {
             boolean deleted = userService.deleteUserById(userId);
             if (deleted) {
@@ -441,7 +470,6 @@ public class AdminController {
         }
         return "redirect:/master/manage-users";
     }
-
 
 
 }

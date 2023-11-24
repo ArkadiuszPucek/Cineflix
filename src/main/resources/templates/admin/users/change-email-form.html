@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ViaPlay</title>
+    <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+</head>
+<body>
+
+<div class="Layout-module-internal-page--krBv">
+    <div th:replace="~{header :: header}"></div>
+    <section class="content">
+        <div class="container">
+            <div class="section-wrapper">
+                <article id="password-block" class="page-info">
+                    <div class="page-title">
+                        <h1 class="page-title__header">Zmień e-mail</h1>
+                    </div>
+                    <div th:if="${error}">
+                        <div class="manage-message-login" th:text="${error}"></div>
+                    </div>
+                    <div th:if="${success}">
+                        <div class="manage-message-login" th:text="${success}"></div>
+                    </div>
+                    <div class="page-info-container page-container page-container--no-padding">
+                        <div class="form-max-width change-password-form">
+                            <form action="#" th:action="@{/change-email}" th:object="${user}" method="post">
+                                <div class="form-elem-wrap double-margin">
+                                    <input class="form-elem" autocomplete="on" placeholder="Dotychczasowy email"
+                                           name="oldEmail" type="email" th:field="*{email}" readonly>
+                                    <span class="label-placeholder">Dotychczasowy email</span>
+                                </div>
+
+                                <div class="form-elem-wrap">
+                                    <input class="form-elem password-indicator" autocomplete="on"
+                                           placeholder="Nowy email" name="newEmail" type="email">
+                                    <span class="label-placeholder">Nowy email</span>
+                                </div>
+
+                                <div class="form-button-space form-button-space-account">
+                                    <div class="form-button-space__cancel">
+                                        <a th:href="@{/account}" class="btn btn-bordered full-width">Anuluj</a>
+                                    </div>
+                                    <div class="form-button-space__submit">
+                                        <button type="submit" id="submit-change-email" class="btn btn-red full-width">Zmień email</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </article>
+            </div>
+        </div>
+    </section>
+    <div th:replace="~{footer :: footer}"></div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

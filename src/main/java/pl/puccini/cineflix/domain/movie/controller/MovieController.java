@@ -1,6 +1,7 @@
 package pl.puccini.cineflix.domain.movie.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +9,7 @@ import pl.puccini.cineflix.domain.genre.Genre;
 import pl.puccini.cineflix.domain.genre.GenreService;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.service.MovieService;
+import pl.puccini.cineflix.domain.user.service.UserUtils;
 
 import java.util.List;
 
@@ -17,14 +19,17 @@ public class MovieController {
 
     private final MovieService movieService;
     private final GenreService genreService;
+    private final UserUtils userUtils;
 
-    public MovieController(MovieService movieService, GenreService genreService) {
+    public MovieController(MovieService movieService, GenreService genreService, UserUtils userUtils) {
         this.movieService = movieService;
         this.genreService = genreService;
+        this.userUtils = userUtils;
     }
 
     @GetMapping("/{value}")
-    public String movieValueHandle(@PathVariable String value, Model model, HttpServletResponse response) {
+    public String movieValueHandle(@PathVariable String value, Model model, Authentication authentication, HttpServletResponse response) {
+        userUtils.addAvatarUrlToModel(authentication, model);
         String normalizedTitle = value.replace("-", " ").toLowerCase();
         MovieDto movieDto = movieService.findMovieByTitle(normalizedTitle);
         if (movieDto != null) {
@@ -60,7 +65,8 @@ public class MovieController {
     }
 
     @GetMapping
-    public String moviesPage(Model model) {
+    public String moviesPage(Authentication authentication, Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
         List<Genre> allGenres = genreService.getAllGenres();
         model.addAttribute("genres", allGenres);
 

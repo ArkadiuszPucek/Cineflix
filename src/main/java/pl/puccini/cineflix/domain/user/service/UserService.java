@@ -10,19 +10,33 @@ import pl.puccini.cineflix.domain.user.model.UserRole;
 import pl.puccini.cineflix.domain.user.repository.UserRepository;
 import pl.puccini.cineflix.domain.user.repository.UserRoleRepository;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserRoleRepository userRoleRepository;
+
+    private static final String DEFAULT_AVATAR_WOLF = "/images/avatars/wilk2.png";
+    private static final String AVATAR_DIRECTORY = "/images/avatars/";
+
+
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userRoleRepository = userRoleRepository;
+    }
+
+    public String getAvatarUrlByUsername(String username) {
+        return userRepository.findByEmail(username)
+                .map(User::getAvatar)
+                .orElseThrow(()-> new UserNotFoundException("Użytkownik nie istnieje"));
     }
 
     public Optional<UserCredentialsDto> findCredentialsByEmail(String email) {
@@ -38,6 +52,7 @@ public class UserService {
         User user = new User();
         user.setEmail(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setAvatar(DEFAULT_AVATAR_WOLF);
 
         UserRole role = userRoleRepository.findByName("USER");
         if (role == null){
@@ -108,6 +123,36 @@ public class UserService {
     public void deleteUserByEmail(String email) {
         User user = findByUsername(email);
         userRepository.delete(user);
+    }
+
+    public void changeEmail(String oldEmail, String newEmail) {
+        User user = findByUsername(oldEmail);
+        if (user != null){
+            user.setEmail(newEmail);
+            userRepository.save(user);
+        }else {
+            throw new UserNotFoundException("Nie znaleziono użytkownika");
+        }
+    }
+
+    public void changeAvatar(String username, String newAvatar) {
+        User user = findByUsername(username);
+        user.setAvatar(newAvatar);
+        userRepository.save(user);
+    }
+
+    public List<String> getAvatarPaths() {
+        File avatarDir = new File("src/main/resources/static" + AVATAR_DIRECTORY);
+        File[] files = avatarDir.listFiles();
+        List<String> avatarPaths = new ArrayList<>();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile() && file.getName().endsWith(".png")) {
+                    avatarPaths.add(AVATAR_DIRECTORY + file.getName());
+                }
+            }
+        }
+        return avatarPaths;
     }
 
 //    public void changeAvatar(Long userId, MultipartFile avatarFile) {

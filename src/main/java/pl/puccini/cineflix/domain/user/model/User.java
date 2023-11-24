@@ -23,6 +23,7 @@ public class User {
     private String email;
     @Length(min = 8, message = "Hasło musi mieć co najmniej 8 znaków.")
     private String password;
+    private String avatar;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

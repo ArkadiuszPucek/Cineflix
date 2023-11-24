@@ -4482,9 +4482,9 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
 }
 
 .ProfileAvatar-module-container-aV27r.ProfileAvatar-module-small-HCZsN {
-    height: 31px;
-    min-width: 31px;
-    width: 31px
+    height: 40px;
+    min-width: 40px;
+    width: 40px
 }
 
 .ProfileAvatar-module-container-aV27r.ProfileAvatar-module-medium-UJi10 {
@@ -24070,6 +24070,12 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     display: none;
 }
 
+.user-avatar {
+    width: 90px;  /* Ustaw szerokość obrazka */
+    height: 90px; /* Ustaw wysokość obrazka */
+    object-fit: cover; /* Upewnij się, że obrazek jest odpowiednio dopasowany */
+}
+
 .manage-message-user-manage-page {
     font-size: 13px;
     text-align: center; /* Wyśrodkowanie tekstu */
@@ -24550,13 +24556,45 @@ button {
 .user-email{
     font-style: italic;
     font-size: 14px;
+    color: #737373;
+    margin-bottom: 8px;
 }
 
 .widget-links{
     font-size: 15px;
 }
 
+.avatars img {
+    border: 0px solid transparent;
+    cursor: pointer;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 100%;
+    transition: box-shadow 0.5s;
 
+}
+
+.avatars {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 30px;
+}
+
+.avatars label {
+    flex-basis: calc(25% - 10px); /* Ustawienie szerokości pojedynczego avatara na 25% minus odstęp */
+    text-align: center; /* Wyśrodkowanie zawartości label */
+}
+
+.avatars input[type="radio"] {
+    display: none;
+}
+
+.avatars img.selected {
+    box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.7);
+}
 
 
 

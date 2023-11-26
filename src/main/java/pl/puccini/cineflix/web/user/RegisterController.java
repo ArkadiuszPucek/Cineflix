@@ -27,14 +27,13 @@ public class RegisterController {
     }
 
     @GetMapping("/register")
-    private String showRegistrationForm(Model model, Authentication authentication){
+    private String showRegistrationForm(Model model){
         UserDto userDto = new UserDto();
         model.addAttribute("user", userDto);
 
         Authentication login = SecurityContextHolder.getContext().getAuthentication();
-        userUtils.addAvatarUrlToModel(login, model);
 
-        if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
+        if (login != null && login.isAuthenticated() && !(login instanceof AnonymousAuthenticationToken)) {
             return "redirect:/";
         }
         return "register-form";

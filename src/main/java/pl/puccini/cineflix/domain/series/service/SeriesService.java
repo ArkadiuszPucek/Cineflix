@@ -7,7 +7,10 @@ import pl.puccini.cineflix.domain.exceptions.SeriesAlreadyExistsException;
 import pl.puccini.cineflix.domain.exceptions.SeriesNotFoundException;
 import pl.puccini.cineflix.domain.genre.Genre;
 import pl.puccini.cineflix.domain.genre.GenreRepository;
+import pl.puccini.cineflix.domain.genre.GenreService;
 import pl.puccini.cineflix.domain.imdb.IMDbApiService;
+import pl.puccini.cineflix.domain.movie.dto.MovieDto;
+import pl.puccini.cineflix.domain.movie.dto.MovieDtoMapper;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDtoMapper;
 import pl.puccini.cineflix.domain.series.dto.seasonDto.SeasonDto;
@@ -19,6 +22,7 @@ import pl.puccini.cineflix.domain.series.model.Season;
 import pl.puccini.cineflix.domain.series.model.Series;
 import pl.puccini.cineflix.domain.series.repository.SeasonRepository;
 import pl.puccini.cineflix.domain.series.repository.SeriesRepository;
+import pl.puccini.cineflix.domain.user.service.UserListService;
 
 import java.io.IOException;
 import java.net.URI;
@@ -40,13 +44,17 @@ public class SeriesService {
     private final SeasonRepository seasonRepository;
     private final IMDbApiService imdbApiService;
     private final GenreRepository genreRepository;
+    private final UserListService userListService;
+    private final GenreService genreService;
     private final EpisodeService episodeService;
 
-    public SeriesService(SeriesRepository seriesRepository, SeasonRepository seasonRepository, IMDbApiService imdbApiService, GenreRepository genreRepository, EpisodeService episodeService) {
+    public SeriesService(SeriesRepository seriesRepository, SeasonRepository seasonRepository, IMDbApiService imdbApiService, GenreRepository genreRepository, UserListService userListService, GenreService genreService, EpisodeService episodeService) {
         this.seriesRepository = seriesRepository;
         this.seasonRepository = seasonRepository;
         this.imdbApiService = imdbApiService;
         this.genreRepository = genreRepository;
+        this.userListService = userListService;
+        this.genreService = genreService;
         this.episodeService = episodeService;
     }
 
@@ -63,18 +71,30 @@ public class SeriesService {
                 .toList();
     }
 
-    public List<SeriesDto> getSeriesByGenre(Genre genre) {
-        return seriesRepository.findAllByGenre(genre).stream()
+//    public List<SeriesDto> getSeriesByGenre(Genre genre) {
+//        return seriesRepository.findAllByGenre(genre).stream()
+//                .map(SeriesDtoMapper::map)
+//                .toList();
+//    }
+
+    public List<SeriesDto> getSeriesByGenre(String genre, Long userId) {
+        Genre genreByType = genreService.getGenreByType(genre);
+        List<SeriesDto> seriesDtos = seriesRepository.findAllByGenre(genreByType).stream()
                 .map(SeriesDtoMapper::map)
                 .toList();
+//        List<SeriesDto> series = seriesService.getSeriesByGenre(genreByType);
+        seriesDtos.forEach(serie -> serie.setOnUserList(userListService.isOnList(userId, serie.getImdbId())));
+        return seriesDtos;
     }
 
-    public SeriesDto findByTitle(String title) {
+    public SeriesDto findSeriesByTitle(String title, Long userId) {
         Series series = seriesRepository.findByTitleIgnoreCase(title);
         if (series == null) {
             return null;
         }
-        return SeriesDtoMapper.map(series);
+        SeriesDto mappedSeries = SeriesDtoMapper.map(series);
+        mappedSeries.setOnUserList(userListService.isOnList(userId, series.getImdbId()));
+        return mappedSeries;
     }
 
     public List<SeriesDto> searchSeries(String query) {

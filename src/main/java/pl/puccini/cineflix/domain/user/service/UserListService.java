@@ -2,8 +2,13 @@ package pl.puccini.cineflix.domain.user.service;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import pl.puccini.cineflix.domain.movie.dto.MovieDto;
+import pl.puccini.cineflix.domain.movie.dto.MovieDtoMapper;
 import pl.puccini.cineflix.domain.movie.model.Movie;
 import pl.puccini.cineflix.domain.movie.repository.MovieRepository;
+import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
+import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDtoMapper;
 import pl.puccini.cineflix.domain.series.model.Series;
 import pl.puccini.cineflix.domain.series.repository.SeriesRepository;
 import pl.puccini.cineflix.domain.user.model.User;
@@ -31,27 +36,29 @@ public class UserListService {
         this.seriesRepository = seriesRepository;
     }
 
-    public List<Movie> getUserMovies(Long userId) {
+    public List<MovieDto> getUserMovies(Long userId) {
         List<UserList> userLists = userListRepository.findByUserId(userId);
-        List<Movie> movies = new ArrayList<>();
+        List<MovieDto> movies = new ArrayList<>();
 
         for (UserList userList : userLists) {
             Movie movieByImdbId = movieRepository.findMovieByImdbId(userList.getImdbId());
-            if (movieByImdbId != null) {
-                movies.add(movieByImdbId);
+            if (movieByImdbId != null){
+                MovieDto mappedMovie = MovieDtoMapper.map(movieByImdbId);
+                movies.add(mappedMovie);
             }
         }
         return movies;
     }
 
-    public List<Series> getUserSeries(Long userId) {
+    public List<SeriesDto> getUserSeries(Long userId) {
         List<UserList> userLists = userListRepository.findByUserId(userId);
-        List<Series> series = new ArrayList<>();
+        List<SeriesDto> series = new ArrayList<>();
 
         for (UserList userList : userLists) {
             Series seriesByImdbId = seriesRepository.findSeriesByImdbId(userList.getImdbId());
             if (seriesByImdbId != null) {
-                series.add(seriesByImdbId);
+                SeriesDto mappedSeries = SeriesDtoMapper.map(seriesByImdbId);
+                series.add(mappedSeries);
             }
         }
         return series;
@@ -71,6 +78,7 @@ public class UserListService {
         }
     }
 
+    @Transactional
     public void removeItemFromList(Long userId, String imdbId) {
         userListRepository.deleteByUserIdAndImdbId(userId, imdbId);
     }

@@ -14,6 +14,7 @@ public interface UserListRepository extends CrudRepository<UserList, Long> {
 
     // Usunięcie filmu/serialu z listy użytkownika
     void deleteByUserIdAndImdbId(Long userId, String imdbId);
+    void deleteByImdbId(String imdbId);
 
     // Sprawdzenie czy dany film/serial jest już na liście użytkownika
     boolean existsByUserIdAndImdbId(Long userId, String imdbId);

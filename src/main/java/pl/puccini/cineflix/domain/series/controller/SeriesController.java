@@ -31,22 +31,24 @@ public class SeriesController {
     @GetMapping
     public String seriesPage(Authentication authentication, Model model) {
         userUtils.addAvatarUrlToModel(authentication, model);
+        Long userId = userUtils.getUserIdFromAuthentication(authentication);
+
         List<Genre> allGenres = genreService.getAllGenres();
         model.addAttribute("genres", allGenres);
 
         String dramaGenre = "Drama";
         model.addAttribute("dramaSeriesTitle", "Seriale dramatyczne");
-        model.addAttribute("dramaSeries", getSeriesByGenre(dramaGenre));
+        model.addAttribute("dramaSeries", seriesService.getSeriesByGenre(dramaGenre, userId));
         model.addAttribute("dramaGenre", dramaGenre.toLowerCase());
 
         String comedyGenre = "Comedy";
         model.addAttribute("comedySeriesTitle", "Seriale komediowe");
-        model.addAttribute("comedySeries", getSeriesByGenre(comedyGenre));
+        model.addAttribute("comedySeries", seriesService.getSeriesByGenre(comedyGenre, userId));
         model.addAttribute("comedyGenre", comedyGenre.toLowerCase());
 
         String actionGenre = "Action";
         model.addAttribute("actionSeriesTitle", "Seriale akcji");
-        model.addAttribute("actionSeries", getSeriesByGenre(actionGenre));
+        model.addAttribute("actionSeries", seriesService.getSeriesByGenre(actionGenre, userId));
         model.addAttribute("actionGenre", actionGenre.toLowerCase());
         return "series";
     }
@@ -55,10 +57,11 @@ public class SeriesController {
     @GetMapping("/{genre}")
     private String getSeriesByGenre(@PathVariable String genre, Authentication authentication, Model model) {
         userUtils.addAvatarUrlToModel(authentication, model);
+        Long userId = userUtils.getUserIdFromAuthentication(authentication);
         String capitalizedGenre = Character.toUpperCase(genre.charAt(0)) + genre.substring(1);
 
-        Genre genreByType = genreService.getGenreByType(capitalizedGenre);
-        List<SeriesDto> seriesByGenre = seriesService.getSeriesByGenre(genreByType);
+//        Genre genreByType = genreService.getGenreByType(capitalizedGenre);
+        List<SeriesDto> seriesByGenre = seriesService.getSeriesByGenre(capitalizedGenre, userId);
 
         List<Genre> allGenres = genreService.getAllGenres();
         model.addAttribute("genres", allGenres);
@@ -72,8 +75,10 @@ public class SeriesController {
     @GetMapping("/{title}/sezon-{seasonNumber}")
     public String showSeriesPage(@PathVariable String title, @PathVariable int seasonNumber, Authentication authentication, Model model) {
         userUtils.addAvatarUrlToModel(authentication, model);
+        Long userId = userUtils.getUserIdFromAuthentication(authentication);
+
         String normalizedTitle = title.replace("-", " ").toLowerCase();
-        SeriesDto seriesDto = seriesService.findByTitle(normalizedTitle);
+        SeriesDto seriesDto = seriesService.findSeriesByTitle(normalizedTitle, userId);
         if (seriesDto == null) {
             return "error/not-found";
         }
@@ -100,8 +105,8 @@ public class SeriesController {
         model.addAttribute("episodes", episodes);
 
         String genre = seriesDto.getGenre();
-        Genre genreByType = genreService.getGenreByType(genre);
-        List<SeriesDto> seriesByGenre = seriesService.getSeriesByGenre(genreByType);
+//        Genre genreByType = genreService.getGenreByType(genre);
+        List<SeriesDto> seriesByGenre = seriesService.getSeriesByGenre(genre, userId);
         model.addAttribute("genre", seriesByGenre);
 
         model.addAttribute("series", seriesDto);
@@ -111,8 +116,8 @@ public class SeriesController {
     }
 
 
-    private List<SeriesDto> getSeriesByGenre(String genre) {
-        Genre genreByType = genreService.getGenreByType(genre);
-        return seriesService.getSeriesByGenre(genreByType);
-    }
+//    private List<SeriesDto> getSeriesByGenre(String genre) {
+//        Genre genreByType = genreService.getGenreByType(genre);
+//        return seriesService.getSeriesByGenre(genreByType);
+//    }
 }

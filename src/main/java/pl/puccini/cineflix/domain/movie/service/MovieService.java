@@ -3,11 +3,15 @@ package pl.puccini.cineflix.domain.movie.service;
 import org.springframework.stereotype.Service;
 import pl.puccini.cineflix.domain.genre.Genre;
 import pl.puccini.cineflix.domain.genre.GenreRepository;
+import pl.puccini.cineflix.domain.genre.GenreService;
 import pl.puccini.cineflix.domain.imdb.IMDbApiService;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.dto.MovieDtoMapper;
 import pl.puccini.cineflix.domain.movie.model.Movie;
 import pl.puccini.cineflix.domain.movie.repository.MovieRepository;
+import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
+import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDtoMapper;
+import pl.puccini.cineflix.domain.user.service.UserListService;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -19,11 +23,15 @@ public class MovieService {
     private final MovieRepository movieRepository;
     private final IMDbApiService imdbApiService;
     private final GenreRepository genreRepository;
+    private final GenreService genreService;
+    private final UserListService userListService;
 
-    public MovieService(MovieRepository movieRepository, IMDbApiService imdbApiService, GenreRepository genreRepository) {
+    public MovieService(MovieRepository movieRepository, IMDbApiService imdbApiService, GenreRepository genreRepository, GenreService genreService, UserListService userListService) {
         this.movieRepository = movieRepository;
         this.imdbApiService = imdbApiService;
         this.genreRepository = genreRepository;
+        this.genreService = genreService;
+        this.userListService = userListService;
     }
 
 
@@ -87,18 +95,28 @@ public class MovieService {
                 .toList();
     }
 
-    public List<MovieDto> getMovieByGenre(Genre genre){
-        return movieRepository.findAllByGenre(genre).stream()
+    public List<MovieDto> getMovieByGenre(String genre, Long userId){
+        Genre genreByType = genreService.getGenreByType(genre);
+        List<MovieDto> moviesDtos = movieRepository.findAllByGenre(genreByType).stream()
                 .map(MovieDtoMapper::map)
                 .toList();
+//        List<SeriesDto> series = seriesService.getSeriesByGenre(genreByType);
+        moviesDtos.forEach(movie -> movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId())));
+        return moviesDtos;
+
+//        return movieRepository.findAllByGenre(genre).stream()
+//                .map(MovieDtoMapper::map)
+//                .toList();
     }
 
-    public MovieDto findMovieByTitle(String title) {
+    public MovieDto findMovieByTitle(String title, Long userId) {
         Movie movie = movieRepository.findByTitleIgnoreCase(title);
         if (movie == null){
             return null;
         }
-        return MovieDtoMapper.map(movie);
+        MovieDto mappedMovie = MovieDtoMapper.map(movie);
+        mappedMovie.setOnUserList(userListService.isOnList(userId, mappedMovie.getImdbId()));
+        return mappedMovie;
     }
 
     public List<MovieDto> findAllMoviesInService(){

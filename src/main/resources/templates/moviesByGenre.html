@@ -5,6 +5,11 @@
     <title>ViaPlay</title>
     <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="javascript" th:href="@{/static/scripts/common.js}"/>
+
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <script src="../static/scripts/common.js"></script>
 
 </head>
 <body>
@@ -94,7 +99,9 @@
                                                                    th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
 
                                                                 </a>
-                                                                <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"></div>
+                                                                <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"
+                                                                     data-testhook="item-star" th:classappend="${movieModel.onUserList ? 'StarButton-module-isStarred-v2AtG' : ''}"
+                                                                     th:attr="data-imdb-id=${movieModel.imdbId}"></div>
                                                                 <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-"></div>
                                                                 <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1"></div>
                                                             </div>

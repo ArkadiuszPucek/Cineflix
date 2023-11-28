@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>ViaPlay</title>
     <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
 </head>
 <body>
@@ -24,6 +26,7 @@
                                 <div class="Scaffold-module-scaffold-F6aIC">
                                     <div>
                                         <div class="SearchFilters-module-container-d0i8m">
+                                            <div class="h1-login-form-header-HD2dE">Moja lista</div>
                                             <ul class="SearchFilters-module-list-P-HYT">
                                                 <li class="SearchFilters-module-item-VQgVJ"><span>Pokaż: </span>
                                                 </li>
@@ -88,13 +91,13 @@
                                                                     </span>
                                                                     <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
                                                                         <span class="Seasons-module-container-ZM15y Seasons-module-hasDefaultTypography-8No96"
-                                                                              th:if="${itemModel.getClass().simpleName == 'Series'}">
+                                                                              th:if="${itemModel.getClass().simpleName == 'SeriesDto'}">
                                                                             <span th:text="${itemModel.seasonsCount} + ' ' + (itemModel.seasonsCount == 1 ? 'Sezon' : 'Sezony')">
                                                                                 5 Sezony
                                                                             </span>
                                                                         </span>
                                                                         <span class="Seasons-module-container-ZM15y Seasons-module-hasDefaultTypography-8No96"
-                                                                              th:if="${itemModel.getClass().simpleName == 'Movie'}">
+                                                                              th:if="${itemModel.getClass().simpleName == 'MovieDto'}">
                                                                             <span th:if="${itemModel.timeline < 59}">
                                                                                 <span th:text="${itemModel.timeline} + ' min.'"></span>
                                                                             </span>
@@ -118,58 +121,62 @@
                                                                    th:with="formattedTitle=${itemModel.title.replace(' ', '-')}"
                                                                    th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
                                                                 </a>
-                                                                <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"></div>
+                                                                <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"
+                                                                     data-testhook="item-star" th:classappend="${itemModel.onUserList ? 'StarButton-module-isStarred-v2AtG' : ''}"
+                                                                     th:attr="data-imdb-id=${itemModel.imdbId}"></div>
                                                                 <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-"></div>
                                                                 <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1"></div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div th:each="movieModel : ${movies}"
-                                                     class="Item-module-item-yTZtG Item-module-carouselItem-Q3n9V Item-module-landscapeItem-Sf-nw">
-                                                    <div class="Item-module-box-4uBp3 Item-module-show-qrDtq">
-                                                        <a class="Item-module-link-Lms-C" tabindex="-1"
-                                                           th:with="formattedTitle=${movieModel.title.toLowerCase().replace(' ', '-')}"
-                                                           th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
-                                                        </a>
-                                                        <div class="Item-module-image-CGday"
-                                                             th:style="'background-image: url(' + ${movieModel.imageUrl} + ');'">
-                                                        </div>
-                                                        <div class="Item-module-curtain-EV2Ya">
-                                                            <div class="SeriesMeta-module-container-oFAL3">
-                                                                <div class="SeriesMeta-module-metadata-8qwss">
-                                                                    <span class="Divider-module-divider-U-3--">
-                                                                        <a class="ImdbRating-module-link-yYfI- ImdbRating-module-hasDefaultTypography-luAjW"
-                                                                           th:href="@{${movieModel.imdbUrl}}"
-                                                                           target="_blank"
-                                                                           tabindex="-1"
-                                                                           th:text="${movieModel.imdbRating}">
-                                                                            ImdbRating
-                                                                        </a>
-                                                                    </span>
-                                                                    <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
-                                                                        <span class="Seasons-module-container-ZM15y Seasons-module-hasDefaultTypography-8No96">
-                                                                            <span th:text="${movieModel.releaseYear}">
-                                                                                ReleaseYear
-                                                                            </span>
-                                                                        </span>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="InteractionIcons-module-container-apGgr">
-                                                                <a class="TooltipButton-module-container-PfKnw TooltipButton-module-isItem-R6NdL"
-                                                                   tabindex="-1"
-                                                                   th:with="formattedTitle=${movieModel.title.replace(' ', '-')}"
-                                                                   th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
+<!--                                                <div th:each="movieModel : ${movies}"-->
+<!--                                                     class="Item-module-item-yTZtG Item-module-carouselItem-Q3n9V Item-module-landscapeItem-Sf-nw">-->
+<!--                                                    <div class="Item-module-box-4uBp3 Item-module-show-qrDtq">-->
+<!--                                                        <a class="Item-module-link-Lms-C" tabindex="-1"-->
+<!--                                                           th:with="formattedTitle=${movieModel.title.toLowerCase().replace(' ', '-')}"-->
+<!--                                                           th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">-->
+<!--                                                        </a>-->
+<!--                                                        <div class="Item-module-image-CGday"-->
+<!--                                                             th:style="'background-image: url(' + ${movieModel.imageUrl} + ');'">-->
+<!--                                                        </div>-->
+<!--                                                        <div class="Item-module-curtain-EV2Ya">-->
+<!--                                                            <div class="SeriesMeta-module-container-oFAL3">-->
+<!--                                                                <div class="SeriesMeta-module-metadata-8qwss">-->
+<!--                                                                    <span class="Divider-module-divider-U-3&#45;&#45;">-->
+<!--                                                                        <a class="ImdbRating-module-link-yYfI- ImdbRating-module-hasDefaultTypography-luAjW"-->
+<!--                                                                           th:href="@{${movieModel.imdbUrl}}"-->
+<!--                                                                           target="_blank"-->
+<!--                                                                           tabindex="-1"-->
+<!--                                                                           th:text="${movieModel.imdbRating}">-->
+<!--                                                                            ImdbRating-->
+<!--                                                                        </a>-->
+<!--                                                                    </span>-->
+<!--                                                                    <span class="Divider-module-divider-U-3&#45;&#45; Divider-module-hasDefaultTypography-Uy4EO">-->
+<!--                                                                        <span class="Seasons-module-container-ZM15y Seasons-module-hasDefaultTypography-8No96">-->
+<!--                                                                            <span th:text="${movieModel.releaseYear}">-->
+<!--                                                                                ReleaseYear-->
+<!--                                                                            </span>-->
+<!--                                                                        </span>-->
+<!--                                                                    </span>-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
+<!--                                                            <div class="InteractionIcons-module-container-apGgr">-->
+<!--                                                                <a class="TooltipButton-module-container-PfKnw TooltipButton-module-isItem-R6NdL"-->
+<!--                                                                   tabindex="-1"-->
+<!--                                                                   th:with="formattedTitle=${movieModel.title.replace(' ', '-')}"-->
+<!--                                                                   th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">-->
 
-                                                                </a>
-                                                                <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"></div>
-                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-"></div>
-                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+<!--                                                                </a>-->
+<!--                                                                <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"-->
+<!--                                                                     data-testhook="item-star" th:classappend="${movieModel.onUserList ? 'StarButton-module-isStarred-v2AtG' : ''}"-->
+<!--                                                                     th:attr="data-imdb-id=${movieModel.imdbId}"></div>-->
+<!--                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-"></div>-->
+<!--                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1"></div>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
                                             </span>
                                             </div>
                                         </div>
@@ -186,5 +193,38 @@
     </div>
 </div>
 </div>
+<script>
+    document.querySelectorAll('.StarButton-module-container-sGC0y').forEach(button => {
+        button.addEventListener('click', function () {
+            var imdbId = this.getAttribute('data-imdb-id');
+
+            var csrfToken = document.querySelector('meta[name="_csrf"]').content;
+            var csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
+
+            var headers = new Headers();
+            headers.append(csrfHeader, csrfToken);
+
+            var isStarred = this.classList.contains('StarButton-module-isStarred-v2AtG');
+
+            var method = isStarred ? 'DELETE' : 'POST';
+
+            // Utwórz pełny adres URL
+            var baseUrl = window.location.origin + '/library/';
+            var apiUrl = (isStarred ? 'remove-from-list/' : 'add-to-list/') + imdbId;
+            var fullUrl = baseUrl + apiUrl;
+
+            fetch(fullUrl, {
+                method: method,
+                headers: headers
+            })
+                .then(response => {
+                    if (response.ok) {
+                        this.classList.toggle('StarButton-module-isStarred-v2AtG', !isStarred);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    });
+</script>
 </body>
 </html>

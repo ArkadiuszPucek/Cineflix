@@ -31,12 +31,14 @@ public class MovieController {
     public String movieValueHandle(@PathVariable String value, Model model, Authentication authentication, HttpServletResponse response) {
         userUtils.addAvatarUrlToModel(authentication, model);
         String normalizedTitle = value.replace("-", " ").toLowerCase();
-        MovieDto movieDto = movieService.findMovieByTitle(normalizedTitle);
+        Long userId = userUtils.getUserIdFromAuthentication(authentication);
+        MovieDto movieDto = movieService.findMovieByTitle(normalizedTitle, userId);
+
         if (movieDto != null) {
             model.addAttribute("title", value);
 
-            Genre genreByType = genreService.getGenreByType(movieDto.getGenre());
-            List<MovieDto> movieByGenre = movieService.getMovieByGenre(genreByType);
+//            Genre genreByType = genreService.getGenreByType(movieDto.getGenre());
+            List<MovieDto> movieByGenre = movieService.getMovieByGenre(movieDto.getGenre(), userId);
             model.addAttribute("moviesByGenre", movieByGenre);
 
             model.addAttribute("movie", movieDto);
@@ -50,7 +52,7 @@ public class MovieController {
             if (genreByType != null) {
                 model.addAttribute("genre", capitalizedGenre);
 
-                List<MovieDto> moviesByGenre = movieService.getMovieByGenre(genreByType);
+                List<MovieDto> moviesByGenre = movieService.getMovieByGenre(capitalizedGenre, userId);
                 model.addAttribute("moviesByGenre", moviesByGenre);
 
                 List<Genre> allGenres = genreService.getAllGenres();
@@ -67,21 +69,23 @@ public class MovieController {
     @GetMapping
     public String moviesPage(Authentication authentication, Model model) {
         userUtils.addAvatarUrlToModel(authentication, model);
+        Long userId = userUtils.getUserIdFromAuthentication(authentication);
+
         List<Genre> allGenres = genreService.getAllGenres();
         model.addAttribute("genres", allGenres);
 
         String thrillerGenre = "Thriller";
         model.addAttribute("thrillerMoviesTitle", "Filmy akcji");
-        model.addAttribute("thrillerMovies", getMoviesByGenre(thrillerGenre));
+        model.addAttribute("thrillerMovies", movieService.getMovieByGenre(thrillerGenre, userId));
         model.addAttribute("thrillerGenre", thrillerGenre.toLowerCase());
 
         return "movies";
     }
 
-    private List<MovieDto> getMoviesByGenre(String genre) {
-        Genre genreByType = genreService.getGenreByType(genre);
-        return movieService.getMovieByGenre(genreByType);
-    }
+//    private List<MovieDto> getMoviesByGenre(String genre) {
+//        Genre genreByType = genreService.getGenreByType(genre);
+//        return movieService.getMovieByGenre(genreByType);
+//    }
 
 
 }

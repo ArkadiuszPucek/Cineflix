@@ -8,7 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.model.Movie;
+import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
 import pl.puccini.cineflix.domain.series.model.Series;
 import pl.puccini.cineflix.domain.user.model.User;
 import pl.puccini.cineflix.domain.user.service.UserListService;
@@ -40,8 +42,12 @@ public class UserListController {
         userUtils.addAvatarUrlToModel(authentication, model);
         Long userId = getUserIdFromAuthentication(authentication);
 
-        List<Movie> userMovies = userListService.getUserMovies(userId);
-        List<Series> userSeries = userListService.getUserSeries(userId);
+        List<MovieDto> userMovies = userListService.getUserMovies(userId);
+        userMovies.forEach(movies -> movies.setOnUserList(userListService.isOnList(userId, movies.getImdbId())));
+
+        List<SeriesDto> userSeries = userListService.getUserSeries(userId);
+        userSeries.forEach(serie -> serie.setOnUserList(userListService.isOnList(userId, serie.getImdbId())));
+
         if ("movies".equals(filter)) {
             model.addAttribute("activeAttribute", userMovies);
         } else if ("series".equals(filter)) {
@@ -53,7 +59,7 @@ public class UserListController {
             Collections.shuffle(mixedResults);
             model.addAttribute("activeAttribute", mixedResults);
         }
-        model.addAttribute("activeFilter",filter);
+        model.addAttribute("activeFilter", filter);
 
         return "/admin/users/library";
     }
@@ -70,11 +76,15 @@ public class UserListController {
         }
     }
 
-    @PostMapping("/remove")
-    public String removeItemFromList(@RequestParam String imdbId, Authentication authentication) {
-        Long userId = getUserIdFromAuthentication(authentication);
-        userListService.removeItemFromList(userId, imdbId);
-        return "redirect:/user-list";
+    @DeleteMapping("/remove-from-list/{imdbId}")
+    public ResponseEntity<?> removeItemFromList(@PathVariable String imdbId, Authentication authentication) {
+        try {
+            Long userId = getUserIdFromAuthentication(authentication);
+            userListService.removeItemFromList(userId, imdbId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error message");
+        }
     }
 
     private Long getUserIdFromAuthentication(Authentication authentication) {
@@ -83,7 +93,7 @@ public class UserListController {
             String email = userDetails.getUsername();
             User user = userService.findByUsername(email);
             return user.getId();
-        }else {
+        } else {
             return null;
         }
     }

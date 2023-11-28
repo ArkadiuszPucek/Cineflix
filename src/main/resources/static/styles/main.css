@@ -24580,6 +24580,10 @@ button {
     background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iI0VFRSIgZD0iTTIuNDIgMTMuOTRhMSAxIDAgMCAxIDEuNDIgMGw1LjQyIDUuNDJMMjAuOCA3LjhhMSAxIDAgMSAxIDEuNDEgMS40MUw5Ljk2IDIxLjQ4YTEgMSAwIDAgMS0xLjQxIDBsLTYuMTMtNi4xM2ExIDEgMCAwIDEgMC0xLjQxWiIvPjwvc3ZnPg==);
 }
 
+.MyList-module-myList-kmBI5.MyList-module-active-T4Dnx:before{
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iI0VFRSIgZD0iTTIuNDIgMTMuOTRhMSAxIDAgMCAxIDEuNDIgMGw1LjQyIDUuNDJMMjAuOCA3LjhhMSAxIDAgMSAxIDEuNDEgMS40MUw5Ljk2IDIxLjQ4YTEgMSAwIDAgMS0xLjQxIDBsLTYuMTMtNi4xM2ExIDEgMCAwIDEgMC0xLjQxWiIvPjwvc3ZnPg==);
+    margin-bottom: 3px;
+}
 
 .avatars {
     display: flex;

@@ -6,7 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.model.Movie;
+import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
 import pl.puccini.cineflix.domain.series.model.Series;
 import pl.puccini.cineflix.domain.user.service.UserUtils;
 
@@ -31,9 +33,10 @@ public class KidsContentController {
             Authentication authentication,
             Model model) {
         userUtils.addAvatarUrlToModel(authentication, model);
+        Long userId = userUtils.getUserIdFromAuthentication(authentication);
 
-        List<Movie> allKidsMovies = kidsContentService.getAllKidsMovies();
-        List<Series> allKidsSeries = kidsContentService.getAllKidsSeries();
+        List<MovieDto> allKidsMovies = kidsContentService.getAllKidsMovies(userId);
+        List<SeriesDto> allKidsSeries = kidsContentService.getAllKidsSeries(userId);
 
 
         if ("movies".equals(filter)) {

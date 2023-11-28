@@ -37,18 +37,21 @@
                     <td th:text="${user.email}">E-mail</td>
                     <td th:text="${user.getRoleNames()}">Rola</td>
                     <td>
-                        <form th:action="@{/master/change-role(user=${user.id})}" method="post"
-                              class="users-change-role-form">
-                            <select name="newRole" onchange="confirmRoleChange(this, '${user.id}', '${user.currentRole}')">
-                                <option value="USER">User</option>
-                                <option value="EDITOR">Editor</option>
-                                <option value="ADMIN">Admin</option>
-                            </select>
-                            <button type="submit"
-                                    class="Buttons-module-primary--YHdl change-role-button"
-                                    tabindex="0">Zmień
-                            </button>
-                        </form>
+                        <th:block th:unless="${user.getRoleNames().equals('ADMIN')}">
+                            <form th:action="@{/master/change-role(user=${user.id})}" method="post"
+                                  class="users-change-role-form">
+                                <select name="newRole" onchange="confirmRoleChange(this, '${user.id}', '${user.currentRole}')">
+                                    <option label="Wybierz rolę"></option>
+                                    <option value="USER">User</option>
+                                    <option value="EDITOR">Editor</option>
+                                    <option value="ADMIN">Admin</option>
+                                </select>
+                                <button type="submit"
+                                        class="Buttons-module-primary--YHdl change-role-button"
+                                        tabindex="0">Zmień
+                                </button>
+                            </form>
+                        </th:block>
                     </td>
                     <td>
                         <a href="#" title="Usuń" th:text="Usuń" id="deleteMovie" th:onclick="showConfirmDialog()"

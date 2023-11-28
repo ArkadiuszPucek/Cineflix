@@ -5,6 +5,8 @@
     <title>ViaPlay</title>
     <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
 
 </head>
@@ -55,7 +57,8 @@
                                                     </div>
                                                     <a class="MyList-module-container-zkH2- Buttons-module-secondary-br7-v Buttons-module-icon-ODVKH"
                                                        tabindex="0">
-                                                        <div class="MyList-module-myList-kmBI5"></div>
+                                                        <div class="MyList-module-myList-kmBI5" data-testhook="item-star" th:classappend="${series.onUserList ? 'MyList-module-active-T4Dnx' : ''}"
+                                                             th:attr="data-imdb-id=${series.imdbId}"></div>
                                                     </a>
                                                     <a class="Rate-module-container-SmrTr Buttons-module-secondary-br7-v Buttons-module-icon-ODVKH"
                                                        data-testhook="rate-button-no-rating" tabindex="0">
@@ -266,7 +269,9 @@
                                                                    tabindex="-1"
                                                                    th:href="@{'/series/' + ${relatedSeries.title.toLowerCase().replace(' ', '-')}}">
                                                                 </a>
-                                                                <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"></div>
+                                                                <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"
+                                                                     data-testhook="item-star" th:classappend="${relatedSeries.onUserList ? 'StarButton-module-isStarred-v2AtG' : ''}"
+                                                                     th:attr="data-imdb-id=${relatedSeries.imdbId}"></div>
                                                                 <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-"></div>
                                                                 <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1"></div>
                                                             </div>
@@ -294,7 +299,39 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script type="text/javascript" src="/scripts/common.js"></script>
+<script>
+    document.querySelectorAll('.MyList-module-myList-kmBI5').forEach(button => {
+        button.addEventListener('click', function () {
+            var imdbId = this.getAttribute('data-imdb-id');
 
+            var csrfToken = document.querySelector('meta[name="_csrf"]').content;
+            var csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
 
+            var headers = new Headers();
+            headers.append(csrfHeader, csrfToken);
+
+            var isStarred = this.classList.contains('MyList-module-active-T4Dnx');
+
+            var method = isStarred ? 'DELETE' : 'POST';
+
+            // Utwórz pełny adres URL
+            var baseUrl = window.location.origin + '/library/';
+            var apiUrl = (isStarred ? 'remove-from-list/' : 'add-to-list/') + imdbId;
+            var fullUrl = baseUrl + apiUrl;
+
+            fetch(fullUrl, {
+                method: method,
+                headers: headers
+            })
+                .then(response => {
+                    if (response.ok) {
+                        this.classList.toggle('MyList-module-active-T4Dnx', !isStarred);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    });
+
+</script>
 </body>
 </html>

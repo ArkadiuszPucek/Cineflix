@@ -17,7 +17,7 @@ public class SeriesDtoMapper {
         seriesDto.setAgeLimit(series.getAgeLimit());
         seriesDto.setImdbRating(series.getImdbRating());
         seriesDto.setImdbUrl(series.getImdbUrl());
-        seriesDto.setSeasonsCount(seriesDto.getSeasonsCount());
+        seriesDto.setSeasonsCount(series.getSeasons().size());
         seriesDto.setOnUserList(false);
         return seriesDto;
     }

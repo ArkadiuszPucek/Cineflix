@@ -40,6 +40,7 @@ public class SearchController {
             Model model, Authentication authentication) {
 
         userUtils.addAvatarUrlToModel(authentication, model);
+        Long userId = userUtils.getUserIdFromAuthentication(authentication);
 
 
         if(query != null && !query.isEmpty()) {
@@ -53,8 +54,8 @@ public class SearchController {
             } else if ("series".equals(filter)) {
                 model.addAttribute("activeAttribute", series);
             } else if ("kids".equals(filter)) {
-                List<Movie> allKidsMovies = kidsContentService.getAllKidsMovies();
-                List<Series> allKidsSeries = kidsContentService.getAllKidsSeries();
+                List<MovieDto> allKidsMovies = kidsContentService.getAllKidsMovies(userId);
+                List<SeriesDto> allKidsSeries = kidsContentService.getAllKidsSeries(userId);
                 List<Object> mixedKidsContent = new ArrayList<>();
                 mixedKidsContent.addAll(allKidsMovies);
                 mixedKidsContent.addAll(allKidsSeries);

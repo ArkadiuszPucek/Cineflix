@@ -50,42 +50,42 @@ class HomeController {
 
         String dramaGenre = "Drama";
         model.addAttribute("dramaSeriesTitle", "Seriale dramatyczne");
-        model.addAttribute("dramaSeries", getSeriesByGenre(dramaGenre, userId));
+        model.addAttribute("dramaSeries", seriesService.getSeriesByGenre(dramaGenre, userId));
         model.addAttribute("dramaGenre", dramaGenre.toLowerCase());
 
         String comedyGenre = "Comedy";
         model.addAttribute("comedySeriesTitle", "Seriale komediowe");
-        model.addAttribute("comedySeries", getSeriesByGenre(comedyGenre, userId));
+        model.addAttribute("comedySeries", seriesService.getSeriesByGenre(comedyGenre, userId));
         model.addAttribute("comedyGenre", comedyGenre.toLowerCase());
 
         String actionGenre = "Action";
         model.addAttribute("actionSeriesTitle", "Seriale akcji");
-        model.addAttribute("actionSeries", getSeriesByGenre(actionGenre, userId));
+        model.addAttribute("actionSeries", seriesService.getSeriesByGenre(actionGenre, userId));
         model.addAttribute("actionGenre", actionGenre.toLowerCase());
 
         String thrillerGenre = "Thriller";
         model.addAttribute("thrillerMoviesTitle", "Filmy akcji");
-        model.addAttribute("thrillerMovies", getMoviesByGenre(thrillerGenre, userId));
+        model.addAttribute("thrillerMovies", movieService.getMovieByGenre(thrillerGenre, userId));
         model.addAttribute("thrillerGenre", thrillerGenre.toLowerCase());
 
         return "index";
     }
 
 
-    private List<SeriesDto> getSeriesByGenre(String genre, Long userId) {
-        Genre genreByType = genreService.getGenreByType(genre);
-        List<SeriesDto> series = seriesService.getSeriesByGenre(genreByType);
-        series.forEach(serie -> serie.setOnUserList(userListService.isOnList(userId, serie.getImdbId())));
-        return series;
-    }
+//    private List<SeriesDto> getSeriesByGenre(String genre, Long userId) {
+//        Genre genreByType = genreService.getGenreByType(genre);
+//        List<SeriesDto> series = seriesService.getSeriesByGenre(genreByType);
+//        series.forEach(serie -> serie.setOnUserList(userListService.isOnList(userId, serie.getImdbId())));
+//        return series;
+//    }
 
 
-    private List<MovieDto> getMoviesByGenre(String genre, Long userId) {
-        Genre genreByType = genreService.getGenreByType(genre);
-        List<MovieDto> movies = movieService.getMovieByGenre(genreByType);
-        movies.forEach(movie -> movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId())));
-        return movies;
-    }
+//    private List<MovieDto> getMoviesByGenre(String genre, Long userId) {
+//        Genre genreByType = genreService.getGenreByType(genre);
+//        List<MovieDto> movies = movieService.getMovieByGenre(genre, userId);
+//        movies.forEach(movie -> movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId())));
+//        return movies;
+//    }
 
     private Object getRandomPromotedItem(Long userId) {
         List<MovieDto> allPromotedMovies = movieService.findAllPromotedMovies();

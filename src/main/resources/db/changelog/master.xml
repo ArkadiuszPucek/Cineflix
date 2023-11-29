@@ -12,6 +12,7 @@
     <include file="0005_2_create_table_episode.xml" relativeToChangelogFile="true" />
     <include file="0006_1_create_tables_users_and_role.xml" relativeToChangelogFile="true" />
     <include file="0007_1_create_tables_user_list.xml" relativeToChangelogFile="true" />
+    <include file="0008_1_create_table_viewing_history.xml" relativeToChangelogFile="true" />
 
     <include file="../testdata/0001_genres.sql" relativeToChangelogFile="true" context="dev"/>
     <include file="../testdata/0002_movies.sql" relativeToChangelogFile="true" context="dev"/>

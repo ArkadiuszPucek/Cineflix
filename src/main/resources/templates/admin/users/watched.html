@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ViaPlay</title>
+    <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+</head>
+<body>
+
+<div id="content-wrapper" class>
+    <div class="dockable"></div>
+    <div id="react-mount">
+        <div class="Layout-module-internal-page--krBv">
+            <div th:replace="~{header :: header}"></div>
+            <div class="dockable"></div>
+            <div class="blocksEnsembleContainer-module-container-ZXS1I">
+                <div id="content" class="article" data-testhook="article">
+                    <div class="dockable"></div>
+                    <div class="Season-module-wrapper-H0oVh" data-testhook="season">
+                        <div class="StickyDiv-module-mark-Me4XV StickyDiv-module-top-peA7i" style="top: 0px;"></div>
+                        <div class="Search-module-results-EVu-r" style="margin-top: 60px">
+                            <section>
+                                <div class="Scaffold-module-scaffold-F6aIC">
+                                    <div>
+                                        <div class="SearchFilters-module-container-d0i8m">
+                                            <div class="h1-login-form-header-HD2dE">Dzienik aktywności</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="Grid-module-container-kIPZs" style="margin-top: 30px">
+                                <div class="Scaffold-module-scaffold-F6aIC">
+                                    <div class="Grid-module-wrapper---F1s">
+                                        <div style="display:inline">
+                                            <div style="display:inline">
+                                            <span>
+                                                <div th:each="item : ${watchedItems}"
+                                                     class="Item-module-item-yTZtG Item-module-carouselItem-Q3n9V Item-module-landscapeItem-Sf-nw">
+                                                    <div class="Item-module-box-4uBp3 Item-module-show-qrDtq">
+                                                        <a th:if="${item.type == 'episode'}"
+                                                           class="Item-module-link-Lms-C" tabindex="-1"
+                                                           th:href="@{/play-episode/{episodeId}(episodeId=${item.episodeId})} ">
+                                                        </a>
+                                                        <a th:if="${item.type == 'movie'}"
+                                                           class="Item-module-link-Lms-C" tabindex="-1"
+                                                           th:with="formattedTitle=${item.title.toLowerCase().replace(' ', '-')}"
+                                                           th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
+                                                        </a>
+                                                        <div class="Item-module-image-CGday"
+                                                             th:style="'background-image: url(' + ${item.imageUrl} + ');'">
+                                                        </div>
+                                                        <div class="Item-module-curtain-EV2Ya">
+                                                            <div class="InteractionIcons-module-container-apGgr">
+                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-"
+                                                                     data-testhook="item-rating-up"></div>
+                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1"
+                                                                     data-testhook="item-rating-down"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="Item-module-below-BMw6u Item-module-centeredExperiment-Q0zBG">
+                                                        <div class="EpisodeMeta-module-container--GenC">
+                                                            <div class="EpisodeMeta-module-title-u8wR7"
+                                                                 th:if="${item.type == 'episode'}"
+                                                                 th:text="${item.title} + ' S' + ${item.seasonNumber} + ' | E' + ${item.episodeNumber}">
+                                                                Series title + season number + episode number
+                                                            </div>
+                                                            <div class="EpisodeMeta-module-title-u8wR7"
+                                                                 th:if="${item.type == 'movie'}"
+                                                                 th:text="${item.title}">
+                                                                Movie title
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div th:replace="~{footer :: footer}"></div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

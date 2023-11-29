@@ -50,11 +50,12 @@
                                                     Title
                                                 </h1>
                                                 <div class="ActionButton-module-container-iom96 ActionButton-module-product-qJKhU ActionButton-module-isLoggedIn-J00sd">
-                                                    <div class="ActionButton-module-wrapper-NdTTC">
-                                                        <div class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl Buttons-module-play-AAOaC"
-                                                             tabindex="0">
-                                                            <span th:href="@{${movie.mediaUrl}}">Obejrzyj film</span>
-                                                        </div>
+                                                    <div class="ActionButton-module-wrapper-movie-Gds43s">
+                                                        <form class="movie-button" th:action="@{/add-movie-to-history/{imdbId}(imdbId=${movie.imdbId})}" method="post">
+                                                            <button type="submit" class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl Buttons-module-play-AAOaC" tabindex="0">
+                                                                <span>Obejrzyj film</span>
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                     <a class="MyList-module-container-zkH2- Buttons-module-secondary-br7-v Buttons-module-icon-ODVKH"
                                                        tabindex="0">

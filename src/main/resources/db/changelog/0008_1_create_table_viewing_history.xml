@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+    <changeSet id="0008_1" author="puccini">
+        <createTable tableName="viewing_history">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_viewing_history_user"
+                             referencedTableName="users" referencedColumnNames="id"/>
+            </column>
+            <column name="episode_id" type="BIGINT">
+                <constraints foreignKeyName="fk_viewing_history_episode"
+                             referencedTableName="episode" referencedColumnNames="id"/>
+            </column>
+            <column name="movie_id" type="VARCHAR(255)">
+                <constraints foreignKeyName="fk_viewing_history_movie"
+                             referencedTableName="movie" referencedColumnNames="imdb_id"/>
+            </column>
+            <column name="viewed_on" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

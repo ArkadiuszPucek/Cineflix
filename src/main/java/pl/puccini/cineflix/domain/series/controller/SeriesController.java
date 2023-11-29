@@ -9,6 +9,7 @@ import pl.puccini.cineflix.domain.genre.GenreService;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.cineflix.domain.series.dto.seasonDto.SeasonDto;
 import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
+import pl.puccini.cineflix.domain.series.service.EpisodeService;
 import pl.puccini.cineflix.domain.series.service.SeriesService;
 import pl.puccini.cineflix.domain.user.service.UserUtils;
 
@@ -20,11 +21,13 @@ public class SeriesController {
     private final SeriesService seriesService;
     private final GenreService genreService;
     private final UserUtils userUtils;
+    private final EpisodeService episodeService;
 
-    public SeriesController(SeriesService seriesService, GenreService genreService, UserUtils userUtils) {
+    public SeriesController(SeriesService seriesService, GenreService genreService, UserUtils userUtils, EpisodeService episodeService) {
         this.seriesService = seriesService;
         this.genreService = genreService;
         this.userUtils = userUtils;
+        this.episodeService = episodeService;
     }
 
 
@@ -101,23 +104,20 @@ public class SeriesController {
             return "error/not-found";
         }
 
-        List<EpisodeDto> episodes = seriesService.getEpisodesForSeason(selectedSeason.getId());
+        EpisodeDto firstUnwatchedEpisode = episodeService.findFirstUnwatchedEpisode(seriesDto.getImdbId(), userId);
+        model.addAttribute("watchedEpisodes", firstUnwatchedEpisode);
+
+        List<EpisodeDto> episodes = seriesService.getEpisodesForSeason(selectedSeason.getId(), userId);
         model.addAttribute("episodes", episodes);
 
         String genre = seriesDto.getGenre();
-//        Genre genreByType = genreService.getGenreByType(genre);
         List<SeriesDto> seriesByGenre = seriesService.getSeriesByGenre(genre, userId);
         model.addAttribute("genre", seriesByGenre);
 
         model.addAttribute("series", seriesDto);
         model.addAttribute("selectedSeason", selectedSeason);
 
-        return "series-title"; //
+        return "series-title";
     }
 
-
-//    private List<SeriesDto> getSeriesByGenre(String genre) {
-//        Genre genreByType = genreService.getGenreByType(genre);
-//        return seriesService.getSeriesByGenre(genreByType);
-//    }
 }

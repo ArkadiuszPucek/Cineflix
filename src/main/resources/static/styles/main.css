@@ -18218,6 +18218,9 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 .ActionButton-module-wrapper-NdTTC {
     display: inline
 }
+.ActionButton-module-wrapper-movie-Gds43s {
+    display: inline-block;
+}
 
 .ActionButton-module-link-Nycdj {
     display: block;
@@ -18846,7 +18849,6 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 }
 
 .Hero-module-backdrop-be6rg:after, .Hero-module-gradient-ieQvj:after, .Hero-module-image-NlipI:after, .Hero-module-sportRightGradient-CLm8y:after, .Hero-module-video-2JJTm:after {
-    content: "";
     display: block;
     padding-top: calc(56.25% + 1px)
 }
@@ -18949,7 +18951,7 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 }
 
 .Hero-module-showImage-09J4b {
-    opacity: 1;
+    opacity: 10;
     transition: opacity .9s ease-in
 }
 
@@ -19638,7 +19640,7 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 }
 
 .ProductPage-module-container-oTkLV {
-    margin-bottom: -64px;
+    /*margin-bottom: -64px;*/
     position: relative;
     top: -64px
 }
@@ -25474,6 +25476,15 @@ select.text-input-style {
     width: 100%
 }
 
+.watched-content{
+    display: inline;
+}
+
+.movie-button{
+    margin: 0px;
+}
+
+
 .FeatureBoxVideo-module-shadow-IJEZu, .FeatureBoxVideo-module-wrapper-8UDKL {
     height: 100%;
     position: absolute;
@@ -25495,7 +25506,7 @@ select.text-input-style {
     left: 0;
     opacity: 0;
     position: absolute;
-    top: 0;
+    top: -80px;
     transition: opacity .3s ease-in;
     width: 100%
 }

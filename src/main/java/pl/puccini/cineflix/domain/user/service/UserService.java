@@ -6,7 +6,9 @@ import pl.puccini.cineflix.domain.exceptions.*;
 import pl.puccini.cineflix.domain.user.dto.UserCredentialsDto;
 import pl.puccini.cineflix.domain.user.dto.UserDto;
 import pl.puccini.cineflix.domain.user.model.User;
+import pl.puccini.cineflix.domain.user.model.UserList;
 import pl.puccini.cineflix.domain.user.model.UserRole;
+import pl.puccini.cineflix.domain.user.repository.UserListRepository;
 import pl.puccini.cineflix.domain.user.repository.UserRepository;
 import pl.puccini.cineflix.domain.user.repository.UserRoleRepository;
 
@@ -21,16 +23,20 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserRoleRepository userRoleRepository;
+    private final UserListService userListService;
+    private final UserListRepository userListRepository;
 
     private static final String DEFAULT_AVATAR_WOLF = "/images/avatars/wilk2.png";
     private static final String AVATAR_DIRECTORY = "/images/avatars/";
 
 
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, UserListService userListService, UserListRepository userListRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userRoleRepository = userRoleRepository;
+        this.userListService = userListService;
+        this.userListRepository = userListRepository;
     }
 
     public String getAvatarUrlByUsername(String username) {
@@ -89,6 +95,7 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(()-> new UserNotFoundException("Nie znaleziono użytkownika"));
         if (user != null){
+            userListService.removeUserAndAllItems(userId);
             userRepository.delete(user);
             return true;
         }else {
@@ -118,6 +125,10 @@ public class UserService {
 
     public User findByUsername(String currentUserName) {
         return userRepository.findByEmail(currentUserName).orElseThrow(()->new UserNotFoundException("Nie znaleziono użytkownika"));
+    }
+
+    public User findUserById(Long userId) {
+        return userRepository.findUserById(userId);
     }
 
     public void deleteUserByEmail(String email) {
@@ -155,7 +166,4 @@ public class UserService {
         return avatarPaths;
     }
 
-//    public void changeAvatar(Long userId, MultipartFile avatarFile) {
-//        // Logika zmiany avatara
-//    }
 }

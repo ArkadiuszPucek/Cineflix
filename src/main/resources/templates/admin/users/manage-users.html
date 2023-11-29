@@ -10,6 +10,7 @@
 <div class="Layout-module-internal-page--krBv">
     <div th:replace="~{header :: header}"></div>
     <h1 class="page-header-admin">Panel administracyjny - zarządzaj użytkownikami</h1>
+    <div th:if="${message}" th:text="${message}" class="alert manage-success"></div>
     <div id="content" class="admin-panel">
         <div th:replace="~{admin/sidebar :: sidebar}"></div>
         <div class="main-content">
@@ -54,7 +55,7 @@
                         </th:block>
                     </td>
                     <td>
-                        <a href="#" title="Usuń" th:text="Usuń" id="deleteMovie" th:onclick="showConfirmDialog()"
+                        <a href="#" title="Usuń" th:text="Usuń" id="deleteUser" th:onclick="showConfirmDialog()"
                            th:attr="data-id=${user.id}"></a>
                     </td>
                 </tr>

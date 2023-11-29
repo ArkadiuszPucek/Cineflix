@@ -22,6 +22,7 @@ import pl.puccini.cineflix.domain.series.service.EpisodeService;
 import pl.puccini.cineflix.domain.series.service.SeriesService;
 import pl.puccini.cineflix.domain.user.model.User;
 import pl.puccini.cineflix.domain.user.dto.UserDto;
+import pl.puccini.cineflix.domain.user.service.UserListService;
 import pl.puccini.cineflix.domain.user.service.UserService;
 import pl.puccini.cineflix.domain.user.service.UserUtils;
 
@@ -461,12 +462,12 @@ public class AdminController {
         if ("deleteUser".equals(action)) {
             boolean deleted = userService.deleteUserById(userId);
             if (deleted) {
-                redirectAttributes.addFlashAttribute("message", "Film został pomyślnie usunięty.");
+                redirectAttributes.addFlashAttribute("message", "Użytkownik został pomyślnie usunięty.");
             } else {
-                redirectAttributes.addFlashAttribute("message", "Nie znaleziono filmu do usunięcia.");
+                redirectAttributes.addFlashAttribute("message", "Nie znaleziono użytkownika do usunięcia.");
             }
         } else {
-            redirectAttributes.addFlashAttribute("message", "Wystąpił błąd podczas usuwania filmu");
+            redirectAttributes.addFlashAttribute("message", "Wystąpił błąd podczas usuwania użytkownika");
         }
         return "redirect:/master/manage-users";
     }

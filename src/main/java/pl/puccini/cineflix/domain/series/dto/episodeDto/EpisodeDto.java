@@ -17,5 +17,6 @@ public class EpisodeDto {
     private String imageUrl;
     private Integer durationMinutes;
     private String episodeDescription;
-
+    private Integer seasonNumber;
+    private boolean watched;
 }

@@ -33,32 +33,15 @@ public class EpisodeController {
         }
         EpisodeInfoDto episodeInfo = episodeService.getEpisodeInfo(episodeId);
 
-        String videoId = extractVideoId(episodeDto.getMediaUrl());
-        String youTubeUrl = "https://www.youtube.com/embed/" + videoId;
-        model.addAttribute("mediaUrl", youTubeUrl);
+        String youTubeUrl = userUtils.extractVideoId(episodeDto.getMediaUrl());
 
+        model.addAttribute("mediaUrl", youTubeUrl);
         model.addAttribute("serialTitle", episodeInfo.getSerialTitle());
         model.addAttribute("seasonNumber", episodeInfo.getSeasonNumber());
         model.addAttribute("episodeNumber", episodeInfo.getEpisodeNumber());
         return "episode-player";
     }
 
-    private static String extractVideoId(String youtubeUrl) {
-        Pattern pattern = Pattern.compile("https?://www\\.youtube\\.com/watch\\?v=([\\w-]+)");
-        Matcher matcher = pattern.matcher(youtubeUrl);
-
-        if (matcher.find()) {
-            return matcher.group(1);
-        }
-
-        pattern = Pattern.compile("https?://youtu\\.be/([\\w-]+)");
-        matcher = pattern.matcher(youtubeUrl);
-        if (matcher.find()) {
-            return matcher.group(1);
-        }
-
-        return null;
-    }
 
 
 }

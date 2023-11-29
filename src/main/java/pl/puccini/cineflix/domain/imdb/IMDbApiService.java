@@ -7,7 +7,6 @@ import pl.puccini.cineflix.domain.genre.Genre;
 import pl.puccini.cineflix.domain.genre.GenreRepository;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
-import pl.puccini.cineflix.domain.series.service.EpisodeService;
 
 import java.io.IOException;
 import java.net.URI;
@@ -19,15 +18,15 @@ import java.util.*;
 public class IMDbApiService {
 
     private final GenreRepository genreRepository;
-    private final EpisodeService episodeService;
     private static final String RAPID_API_KEY = "a036483fe6mshaed22ea9f1c82e1p101240jsn943f47197fbe";
     private static final String RAPID_API_HOST = "mdblist.p.rapidapi.com";
     private static final String RAPID_API_MDA_HOST = "movie-database-alternative.p.rapidapi.com";
     private static final String RAPID_API_IMDb_HOST = "imdb8.p.rapidapi.com";
-    public IMDbApiService(GenreRepository genreRepository, EpisodeService episodeService) {
+
+    public IMDbApiService(GenreRepository genreRepository) {
         this.genreRepository = genreRepository;
-        this.episodeService = episodeService;
     }
+
 
     public MovieDto fetchIMDbData(String imdbId) throws IOException, InterruptedException {
         String apiUrl = "https://mdblist.p.rapidapi.com/?i=" + imdbId;

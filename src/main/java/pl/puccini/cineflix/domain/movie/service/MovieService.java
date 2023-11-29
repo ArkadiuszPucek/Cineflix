@@ -9,13 +9,14 @@ import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.dto.MovieDtoMapper;
 import pl.puccini.cineflix.domain.movie.model.Movie;
 import pl.puccini.cineflix.domain.movie.repository.MovieRepository;
-import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
-import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDtoMapper;
+import pl.puccini.cineflix.domain.user.model.ViewingHistory;
+import pl.puccini.cineflix.domain.user.repository.ViewingHistoryRepository;
 import pl.puccini.cineflix.domain.user.service.UserListService;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieService {
@@ -25,13 +26,15 @@ public class MovieService {
     private final GenreRepository genreRepository;
     private final GenreService genreService;
     private final UserListService userListService;
+    private final ViewingHistoryRepository viewingHistoryRepository;
 
-    public MovieService(MovieRepository movieRepository, IMDbApiService imdbApiService, GenreRepository genreRepository, GenreService genreService, UserListService userListService) {
+    public MovieService(MovieRepository movieRepository, IMDbApiService imdbApiService, GenreRepository genreRepository, GenreService genreService, UserListService userListService, ViewingHistoryRepository viewingHistoryRepository) {
         this.movieRepository = movieRepository;
         this.imdbApiService = imdbApiService;
         this.genreRepository = genreRepository;
         this.genreService = genreService;
         this.userListService = userListService;
+        this.viewingHistoryRepository = viewingHistoryRepository;
     }
 
 
@@ -166,6 +169,20 @@ public class MovieService {
         }
     }
 
+    public Movie getMovieByImdbId(String imdbId){
+        return movieRepository.findMovieByImdbId(imdbId);
+    }
+
+    public String getFormattedMovieTitle(String imdbId){
+        Movie movieByImdbId = movieRepository.findMovieByImdbId(imdbId);
+        return movieByImdbId.getTitle().toLowerCase().replace(' ', '-');
+    }
+
+    public MovieDto findMovieByTitle(String title){
+        Movie movie = movieRepository.findByTitleIgnoreCase(title);
+        return MovieDtoMapper.map(movie);
+    }
+
     public boolean deleteMovieByImdbId(String imdbId) {
         Movie movieByImdbId = movieRepository.findMovieByImdbId(imdbId);
         if (movieByImdbId != null) {
@@ -174,5 +191,19 @@ public class MovieService {
         }
         return false;
     }
+
+    public List<MovieDto> getWatchedMovies(Long userId) {
+        // Pobierz listę historii oglądania filmów dla danego użytkownika, posortowaną od najnowszej
+        List<ViewingHistory> movieHistoryList = viewingHistoryRepository.findByUserIdOrderByViewedOnDesc(userId);
+
+        // Mapuj na DTO
+        return movieHistoryList.stream()
+                .map(ViewingHistory::getMovie)
+                .distinct()
+                .map(MovieDtoMapper::map)
+                .collect(Collectors.toList());
+    }
+
+
 
 }

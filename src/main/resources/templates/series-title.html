@@ -49,15 +49,18 @@
                                                     Title
                                                 </h1>
                                                 <div class="ActionButton-module-container-iom96 ActionButton-module-product-qJKhU ActionButton-module-isLoggedIn-J00sd">
-                                                    <div class="ActionButton-module-wrapper-NdTTC">
-                                                        <div class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl Buttons-module-play-AAOaC"
-                                                             tabindex="0">
-                                                            <span>Sezon 1 - Odcinek 1</span>
-                                                        </div>
+                                                    <div class="ActionButton-module-wrapper-movie-Gds43s">
+                                                        <form th:action="@{/add-episode-to-history/{episodeId}(episodeId=${watchedEpisodes.id})}" method="post">
+                                                            <button type="submit" class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl Buttons-module-play-AAOaC">
+                                                            <span th:text="'Sezon ' + ${watchedEpisodes.seasonNumber} + ' - Odcinek ' + ${watchedEpisodes.episodeNumber}">Sezon 1 - Odcinek 1</span>
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                     <a class="MyList-module-container-zkH2- Buttons-module-secondary-br7-v Buttons-module-icon-ODVKH"
                                                        tabindex="0">
-                                                        <div class="MyList-module-myList-kmBI5" data-testhook="item-star" th:classappend="${series.onUserList ? 'MyList-module-active-T4Dnx' : ''}"
+                                                        <div class="MyList-module-myList-kmBI5"
+                                                             data-testhook="item-star"
+                                                             th:classappend="${series.onUserList ? 'MyList-module-active-T4Dnx' : ''}"
                                                              th:attr="data-imdb-id=${series.imdbId}"></div>
                                                     </a>
                                                     <a class="Rate-module-container-SmrTr Buttons-module-secondary-br7-v Buttons-module-icon-ODVKH"
@@ -181,20 +184,21 @@
                                                         <div class="Episode-module-image-ND-Ju"
                                                              th:style="'background-image: url(&quot;' + ${episode.imageUrl} + '&quot;);'">
                                                         </div>
-                                                        <div class="Episode-module-backdrop-KXm-S">
-                                                            <a class="Item-module-link-Lms-C"
-                                                                data-testhook="item-product-page-link" tabindex="-1"
-                                                               th:href="@{/play-episode/{episodeId}(episodeId=${episode.id})}">
-                                                            <div class="PlayButton-module-container-RmQKd
-                                                            PlayButton-module-show-B7cDu
-                                                            PlayButton-module-landscape-dCM5E
-                                                            PlayButton-module-forceHover-ubElK
-                                                            PlayButton-module-episode-IOzP7"
-                                                                 data-testhook="play-button" tabindex="0">
-                                                                <figure class="PlayButton-module-icon-q3WfE"></figure>
-                                                            </div>
-                                                        </a>
+                                                        <div class="Episode-module-backdrop-KXm-S" >
+                                                            <form th:action="@{/add-episode-to-history/{episodeId}(episodeId=${episode.id})}" method="post">
+                                                            <button type="submit" class="PlayButton-module-container-RmQKd
+                                                                    PlayButton-module-show-B7cDu
+                                                                    PlayButton-module-landscape-dCM5E
+                                                                    PlayButton-module-forceHover-ubElK
+                                                                    PlayButton-module-episode-IOzP7"
+                                                                    data-testhook="play-button" tabindex="0">
+
+                                                                    <figure class="PlayButton-module-icon-q3WfE"></figure>
+
+                                                            </button>
+                                                            </form>
                                                         </div>
+                                                        <div th:if="${episode.watched}" class="Progress-module-watched-rejvO"></div>
                                                     </div>
                                                     <div class="Episode-module-labels-QC9tQ">
                                                         <div data-testhook="episode-title"
@@ -270,7 +274,8 @@
                                                                    th:href="@{'/series/' + ${relatedSeries.title.toLowerCase().replace(' ', '-')}}">
                                                                 </a>
                                                                 <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"
-                                                                     data-testhook="item-star" th:classappend="${relatedSeries.onUserList ? 'StarButton-module-isStarred-v2AtG' : ''}"
+                                                                     data-testhook="item-star"
+                                                                     th:classappend="${relatedSeries.onUserList ? 'StarButton-module-isStarred-v2AtG' : ''}"
                                                                      th:attr="data-imdb-id=${relatedSeries.imdbId}"></div>
                                                                 <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-"></div>
                                                                 <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1"></div>

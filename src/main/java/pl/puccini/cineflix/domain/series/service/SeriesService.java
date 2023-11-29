@@ -9,8 +9,6 @@ import pl.puccini.cineflix.domain.genre.Genre;
 import pl.puccini.cineflix.domain.genre.GenreRepository;
 import pl.puccini.cineflix.domain.genre.GenreService;
 import pl.puccini.cineflix.domain.imdb.IMDbApiService;
-import pl.puccini.cineflix.domain.movie.dto.MovieDto;
-import pl.puccini.cineflix.domain.movie.dto.MovieDtoMapper;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDtoMapper;
 import pl.puccini.cineflix.domain.series.dto.seasonDto.SeasonDto;
@@ -32,6 +30,7 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,6 +59,17 @@ public class SeriesService {
 
 
     public List<SeriesDto> findAllPromotedSeries() {
+//        List<ViewingHistory> viewed = viewingHistoryRepository.findByUserId(userId);
+//        Set<String> viewedImdbIds = viewed.stream()
+//                .map(history -> history.getEpisode().getSeries().getImdbId())
+//                .collect(Collectors.toSet());
+//
+//        // Pobierz listę proponowanych seriali, wykluczając obejrzane
+//        List<SeriesDto> recommended = // metoda pobierająca proponowane seriale
+//        return recommended.stream()
+//                .filter(series -> !viewedImdbIds.contains(series.getImdbId()))
+//                .collect(Collectors.toList());
+
         return seriesRepository.findAllByPromotedIsTrue().stream()
                 .map(SeriesDtoMapper::map)
                 .toList();
@@ -71,18 +81,12 @@ public class SeriesService {
                 .toList();
     }
 
-//    public List<SeriesDto> getSeriesByGenre(Genre genre) {
-//        return seriesRepository.findAllByGenre(genre).stream()
-//                .map(SeriesDtoMapper::map)
-//                .toList();
-//    }
 
     public List<SeriesDto> getSeriesByGenre(String genre, Long userId) {
         Genre genreByType = genreService.getGenreByType(genre);
         List<SeriesDto> seriesDtos = seriesRepository.findAllByGenre(genreByType).stream()
                 .map(SeriesDtoMapper::map)
                 .toList();
-//        List<SeriesDto> series = seriesService.getSeriesByGenre(genreByType);
         seriesDtos.forEach(serie -> serie.setOnUserList(userListService.isOnList(userId, serie.getImdbId())));
         return seriesDtos;
     }
@@ -112,25 +116,25 @@ public class SeriesService {
         List<Season> seasons = seasonRepository.findSeasonsBySeriesImdbId(imdbId);
 
         // Mapuj sezon na SeasonDto za pomocą SeasonDtoMapper
-        List<SeasonDto> seasonDtos = seasons.stream()
+
+        return seasons.stream()
                 .map(SeasonDtoMapper::map)
                 .collect(Collectors.toList());
-
-        return seasonDtos;
     }
 
-    public List<EpisodeDto> getEpisodesForSeason(Long seasonId) {
+    public List<EpisodeDto> getEpisodesForSeason(Long seasonId, Long userId) {
         Season season = seasonRepository.findById(seasonId).orElse(null);
         if (season == null) {
-            // Obsłuż przypadek, gdy sezon nie istnieje
             return Collections.emptyList();
         }
 
+        Set<Long> watchedEpisodeIds = episodeService.getWatchedEpisodesIds(userId);
         List<Episode> episodes = season.getEpisodes();
         List<EpisodeDto> episodeDtos = new ArrayList<>();
 
         for (Episode episode : episodes) {
             EpisodeDto episodeDto = EpisodeDtoMapper.map(episode);
+            episodeDto.setWatched(watchedEpisodeIds.contains(episode.getId()));
             episodeDtos.add(episodeDto);
         }
 

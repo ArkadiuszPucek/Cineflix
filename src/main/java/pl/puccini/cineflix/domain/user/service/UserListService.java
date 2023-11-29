@@ -82,6 +82,12 @@ public class UserListService {
     public void removeItemFromList(Long userId, String imdbId) {
         userListRepository.deleteByUserIdAndImdbId(userId, imdbId);
     }
+    @Transactional
+    public void removeUserAndAllItems(Long userId){
+        List<UserList> byUserId = userListRepository.findByUserId(userId);
+        userListRepository.deleteAll(byUserId);
+        userListRepository.deleteUserById(userId);
+    }
 
     public List<UserList> getUserList(Long userId) {
         return userListRepository.findByUserId(userId);

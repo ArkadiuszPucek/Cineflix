@@ -72,21 +72,6 @@ class HomeController {
     }
 
 
-//    private List<SeriesDto> getSeriesByGenre(String genre, Long userId) {
-//        Genre genreByType = genreService.getGenreByType(genre);
-//        List<SeriesDto> series = seriesService.getSeriesByGenre(genreByType);
-//        series.forEach(serie -> serie.setOnUserList(userListService.isOnList(userId, serie.getImdbId())));
-//        return series;
-//    }
-
-
-//    private List<MovieDto> getMoviesByGenre(String genre, Long userId) {
-//        Genre genreByType = genreService.getGenreByType(genre);
-//        List<MovieDto> movies = movieService.getMovieByGenre(genre, userId);
-//        movies.forEach(movie -> movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId())));
-//        return movies;
-//    }
-
     private Object getRandomPromotedItem(Long userId) {
         List<MovieDto> allPromotedMovies = movieService.findAllPromotedMovies();
         allPromotedMovies.forEach(movie -> movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId())));

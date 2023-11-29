@@ -9,6 +9,8 @@ import pl.puccini.cineflix.domain.genre.Genre;
 import pl.puccini.cineflix.domain.genre.GenreService;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.service.MovieService;
+import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
+import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeInfoDto;
 import pl.puccini.cineflix.domain.user.service.UserUtils;
 
 import java.util.List;
@@ -82,10 +84,21 @@ public class MovieController {
         return "movies";
     }
 
-//    private List<MovieDto> getMoviesByGenre(String genre) {
-//        Genre genreByType = genreService.getGenreByType(genre);
-//        return movieService.getMovieByGenre(genreByType);
-//    }
+    @GetMapping("/play-movie/{imdbId}")
+    public String playMovie(@PathVariable String imdbId, Authentication authentication, Model model) {
+        userUtils.addAvatarUrlToModel(authentication, model);
+
+        MovieDto movieDto = movieService.findMovieByImdbId(imdbId);
+
+        if (movieDto == null) {
+            return "error/not-found";
+        }
+
+        String youTubeUrl = userUtils.extractVideoId(movieDto.getMediaUrl());
+        model.addAttribute("mediaUrl", youTubeUrl);
+        model.addAttribute("movieTitle", movieDto.getTitle());
+        return "movie-player";
+    }
 
 
 }

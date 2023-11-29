@@ -5,39 +5,34 @@ import pl.puccini.cineflix.domain.exceptions.EpisodeNotFoundException;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDtoMapper;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeInfoDto;
+import pl.puccini.cineflix.domain.series.model.Episode;
 import pl.puccini.cineflix.domain.series.model.Season;
 import pl.puccini.cineflix.domain.series.model.Series;
 import pl.puccini.cineflix.domain.series.repository.EpisodeRepository;
-import pl.puccini.cineflix.domain.series.model.Episode;
+import pl.puccini.cineflix.domain.series.repository.SeasonRepository;
+import pl.puccini.cineflix.domain.user.service.ViewingHistoryService;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class EpisodeService {
     private final EpisodeRepository episodeRepository;
     private final SeasonService seasonService;
+    private final ViewingHistoryService viewingHistoryService;
+    private final SeasonRepository seasonRepository;
 
-    public EpisodeService(EpisodeRepository episodeRepository, SeasonService seasonService) {
+    public EpisodeService(EpisodeRepository episodeRepository, SeasonService seasonService, ViewingHistoryService viewingHistoryService, SeasonRepository seasonRepository) {
         this.episodeRepository = episodeRepository;
         this.seasonService = seasonService;
+        this.viewingHistoryService = viewingHistoryService;
+        this.seasonRepository = seasonRepository;
     }
 
 
-//    List<Episode> getAllEpisodes(){
-//        return episodeRepository.findAllBy();
-//    }
-
-//    public List<EpisodeDto> getEpisodesForSeason(Long seasonId) {
-//        List<Episode> episodes = episodeRepository.findBySeasonId(seasonId);
-//
-//        List<EpisodeDto> episodeDtos = episodes.stream()
-//                .map(EpisodeDtoMapper::map)
-//                .collect(Collectors.toList());
-//
-//        return episodeDtos;
-//    }
-
     public Episode addEpisode(EpisodeDto episodeDto, String seriesId, int seasonNumber) {
         Season season = seasonService.findOrCreateSeason(seriesId, seasonNumber);
-//        Season season = findOrCreateSeason(seriesId, seasonNumber);
 
         Episode episode = new Episode();
         episode.setEpisodeNumber(episodeDto.getEpisodeNumber());
@@ -51,32 +46,16 @@ public class EpisodeService {
         return episodeRepository.save(episode);
     }
 
-//    private Season findOrCreateSeason(String seriesId, int seasonNumber) {
-//        Series series = seriesRepository.findByImdbId(seriesId);
-//        Season season = seasonRepository.findBySeriesAndSeasonNumber(series, seasonNumber);
-//
-//        if (season == null) {
-//            season = new Season();
-//            season.setSeries(series);
-//            season.setSeasonNumber(seasonNumber);
-//            season = seasonRepository.save(season);
-//
-//            series.getSeasons().add(season);
-//            seriesRepository.save(series);
-//        }
-//
-//        return season;
-//    }
-
     public EpisodeDto getEpisodeById(Long episodeId) {
         Episode episode = episodeRepository.findEpisodeById(episodeId);
         return EpisodeDtoMapper.map(episode);
     }
 
+
     public EpisodeInfoDto getEpisodeInfo(Long episodeId) {
         Episode episode = episodeRepository.findById(episodeId).orElse(null);
         if (episode == null) {
-            return null; // Możesz też rzucić wyjątek, jeśli to preferujesz
+            return null;
         }
 
         Season season = episode.getSeason();
@@ -130,9 +109,6 @@ public class EpisodeService {
         return existingEpisode;
     }
 
-
-
-
     public Episode deleteEpisodeById(Long episodeId) {
         Episode episodeById = episodeRepository.findEpisodeById(episodeId);
         if (episodeById != null){
@@ -142,6 +118,58 @@ public class EpisodeService {
             throw new EpisodeNotFoundException("Nie znaleziono epizodu o ID: " + episodeId);
         }
     }
+
+    public Episode findEpisodeById(Long episodeId){
+        return episodeRepository.findEpisodeById(episodeId);
+    }
+
+//    public List<EpisodeDto> getWatchedEpisodes(Long userId) {
+//        List<ViewingHistory> historyList = viewingHistoryRepository.findByUserIdOrderByViewedOnDesc(userId);
+//
+//        // Mapuj na DTO
+//        return historyList.stream()
+//                .map(ViewingHistory::getEpisode)
+//                .distinct() // Usuń duplikaty, jeśli użytkownik oglądał ten sam epizod wielokrotnie
+//                .map(EpisodeDtoMapper::map)
+//                .collect(Collectors.toList());
+//    }
+
+
+
+    public EpisodeDto findFirstUnwatchedEpisode(String seriesId, Long userId) {
+        // Znajdź wszystkie sezony dla danego serialu
+        List<Season> seasons = seasonRepository.findSeasonsBySeriesImdbId(seriesId);
+
+        // Pobierz ID obejrzanych epizodów
+        Set<Long> watchedEpisodeIds = getWatchedEpisodesIds(userId);
+
+        for (Season season : seasons) {
+            List<Episode> episodes = season.getEpisodes().stream()
+                    .sorted(Comparator.comparingInt(Episode::getEpisodeNumber)).toList();
+
+            for (Episode episode : episodes) {
+                if (!watchedEpisodeIds.contains(episode.getId())) {
+                    // Zwróć pierwszy nieobejrzany epizod
+                    return EpisodeDtoMapper.map(episode);
+                }
+            }
+        }
+
+        // Jeśli wszystkie epizody zostały obejrzane, zwróć pierwszy epizod pierwszego sezonu
+        if (!seasons.isEmpty() && !seasons.get(0).getEpisodes().isEmpty()) {
+            return EpisodeDtoMapper.map(seasons.get(0).getEpisodes().get(0));
+        }
+
+        // Zwróć null lub rzuć wyjątek, jeśli serial nie ma epizodów
+        return null;
+    }
+
+    public Set<Long> getWatchedEpisodesIds(Long userId) {
+        return viewingHistoryService.getWatchedEpisodeIds(userId);
+    }
+
+
+
 }
 
 

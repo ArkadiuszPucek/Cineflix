@@ -102,7 +102,10 @@ class HomeController {
     private List<MovieDto> getMoviePromoBox(Long userId) {
         return Stream.of("tt0993842", "tt4034228", "tt2304933", "tt6644200", "tt6146586")
                 .flatMap(imdbId -> movieService.getMoviesByImdbId(imdbId).stream())
-                .peek(movie -> movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId())))
+                .peek(movie -> {
+                    movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId()));
+                    movie.setUserRating(movieService.getCurrentUserRatingForMovie(movie.getImdbId(), userId).orElse(null));
+                })
                 .collect(Collectors.toList());
     }
 }

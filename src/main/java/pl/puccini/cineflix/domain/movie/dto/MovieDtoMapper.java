@@ -21,7 +21,8 @@ public class MovieDtoMapper {
         movieDto.setPromoted(movie.isPromoted());
         movieDto.setImdbRating(movie.getImdbRating());
         movieDto.setImdbUrl(movie.getImdbUrl());
-        movieDto.setOnUserList(false);
+        movieDto.setOnUserList(null);
+        movieDto.setUserRating(null);
         return movieDto;
     }
 }

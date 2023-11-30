@@ -9,13 +9,16 @@ import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.dto.MovieDtoMapper;
 import pl.puccini.cineflix.domain.movie.model.Movie;
 import pl.puccini.cineflix.domain.movie.repository.MovieRepository;
+import pl.puccini.cineflix.domain.user.model.UserRating;
 import pl.puccini.cineflix.domain.user.model.ViewingHistory;
+import pl.puccini.cineflix.domain.user.repository.UserRatingRepository;
 import pl.puccini.cineflix.domain.user.repository.ViewingHistoryRepository;
 import pl.puccini.cineflix.domain.user.service.UserListService;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,14 +30,16 @@ public class MovieService {
     private final GenreService genreService;
     private final UserListService userListService;
     private final ViewingHistoryRepository viewingHistoryRepository;
+    private final UserRatingRepository userRatingRepository;
 
-    public MovieService(MovieRepository movieRepository, IMDbApiService imdbApiService, GenreRepository genreRepository, GenreService genreService, UserListService userListService, ViewingHistoryRepository viewingHistoryRepository) {
+    public MovieService(MovieRepository movieRepository, IMDbApiService imdbApiService, GenreRepository genreRepository, GenreService genreService, UserListService userListService, ViewingHistoryRepository viewingHistoryRepository, UserRatingRepository userRatingRepository) {
         this.movieRepository = movieRepository;
         this.imdbApiService = imdbApiService;
         this.genreRepository = genreRepository;
         this.genreService = genreService;
         this.userListService = userListService;
         this.viewingHistoryRepository = viewingHistoryRepository;
+        this.userRatingRepository = userRatingRepository;
     }
 
 
@@ -192,18 +197,22 @@ public class MovieService {
         return false;
     }
 
-    public List<MovieDto> getWatchedMovies(Long userId) {
-        // Pobierz listę historii oglądania filmów dla danego użytkownika, posortowaną od najnowszej
-        List<ViewingHistory> movieHistoryList = viewingHistoryRepository.findByUserIdOrderByViewedOnDesc(userId);
+//    public List<MovieDto> getWatchedMovies(Long userId) {
+//        // Pobierz listę historii oglądania filmów dla danego użytkownika, posortowaną od najnowszej
+//        List<ViewingHistory> movieHistoryList = viewingHistoryRepository.findByUserIdOrderByViewedOnDesc(userId);
+//
+//        // Mapuj na DTO
+//        return movieHistoryList.stream()
+//                .map(ViewingHistory::getMovie)
+//                .distinct()
+//                .map(MovieDtoMapper::map)
+//                .collect(Collectors.toList());
+//    }
 
-        // Mapuj na DTO
-        return movieHistoryList.stream()
-                .map(ViewingHistory::getMovie)
-                .distinct()
-                .map(MovieDtoMapper::map)
-                .collect(Collectors.toList());
+    public Optional<Boolean> getCurrentUserRatingForMovie(String imdbId, Long userId) {
+        return userRatingRepository.findByMovieImdbIdAndUserId(imdbId, userId)
+                .map(UserRating::isUpvote);
     }
-
 
 
 }

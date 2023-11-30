@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import pl.puccini.cineflix.domain.genre.Genre;
+import pl.puccini.cineflix.domain.user.model.UserRating;
+
+import java.util.Set;
 
 
 @Entity
@@ -30,4 +33,7 @@ public class Movie {
     @ManyToOne
     @JoinColumn(name = "genre_type")
     private Genre genre;
+
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UserRating> ratings;
 }

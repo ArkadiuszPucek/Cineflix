@@ -20,6 +20,8 @@ import pl.puccini.cineflix.domain.series.model.Season;
 import pl.puccini.cineflix.domain.series.model.Series;
 import pl.puccini.cineflix.domain.series.repository.SeasonRepository;
 import pl.puccini.cineflix.domain.series.repository.SeriesRepository;
+import pl.puccini.cineflix.domain.user.model.UserRating;
+import pl.puccini.cineflix.domain.user.repository.UserRatingRepository;
 import pl.puccini.cineflix.domain.user.service.UserListService;
 
 import java.io.IOException;
@@ -27,10 +29,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,8 +45,9 @@ public class SeriesService {
     private final UserListService userListService;
     private final GenreService genreService;
     private final EpisodeService episodeService;
+    private final UserRatingRepository userRatingRepository;
 
-    public SeriesService(SeriesRepository seriesRepository, SeasonRepository seasonRepository, IMDbApiService imdbApiService, GenreRepository genreRepository, UserListService userListService, GenreService genreService, EpisodeService episodeService) {
+    public SeriesService(SeriesRepository seriesRepository, SeasonRepository seasonRepository, IMDbApiService imdbApiService, GenreRepository genreRepository, UserListService userListService, GenreService genreService, EpisodeService episodeService, UserRatingRepository userRatingRepository) {
         this.seriesRepository = seriesRepository;
         this.seasonRepository = seasonRepository;
         this.imdbApiService = imdbApiService;
@@ -55,6 +55,7 @@ public class SeriesService {
         this.userListService = userListService;
         this.genreService = genreService;
         this.episodeService = episodeService;
+        this.userRatingRepository = userRatingRepository;
     }
 
 
@@ -87,7 +88,10 @@ public class SeriesService {
         List<SeriesDto> seriesDtos = seriesRepository.findAllByGenre(genreByType).stream()
                 .map(SeriesDtoMapper::map)
                 .toList();
-        seriesDtos.forEach(serie -> serie.setOnUserList(userListService.isOnList(userId, serie.getImdbId())));
+        seriesDtos.forEach(serie -> {
+            serie.setOnUserList(userListService.isOnList(userId, serie.getImdbId()));
+            serie.setUserRating(getCurrentUserRatingForSeries(serie.getImdbId(), userId).orElse(null));
+        });
         return seriesDtos;
     }
 
@@ -331,6 +335,11 @@ public class SeriesService {
 
     public String getNormalizedSeriesTitle(String title) {
         return title.toLowerCase().replace(" ", "-");
+    }
+
+    public Optional<Boolean> getCurrentUserRatingForSeries(String imdbId, Long userId) {
+        return userRatingRepository.findBySeriesImdbIdAndUserId(imdbId, userId)
+                .map(UserRating::isUpvote);
     }
 
 

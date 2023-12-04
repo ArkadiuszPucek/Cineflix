@@ -20,10 +20,10 @@
                             <form class="Search-module-form-5fLlq" action="/search" method="get">
                                 <input type="search" class="Search-module-input-WV9xu"
                                        data-testhook="search-input-field"
-                                       name="query" placeholder="Wyszukaj według tytułu, aktora lub reżysera">
+                                       name="query" placeholder="Search by title, actor, or director">
                                 <button type="submit"
                                         class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl"
-                                        tabindex="0">Szukaj
+                                        tabindex="0">Search
                                 </button>
                             </form>
                             <div class="Search-module-results-EVu-r" style="margin-top: 20px">
@@ -32,34 +32,34 @@
                                         <div>
                                             <div class="SearchFilters-module-container-d0i8m">
                                                 <ul class="SearchFilters-module-list-P-HYT">
-                                                    <li class="SearchFilters-module-item-VQgVJ"><span>Pokaż: </span>
+                                                    <li class="SearchFilters-module-item-VQgVJ"><span>Show: </span>
                                                     </li>
                                                     <li class="SearchFilters-module-item-VQgVJ"
                                                         th:classappend="${activeFilter == 'all' ? 'SearchFilters-module-active-xbXxo' : ''}">
                                                         <a class="SearchFilters-module-link-cRk6q"
                                                            th:href="@{'/search?query=' + ${searchQuery} + '&filter=all'}"
-                                                           title="Wszystko">Wszystko</a>
+                                                           title="Wszystko">All</a>
                                                     </li>
 
                                                     <li class="SearchFilters-module-item-VQgVJ"
                                                         th:classappend="${activeFilter == 'series' ? 'SearchFilters-module-active-xbXxo' : ''}">
                                                         <a class="SearchFilters-module-link-cRk6q"
                                                            th:href="@{'/search?query=' + ${searchQuery} + '&filter=series'}"
-                                                           title="Seriale">Seriale</a>
+                                                           title="Seriale">Series</a>
                                                     </li>
 
                                                     <li class="SearchFilters-module-item-VQgVJ"
                                                         th:classappend="${activeFilter == 'movies' ? 'SearchFilters-module-active-xbXxo' : ''}">
                                                         <a class="SearchFilters-module-link-cRk6q"
                                                            th:href="@{'/search?query=' + ${searchQuery} + '&filter=movies'}"
-                                                           title="Filmy">Filmy</a>
+                                                           title="Filmy">Movies</a>
                                                     </li>
 
                                                     <li class="SearchFilters-module-item-VQgVJ"
                                                         th:classappend="${activeFilter == 'kids' ? 'SearchFilters-module-active-xbXxo' : ''}">
                                                         <a class="SearchFilters-module-link-cRk6q"
                                                            th:href="@{'/search?query=' + ${searchQuery} + '&filter=kids'}"
-                                                           title="Dla dzieci">Dla dzieci</a>
+                                                           title="Dla dzieci">Kids</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -103,8 +103,8 @@
                                                                     <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
                                                                         <span class="Seasons-module-container-ZM15y Seasons-module-hasDefaultTypography-8No96"
                                                                               th:if="${itemModel.getClass().simpleName == 'SeriesDto'}">
-                                                                            <span th:text="${itemModel.seasonsCount} + ' ' + (itemModel.seasonsCount == 1 ? 'Sezon' : 'Sezony')">
-                                                                                5 Sezony
+                                                                            <span th:text="${itemModel.seasonsCount} + ' ' + (itemModel.seasonsCount == 1 ? 'Season' : 'Seasons')">
+                                                                                Seasons count
                                                                             </span>
                                                                         </span>
                                                                         <span class="Seasons-module-container-ZM15y Seasons-module-hasDefaultTypography-8No96"
@@ -113,7 +113,7 @@
                                                                                 <span th:text="${itemModel.timeline} + ' min.'"></span>
                                                                             </span>
                                                                             <span th:if="${itemModel.timeline >= 60}">
-                                                                                <span th:text="${itemModel.timeline div 60 + ' godz.' + (itemModel.timeline % 60 > 0 ? ' ' + itemModel.timeline % 60 + ' min.' : '')}"></span>
+                                                                                <span th:text="${itemModel.timeline div 60 + ' hr.' + (itemModel.timeline % 60 > 0 ? ' ' + itemModel.timeline % 60 + ' min.' : '')}"></span>
                                                                             </span>
                                                                         </span>
                                                                     </span>

@@ -108,13 +108,11 @@ public class MovieService {
         List<MovieDto> moviesDtos = movieRepository.findAllByGenre(genreByType).stream()
                 .map(MovieDtoMapper::map)
                 .toList();
-//        List<SeriesDto> series = seriesService.getSeriesByGenre(genreByType);
-        moviesDtos.forEach(movie -> movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId())));
+        moviesDtos.forEach(movie -> {
+            movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId()));
+            movie.setUserRating(getCurrentUserRatingForMovie(movie.getImdbId(), userId).orElse(null));
+        });
         return moviesDtos;
-
-//        return movieRepository.findAllByGenre(genre).stream()
-//                .map(MovieDtoMapper::map)
-//                .toList();
     }
 
     public MovieDto findMovieByTitle(String title, Long userId) {
@@ -124,6 +122,7 @@ public class MovieService {
         }
         MovieDto mappedMovie = MovieDtoMapper.map(movie);
         mappedMovie.setOnUserList(userListService.isOnList(userId, mappedMovie.getImdbId()));
+        mappedMovie.setUserRating(getCurrentUserRatingForMovie(mappedMovie.getImdbId(), userId).orElse(null));
         return mappedMovie;
     }
 

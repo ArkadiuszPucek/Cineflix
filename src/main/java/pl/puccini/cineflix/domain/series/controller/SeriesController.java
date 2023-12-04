@@ -40,17 +40,17 @@ public class SeriesController {
         model.addAttribute("genres", allGenres);
 
         String dramaGenre = "Drama";
-        model.addAttribute("dramaSeriesTitle", "Seriale dramatyczne");
+        model.addAttribute("dramaSeriesTitle", "Drama series");
         model.addAttribute("dramaSeries", seriesService.getSeriesByGenre(dramaGenre, userId));
         model.addAttribute("dramaGenre", dramaGenre.toLowerCase());
 
         String comedyGenre = "Comedy";
-        model.addAttribute("comedySeriesTitle", "Seriale komediowe");
+        model.addAttribute("comedySeriesTitle", "Comedy series");
         model.addAttribute("comedySeries", seriesService.getSeriesByGenre(comedyGenre, userId));
         model.addAttribute("comedyGenre", comedyGenre.toLowerCase());
 
         String actionGenre = "Action";
-        model.addAttribute("actionSeriesTitle", "Seriale akcji");
+        model.addAttribute("actionSeriesTitle", "Action series");
         model.addAttribute("actionSeries", seriesService.getSeriesByGenre(actionGenre, userId));
         model.addAttribute("actionGenre", actionGenre.toLowerCase());
         return "series";
@@ -63,7 +63,6 @@ public class SeriesController {
         Long userId = userUtils.getUserIdFromAuthentication(authentication);
         String capitalizedGenre = Character.toUpperCase(genre.charAt(0)) + genre.substring(1);
 
-//        Genre genreByType = genreService.getGenreByType(capitalizedGenre);
         List<SeriesDto> seriesByGenre = seriesService.getSeriesByGenre(capitalizedGenre, userId);
 
         List<Genre> allGenres = genreService.getAllGenres();

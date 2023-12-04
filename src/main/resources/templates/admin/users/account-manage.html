@@ -12,9 +12,9 @@
     <div id="content" class="admin-panel">
         <div id="customDialogOverlay" class="custom-dialog-overlay">
             <div id="customDialogBox" class="custom-dialog-box">
-                <p>Czy na pewno chcesz usunąć swoje konto?</p>
-                <button onclick="submitForm('deleteAccount')">Tak</button>
-                <button onclick="submitForm('dontDeleteAccount')">Nie</button>
+                <p>Are you sure you want to delete your account?</p>
+                <button onclick="submitForm('deleteAccount')">Yes</button>
+                <button onclick="submitForm('dontDeleteAccount')">No</button>
             </div>
         </div>
         <div class="section-wrapper">
@@ -38,7 +38,7 @@
                                     <img class="user-avatar" th:src="${user.avatar}" alt="Avatar użytkownika"></img>
                                     <ul class="widget-links">
                                         <li>
-                                            <a th:href="@{/change-avatar}">Zmień avatar</a>
+                                            <a th:href="@{/change-avatar}">Change avatar</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -51,11 +51,11 @@
                             <div class="overview-widget__column overview-widget__content" th:each="users : ${user}">
                                 <div id="email-info" class="widget-data">
                                     <div class="user-email long-text" th:text="${users.email}">
-                                        arkadiusz.pucek@gmail.com
+                                        User email
                                     </div>
                                     <ul class="widget-links">
                                         <li>
-                                            <a th:href="@{/change-email}">Zmień e-mail</a>
+                                            <a th:href="@{/change-email}">Change e-mail</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -63,13 +63,13 @@
                         </div>
                         <div id="password-section" class="overview-widget user-section nls_protected">
                             <div class="overview-widget__column overview-widget__name">
-                                <h2 class="overview-widget__title">Hasło</h2>
+                                <h2 class="overview-widget__title">Password</h2>
                             </div>
                             <div class="overview-widget__column overview-widget__content" th:each="users : ${user}">
                                 <div id="password-info" class="widget-data">
                                     <ul class="widget-links">
                                         <li>
-                                            <a th:href="@{/change-password}">Zmień hasło</a>
+                                            <a th:href="@{/change-password}">Change password</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -77,14 +77,14 @@
                         </div>
                         <div id="delete-section" class="overview-widget user-section nls_protected">
                             <div class="overview-widget__column overview-widget__name">
-                                <h2 class="overview-widget__title">Usuń konto</h2>
+                                <h2 class="overview-widget__title">Delete account</h2>
                             </div>
                             <div class="overview-widget__column overview-widget__content">
                                 <div id="delete-info" class="widget-data">
                                     <ul class="widget-links">
                                         <li>
-                                            <a href="#" title="Usuń" th:text="Usuń" id="deleteAccount"
-                                               onclick="showConfirmDialog()">Usuń</a>
+                                            <a href="#" title="Usuń" th:text="Delete" id="deleteAccount"
+                                               onclick="showConfirmDialog()">Delete account</a>
                                         </li>
                                     </ul>
                                 </div>

@@ -39,7 +39,6 @@ public class MovieController {
         if (movieDto != null) {
             model.addAttribute("title", value);
 
-//            Genre genreByType = genreService.getGenreByType(movieDto.getGenre());
             List<MovieDto> movieByGenre = movieService.getMovieByGenre(movieDto.getGenre(), userId);
             model.addAttribute("moviesByGenre", movieByGenre);
 
@@ -77,7 +76,7 @@ public class MovieController {
         model.addAttribute("genres", allGenres);
 
         String thrillerGenre = "Thriller";
-        model.addAttribute("thrillerMoviesTitle", "Filmy akcji");
+        model.addAttribute("thrillerMoviesTitle", thrillerGenre);
         model.addAttribute("thrillerMovies", movieService.getMovieByGenre(thrillerGenre, userId));
         model.addAttribute("thrillerGenre", thrillerGenre.toLowerCase());
 

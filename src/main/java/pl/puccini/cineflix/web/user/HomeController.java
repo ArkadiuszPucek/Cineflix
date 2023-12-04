@@ -42,29 +42,29 @@ class HomeController {
         userUtils.addAvatarUrlToModel(authentication, model);
         model.addAttribute("randomPromotedItems", getRandomPromotedItem(userId));
 
-        model.addAttribute("seriesPromoBoxMainTitle", "Wciągające seriale ze szpitalnych korytarzy");
+        model.addAttribute("seriesPromoBoxMainTitle", "Engaging hospital series");
         model.addAttribute("seriesPromoBox", getSeriesPromoBox(userId));
 
-        model.addAttribute("moviePromoBoxMainTitle", "Filmy zyskujące popularność");
+        model.addAttribute("moviePromoBoxMainTitle", "Trending movies");
         model.addAttribute("moviePromoBox", getMoviePromoBox(userId));
 
         String dramaGenre = "Drama";
-        model.addAttribute("dramaSeriesTitle", "Seriale dramatyczne");
+        model.addAttribute("dramaSeriesTitle", "Drama Series");
         model.addAttribute("dramaSeries", seriesService.getSeriesByGenre(dramaGenre, userId));
         model.addAttribute("dramaGenre", dramaGenre.toLowerCase());
 
         String comedyGenre = "Comedy";
-        model.addAttribute("comedySeriesTitle", "Seriale komediowe");
+        model.addAttribute("comedySeriesTitle", "Comedy Series");
         model.addAttribute("comedySeries", seriesService.getSeriesByGenre(comedyGenre, userId));
         model.addAttribute("comedyGenre", comedyGenre.toLowerCase());
 
         String actionGenre = "Action";
-        model.addAttribute("actionSeriesTitle", "Seriale akcji");
+        model.addAttribute("actionSeriesTitle", "Action Series");
         model.addAttribute("actionSeries", seriesService.getSeriesByGenre(actionGenre, userId));
         model.addAttribute("actionGenre", actionGenre.toLowerCase());
 
         String thrillerGenre = "Thriller";
-        model.addAttribute("thrillerMoviesTitle", "Filmy akcji");
+        model.addAttribute("thrillerMoviesTitle", "Action Movies");
         model.addAttribute("thrillerMovies", movieService.getMovieByGenre(thrillerGenre, userId));
         model.addAttribute("thrillerGenre", thrillerGenre.toLowerCase());
 
@@ -95,7 +95,10 @@ class HomeController {
     private List<SeriesDto> getSeriesPromoBox(Long userId) {
         return Stream.of("tt7817340", "tt6470478", "tt4655480", "tt6236572", "tt6664638")
                 .flatMap(imdbId -> seriesService.getSeriesByImdbId(imdbId).stream())
-                .peek(serie -> serie.setOnUserList(userListService.isOnList(userId, serie.getImdbId())))
+                .peek(serie -> {
+                    serie.setOnUserList(userListService.isOnList(userId, serie.getImdbId()));
+                    serie.setUserRating(seriesService.getCurrentUserRatingForSeries(serie.getImdbId(), userId).orElse(null));
+                })
                 .collect(Collectors.toList());
     }
 

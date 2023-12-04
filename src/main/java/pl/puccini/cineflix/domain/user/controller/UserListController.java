@@ -9,9 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
-import pl.puccini.cineflix.domain.movie.model.Movie;
 import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
-import pl.puccini.cineflix.domain.series.model.Series;
 import pl.puccini.cineflix.domain.user.model.User;
 import pl.puccini.cineflix.domain.user.service.UserListService;
 import pl.puccini.cineflix.domain.user.service.UserService;
@@ -61,7 +59,7 @@ public class UserListController {
         }
         model.addAttribute("activeFilter", filter);
 
-        return "/admin/users/library";
+        return "/library";
     }
 
     @PostMapping("/add-to-list/{imdbId}")

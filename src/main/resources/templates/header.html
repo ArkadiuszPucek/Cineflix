@@ -17,13 +17,13 @@
         </span>
             </div>
             <nav class="NavigationItems-module-center-cd-0t">
-                <a class="NavigationItem-module-item-vXU--" href="/series">Seriale</a>
-                <a class="NavigationItem-module-item-vXU--" href="/movies">Filmy</a>
-                <a class="NavigationItem-module-item-vXU--" href="/kids">Dla dzieci</a>
+                <a class="NavigationItem-module-item-vXU--" th:href="@{/series}">Series</a>
+                <a class="NavigationItem-module-item-vXU--" th:href="@{/movies}">Movies</a>
+                <a class="NavigationItem-module-item-vXU--" th:href="@{/kids}">Kids</a>
             </nav>
             <div class="Navigation-module-right-643YK">
                 <div class="SearchButton-module-container-oHmID">
-                    <a class="SearchButton-module-icon-zn1mS" href="/search"></a>
+                    <a class="SearchButton-module-icon-zn1mS" th:href="@{/search}"></a>
                 </div>
                 <a class="NavigationItem-module-item-vXU-- NavigationItem-module-library-E3ML5 NavigationItem-module-hide-n07a1"
                    href="/library">
@@ -50,7 +50,7 @@
                                         <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA NavigationItem-module-library-E3ML5"
                                            data-testhook="user-menu-library"
                                            th:href="@{/library}">
-                                            <span>Moja biblioteka</span>
+                                            <span>Library</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -58,19 +58,19 @@
                                     <li>
                                         <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA NavigationItem-module-watched-mwewA"
                                            th:href="@{/watched}">
-                                            <span>Dziennik aktywności</span>
+                                            <span>Watched</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA NavigationItem-module-watched-mwewA"
                                            th:href="@{/account}">
-                                            <span>Moje konto</span>
+                                            <span>My account</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA NavigationItem-module-watched-mwewA"
                                            th:href="@{/support}">
-                                            <span>Pomoc techniczna</span>
+                                            <span>Support</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -78,7 +78,7 @@
                                     <li sec:authorize="hasAnyRole('ADMIN', 'EDITOR')">
                                         <a class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA NavigationItem-module-watched-mwewA"
                                            th:href="@{/admin}">
-                                            <span>Strona administratorska</span>
+                                            <span>Administration page</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -86,7 +86,7 @@
                                     <li>
                                         <a class="Buttons-module-dark-Di3pP DropDownUserMenu-module-logoutButton-VFuHS"
                                            th:href="@{/logout}" tabindex="0">
-                                            <span>Wyloguj</span>
+                                            <span>Logout</span>
                                         </a>
                                     </li>
                                 </ul>

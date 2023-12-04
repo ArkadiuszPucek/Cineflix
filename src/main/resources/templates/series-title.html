@@ -52,7 +52,7 @@
                                                     <div class="ActionButton-module-wrapper-movie-Gds43s">
                                                         <form th:action="@{/add-episode-to-history/{episodeId}(episodeId=${watchedEpisodes.id})}" method="post">
                                                             <button type="submit" class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl Buttons-module-play-AAOaC">
-                                                            <span th:text="'Sezon ' + ${watchedEpisodes.seasonNumber} + ' - Odcinek ' + ${watchedEpisodes.episodeNumber}">Sezon 1 - Odcinek 1</span>
+                                                            <span th:text="'Season ' + ${watchedEpisodes.seasonNumber} + ' - Episode ' + ${watchedEpisodes.episodeNumber}">Season 1 - Episode 1</span>
                                                             </button>
                                                         </form>
                                                     </div>
@@ -98,7 +98,7 @@
                                                     </span>
                                                 <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
                                                         <span class="ParentalRating-module-container-lxbzk ParentalRating-module-hasDefaultTypography-UP2B1">
-                                                            <span th:text="${series.ageLimit} + ' lat'">
+                                                            <span th:text="${series.ageLimit} + ' +'">
                                                                 Age limit
                                                             </span>
                                                         </span>
@@ -109,7 +109,7 @@
                                                     <div class="Group-module-group--XDAf">
                                                         <div class="Synopsis-module-container-pmsNY Synopsis-module-hasDefaultTypography-5xyxY"
                                                              itemprop="description" th:text="${series.description}">
-                                                            Opis
+                                                            Description
                                                         </div>
                                                     </div>
                                                 </div>
@@ -122,7 +122,7 @@
                                                         <div class="">
                                                             <div>
                                                                 <span class="PeopleList-module-title-voAAo">
-                                                                    Obsada
+                                                                    Cast
                                                                 </span>
                                                                 <div class="PeopleList-module-peoplearray-KNtVQ"
                                                                      th:text="${series.staff}">
@@ -150,7 +150,7 @@
                                                 <button class="SeasonsNavigation-module-button-vAD9n"
                                                         data-testhook="season-button" tabindex="0"
                                                         style="text-decoration: none;">
-                                                    <span>Sezon [[${seasonDto.seasonNumber}]]</span>
+                                                    <span>Season [[${seasonDto.seasonNumber}]]</span>
                                                 </button>
                                                 <div class="SeasonsNavigation-module-dropdownWrapper-kC57-">
                                                     <ul th:each="season : ${seasons}"
@@ -159,7 +159,7 @@
                                                         <li class="SeasonButton-module-season-fRUUl"
                                                             data-testhook="season-navigation-link" tabindex="0">
                                                             <a th:href="@{'/series/' + ${title} + '/sezon-' + ${season.seasonNumber}}">
-                                                                <span class="SeasonButton-module-link-NG1PO">Sezon [[${season.seasonNumber}]]</span>
+                                                                <span class="SeasonButton-module-link-NG1PO">Season [[${season.seasonNumber}]]</span>
                                                             </a>
                                                         </li>
                                                     </ul>
@@ -177,7 +177,6 @@
                                          data-testhook="season-episodes">
                                         <div class="EpisodesListing-module-grid-yMq1a">
                                             <div style="display: inline;" th:each="episode : ${episodes}">
-                                                <!-- Poniżej wyświetl epizody dla wybranego sezonu -->
                                                 <div class="Episode-module-item-ePwVa"
                                                      data-product-id="${episode.id}" data-testhook="episode">
                                                     <div class="Episode-module-front-ksw4U">
@@ -192,9 +191,7 @@
                                                                     PlayButton-module-forceHover-ubElK
                                                                     PlayButton-module-episode-IOzP7"
                                                                     data-testhook="play-button" tabindex="0">
-
                                                                     <figure class="PlayButton-module-icon-q3WfE"></figure>
-
                                                             </button>
                                                             </form>
                                                         </div>
@@ -225,7 +222,7 @@
                                             <header class="CarouselHeader-module-wrapper-B8ict">
                                                 <h2 class="Title-module-subheader--ZDhF undefined"
                                                     data-testhook="carousel-title">
-                                                    Podobne seriale
+                                                    Related series
                                                 </h2>
                                             </header>
                                         </div>
@@ -262,7 +259,7 @@
                                                                     <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
                                                                         <span class="Seasons-module-container-ZM15y Seasons-module-hasDefaultTypography-8No96">
                                                                             <span th:text="${relatedSeries.seasonsCount} + ' ' + (relatedSeries.seasonsCount == 1 ? 'Sezon' : 'Sezony')">
-                                                                                Ilość sezonów
+                                                                                Seasons count
                                                                             </span>
                                                                         </span>
                                                                     </span>

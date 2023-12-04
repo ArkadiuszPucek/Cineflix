@@ -34,7 +34,7 @@
                                             <button class="SeasonsNavigation-module-button-vAD9n"
                                                     data-testhook="genre-button" tabindex="0"
                                                     style="text-decoration: none;">
-                                                <span>Gatunek</span>
+                                                <span>Genre</span>
                                             </button>
                                             <div class="SeasonsNavigation-module-dropdownWrapper-kC57-">
                                                 <ul th:each="genre : ${genres}"
@@ -44,7 +44,7 @@
                                                         data-testhook="season-navigation-link" tabindex="0">
                                                         <a th:href="@{'/movies/' + ${genre.genreType.toLowerCase()}}">
                                                             <span class="SeasonButton-module-link-NG1PO"
-                                                                  th:text="${genre.genreType}">Gatunek filmu</span>
+                                                                  th:text="${genre.genreType}">Movie Genre</span>
                                                         </a>
                                                     </li>
                                                 </ul>

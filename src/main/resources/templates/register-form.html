@@ -24,7 +24,7 @@
             <div class="Modal_modalWrapper__GBKNS" role="dialog">
                 <div class="Modal_modalBody__2_aM7">
                     <div class="flex flex-col items-center">
-                        <h1 class="h1-login-form-header-HD2dE">Utwórz konto</h1>
+                        <h1 class="h1-login-form-header-HD2dE">Create account</h1>
                         <form th:action="@{/register}" method="post" th:object="${user}" class="login-form-windows"
                               data-testid="login-form" name="register">
                             <div th:if="${message}" th:text="${message}" class="manage-message-login"></div>
@@ -33,27 +33,30 @@
                                        required="" class="Input_input__cDdvD w-full" autocomplete="username"
                                        data-testid="login-email" name="username">
                             </div>
-                            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="register-message-login">Hasło musi składać się co najmniej ośmiu znaków</div>
+                            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="register-message-login">Password hints </div>
                             <div class="Input-login-window">
-                                <input type="password" placeholder="Hasło" required="" id="password"
+                                <input type="password" placeholder="Password" required="" id="password"
                                        th:field="*{password}"
                                        class="Input_input__cDdvD Input_visibilityOption__KuDsP"
                                        autocomplete="current-password" data-testid="login-password" name="password">
-                                <label class="sr-only" for="password" hidden>Utwórz hasło</label>
+                                <label class="sr-only" for="password" hidden>Create password</label>
                             </div>
+                            <div th:text="'The password must start with a capital letter, contain a special character and a number, and be at least 8 characters long.'"
+                                 class="register-password-hint-hk53I">Password hints </div>
                             <div class="submit-button-register-page">
                                 <button type="submit"
                                         class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl"
                                         tabindex="0">
-                                    Zarejsetruj się
+                                    Register
                                 </button>
                             </div>
                             <div class="login-bottom-text-HD21d">
                                 <div class="algin-text-login-page">
-                  <span>Nasz już konto?
-                    <a th:href="@{/login}" class="algin-text-login-page font-bold">Zaloguj się</a>
-                  </span>
+                                    <span>Already have an account?
+                                        <a th:href="@{/login}" class="algin-text-login-page font-bold font-underline">Log in</a>
+                                    </span>
                                 </div>
+                            </div>
                         </form>
                     </div>
                 </div>

@@ -7,34 +7,34 @@
         <ul>
             <li>
                         <span class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA NavigationItem-module-watched-mwewA">
-                            Filmy
+                            Movies
                         </span>
                 <ul class="sub-menu">
-                    <li><a th:href="@{/admin/add-movie-api}">Dodaj film API</a></li>
-                    <li><a th:href="@{/admin/add-movie-form}">Dodaj film ręcznie </a></li>
-                    <li><a th:href="@{/admin/manage-movies}">Zarządzaj filmami</a></li>
+                    <li><a th:href="@{/admin/add-movie-api}">Add movie by API</a></li>
+                    <li><a th:href="@{/admin/add-movie-form}">Add movie manually </a></li>
+                    <li><a th:href="@{/admin/manage-movies}">Manege movies</a></li>
                 </ul>
             </li>
         </ul>
         <ul>
             <li>
                 <span class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA NavigationItem-module-watched-mwewA">
-                    Seriale
+                    Series
                 </span>
                 <ul class="sub-menu">
-                    <li><a th:href="@{/admin/add-series-api}">Dodaj serial API</a></li>
-                    <li><a th:href="@{/admin/add-series-form}">Dodaj serial ręcznie </a></li>
-                    <li><a th:href="@{/admin/manage-series}">Zarządzaj serialami</a></li>
+                    <li><a th:href="@{/admin/add-series-api}">Add series by API</a></li>
+                    <li><a th:href="@{/admin/add-series-form}">Add series manually </a></li>
+                    <li><a th:href="@{/admin/manage-series}">Manage series</a></li>
                 </ul>
             </li>
         </ul>
         <ul>
             <li sec:authorize="hasRole('ADMIN')">
                 <span class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA NavigationItem-module-watched-mwewA">
-                    Użytkownicy
+                    Users
                 </span>
                 <ul class="sub-menu">
-                    <li><a th:href="@{/master/manage-users}">Zarządzaj użytkownikami</a></li>
+                    <li><a th:href="@{/master/manage-users}">Manage users</a></li>
                 </ul>
             </li>
         </ul>

@@ -9,7 +9,7 @@
 
 <div class="Layout-module-internal-page--krBv">
     <div th:replace="~{header :: header}"></div>
-    <h1 class="page-header-admin">Panel administracyjny - dodaj serial</h1>
+    <h1 class="page-header-admin">Administration panel - Add series manually</h1>
     <div id="content" class="admin-panel">
         <div th:replace="~{admin/sidebar :: sidebar}"></div>
         <div class="main-content">
@@ -19,47 +19,47 @@
                     <tr>
                         <td>
                             <input class="text-input-style" type="text" name="imdbId" th:field="*{imdbId}" pattern="^tt\d{5,8}$"
-                                   placeholder="Wpisz IMDB ID [tt642624]" required></td>
+                                   placeholder="IMDb ID [tt642624]" required></td>
                     </tr>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="title" th:field="*{title}" placeholder="Wpisz tytuł filmu" required></td>
+                        <td><input class="text-input-style" type="text" name="title" th:field="*{title}" placeholder="Title" required></td>
                     </tr>
                     <select class="text-input-style" name="releaseYear" th:field="*{releaseYear}" required>
-                        <option value="">Wybierz rok emisji</option>
+                        <option value="">Release year</option>
                         <option th:each="year : ${#numbers.sequence(1950, 2024)}"
                                 th:value="${year}"
                                 th:text="${year}">1900</option>
                     </select>
                     <tr>
                         <td><input class="text-input-style" type="text" name="imageUrl" th:field="*{imageUrl}"
-                                   pattern="^(https?://www\.|https?://|www\.)\S+" placeholder="Wpisz adres URL zdjęcia głownego"
+                                   pattern="^(https?://www\.|https?://|www\.)\S+" placeholder="Main image URL"
                                    required></td>
                     </tr>
                     <tr>
                         <td><input class="text-input-style" type="text" name="backgroundImageUrl" th:field="*{backgroundImageUrl}"
-                                   pattern="^(https?://www\.|https?://|www\.)\S+" placeholder="Wpisz adres URL zdjęcia w tle"
+                                   pattern="^(https?://www\.|https?://|www\.)\S+" placeholder="Background image URL"
                                    required></td>
                     </tr>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="description" th:field="*{description}" placeholder="Wpisz opis filmu"
+                        <td><input class="text-input-style" type="text" name="description" th:field="*{description}" placeholder="Description"
                                    required></td>
                     </tr>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="staff" th:field="*{staff}" placeholder="Wpisz obsadę filmu" required></td>
+                        <td><input class="text-input-style" type="text" name="staff" th:field="*{staff}" placeholder="Cast" required></td>
                     </tr>
                     <tr>
                         <td>
                             <select class="text-input-style" name="genre" th:field="*{genre}" required>
-                                <option value="">Wybierz gatunek</option>
+                                <option value="">Genre</option>
                                 <option th:each="genre : ${genres}"
                                         th:value="${genre.genreType}"
-                                        th:text="${genre.genreType}">Gatunek
+                                        th:text="${genre.genreType}">Genre
                                 </option>
                             </select>
                         </td>
                     </tr>
                     <select class="text-input-style" name="ageLimit" th:field="*{ageLimit}" required>
-                        <option value="">Wybierz ograniczenie wiekowe</option>
+                        <option value="">Age limit</option>
                         <option th:each="age : ${ageLimits}"
                                 th:value="${age}"
                                 th:text="${age}"></option>
@@ -67,10 +67,10 @@
                     <tr>
                         <td><input class="text-input-style" type="text" name="imdbRating" th:field="*{imdbRating}"
                                    pattern="^(10(\.0{1,2})?|[0-9](\.[0-9]{1,2})?)$"
-                                   placeholder="Ocena filmu z IMDB" required></td>
+                                   placeholder="IMDb rating" required></td>
                     </tr>
                     <select class="text-input-style" name="seasonsCount" th:field="*{seasonsCount}" required>
-                        <option value="">Wybierz ilość sezonów</option>
+                        <option value="">Seasons number</option>
                         <option th:each="seasonNumber : ${#numbers.sequence(1, 30)}"
                                 th:value="${seasonNumber}"
                                 th:text="${seasonNumber}">1</option>
@@ -78,7 +78,7 @@
                     <tr>
                         <td>
                             <div class="flex-container">
-                                <label for="promoted" class="checkbox-label">Promowanie na stronie głównej:</label>
+                                <label for="promoted" class="checkbox-label">Promoted: </label>
                                 <input type="checkbox" id="promoted" name="promoted" th:field="*{promoted}">
                             </div>
                         </td>
@@ -87,7 +87,7 @@
                 <div class="submit-button-movie-page">
                     <button type="submit"
                             class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl"
-                            tabindex="0">Dodaj serial
+                            tabindex="0">Add
                     </button>
                 </div>
             </form>

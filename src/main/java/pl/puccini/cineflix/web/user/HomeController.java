@@ -4,49 +4,36 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import pl.puccini.cineflix.domain.genre.Genre;
-import pl.puccini.cineflix.domain.genre.GenreService;
 import pl.puccini.cineflix.domain.movie.service.MovieService;
-import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.series.service.SeriesService;
-import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
-import pl.puccini.cineflix.domain.user.service.UserListService;
 import pl.puccini.cineflix.domain.user.service.UserUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Controller
 class HomeController {
 
     private final MovieService movieService;
-    private final GenreService genreService;
     private final SeriesService seriesService;
     private final UserUtils userUtils;
-    private final UserListService userListService;
+    private final HomeService homeService;
 
-    HomeController(MovieService movieService, GenreService genreService, SeriesService seriesService, UserUtils userUtils, UserListService userListService) {
+    HomeController(MovieService movieService, SeriesService seriesService, UserUtils userUtils, HomeService homeService) {
         this.movieService = movieService;
-        this.genreService = genreService;
         this.seriesService = seriesService;
         this.userUtils = userUtils;
-        this.userListService = userListService;
+        this.homeService = homeService;
     }
     @GetMapping("/")
     String home(Authentication authentication, Model model) {
         Long userId = userUtils.getUserIdFromAuthentication(authentication);
 
         userUtils.addAvatarUrlToModel(authentication, model);
-        model.addAttribute("randomPromotedItems", getRandomPromotedItem(userId));
+        model.addAttribute("randomPromotedItems", homeService.getRandomPromotedItem(userId));
 
         model.addAttribute("seriesPromoBoxMainTitle", "Engaging hospital series");
-        model.addAttribute("seriesPromoBox", getSeriesPromoBox(userId));
+        model.addAttribute("seriesPromoBox", homeService.getSeriesPromoBox(userId));
 
         model.addAttribute("moviePromoBoxMainTitle", "Trending movies");
-        model.addAttribute("moviePromoBox", getMoviePromoBox(userId));
+        model.addAttribute("moviePromoBox", homeService.getMoviePromoBox(userId));
 
         String dramaGenre = "Drama";
         model.addAttribute("dramaSeriesTitle", "Drama Series");
@@ -69,46 +56,5 @@ class HomeController {
         model.addAttribute("thrillerGenre", thrillerGenre.toLowerCase());
 
         return "index";
-    }
-
-
-    private Object getRandomPromotedItem(Long userId) {
-        List<MovieDto> allPromotedMovies = movieService.findAllPromotedMovies();
-        allPromotedMovies.forEach(movie -> movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId())));
-
-        List<SeriesDto> allPromotedSeries = seriesService.findAllPromotedSeries();
-        allPromotedSeries.forEach(series -> series.setOnUserList(userListService.isOnList(userId, series.getImdbId())));
-
-        List<Object> promotedItems = new ArrayList<>();
-        promotedItems.addAll(allPromotedMovies);
-        promotedItems.addAll(allPromotedSeries);
-
-        int size = promotedItems.size();
-        if (size > 0) {
-            int randomIndex = ThreadLocalRandom.current().nextInt(size);
-            return promotedItems.get(randomIndex);
-        } else {
-            return null;
-        }
-    }
-
-    private List<SeriesDto> getSeriesPromoBox(Long userId) {
-        return Stream.of("tt7817340", "tt6470478", "tt4655480", "tt6236572", "tt6664638")
-                .flatMap(imdbId -> seriesService.getSeriesByImdbId(imdbId).stream())
-                .peek(serie -> {
-                    serie.setOnUserList(userListService.isOnList(userId, serie.getImdbId()));
-                    serie.setUserRating(seriesService.getCurrentUserRatingForSeries(serie.getImdbId(), userId).orElse(null));
-                })
-                .collect(Collectors.toList());
-    }
-
-    private List<MovieDto> getMoviePromoBox(Long userId) {
-        return Stream.of("tt0993842", "tt4034228", "tt2304933", "tt6644200", "tt6146586")
-                .flatMap(imdbId -> movieService.getMoviesByImdbId(imdbId).stream())
-                .peek(movie -> {
-                    movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId()));
-                    movie.setUserRating(movieService.getCurrentUserRatingForMovie(movie.getImdbId(), userId).orElse(null));
-                })
-                .collect(Collectors.toList());
     }
 }

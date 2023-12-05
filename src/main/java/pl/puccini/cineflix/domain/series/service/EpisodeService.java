@@ -123,24 +123,10 @@ public class EpisodeService {
         return episodeRepository.findEpisodeById(episodeId);
     }
 
-//    public List<EpisodeDto> getWatchedEpisodes(Long userId) {
-//        List<ViewingHistory> historyList = viewingHistoryRepository.findByUserIdOrderByViewedOnDesc(userId);
-//
-//        // Mapuj na DTO
-//        return historyList.stream()
-//                .map(ViewingHistory::getEpisode)
-//                .distinct() // Usuń duplikaty, jeśli użytkownik oglądał ten sam epizod wielokrotnie
-//                .map(EpisodeDtoMapper::map)
-//                .collect(Collectors.toList());
-//    }
-
-
 
     public EpisodeDto findFirstUnwatchedEpisode(String seriesId, Long userId) {
-        // Znajdź wszystkie sezony dla danego serialu
         List<Season> seasons = seasonRepository.findSeasonsBySeriesImdbId(seriesId);
 
-        // Pobierz ID obejrzanych epizodów
         Set<Long> watchedEpisodeIds = getWatchedEpisodesIds(userId);
 
         for (Season season : seasons) {
@@ -149,7 +135,6 @@ public class EpisodeService {
 
             for (Episode episode : episodes) {
                 if (!watchedEpisodeIds.contains(episode.getId())) {
-                    // Zwróć pierwszy nieobejrzany epizod
                     return EpisodeDtoMapper.map(episode);
                 }
             }

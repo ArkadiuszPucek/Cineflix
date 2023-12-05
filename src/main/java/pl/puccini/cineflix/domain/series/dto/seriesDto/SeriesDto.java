@@ -25,4 +25,5 @@ public class SeriesDto {
     private Integer seasonsCount;
     private Boolean onUserList;
     private Boolean userRating;
+    private Long firstUnwatchedEpisodeId;
 }

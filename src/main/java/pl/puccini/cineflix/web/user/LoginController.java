@@ -25,9 +25,8 @@ public class LoginController {
         }
 
         if (request.getParameter("error") != null) {
-            model.addAttribute("loginError", "Niepoprawny adres e-mail lub hasło.");
+            model.addAttribute("loginError", "Incorrect email address or password.");
         }
-
 
         Map<String, ?> flashAttributes = RequestContextUtils.getInputFlashMap(request);
         if (flashAttributes != null) {

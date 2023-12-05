@@ -33,7 +33,7 @@
                                             <button class="SeasonsNavigation-module-button-vAD9n"
                                                     data-testhook="genre-button" tabindex="0"
                                                     style="text-decoration: none;">
-                                                <span th:text="${genre}">Gatunek</span>
+                                                <span th:text="${genre}">Genre</span>
                                             </button>
                                             <div class="SeasonsNavigation-module-dropdownWrapper-kC57-">
                                                 <ul th:each="genre : ${genres}"
@@ -43,7 +43,7 @@
                                                         data-testhook="season-navigation-link" tabindex="0">
                                                         <a th:href="@{'/series/' + ${genre.genreType.toLowerCase()}}">
                                                             <span class="SeasonButton-module-link-NG1PO"
-                                                                  th:text="${genre.genreType}">Gatunek serialu</span>
+                                                                  th:text="${genre.genreType}">Series Genre</span>
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -86,7 +86,7 @@
                                                                     <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
                                                                         <span class="Seasons-module-container-ZM15y Seasons-module-hasDefaultTypography-8No96">
                                                                             <span th:text="${seriesModel.seasonsCount} + ' ' + (seriesModel.seasonsCount == 1 ? 'Sezon' : 'Sezony')">
-                                                                                Ilość sezonów
+                                                                                Season Count
                                                                             </span>
                                                                         </span>
                                                                     </span>
@@ -102,8 +102,13 @@
                                                                 <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"
                                                                      data-testhook="item-star" th:classappend="${seriesModel.onUserList ? 'StarButton-module-isStarred-v2AtG' : ''}"
                                                                      th:attr="data-imdb-id=${seriesModel.imdbId}"></div>
-                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-"></div>
-                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1"></div>
+                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 rate-up"
+                                                                     th:classappend="${seriesModel.userRating != null ? (seriesModel.userRating ? ' RateButtons-module-rateUp-S4se- RateButtons-module-active-n-0Gb' : ' RateButtons-module-rateUp-S4se-') : ' RateButtons-module-rateUp-S4se-'}"
+                                                                     onclick="rate('up', this)" th:attr="data-imdbid=${seriesModel.imdbId}" data-testhook="item-rating-up">
+                                                                </div>
+                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 rate-down"
+                                                                     th:classappend="${seriesModel.userRating != null ? (seriesModel.userRating ? ' RateButtons-module-rateDown-DblB1' : ' RateButtons-module-rateDown-DblB1 RateButtons-module-active-n-0Gb') : ' RateButtons-module-rateDown-DblB1'}"
+                                                                     onclick="rate('down', this)" th:attr="data-imdbid=${seriesModel.imdbId}" data-testhook="item-rating-down"></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -129,6 +134,36 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script type="text/javascript" src="/scripts/common.js"></script>
+<script>
+    function rate(direction, element) {
+        var csrfToken = document.querySelector('meta[name="_csrf"]').content;
+        var csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
 
+        var headers = new Headers();
+        headers.append(csrfHeader, csrfToken);
+        var imdbId = element.getAttribute('data-imdbid');
+
+        fetch('/rate/' + direction + '/' + imdbId, { method: 'POST', headers: headers })
+            .then(response => {
+                if (response.ok) {
+                    var container = element.closest('.InteractionIcons-module-container-apGgr');
+                    var rateUpIcon = container.querySelector('[data-imdbid="' + imdbId + '"][data-testhook="item-rating-up"]');
+                    var rateDownIcon = container.querySelector('[data-imdbid="' + imdbId + '"][data-testhook="item-rating-down"]');
+                    updateRatingUI(direction, rateUpIcon, rateDownIcon);
+                }
+            });
+    }
+
+    function updateRatingUI(direction, rateUpIcon, rateDownIcon) {
+        rateUpIcon.className = 'RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-';
+        rateDownIcon.className = 'RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1';
+
+        if (direction === 'up') {
+            rateUpIcon.classList.add('RateButtons-module-active-n-0Gb');
+        } else if (direction === 'down') {
+            rateDownIcon.classList.add('RateButtons-module-active-n-0Gb');
+        }
+    }
+</script>
 </body>
 </html>

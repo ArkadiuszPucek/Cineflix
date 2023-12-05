@@ -1,9 +1,14 @@
 package pl.puccini.cineflix.domain.user.service;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.puccini.cineflix.domain.user.model.User;
 
 import java.util.regex.Matcher;
@@ -29,13 +34,11 @@ public class UserUtils {
     public Long getUserIdFromAuthentication(Authentication authentication) {
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            // Załóżmy, że nazwa użytkownika jest e-mailem, który jest unikatowy
             String email = userDetails.getUsername();
-            // Następnie używamy serwisu użytkownika, aby pobrać obiekt użytkownika i zwrócić jego ID
             User user = userService.findByUsername(email);
             return user.getId();
         }
-        return null; // Jeśli użytkownik nie jest zalogowany, zwracamy null
+        return null;
     }
 
     public String extractVideoId(String youtubeUrl) {
@@ -53,5 +56,18 @@ public class UserUtils {
         }
 
         return null;
+    }
+
+    public void deleteUser(HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, Long userId) {
+        boolean deleted = userService.deleteUserById(userId);
+        if (deleted) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (auth != null) {
+                new SecurityContextLogoutHandler().logout(request, response, auth);
+            }
+            redirectAttributes.addFlashAttribute("message", "User deleted.");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "User not found.");
+        }
     }
 }

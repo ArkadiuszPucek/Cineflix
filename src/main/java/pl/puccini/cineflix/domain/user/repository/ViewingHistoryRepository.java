@@ -11,4 +11,6 @@ public interface ViewingHistoryRepository extends CrudRepository<ViewingHistory,
     List<ViewingHistory> findByUserIdOrderByViewedOnDesc(Long userId);
 
     List<ViewingHistory> findByUserId(Long userId);
+
+    void deleteUserById(Long userId);
 }

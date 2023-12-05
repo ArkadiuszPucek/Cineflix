@@ -63,9 +63,16 @@
                                                              th:classappend="${series.onUserList ? 'MyList-module-active-T4Dnx' : ''}"
                                                              th:attr="data-imdb-id=${series.imdbId}"></div>
                                                     </a>
-                                                    <a class="Rate-module-container-SmrTr Buttons-module-secondary-br7-v Buttons-module-icon-ODVKH"
-                                                       data-testhook="rate-button-no-rating" tabindex="0">
-                                                        <div class="Rate-module-rate-GCdtz undefined"></div>
+                                                    <a class="Rate-module-container-SmrTr Buttons-module-secondary-br7-v RatingButtons-module-icon-HDsa3"
+                                                       data-testhook="rate-button-up" tabindex="0" onclick="rateSerie('up', this)"
+                                                       th:attr="data-imdbid=${series.imdbId}">
+                                                        <div class="Rate-module-rate-GCdtz" th:classappend="${series.userRating != null ? (series.userRating ? ' Rate-module-activeRatingUp-XcMDm' : ' undefined') : ' null'}"></div>
+                                                    </a>
+
+                                                    <a class="Rate-module-container-SmrTr Buttons-module-secondary-br7-v RatingButtons-module-icon-HDsa3"
+                                                       data-testhook="rate-button-down" tabindex="0" onclick="rateSerie('down', this)"
+                                                       th:attr="data-imdbid=${series.imdbId}">
+                                                        <div class="Rate-module-rate-grszv" th:classappend="${series.userRating != null ? (series.userRating ? ' undefined' : ' Rate-module-activeRatingDown-XcMDm') : ' null'}"></div>
                                                     </a>
                                                 </div>
                                             </div>
@@ -274,8 +281,13 @@
                                                                      data-testhook="item-star"
                                                                      th:classappend="${relatedSeries.onUserList ? 'StarButton-module-isStarred-v2AtG' : ''}"
                                                                      th:attr="data-imdb-id=${relatedSeries.imdbId}"></div>
-                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-"></div>
-                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1"></div>
+                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 rate-up"
+                                                                     th:classappend="${relatedSeries.userRating != null ? (relatedSeries.userRating ? ' RateButtons-module-rateUp-S4se- RateButtons-module-active-n-0Gb' : ' RateButtons-module-rateUp-S4se-') : ' RateButtons-module-rateUp-S4se-'}"
+                                                                     onclick="rate('up', this)" th:attr="data-imdbid=${relatedSeries.imdbId}" data-testhook="item-rating-up">
+                                                                </div>
+                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 rate-down"
+                                                                     th:classappend="${relatedSeries.userRating != null ? (relatedSeries.userRating ? ' RateButtons-module-rateDown-DblB1' : ' RateButtons-module-rateDown-DblB1 RateButtons-module-active-n-0Gb') : ' RateButtons-module-rateDown-DblB1'}"
+                                                                     onclick="rate('down', this)" th:attr="data-imdbid=${relatedSeries.imdbId}" data-testhook="item-rating-down"></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -335,5 +347,97 @@
     });
 
 </script>
+<script>
+    function rateSerie(direction, element) {
+        var imdbId = element.getAttribute('data-imdbid');
+        var csrfToken = document.querySelector('meta[name="_csrf"]').content;
+        var csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
+
+        var headers = new Headers();
+        headers.append(csrfHeader, csrfToken);
+
+        fetch('/rate/' + direction + '/' + imdbId, { method: 'POST', headers: headers })
+            .then(response => {
+                if (response.ok) {
+                    var container = element.closest('.ActionButton-module-container-iom96'); // Kontener przycisków
+                    updateMovieRatingUI(direction, container);
+                }
+            });
+    }
+    function updateMovieRatingUI(direction, container) {
+        var rateUpButton = container.querySelector('[data-testhook="rate-button-up"]');
+        var rateDownButton = container.querySelector('[data-testhook="rate-button-down"]');
+        var rateUpDiv = rateUpButton.querySelector('div');
+        var rateDownDiv = rateDownButton.querySelector('div');
+
+        if (direction === 'up') {
+            if (rateUpDiv.classList.contains('Rate-module-activeRatingUp-XcMDm')) {
+                rateUpDiv.classList.remove('Rate-module-activeRatingUp-XcMDm');
+                rateUpDiv.classList.add('undefined');
+            } else {
+                rateUpDiv.classList.add('Rate-module-activeRatingUp-XcMDm');
+                rateUpDiv.classList.remove('undefined');
+            }
+            rateDownDiv.classList.remove('Rate-module-activeRatingDown-XcMDm');
+            rateDownDiv.classList.add('undefined');
+        } else if (direction === 'down') {
+            if (rateDownDiv.classList.contains('Rate-module-activeRatingDown-XcMDm')) {
+                rateDownDiv.classList.remove('Rate-module-activeRatingDown-XcMDm');
+                rateDownDiv.classList.add('undefined');
+            } else {
+                rateDownDiv.classList.add('Rate-module-activeRatingDown-XcMDm');
+                rateDownDiv.classList.remove('undefined');
+            }
+            rateUpDiv.classList.remove('Rate-module-activeRatingUp-XcMDm');
+            rateUpDiv.classList.add('undefined');
+        }
+    }
+
+    function resetRatingButtons(rateUpButton, rateDownButton) {
+        var rateUpDiv = rateUpButton.querySelector('div');
+        var rateDownDiv = rateDownButton.querySelector('div');
+
+        rateUpDiv.classList.remove('Rate-module-activeRatingUp-XcMDm');
+        rateDownDiv.classList.remove('Rate-module-activeRatingDown-XcMDm');
+
+        if (!rateUpDiv.classList.contains('Rate-module-activeRatingUp-XcMDm') &&
+            !rateDownDiv.classList.contains('Rate-module-activeRatingDown-XcMDm')) {
+            rateUpDiv.classList.add('undefined');
+            rateDownDiv.classList.add('undefined');
+        }
+    }
+</script>
+<script>
+    function rate(direction, element) {
+        var csrfToken = document.querySelector('meta[name="_csrf"]').content;
+        var csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
+
+        var headers = new Headers();
+        headers.append(csrfHeader, csrfToken);
+        var imdbId = element.getAttribute('data-imdbid');
+
+        fetch('/rate/' + direction + '/' + imdbId, { method: 'POST', headers: headers })
+            .then(response => {
+                if (response.ok) {
+                    var container = element.closest('.InteractionIcons-module-container-apGgr');
+                    var rateUpIcon = container.querySelector('[data-imdbid="' + imdbId + '"][data-testhook="item-rating-up"]');
+                    var rateDownIcon = container.querySelector('[data-imdbid="' + imdbId + '"][data-testhook="item-rating-down"]');
+                    updateRatingUI(direction, rateUpIcon, rateDownIcon);
+                }
+            });
+    }
+
+    function updateRatingUI(direction, rateUpIcon, rateDownIcon) {
+        rateUpIcon.className = 'RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-';
+        rateDownIcon.className = 'RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1';
+
+        if (direction === 'up') {
+            rateUpIcon.classList.add('RateButtons-module-active-n-0Gb');
+        } else if (direction === 'down') {
+            rateDownIcon.classList.add('RateButtons-module-active-n-0Gb');
+        }
+    }
+</script>
+
 </body>
 </html>

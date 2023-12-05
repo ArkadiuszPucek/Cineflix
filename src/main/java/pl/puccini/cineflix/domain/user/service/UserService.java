@@ -1,12 +1,12 @@
 package pl.puccini.cineflix.domain.user.service;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.puccini.cineflix.domain.exceptions.*;
 import pl.puccini.cineflix.domain.user.dto.UserCredentialsDto;
 import pl.puccini.cineflix.domain.user.dto.UserDto;
 import pl.puccini.cineflix.domain.user.model.User;
-import pl.puccini.cineflix.domain.user.model.UserList;
 import pl.puccini.cineflix.domain.user.model.UserRole;
 import pl.puccini.cineflix.domain.user.repository.UserListRepository;
 import pl.puccini.cineflix.domain.user.repository.UserRepository;
@@ -24,19 +24,19 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRoleRepository userRoleRepository;
     private final UserListService userListService;
-    private final UserListRepository userListRepository;
+    private final ViewingHistoryService viewingHistoryService;
 
     private static final String DEFAULT_AVATAR_WOLF = "/images/avatars/wilk2.png";
     private static final String AVATAR_DIRECTORY = "/images/avatars/";
 
 
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, UserListService userListService, UserListRepository userListRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, UserListService userListService, @Lazy ViewingHistoryService viewingHistoryService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userRoleRepository = userRoleRepository;
         this.userListService = userListService;
-        this.userListRepository = userListRepository;
+        this.viewingHistoryService = viewingHistoryService;
     }
 
     public String getAvatarUrlByUsername(String username) {
@@ -90,33 +90,20 @@ public class UserService {
         userRepository.save(user);
     }
 
-
-    public boolean deleteUserById(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(()-> new UserNotFoundException("Nie znaleziono użytkownika"));
-        if (user != null){
-            userListService.removeUserAndAllItems(userId);
-            userRepository.delete(user);
-            return true;
-        }else {
-            return false;
-        }
-    }
-
     public void changePassword(String oldPassword, String newPassword, String confirmPassword, User user)
             throws InvalidPasswordException, PasswordConfirmationException, PasswordFormatException {
 
         if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
-            throw new InvalidPasswordException("Stare hasło jest niepoprawne.");
+            throw new InvalidPasswordException("Current password incorrect.");
         }
 
         if (!newPassword.equals(confirmPassword)) {
-            throw new PasswordConfirmationException("Hasła nie są identyczne.");
+            throw new PasswordConfirmationException("The passwords are not identical.");
         }
 
         String passwordRegex = "^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\\d).{8,}$";
         if (!newPassword.matches(passwordRegex)) {
-            throw new PasswordFormatException("Hasło musi zawierać co najmniej jedną dużą literę, jedną cyfrę, jeden znak specjalny i musi mieć co najmniej 8 znaków.");
+            throw new PasswordFormatException("The password must contain at least one uppercase letter, one number, one special character and must be at least 8 characters long.");
         }
 
         user.setPassword(passwordEncoder.encode(newPassword));
@@ -124,16 +111,25 @@ public class UserService {
     }
 
     public User findByUsername(String currentUserName) {
-        return userRepository.findByEmail(currentUserName).orElseThrow(()->new UserNotFoundException("Nie znaleziono użytkownika"));
+        return userRepository.findByEmail(currentUserName).orElseThrow(()->new UserNotFoundException("User not found"));
     }
 
     public User findUserById(Long userId) {
         return userRepository.findUserById(userId);
     }
 
-    public void deleteUserByEmail(String email) {
-        User user = findByUsername(email);
-        userRepository.delete(user);
+
+    public boolean deleteUserById(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(()-> new UserNotFoundException("User not found"));
+        if (user != null){
+            userListService.removeUserAndAllItems(userId);
+            viewingHistoryService.removeUserAndAllViewingHistory(userId);
+            userRepository.delete(user);
+            return true;
+        }else {
+            return false;
+        }
     }
 
     public void changeEmail(String oldEmail, String newEmail) {
@@ -142,7 +138,7 @@ public class UserService {
             user.setEmail(newEmail);
             userRepository.save(user);
         }else {
-            throw new UserNotFoundException("Nie znaleziono użytkownika");
+            throw new UserNotFoundException("User not found");
         }
     }
 

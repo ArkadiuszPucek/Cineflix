@@ -24,38 +24,34 @@
             <div class="Modal_modalWrapper__GBKNS" role="dialog">
                 <div class="Modal_modalBody__2_aM7">
                     <div class="flex flex-col items-center">
-                        <h1 class="h1-login-form-header-HD2dE">Logowanie</h1>
+                        <h1 class="h1-login-form-header-HD2dE">Login</h1>
                         <form action="/login" th:action="@{/login}" method="post" class="login-form-windows" data-testid="login-form" name="login">
                             <div th:if="${message}" th:text="${message}" class="manage-message-login"></div>
                             <p th:if="${loginError}" class="manage-message-login" th:text="${loginError}"></p>
                             <p th:if="${param.logout}" class="algin-text-login-page">
-                                Zostałeś wylogowany, możesz zalogować się ponownie.
-                            </p>
+                                You have been logged out, you can log in again.                            </p>
                             <div class="Input-login-window">
                                 <input type="email" aria-describedby="show-password" id="username" placeholder="E-mail"
                                        required="" class="Input_input__cDdvD w-full" autocomplete="username"
                                        data-testid="login-email" name="username">
                             </div>
                             <div class="Input-login-window">
-                                <input type="password" aria-describedby="show-password" placeholder="Hasło" required="" id="password"
+                                <input type="password" aria-describedby="show-password" placeholder="Password" required="" id="password"
                                        class="Input_input__cDdvD Input_visibilityOption__KuDsP"
                                        autocomplete="current-password" data-testid="login-password" name="password">
-                                <label class="sr-only" for="password" hidden>Hasło</label>
+                                <label class="sr-only" for="password" hidden>Password</label>
                             </div>
                             <div class="submit-button-login-page">
                                 <button type="submit"
                                         class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl"
-                                        tabindex="0">Logowanie
+                                        tabindex="0">Login
                                 </button>
                             </div>
                         </form>
                         <div class="login-bottom-text-HD21d">
-<!--                        <div class="algin-text-login-page">-->
-<!--                            <a href="https://account.viaplay.pl/forgot-password">Nie pamiętasz hasła?</a>-->
-<!--                        </div>-->
                         <div class="algin-text-login-page">
-                        <span>Nie masz konta Cineflix?
-                            <a th:href="@{/register}" class="algin-text-login-page font-bold">Załóż je tutaj</a>
+                        <span>Don't have a Cineflix account?
+                            <a th:href="@{/register}" class="algin-text-login-page font-bold font-underline">Register here!</a>
                         </span>
                         </div>
                     </div>

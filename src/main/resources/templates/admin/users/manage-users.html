@@ -55,8 +55,10 @@
                         </th:block>
                     </td>
                     <td>
+                        <th:block th:unless="${user.getRoleNames().equals('ADMIN')}">
                         <a href="#" title="Usuń" th:text="Usuń" id="deleteUser" th:onclick="showConfirmDialog()"
                            th:attr="data-id=${user.id}"></a>
+                        </th:block>
                     </td>
                 </tr>
                 </tbody>

@@ -9,7 +9,7 @@
 
 <div class="Layout-module-internal-page--krBv">
   <div th:replace="~{header :: header}"></div>
-  <h1 class="page-header-admin">Panel administracyjny - dodaj film</h1>
+  <h1 class="page-header-admin">Administration panel - add movie</h1>
   <div id="content" class="admin-panel">
     <div th:replace="~{admin/sidebar :: sidebar}"></div>
     <div class="main-content">
@@ -19,22 +19,20 @@
           <tr>
             <td>
               <input class="text-input-style" type="text" name="imdbId" th:field="*{imdbId}" pattern="^tt\d{5,8}$"
-                     placeholder="Wpisz IMDB ID [tt642624]" required></td>
+                     placeholder="Enter IMDB ID [tt642624]" required></td>
           </tr>
           <tr>
             <td>
               <div class="flex-container">
-                <label for="promoted" class="checkbox-label">Promowanie na stronie głównej:</label>
+                <label for="promoted" class="checkbox-label">Promoted: </label>
                 <input type="checkbox" id="promoted" name="promoted" th:field="*{promoted}">
               </div>
             </td>
           </tr>
         </div>
         <div class="submit-button-movie-page">
-          <button type="submit"
-                  class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl"
-                  tabindex="0">Dodaj film
-          </button>
+          <button type="submit" class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl"
+                  tabindex="0">Add</button>
         </div>
       </form>
     </div>

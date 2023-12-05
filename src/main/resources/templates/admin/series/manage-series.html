@@ -9,7 +9,7 @@
 
 <div class="Layout-module-internal-page--krBv">
     <div th:replace="~{header :: header}"></div>
-    <h1 class="page-header-admin">Panel administracyjny - zarządzaj serialami</h1>
+    <h1 class="page-header-admin">Administration panel - Manage series</h1>
     <div th:if="${success}" th:text="${success}" class="alert manage-success"></div>
     <div th:if="${error}" th:text="${error}" class="alert manage-error"></div>
     <div id="content" class="admin-panel">
@@ -17,24 +17,24 @@
         <div class="main-content">
             <div id="customDialogOverlay" class="custom-dialog-overlay">
                 <div id="customDialogBox" class="custom-dialog-box">
-                    <p>Czy na pewno chcesz usunąć ten serial?</p>
-                    <button onclick="submitForm('deleteSeries')">Tak</button>
-                    <button onclick="submitForm('dontDeleteSeries')">Nie</button>
+                    <p>Are you sure you want to delete this series?</p>
+                    <button onclick="submitForm('deleteSeries')">Yes</button>
+                    <button onclick="submitForm('dontDeleteSeries')">No</button>
                 </div>
             </div>
             <input type="hidden" id="action" value="">
             <table class="series-table">
                 <thead>
                 <tr>
-                    <th>Tytuł</th>
-                    <th>Sezony</th>
-                    <th>Rok wydania</th>
-                    <th>Limit wieku</th>
-                    <th>Opis serialu</th>
-                    <th>Obsada</th>
-                    <th>Gatunek</th>
-                    <th>Promowanie</th>
-                    <th>Ocena IMDb</th>
+                    <th>Title</th>
+                    <th>Seasons</th>
+                    <th>Release year</th>
+                    <th>Age limit</th>
+                    <th>Description</th>
+                    <th>Cast</th>
+                    <th>Genre</th>
+                    <th>Promoted</th>
+                    <th>IMDb rating</th>
                     <th>       </th>
                 </tr>
                 </thead>
@@ -50,9 +50,11 @@
                     <td th:text="${series.promoted}">Is promoted</td>
                     <td th:text="${series.imdbRating}">Imdb Rating</td>
                     <td>
-                        <a th:href="@{'/admin/edit-series/' + ${series.imdbId}}" title="Edytuj" th:text="Edytuj"></a>
-                        <a href="#" title="Usuń" th:text="Usuń" id="deleteSeries" th:onclick="showConfirmDialog()" th:attr="data-imdbId=${series.imdbId}"></a>
-                        <a th:href="@{'/admin/edit-series-seasons/' + ${series.imdbId}}" title="Zarządzaj_sezonami" th:text="'Zarządzaj sezonami'"></a>
+                        <a th:href="@{'/admin/edit-series/' + ${series.imdbId}}" title="Edit" th:text=" Edit "></a>
+                        <a href="#" title=" Delete " th:text="Delete" id="deleteSeries" th:onclick="showConfirmDialog()" th:attr="data-imdbId=${series.imdbId}"></a>
+                        <div>
+                            <a th:href="@{'/admin/edit-series-seasons/' + ${series.imdbId}}" title="Zarządzaj_sezonami" th:text="'Manage seasons'"></a>
+                        </div>
 
                     </td>
                 </tr>

@@ -10,8 +10,6 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <script src="../static/scripts/common.js"></script>
-
-
 </head>
 <body>
 
@@ -33,17 +31,25 @@
                                         <div style="display: block;">
                                             <li class="Frame-module-container-hTg-J Frame-module-autofadein-pgNO2"
                                                 th:each="item : ${randomPromotedItems}">
-                                                <div class="FeatureBoxVideo-module-container-8tmrB">
-                                                    <div class="FeatureBoxVideo-module-wrapper-8UDKL">
-                                                        <div class="FeatureBoxVideo-module-poster-SJpIi FeatureBoxVideo-module-visibleItem-85rzi FeatureBoxVideo-module-smoothVisibleItem-1w-S7"
-                                                             th:style="'background-image: url(' + ${item.imageUrl} + ');'">
+                                                    <div class="FeatureBoxVideo-module-container-8tmrB">
+                                                        <div class="FeatureBoxVideo-module-wrapper-8UDKL">
+                                                            <div class="FeatureBoxVideo-module-poster-SJpIi FeatureBoxVideo-module-visibleItem-85rzi FeatureBoxVideo-module-smoothVisibleItem-1w-S7"
+                                                                 th:style="'background-image: url(' + ${item.imageUrl} + ');'">
+                                                            </div>
                                                         </div>
+                                                        <div class="FeatureBoxVideo-module-shadow-IJEZu"></div>
                                                     </div>
-                                                    <div class="FeatureBoxVideo-module-shadow-IJEZu"></div>
-                                                </div>
-                                                <div class="FeatureBoxFlags-module-container-kShG1"></div>
-                                                <div class="Frame-module-vignette-eazga"></div>
-                                                <div></div>
+                                                <a th:if="${item.getClass().simpleName == 'SeriesDto'}"
+                                                   th:with="formattedTitle=${item.title.toLowerCase().replace(' ', '-')+'/sezon-1'}"
+                                                   th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})}">
+                                                    <div class="Frame-module-vignette-eazga"></div>
+                                                </a>
+                                                <a th:if="${item.getClass().simpleName == 'MovieDto'}"
+                                                   th:with="formattedTitle=${item.title.toLowerCase().replace(' ', '-')}"
+                                                   th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})}">
+                                                    <div class="Frame-module-vignette-eazga"></div>
+                                                </a>
+
 
                                                 <!--                                                INFORMATION MODULE FRAME-->
                                                 <div class="Frame-module-body-ICZKd">
@@ -121,15 +127,15 @@
                                                         <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl Buttons-module-play-AAOaC"
                                                            tabindex="-1"
                                                            th:if="${item.getClass().simpleName == 'SeriesDto'}"
-                                                           th:with="formattedTitle=${item.title.toLowerCase().replace(' ', '-')+'/sezon-1'}"
-                                                           th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} ">
+                                                           th:with="unwachedEpisodeId=${item.firstUnwatchedEpisodeId}"
+                                                           th:href="@{/play-episode/{unwachedEpisodeId}(unwachedEpisodeId=${unwachedEpisodeId})} ">
                                                             Watch
                                                         </a>
-                                                        <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl"
+                                                        <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl Buttons-module-play-AAOaC"
                                                            tabindex="-1"
                                                            th:if="${item.getClass().simpleName == 'MovieDto'}"
-                                                           th:with="formattedTitle=${item.title.toLowerCase().replace(' ', '-')}"
-                                                           th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
+                                                           th:with="imdbId=${item.imdbId}"
+                                                           th:href="@{/movies/play-movie/{imdbId}(imdbId=${imdbId})} ">
                                                             Watch
                                                         </a>
                                                         <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl"

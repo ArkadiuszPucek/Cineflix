@@ -20,6 +20,7 @@ public class SeriesDtoMapper {
         seriesDto.setSeasonsCount(series.getSeasons().size());
         seriesDto.setOnUserList(null);
         seriesDto.setUserRating(null);
+        seriesDto.setFirstUnwatchedEpisodeId(null);
         return seriesDto;
     }
 }

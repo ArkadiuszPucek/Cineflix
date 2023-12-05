@@ -1,16 +1,18 @@
 package pl.puccini.cineflix.domain.user.service;
 
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.dto.MovieDtoMapper;
 import pl.puccini.cineflix.domain.movie.model.Movie;
 import pl.puccini.cineflix.domain.movie.repository.MovieRepository;
+import pl.puccini.cineflix.domain.movie.service.MovieService;
 import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
 import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDtoMapper;
 import pl.puccini.cineflix.domain.series.model.Series;
 import pl.puccini.cineflix.domain.series.repository.SeriesRepository;
+import pl.puccini.cineflix.domain.series.service.SeriesService;
 import pl.puccini.cineflix.domain.user.model.User;
 import pl.puccini.cineflix.domain.user.model.UserList;
 import pl.puccini.cineflix.domain.user.repository.UserListRepository;
@@ -18,8 +20,6 @@ import pl.puccini.cineflix.domain.user.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserListService {
@@ -28,12 +28,16 @@ public class UserListService {
     private final UserRepository userRepository;
     private final MovieRepository movieRepository;
     private final SeriesRepository seriesRepository;
+    private final SeriesService seriesService;
+    private final MovieService movieService;
 
-    public UserListService(UserListRepository userListRepository, UserRepository userRepository, MovieRepository movieRepository, SeriesRepository seriesRepository) {
+    public UserListService(UserListRepository userListRepository, UserRepository userRepository, MovieRepository movieRepository, SeriesRepository seriesRepository, @Lazy SeriesService seriesService, @Lazy MovieService movieService) {
         this.userListRepository = userListRepository;
         this.userRepository = userRepository;
         this.movieRepository = movieRepository;
         this.seriesRepository = seriesRepository;
+        this.seriesService = seriesService;
+        this.movieService = movieService;
     }
 
     public List<MovieDto> getUserMovies(Long userId) {
@@ -44,6 +48,9 @@ public class UserListService {
             Movie movieByImdbId = movieRepository.findMovieByImdbId(userList.getImdbId());
             if (movieByImdbId != null){
                 MovieDto mappedMovie = MovieDtoMapper.map(movieByImdbId);
+                mappedMovie.setOnUserList(isOnList(userId, mappedMovie.getImdbId()));
+                mappedMovie.setUserRating(movieService
+                        .getCurrentUserRatingForMovie(mappedMovie.getImdbId(), userId).orElse(null));
                 movies.add(mappedMovie);
             }
         }
@@ -58,6 +65,9 @@ public class UserListService {
             Series seriesByImdbId = seriesRepository.findSeriesByImdbId(userList.getImdbId());
             if (seriesByImdbId != null) {
                 SeriesDto mappedSeries = SeriesDtoMapper.map(seriesByImdbId);
+                mappedSeries.setOnUserList(isOnList(userId, mappedSeries.getImdbId()));
+                mappedSeries.setUserRating(seriesService
+                        .getCurrentUserRatingForSeries(mappedSeries.getImdbId(), userId).orElse(null));
                 series.add(mappedSeries);
             }
         }

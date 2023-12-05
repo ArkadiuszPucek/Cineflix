@@ -102,6 +102,7 @@ public class SeriesService {
         }
         SeriesDto mappedSeries = SeriesDtoMapper.map(series);
         mappedSeries.setOnUserList(userListService.isOnList(userId, series.getImdbId()));
+        mappedSeries.setUserRating(getCurrentUserRatingForSeries(mappedSeries.getImdbId(), userId).orElse(null));
         return mappedSeries;
     }
 

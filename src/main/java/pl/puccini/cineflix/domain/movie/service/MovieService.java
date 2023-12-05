@@ -29,16 +29,14 @@ public class MovieService {
     private final GenreRepository genreRepository;
     private final GenreService genreService;
     private final UserListService userListService;
-    private final ViewingHistoryRepository viewingHistoryRepository;
     private final UserRatingRepository userRatingRepository;
 
-    public MovieService(MovieRepository movieRepository, IMDbApiService imdbApiService, GenreRepository genreRepository, GenreService genreService, UserListService userListService, ViewingHistoryRepository viewingHistoryRepository, UserRatingRepository userRatingRepository) {
+    public MovieService(MovieRepository movieRepository, IMDbApiService imdbApiService, GenreRepository genreRepository, GenreService genreService, UserListService userListService, UserRatingRepository userRatingRepository) {
         this.movieRepository = movieRepository;
         this.imdbApiService = imdbApiService;
         this.genreRepository = genreRepository;
         this.genreService = genreService;
         this.userListService = userListService;
-        this.viewingHistoryRepository = viewingHistoryRepository;
         this.userRatingRepository = userRatingRepository;
     }
 
@@ -53,7 +51,63 @@ public class MovieService {
         return movieRepository.existsByImdbId(imdbId);
     }
 
-    public void addMovieManual(MovieDto movieDto) throws IOException, InterruptedException {
+//    public void addMovieManual(MovieDto movieDto) {
+//        Movie movie = new Movie();
+//        movie.setImdbId(movieDto.getImdbId());
+//        movie.setTitle(movieDto.getTitle());
+//        movie.setReleaseYear(movieDto.getReleaseYear());
+//        movie.setImageUrl(movieDto.getImageUrl());
+//        movie.setBackgroundImageUrl(movieDto.getBackgroundImageUrl());
+//        movie.setMediaUrl(movieDto.getMediaUrl());
+//        movie.setTimeline(movieDto.getTimeline());
+//        movie.setAgeLimit(movieDto.getAgeLimit());
+//        movie.setDescription(movieDto.getDescription());
+//        movie.setStaff(movieDto.getStaff());
+//        movie.setDirectedBy(movieDto.getDirectedBy());
+//        movie.setLanguages(movieDto.getLanguages());
+//        movie.setGenre(genreRepository.findByGenreTypeIgnoreCase(movieDto.getGenre()));
+//        movie.setImdbRating(movieDto.getImdbRating());
+//        movie.setPromoted(movieDto.isPromoted());
+//        movie.setImdbUrl("https://www.imdb.com/title/"+movieDto.getImdbId());
+//        movieRepository.save(movie);
+//    }
+//
+//    public Movie addMovieByApi(MovieDto movieDto) throws IOException, InterruptedException {
+//        MovieDto movieApiDto = imdbApiService.fetchIMDbData(movieDto.getImdbId());
+//        Movie movie = new Movie();
+//        movie.setImdbId(movieApiDto.getImdbId());
+//        movie.setTitle(movieApiDto.getTitle());
+//        movie.setReleaseYear(movieApiDto.getReleaseYear());
+//        movie.setImageUrl(movieApiDto.getImageUrl());
+//        movie.setBackgroundImageUrl(movieApiDto.getBackgroundImageUrl());
+//        movie.setMediaUrl(movieApiDto.getMediaUrl());
+//        movie.setTimeline(movieApiDto.getTimeline());
+//        movie.setAgeLimit(movieApiDto.getAgeLimit());
+//        movie.setDescription(movieApiDto.getDescription());
+//        movie.setStaff(movieApiDto.getStaff());
+//        movie.setDirectedBy(movieApiDto.getDirectedBy());
+//        movie.setLanguages(movieApiDto.getLanguages());
+//        movie.setGenre(genreRepository.findByGenreTypeIgnoreCase(movieApiDto.getGenre()));
+//        movie.setImdbRating(movieApiDto.getImdbRating());
+//        movie.setPromoted(movieDto.isPromoted());
+//        movie.setImdbUrl("https://www.imdb.com/title/"+movieDto.getImdbId());
+//        movieRepository.save(movie);
+//        return movie;
+//    }
+
+    public void addMovieManual(MovieDto movieDto) {
+        Movie movie = mapMovieDtoToMovie(movieDto, null);
+        movieRepository.save(movie);
+    }
+
+    public Movie addMovieByApi(MovieDto movieDto) throws IOException, InterruptedException {
+        MovieDto movieApiDto = imdbApiService.fetchIMDbData(movieDto.getImdbId());
+        Movie movie = mapMovieDtoToMovie(movieApiDto, movieDto.isPromoted());
+        movieRepository.save(movie);
+        return movie;
+    }
+
+    private Movie mapMovieDtoToMovie(MovieDto movieDto, Boolean isPromoted) {
         Movie movie = new Movie();
         movie.setImdbId(movieDto.getImdbId());
         movie.setTitle(movieDto.getTitle());
@@ -69,31 +123,8 @@ public class MovieService {
         movie.setLanguages(movieDto.getLanguages());
         movie.setGenre(genreRepository.findByGenreTypeIgnoreCase(movieDto.getGenre()));
         movie.setImdbRating(movieDto.getImdbRating());
-        movie.setPromoted(movieDto.isPromoted());
-        movie.setImdbUrl("https://www.imdb.com/title/"+movieDto.getImdbId());
-        movieRepository.save(movie);
-    }
-
-    public Movie addMovieByApi(MovieDto movieDto) throws IOException, InterruptedException {
-        MovieDto movieApiDto = imdbApiService.fetchIMDbData(movieDto.getImdbId());
-        Movie movie = new Movie();
-        movie.setImdbId(movieApiDto.getImdbId());
-        movie.setTitle(movieApiDto.getTitle());
-        movie.setReleaseYear(movieApiDto.getReleaseYear());
-        movie.setImageUrl(movieApiDto.getImageUrl());
-        movie.setBackgroundImageUrl(movieApiDto.getBackgroundImageUrl());
-        movie.setMediaUrl(movieApiDto.getMediaUrl());
-        movie.setTimeline(movieApiDto.getTimeline());
-        movie.setAgeLimit(movieApiDto.getAgeLimit());
-        movie.setDescription(movieApiDto.getDescription());
-        movie.setStaff(movieApiDto.getStaff());
-        movie.setDirectedBy(movieApiDto.getDirectedBy());
-        movie.setLanguages(movieApiDto.getLanguages());
-        movie.setGenre(genreRepository.findByGenreTypeIgnoreCase(movieApiDto.getGenre()));
-        movie.setImdbRating(movieApiDto.getImdbRating());
-        movie.setPromoted(movieDto.isPromoted());
-        movie.setImdbUrl("https://www.imdb.com/title/"+movieDto.getImdbId());
-        movieRepository.save(movie);
+        movie.setPromoted(isPromoted != null ? isPromoted : movieDto.isPromoted());
+        movie.setImdbUrl("https://www.imdb.com/title/" + movieDto.getImdbId());
         return movie;
     }
 
@@ -196,22 +227,9 @@ public class MovieService {
         return false;
     }
 
-//    public List<MovieDto> getWatchedMovies(Long userId) {
-//        // Pobierz listę historii oglądania filmów dla danego użytkownika, posortowaną od najnowszej
-//        List<ViewingHistory> movieHistoryList = viewingHistoryRepository.findByUserIdOrderByViewedOnDesc(userId);
-//
-//        // Mapuj na DTO
-//        return movieHistoryList.stream()
-//                .map(ViewingHistory::getMovie)
-//                .distinct()
-//                .map(MovieDtoMapper::map)
-//                .collect(Collectors.toList());
-//    }
-
     public Optional<Boolean> getCurrentUserRatingForMovie(String imdbId, Long userId) {
         return userRatingRepository.findByMovieImdbIdAndUserId(imdbId, userId)
                 .map(UserRating::isUpvote);
     }
-
 
 }

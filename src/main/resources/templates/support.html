@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ViaPlay</title>
+    <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+</head>
+
+<div id="content-wrapper" class>
+    <div class="dockable"></div>
+    <div id="react-mount">
+        <div class="Layout-module-internal-page--krBv">
+            <div th:replace="~{header :: header}"></div>
+            <div class="dockable"></div>
+            <div class="blocksEnsembleContainer-module-container-ZXS1I">
+                <div id="content" class="article" data-testhook="article">
+                    <div class="dockable"></div>
+                    <div class="blocksEnsembleContainer-module-container-ZXS1I">
+                        <div class="webform-content-column">
+                            <h1 class="front-page-title">Skontaktuj się z nami</h1>
+                            <div class="support-page-text-4F62f">
+                            <span class="support-page-phoneNumber-fa7FE" th:text="'tel. +48 531-636-950'">Phone number</span>
+                            </div>
+                            <div>
+                            <span class="support-page-mail-54KJf">
+                                <a href="mailto:arkadiusz.pucek@gmail.com">arkadiusz.pucek@gmail.com</a>
+                            </span>
+                            </div>
+                            <div class="support-page-homebutton-532fE">
+                                <div class="ActionButton-module-wrapper-NdTTC">
+                                    <div class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl"
+                                         tabindex="0">
+                                        <span onclick="window.location.href='/'">Strona główna</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="webform-actions__email-form">
+                <div class="webform-email-form-content"
+                     id="webform-email-form-content"></div>
+            </div>
+        </div>
+        <span class="webform-actions__column-subtitle webform-actions__column-subtitle--larger">
+            <span id="get-in-touch-text-open">Skontaktuj się z nami</span>
+            <span id="get-in-touch-text-close">Zamknij</span>
+        </span>
+    </div>
+</div>
+<div th:replace="~{footer :: footer}"></div>
+</html>

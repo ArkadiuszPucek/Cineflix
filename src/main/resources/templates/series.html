@@ -72,6 +72,36 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script type="text/javascript" src="/scripts/common.js"></script>
+<script>
+    function rate(direction, element) {
+        var csrfToken = document.querySelector('meta[name="_csrf"]').content;
+        var csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
 
+        var headers = new Headers();
+        headers.append(csrfHeader, csrfToken);
+        var imdbId = element.getAttribute('data-imdbid');
+
+        fetch('/rate/' + direction + '/' + imdbId, { method: 'POST', headers: headers })
+            .then(response => {
+                if (response.ok) {
+                    var container = element.closest('.InteractionIcons-module-container-apGgr');
+                    var rateUpIcon = container.querySelector('[data-imdbid="' + imdbId + '"][data-testhook="item-rating-up"]');
+                    var rateDownIcon = container.querySelector('[data-imdbid="' + imdbId + '"][data-testhook="item-rating-down"]');
+                    updateRatingUI(direction, rateUpIcon, rateDownIcon);
+                }
+            });
+    }
+
+    function updateRatingUI(direction, rateUpIcon, rateDownIcon) {
+        rateUpIcon.className = 'RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateUp-S4se-';
+        rateDownIcon.className = 'RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 RateButtons-module-rateDown-DblB1';
+
+        if (direction === 'up') {
+            rateUpIcon.classList.add('RateButtons-module-active-n-0Gb');
+        } else if (direction === 'down') {
+            rateDownIcon.classList.add('RateButtons-module-active-n-0Gb');
+        }
+    }
+</script>
 </body>
 </html>

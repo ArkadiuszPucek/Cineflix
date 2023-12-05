@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>pl.puccini</groupId>
-    <artifactId>viaplay</artifactId>
+    <artifactId>Cineflix</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>viaplay</name>
-    <description>viaplay</description>
+    <name>Cineflix</name>
+    <description>Cineflix</description>
     <properties>
         <java.version>17</java.version>
     </properties>

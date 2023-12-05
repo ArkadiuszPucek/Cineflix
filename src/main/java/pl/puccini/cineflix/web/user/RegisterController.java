@@ -48,7 +48,7 @@ public class RegisterController {
         }
         try {
             userService.registerNewUserAccount(userDto);
-            redirectAttributes.addFlashAttribute("message", "Rejestracja przebiegła pomyślnie.");
+            redirectAttributes.addFlashAttribute("message", "Registration successful.");
             return "redirect:/login";
         } catch (UsernameExistsException e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());

@@ -1,5 +1,7 @@
 package pl.puccini.cineflix.web.admin;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -59,7 +61,7 @@ public class AdminController {
     @PostMapping("/admin/add-movie-form")
     public String addMovieManual(MovieDto movie, RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
         if (movieService.existsByImdbId(movie.getImdbId())) {
-            redirectAttributes.addFlashAttribute("error", "Film o podanym IMDb id istnieje w serwisie!");
+            redirectAttributes.addFlashAttribute("error", "A film with the given IMDb id exists on the website!");
             return "redirect:/add-movie-form";
         }
         movieService.addMovieManual(movie);
@@ -86,7 +88,7 @@ public class AdminController {
     @PostMapping("/admin/add-movie-api")
     public String addMovieByApi(MovieDto movie, RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
         if (movieService.existsByImdbId(movie.getImdbId())) {
-            redirectAttributes.addFlashAttribute("error", "Film o podanym IMDb id istnieje w serwisie!");
+            redirectAttributes.addFlashAttribute("error", "A film with the given IMDb id exists on the website!");
             return "redirect:/add-movie-api";
         }
         Movie movieFromApi = movieService.addMovieByApi(movie);
@@ -125,14 +127,14 @@ public class AdminController {
             boolean updateResult = movieService.updateMovie(movieDto);
 
             if (updateResult) {
-                redirectAttributes.addFlashAttribute("success", "Film został pomyślnie zaktualizowany.");
+                redirectAttributes.addFlashAttribute("success", "The video has been successfully updated.");
                 return "redirect:/admin/manage-movies";
             } else {
-                redirectAttributes.addFlashAttribute("error", "Nie znaleziono filmu do aktualizacji.");
+                redirectAttributes.addFlashAttribute("error", "Movie not found");
                 return "redirect:/admin/edit-movie/" + movieDto.getImdbId();
             }
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas aktualizacji filmu: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "An error occurred while updating the video: " + e.getMessage());
             return "redirect:/admin/edit-movie/" + movieDto.getImdbId();
         }
     }
@@ -147,12 +149,12 @@ public class AdminController {
         if ("deleteMovie".equals(action)) {
             boolean deleted = movieService.deleteMovieByImdbId(imdbId);
             if (deleted) {
-                redirectAttributes.addFlashAttribute("success", "Film został pomyślnie usunięty.");
+                redirectAttributes.addFlashAttribute("success", "The video has been successfully removed.");
             } else {
-                redirectAttributes.addFlashAttribute("error", "Nie znaleziono filmu do usunięcia.");
+                redirectAttributes.addFlashAttribute("error", "Movie not found");
             }
         } else {
-            redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas usuwania filmu");
+            redirectAttributes.addFlashAttribute("error", "An error occurred while deleting the video.");
         }
         return "redirect:/admin/manage-movies";
     }
@@ -173,7 +175,7 @@ public class AdminController {
     @PostMapping("/admin/add-series-form")
     public String addSeriesManual(@ModelAttribute SeriesDto series, RedirectAttributes redirectAttributes, HttpSession session) {
         if (seriesService.existsByImdbId(series.getImdbId())) {
-            redirectAttributes.addFlashAttribute("message", "Film o podanym IMDb id istnieje w serwisie!");
+            redirectAttributes.addFlashAttribute("message", "A film with the given IMDb id exists on the website!");
             return "redirect:/admin/add-series-form";
         }
 
@@ -182,10 +184,10 @@ public class AdminController {
             session.setAttribute("seasonsCount", series.getSeasonsCount());
             session.setAttribute("title", series.getTitle());
             redirectAttributes.addFlashAttribute("seasonsCount", series.getSeasonsCount());
-            redirectAttributes.addFlashAttribute("message", "Serial został dodany.");
+            redirectAttributes.addFlashAttribute("message", "The series has been added.");
             return "redirect:/admin/add-episode/"+series.getImdbId()+"/1/1";
         } catch (IOException | InterruptedException e) {
-            redirectAttributes.addFlashAttribute("error", "Błąd podczas dodawania serialu: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Error adding series: " + e.getMessage());
             return "redirect:/admin/add-series-form";
         }
     }
@@ -232,7 +234,7 @@ public class AdminController {
             String seriesTitle = (String) session.getAttribute("title");
 
             if (seasonsCount == null) {
-                redirectAttributes.addFlashAttribute("message", "Wystąpił błąd podczas dodawnia liczby sezonów");
+                redirectAttributes.addFlashAttribute("message", "An error occurred while adding the number of seasons.");
                 return "redirect:/admin";
             }
 
@@ -240,7 +242,7 @@ public class AdminController {
             String redirectUrl = episodeService.processEpisodeAddition(episodeDto, seriesId, seasonNumber, episodeNumber, seasonsCount, action, seriesTitle);
             return "redirect:" + redirectUrl;
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("message", "Wystąpił błąd: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("message", "An error occured: " + e.getMessage());
             return "redirect:/admin/add-episode/" + seriesId + "/" + seasonNumber + "/" + episodeNumber;
         }
     }
@@ -257,7 +259,7 @@ public class AdminController {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/admin/add-series-api";
         } catch (IOException | InterruptedException e) {
-            redirectAttributes.addFlashAttribute("error", "Wystąpił błąd: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "An error occured: " + e.getMessage());
             return "redirect:/admin/add-series-api";
         }
     }
@@ -298,13 +300,13 @@ public class AdminController {
     public String updateSeries(@ModelAttribute("series") SeriesDto seriesDto, RedirectAttributes redirectAttributes) {
         try {
             seriesService.updateSeries(seriesDto);
-            redirectAttributes.addFlashAttribute("success", "Serial został pomyślnie zaktualizowany.");
+            redirectAttributes.addFlashAttribute("success", "The series has been successfully updated.");
             return "redirect:/admin/manage-series";
         } catch (SeriesNotFoundException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/admin/manage-series";
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas aktualizacji serialu: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "An error occurred while updating the series " + e.getMessage());
             return "redirect:/admin/edit-series/" + seriesDto.getImdbId();
         }
     }
@@ -320,12 +322,12 @@ public class AdminController {
         if ("deleteSeries".equals(action)) {
             boolean deleted = seriesService.deleteSeriesByImdbId(imdbId);
             if (deleted) {
-                redirectAttributes.addFlashAttribute("success", "Serial został pomyślnie usunięty.");
+                redirectAttributes.addFlashAttribute("success", "The series has been successfully removed.");
             } else {
-                redirectAttributes.addFlashAttribute("error", "Nie znaleziono serialu do usunięcia.");
+                redirectAttributes.addFlashAttribute("error", "The series was not found.");
             }
         } else {
-            redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas usuwania serialu: ");
+            redirectAttributes.addFlashAttribute("error", "An error occurred while deleting the series: ");
         }
         return "redirect:/admin/manage-series";
     }
@@ -361,10 +363,10 @@ public class AdminController {
         try {
             Episode updatedEpisode = episodeService.updateEpisode(episodeDto);
             String seriesImdbId = updatedEpisode.getSeason().getSeries().getImdbId();
-            redirectAttributes.addFlashAttribute("message", "Epizod został pomyślnie zaktualizowany.");
+            redirectAttributes.addFlashAttribute("message", "The episode has been successfully updated.");
             return "redirect:/admin/edit-series-seasons/" + seriesImdbId;
         } catch (EpisodeNotFoundException e) {
-            redirectAttributes.addFlashAttribute("message", "Wystąpił błąd podczas edytowania epizodu " + e.getMessage());
+            redirectAttributes.addFlashAttribute("message", "An error occurred while editing the episode " + e.getMessage());
             return "redirect:/admin/manage-series";
         }
     }
@@ -381,14 +383,14 @@ public class AdminController {
             if ("deleteEpisode".equals(action)){
                 Episode episodeToDelete = episodeService.deleteEpisodeById(episodeId);
                 String imdbId = episodeToDelete.getSeason().getSeries().getImdbId();
-                redirectAttributes.addFlashAttribute("message", "Epizod został pomyślnie usunięty.");
+                redirectAttributes.addFlashAttribute("message", "The episode was successfully deleted.");
                 return "redirect:/admin/edit-series-seasons/" + imdbId;
             }else {
-                redirectAttributes.addFlashAttribute("message", "Epizod nie został usunięty.");
+                redirectAttributes.addFlashAttribute("message", "The episode has not been removed.");
                 return "redirect:/admin/manage-series";
             }
         } catch (EpisodeNotFoundException e) {
-            redirectAttributes.addFlashAttribute("message", "Wystąpił błąd podczas edytowania epizodu " + e.getMessage());
+            redirectAttributes.addFlashAttribute("message", "An error occurred while editing the episode " + e.getMessage());
             return "redirect:/admin/manage-series";
         }
     }
@@ -410,64 +412,26 @@ public class AdminController {
     public String changeUserRole(@RequestParam Long user, @RequestParam String newRole, RedirectAttributes redirectAttributes) {
         try {
             userService.changeUserRole(user, newRole);
-            redirectAttributes.addFlashAttribute("message", "Rola użytkownika została zmieniona.");
+            redirectAttributes.addFlashAttribute("message", "The user role has been changed.");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("message", "Wystąpił błąd: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("message", "An error occured: " + e.getMessage());
         }
         return "redirect:/master/manage-users";
     }
-
-
-//    @GetMapping("/master/edit-user/{userId}")
-//    public String showEditUserForm(@PathVariable String userId, Model model) {
-//        MovieDto movieByImdbId = movieService.findMovieByImdbId(imdbId);
-//
-//        model.addAttribute("movie", movieByImdbId);
-//        List<Genre> allGenres = genreService.getAllGenres();
-//        model.addAttribute("genres", allGenres);
-//        List<Integer> ageLimits = Arrays.asList(3, 7, 12, 16, 18);
-//        model.addAttribute("ageLimits", ageLimits);
-//
-//        return "admin/movies/edit-movie-form";
-//        return null;
-//    }
-
-//    @PostMapping("/master/update-user")
-//    public String updateUser(@ModelAttribute("user") UserDto userDto, RedirectAttributes redirectAttributes) {
-//        try {
-//            boolean updateResult = movieService.updateMovie(movieDto);
-//
-//            if (updateResult) {
-//                redirectAttributes.addFlashAttribute("success", "Film został pomyślnie zaktualizowany.");
-//                return "redirect:/admin/manage-movies";
-//            } else {
-//                redirectAttributes.addFlashAttribute("error", "Nie znaleziono filmu do aktualizacji.");
-//                return "redirect:/admin/edit-movie/" + movieDto.getImdbId();
-//            }
-//        } catch (Exception e) {
-//            redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas aktualizacji filmu: " + e.getMessage());
-//            return "redirect:/admin/edit-movie/" + movieDto.getImdbId();
-//        return null;
-//        }
-//    }
-
 
     @GetMapping("/master/delete-user/{userId}")
     public String deleteUser(@PathVariable Long userId,
                               RedirectAttributes redirectAttributes,
                               @RequestParam String action,
+                             HttpServletRequest request,
+                             HttpServletResponse response,
                              Authentication authentication,
                              Model model) {
         userUtils.addAvatarUrlToModel(authentication, model);
         if ("deleteUser".equals(action)) {
-            boolean deleted = userService.deleteUserById(userId);
-            if (deleted) {
-                redirectAttributes.addFlashAttribute("message", "Użytkownik został pomyślnie usunięty.");
-            } else {
-                redirectAttributes.addFlashAttribute("message", "Nie znaleziono użytkownika do usunięcia.");
-            }
+            userUtils.deleteUser(request, response, redirectAttributes, userId);
         } else {
-            redirectAttributes.addFlashAttribute("message", "Wystąpił błąd podczas usuwania użytkownika");
+            redirectAttributes.addFlashAttribute("message", "An error occurred while deleting the user.");
         }
         return "redirect:/master/manage-users";
     }

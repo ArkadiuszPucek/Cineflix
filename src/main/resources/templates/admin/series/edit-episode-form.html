@@ -9,7 +9,7 @@
 
 <div class="Layout-module-internal-page--krBv">
     <div th:replace="~{header :: header}"></div>
-    <h1 class="page-header-admin">Panel administracyjny - edytuj epizod</h1>
+    <h1 class="page-header-admin" th:text="'Administration panel - Edit: episode '+${episode.episodeNumber} + ', season ' + ${episode.seasonNumber}">Administration panel - Edit episode</h1>
     <div id="content" class="admin-panel">
         <div th:replace="~{admin/sidebar :: sidebar}"></div>
         <div class="main-content">
@@ -20,27 +20,27 @@
                         <input class="text-input-style" type="hidden" name="imdbId" th:field="*{id}" required></td>
                     </tr>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="episodeTitle" th:field="*{episodeNumber}" placeholder="Numer epizodu" required></td>
+                        <td><input class="text-input-style" type="text" name="episodeTitle" th:field="*{episodeNumber}" placeholder="Episode number" required></td>
                     </tr>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="episodeTitle" th:field="*{episodeTitle}" placeholder="Wpisz tytuł epizodu" required></td>
+                        <td><input class="text-input-style" type="text" name="episodeTitle" th:field="*{episodeTitle}" placeholder="Episode title" required></td>
                     </tr>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="mediaUrl" th:field="*{imageUrl}" pattern="^(https?://www\.|https?://|www\.)\S+" placeholder="Wpisz adres URL zdjęcia epizodu"
+                        <td><input class="text-input-style" type="text" name="mediaUrl" th:field="*{imageUrl}" pattern="^(https?://www\.|https?://|www\.)\S+" placeholder="Episode image URL"
                                    required></td>
                     </tr>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="mediaUrl" th:field="*{mediaUrl}" placeholder="URL mediów" pattern="^(https?://www\.|https?://|www\.)\S+" required></td>
+                        <td><input class="text-input-style" type="text" name="mediaUrl" th:field="*{mediaUrl}" placeholder="Media URL" pattern="^(https?://www\.|https?://|www\.)\S+" required></td>
                     </tr>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="durationMinutes" th:field="*{durationMinutes}" placeholder="Czas trwania [min]" required pattern="^(?:[1-9]|[1-9][0-9]|1[0-9]{2}|2[0-3][0-9]|240)$"></td>
+                        <td><input class="text-input-style" type="text" name="durationMinutes" th:field="*{durationMinutes}" placeholder="Duration [min]" required pattern="^(?:[1-9]|[1-9][0-9]|1[0-9]{2}|2[0-3][0-9]|240)$"></td>
                     </tr>
                     <tr>
-                        <td><input class="text-input-style" type="text" name="episodeDescription" th:field="*{episodeDescription}" placeholder="Opis epizodu"  required></td>
+                        <td><input class="text-input-style" type="text" name="episodeDescription" th:field="*{episodeDescription}" placeholder="Description"  required></td>
                     </tr>
                 </div>
                 <div class="submit-button-movie-page">
-                    <button type="submit" class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl" tabindex="0">Edytuj epizod</button>
+                    <button type="submit" class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl" tabindex="0">Edit</button>
                 </div>
             </form>
         </div>

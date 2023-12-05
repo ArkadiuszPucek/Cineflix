@@ -23571,6 +23571,53 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     position: relative
 }
 
+.webform-content-column h1 {
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(67deg,#cd207c,#f30000);
+    background-clip: text;
+    -webkit-background-clip: text;
+    padding-bottom: 35px;
+    padding-top: 140px;
+}
+
+.webform-content-column {
+    padding: 1.875rem 15px;
+    position: relative;
+    text-align: center;
+    width: 100%
+}
+
+.support-page-homebutton-532fE{
+    margin-top: 70px;
+}
+
+.support-page-phoneNumber-fa7FE{
+    font-size: 24px;
+    font-style: initial;
+    margin-bottom: 60px;
+}
+
+.support-page-mail-54KJf{
+    font-size: 18px;
+    font-style: initial;
+    margin-bottom: 20px;
+}
+
+.support-page-text-4F62f{
+    padding-bottom: 12px;
+}
+
+@media (min-width: 992px) {
+    .front-page-title {
+        font-size:4rem;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+        line-height: 1.21875;
+        margin-bottom: 3.75rem;
+        word-break: break-word
+    }
+}
+
 .Navigation-module-logo-xLPeH {
     display: block
 }
@@ -24111,10 +24158,22 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 
 .register-message-login {
     font-size: 12px;
-    text-align: center; /* Wyśrodkowanie tekstu */
-    width: 100%; /* Szerokość elementu, aby wypełnił dostępną przestrzeń */
-    margin-bottom: 13px;
+    font-style: oblique;
+    font-weight: lighter;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 7px;
     color: #e5e530;
+}
+
+.register-password-hint-hk53I {
+    font-size: 12px;
+    font-style: oblique;
+    font-weight: lighter;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 7px;
+    color: #a1a1a1;
 }
 
 .page-title__header{
@@ -24725,6 +24784,10 @@ button {
     font-size: 13px;
 }
 
+.font-underline{
+    text-decoration: underline;
+}
+
 .font-bold{
     font-weight: 700;
 }
@@ -24745,7 +24808,7 @@ button {
 .submit-button-register-page{
     display: flex;
     justify-content: center;
-    padding-top: 40px;
+    padding-top: 20px;
     padding-bottom: 30px;
 }
 
@@ -24817,7 +24880,7 @@ button {
 
 .Input-login-window{
     position: relative;
-    margin-bottom: 1rem;
+    margin-bottom: 15px;
     display: inline-flex;
     align-items: center;
 }

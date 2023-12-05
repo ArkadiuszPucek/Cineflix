@@ -14,7 +14,7 @@
             <div class="section-wrapper">
                 <article id="password-block" class="page-info">
                     <div class="page-title">
-                        <h1 class="page-title__header">Zmień e-mail</h1>
+                        <h1 class="page-title__header">Change your e-mail</h1>
                     </div>
                     <div th:if="${error}">
                         <div class="manage-message-login" th:text="${error}"></div>
@@ -26,23 +26,23 @@
                         <div class="form-max-width change-password-form">
                             <form action="#" th:action="@{/change-email}" th:object="${user}" method="post">
                                 <div class="form-elem-wrap double-margin">
-                                    <input class="form-elem" autocomplete="on" placeholder="Dotychczasowy email"
+                                    <input class="form-elem" autocomplete="on"
                                            name="oldEmail" type="email" th:field="*{email}" readonly>
-                                    <span class="label-placeholder">Dotychczasowy email</span>
+                                    <span class="label-placeholder">Old email</span>
                                 </div>
 
                                 <div class="form-elem-wrap">
                                     <input class="form-elem password-indicator" autocomplete="on"
-                                           placeholder="Nowy email" name="newEmail" type="email">
-                                    <span class="label-placeholder">Nowy email</span>
+                                           placeholder="New e-mail" name="newEmail" type="email" required>
+                                    <span class="label-placeholder">New e-mail</span>
                                 </div>
 
                                 <div class="form-button-space form-button-space-account">
                                     <div class="form-button-space__cancel">
-                                        <a th:href="@{/account}" class="btn btn-bordered full-width">Anuluj</a>
+                                        <a th:href="@{/account}" class="btn btn-bordered full-width">Cancel</a>
                                     </div>
                                     <div class="form-button-space__submit">
-                                        <button type="submit" id="submit-change-email" class="btn btn-red full-width">Zmień email</button>
+                                        <button type="submit" id="submit-change-email" class="btn btn-red full-width">Change</button>
                                     </div>
                                 </div>
                             </form>

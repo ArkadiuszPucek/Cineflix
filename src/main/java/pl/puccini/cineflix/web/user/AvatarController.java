@@ -40,9 +40,9 @@ public class AvatarController {
         String username = authentication.getName();
         try {
             userService.changeAvatar(username, selectedAvatar);
-            redirectAttributes.addFlashAttribute("success", "Avatar został zmieniony.");
+            redirectAttributes.addFlashAttribute("success", "The avatar has been changed.");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas zmiany avatara: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "An error occurred while changing the avatar: " + e.getMessage());
         }
         return "redirect:/account";
     }

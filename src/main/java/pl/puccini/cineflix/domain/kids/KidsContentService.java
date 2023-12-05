@@ -38,10 +38,6 @@ public class KidsContentService {
 
     public List<SeriesDto> getAllKidsSeries(Long userId) {
         return seriesService.getSeriesByGenre(KIDS_GENRE, userId);
-//        return seriesRepository.findAllByGenre(findGenreByName("Kids"));
     }
 
-//    private Genre findGenreByName(String name) {
-//        return genreRepository.findByGenreType(name);
-//    }
 }

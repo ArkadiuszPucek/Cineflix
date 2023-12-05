@@ -14,6 +14,6 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 public class UserDto {
     private String username;
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\\d).{8,}$", message = "Hasło musi zaczynać się od dużej litery, zawierać znak specjalny i cyfrę oraz mieć co najmniej 8 znaków")
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\\d).{8,}$", message = "Provided password is incorrect")
     private String password;
 }

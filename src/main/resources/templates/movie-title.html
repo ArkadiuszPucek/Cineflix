@@ -317,7 +317,6 @@
             rateDownDiv.classList.remove('Rate-module-activeRatingDown-XcMDm');
             rateDownDiv.classList.add('undefined');
         } else if (direction === 'down') {
-            // Przełączanie między klasami 'Rate-module-activeRatingDown-XcMDm' i 'undefined'
             if (rateDownDiv.classList.contains('Rate-module-activeRatingDown-XcMDm')) {
                 rateDownDiv.classList.remove('Rate-module-activeRatingDown-XcMDm');
                 rateDownDiv.classList.add('undefined');
@@ -330,7 +329,6 @@
         }
     }
 
-
     function resetRatingButtons(rateUpButton, rateDownButton) {
         var rateUpDiv = rateUpButton.querySelector('div');
         var rateDownDiv = rateDownButton.querySelector('div');
@@ -338,7 +336,6 @@
         rateUpDiv.classList.remove('Rate-module-activeRatingUp-XcMDm');
         rateDownDiv.classList.remove('Rate-module-activeRatingDown-XcMDm');
 
-        // Dodaj klasę 'undefined' jeśli żaden z przycisków nie jest aktywny
         if (!rateUpDiv.classList.contains('Rate-module-activeRatingUp-XcMDm') &&
             !rateDownDiv.classList.contains('Rate-module-activeRatingDown-XcMDm')) {
             rateUpDiv.classList.add('undefined');
@@ -376,7 +373,6 @@
             rateDownIcon.classList.add('RateButtons-module-active-n-0Gb');
         }
     }
-
 </script>
 
 </body>

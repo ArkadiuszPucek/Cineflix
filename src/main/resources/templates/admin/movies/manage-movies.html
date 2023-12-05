@@ -9,7 +9,7 @@
 
 <div class="Layout-module-internal-page--krBv">
     <div th:replace="~{header :: header}"></div>
-    <h1 class="page-header-admin">Panel administracyjny - zarządzaj filmami</h1>
+    <h1 class="page-header-admin">Administration panel - manage movies</h1>
     <div th:if="${success}" th:text="${success}" class="alert manage-success"></div>
     <div th:if="${error}" th:text="${error}" class="alert manage-error"></div>
     <div id="content" class="admin-panel">
@@ -17,25 +17,25 @@
         <div class="main-content">
             <div id="customDialogOverlay" class="custom-dialog-overlay">
                 <div id="customDialogBox" class="custom-dialog-box">
-                    <p>Czy na pewno chcesz usunąć ten film?</p>
-                    <button onclick="submitForm('deleteMovie')">Tak</button>
-                    <button onclick="submitForm('dontDeleteMovie')">Nie</button>
+                    <p>Are you sure you want to delete this video?</p>
+                    <button onclick="submitForm('deleteMovie')">Yes</button>
+                    <button onclick="submitForm('dontDeleteMovie')">No</button>
                 </div>
             </div>
             <input type="hidden" id="action" value="">
             <table class="movie-table">
                 <thead>
                 <tr>
-                    <th>Tytuł</th>
-                    <th>Rok wydania</th>
-                    <th>Limit wieku</th>
-                    <th>Opis filmu</th>
-                    <th>Obsada</th>
-                    <th>Reżyser</th>
-                    <th>Języki</th>
-                    <th>Gatunek</th>
-                    <th>Promowanie</th>
-                    <th>Ocena IMDb</th>
+                    <th>Title</th>
+                    <th>Release year</th>
+                    <th>Age limit</th>
+                    <th>Description</th>
+                    <th>Cast</th>
+                    <th>Directed By</th>
+                    <th>Languages</th>
+                    <th>Genre</th>
+                    <th>Promoted</th>
+                    <th>IMDb rating</th>
                     <th>       </th>
                 </tr>
                 </thead>
@@ -52,9 +52,9 @@
                     <td th:text="${movie.promoted}">Is promoted</td>
                     <td th:text="${movie.imdbRating}">Imdb Rating</td>
                     <td>
-                        <a th:href="@{'/admin/edit-movie/' + ${movie.imdbId}}" title="Edytuj" th:text="Edytuj">
+                        <a th:href="@{'/admin/edit-movie/' + ${movie.imdbId}}" title="Edit" th:text="Edit">
                         </a>
-                        <a href="#" title="Usuń" th:text="Usuń" id="deleteMovie" th:onclick="showConfirmDialog()" th:attr="data-imdbId=${movie.imdbId}"></a>
+                        <a href="#" title="Delete" th:text="Delete" id="deleteMovie" th:onclick="showConfirmDialog()" th:attr="data-imdbId=${movie.imdbId}"></a>
                         </a>
                     </td>
                 </tr>

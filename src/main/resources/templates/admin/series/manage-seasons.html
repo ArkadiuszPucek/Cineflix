@@ -9,32 +9,32 @@
 
 <div class="Layout-module-internal-page--krBv">
     <div th:replace="~{header :: header}"></div>
-    <h1 class="page-header-admin" th:text="'Panel administracyjny - zarządzaj sezonami serialu: ' + ${series.title}">
-        Panel administracyjny - zarządzaj sezonami </h1>
+    <h1 class="page-header-admin" th:text="'Administration panel - Manage seasons of series: ' + ${series.title}">
+        Administration panel - manage series seasons</h1>
     <div th:if="${message}" th:text="${message}" class="alert manage-success"></div>
     <div id="content" class="admin-panel">
         <div th:replace="~{admin/sidebar :: sidebar}"></div>
         <div class="main-content-seasons">
             <div id="customDialogOverlay" class="custom-dialog-overlay">
                 <div id="customDialogBox" class="custom-dialog-box">
-                    <p>Czy na pewno chcesz usunąć ten epizod?</p>
-                    <button onclick="submitForm('deleteEpisode')">Tak</button>
-                    <button onclick="submitForm('dontDeleteEpisode')">Nie</button>
+                    <p>Are you sure you want to delete this episode?</p>
+                    <button onclick="submitForm('deleteEpisode')">Yes</button>
+                    <button onclick="submitForm('dontDeleteEpisode')">No</button>
                 </div>
             </div>
 
             <input type="hidden" id="action" value="">
             <div class="seasons-tables-style" th:each="season : ${seasons}">
-                <h2 class="season-table-header">Sezon <span th:text="${season.seasonNumber}"></span></h2>
+                <h2 class="season-table-header">Season <span th:text="${season.seasonNumber}"></span></h2>
                 <table class="seasons-tables">
                     <thead>
                     <tr>
-                        <th>Numer</th>
-                        <th>Tytuł</th>
-                        <th>URL okładki</th>
-                        <th>URL filmu</th>
-                        <th>Czas trwania</th>
-                        <th>Opis epizodu</th>
+                        <th>Number</th>
+                        <th>Title</th>
+                        <th>Image URL</th>
+                        <th>Media URL</th>
+                        <th>Duration</th>
+                        <th>Description</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -47,8 +47,8 @@
                         <td th:text="${epizode.durationMinutes}">Description</td>
                         <td th:text="${epizode.episodeDescription}">Staff</td>
                         <td>
-                            <a th:href="@{'/admin/edit-episode/' + ${epizode.id}}" title="Edytuj" th:text="Edytuj"></a>
-                            <a href="#" title="Usuń" th:text="Usuń" id="deleteEpisode" th:onclick="showConfirmDialog()" th:attr="data-id=${epizode.id}"></a>
+                            <a th:href="@{'/admin/edit-episode/' + ${epizode.id}}" title="Edytuj" th:text="Edit"></a>
+                            <a href="#" title="Delete" th:text="Delete" id="deleteEpisode" th:onclick="showConfirmDialog()" th:attr="data-id=${epizode.id}"></a>
                         </td>
                     </tr>
                     </tbody>

@@ -30,13 +30,19 @@ public class AccountController {
     }
 
     @GetMapping("/account")
-    public String account(Model model, Authentication authentication) {
+    public String account(Model model,
+                          HttpServletRequest request,
+                          HttpServletResponse response,
+                          Authentication authentication) {
         if (authentication != null) {
             String currentUserName = authentication.getName();
             userUtils.addAvatarUrlToModel(authentication, model);
 
             User user = userService.findByUsername(currentUserName);
             model.addAttribute("user", user);
+        }else {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "/admin/users/account-manage";
     }
@@ -57,7 +63,7 @@ public class AccountController {
         try {
             User currentUser = userService.findByUsername(authentication.getName());
             userService.changePassword(oldPassword, newPassword, confirmPassword, currentUser);
-            redirectAttributes.addFlashAttribute("success", "Hasło zostało zmienione.");
+            redirectAttributes.addFlashAttribute("success", "Password has been changed.");
         } catch (InvalidPasswordException | PasswordConfirmationException | PasswordFormatException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/change-password";
@@ -71,19 +77,19 @@ public class AccountController {
                                 HttpServletResponse response,
                                 RedirectAttributes redirectAttributes,
                                 Model model) {
-        if (authentication != null) {
-            userService.deleteUserByEmail(authentication.getName());
-            userUtils.addAvatarUrlToModel(authentication, model);
+        Long userId = userUtils.getUserIdFromAuthentication(authentication);
+        userUtils.addAvatarUrlToModel(authentication, model);
 
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            if (auth != null) {
-                new SecurityContextLogoutHandler().logout(request, response, auth);
-            }
-            redirectAttributes.addFlashAttribute("message", "Konto usunięte");
+        if (userId != null) {
+            userUtils.deleteUser(request, response, redirectAttributes, userId);
+        } else {
+            redirectAttributes.addFlashAttribute("message", "An error occurred while deleting the user");
+            return "redirect:/account";
         }
-        return "redirect:/login?accountDeleted\"";
+        return "redirect:/login?accountDeleted";
 
     }
+
 
     @GetMapping("/change-email")
     public String changeEmailForm(Authentication authentication, Model model) {
@@ -102,7 +108,7 @@ public class AccountController {
 
         try {
             userService.changeEmail(authentication.getName(), newEmail);
-            redirectAttributes.addFlashAttribute("message", "Email został zmieniony, zaloguj się ponownie.");
+            redirectAttributes.addFlashAttribute("message", "Email has been changed, please log in again.");
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth != null) {
                 new SecurityContextLogoutHandler().logout(request, response, auth);

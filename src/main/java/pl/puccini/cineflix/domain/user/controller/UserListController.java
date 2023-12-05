@@ -38,13 +38,10 @@ public class UserListController {
                            Authentication authentication,
                            Model model) {
         userUtils.addAvatarUrlToModel(authentication, model);
-        Long userId = getUserIdFromAuthentication(authentication);
+        Long userId = userUtils.getUserIdFromAuthentication(authentication);
 
         List<MovieDto> userMovies = userListService.getUserMovies(userId);
-        userMovies.forEach(movies -> movies.setOnUserList(userListService.isOnList(userId, movies.getImdbId())));
-
         List<SeriesDto> userSeries = userListService.getUserSeries(userId);
-        userSeries.forEach(serie -> serie.setOnUserList(userListService.isOnList(userId, serie.getImdbId())));
 
         if ("movies".equals(filter)) {
             model.addAttribute("activeAttribute", userMovies);
@@ -66,7 +63,7 @@ public class UserListController {
     @ResponseBody
     public ResponseEntity<?> addItemToList(@PathVariable String imdbId, Authentication authentication) {
         try {
-            Long userId = getUserIdFromAuthentication(authentication);
+            Long userId = userUtils.getUserIdFromAuthentication(authentication);
             userListService.addItemToList(userId, imdbId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
@@ -77,22 +74,11 @@ public class UserListController {
     @DeleteMapping("/remove-from-list/{imdbId}")
     public ResponseEntity<?> removeItemFromList(@PathVariable String imdbId, Authentication authentication) {
         try {
-            Long userId = getUserIdFromAuthentication(authentication);
+            Long userId = userUtils.getUserIdFromAuthentication(authentication);
             userListService.removeItemFromList(userId, imdbId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error message");
-        }
-    }
-
-    private Long getUserIdFromAuthentication(Authentication authentication) {
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            String email = userDetails.getUsername();
-            User user = userService.findByUsername(email);
-            return user.getId();
-        } else {
-            return null;
         }
     }
 }

@@ -2,6 +2,7 @@ package pl.puccini.cineflix.domain.user.service;
 
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.puccini.cineflix.domain.exceptions.EpisodeNotFoundException;
 import pl.puccini.cineflix.domain.exceptions.UserNotFoundException;
 import pl.puccini.cineflix.domain.movie.model.Movie;
@@ -10,6 +11,7 @@ import pl.puccini.cineflix.domain.series.model.Episode;
 import pl.puccini.cineflix.domain.series.service.EpisodeService;
 import pl.puccini.cineflix.domain.user.dto.WatchedItemDto;
 import pl.puccini.cineflix.domain.user.model.User;
+import pl.puccini.cineflix.domain.user.model.UserList;
 import pl.puccini.cineflix.domain.user.model.ViewingHistory;
 import pl.puccini.cineflix.domain.user.repository.ViewingHistoryRepository;
 
@@ -110,6 +112,13 @@ public class ViewingHistoryService {
                 .filter(Objects::nonNull)
                 .map(Episode::getId)
                 .collect(Collectors.toSet());
+    }
+
+    @Transactional
+    public void removeUserAndAllViewingHistory(Long userId){
+        List<ViewingHistory> viewingHistoryByUserId = viewingHistoryRepository.findByUserId(userId);
+        viewingHistoryRepository.deleteAll(viewingHistoryByUserId);
+        viewingHistoryRepository.deleteUserById(userId);
     }
 
 

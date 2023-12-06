@@ -124,20 +124,28 @@
                                                         Description
                                                     </p>
                                                     <div class="Frame-module-buttons-bIDYz">
-                                                        <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl Buttons-module-play-AAOaC"
-                                                           tabindex="-1"
-                                                           th:if="${item.getClass().simpleName == 'SeriesDto'}"
-                                                           th:with="unwachedEpisodeId=${item.firstUnwatchedEpisodeId}"
-                                                           th:href="@{/play-episode/{unwachedEpisodeId}(unwachedEpisodeId=${unwachedEpisodeId})} ">
-                                                            Watch
-                                                        </a>
-                                                        <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl Buttons-module-play-AAOaC"
-                                                           tabindex="-1"
-                                                           th:if="${item.getClass().simpleName == 'MovieDto'}"
-                                                           th:with="imdbId=${item.imdbId}"
-                                                           th:href="@{/movies/play-movie/{imdbId}(imdbId=${imdbId})} ">
-                                                            Watch
-                                                        </a>
+                                                        <div th:if="${item.getClass().simpleName == 'SeriesDto'}"
+                                                             th:with="unwachedEpisodeId=${item.firstUnwatchedEpisodeId}"
+                                                             th:href="@{/play-episode/{unwachedEpisodeId}(unwachedEpisodeId=${unwachedEpisodeId})} "
+                                                             class="ActionButton-module-wrapper-movie-Gds43s">
+                                                            <form th:action="@{/add-episode-to-history/{unwachedEpisodeId}(unwachedEpisodeId=${unwachedEpisodeId})}" method="post">
+                                                                <button type="submit" class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl Buttons-module-play-AAOaC">
+                                                                    <span>Watch</span>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+
+                                                        <div th:if="${item.getClass().simpleName == 'MovieDto'}"
+                                                             th:with="imdbId=${item.imdbId}"
+                                                             th:href="@{/movies/play-movie/{imdbId}(imdbId=${imdbId})} "
+                                                             class="ActionButton-module-wrapper-movie-Gds43s">
+                                                            <form th:action="@{/add-movie-to-history/{imdbId}(imdbId=${item.imdbId})}" method="post">
+                                                                <button type="submit" class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl Buttons-module-play-AAOaC">
+                                                                    <span>Watch</span>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+
                                                         <a class="FeatureBoxButton-module-button--HNtu Buttons-module-primary--YHdl"
                                                            tabindex="-1"
                                                            th:if="${item.getClass().simpleName == 'SeriesDto'}"

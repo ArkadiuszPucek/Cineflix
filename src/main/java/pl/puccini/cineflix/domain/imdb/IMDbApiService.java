@@ -2,11 +2,15 @@ package pl.puccini.cineflix.domain.imdb;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import pl.puccini.cineflix.domain.genre.Genre;
 import pl.puccini.cineflix.domain.genre.GenreRepository;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
+import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
+import pl.puccini.cineflix.domain.series.model.Series;
+import pl.puccini.cineflix.domain.series.service.EpisodeService;
 import pl.puccini.cineflix.web.admin.ConfigLoader;
 
 import java.io.IOException;
@@ -19,13 +23,15 @@ import java.util.*;
 public class IMDbApiService {
 
     private final GenreRepository genreRepository;
+    private final EpisodeService episodeService;
     private static final String RAPID_API_HOST = "mdblist.p.rapidapi.com";
     private static final String RAPID_API_MDA_HOST = "movie-database-alternative.p.rapidapi.com";
     private static final String RAPID_API_IMDb_HOST = "imdb8.p.rapidapi.com";
     private String rapidApiKey;
 
-    public IMDbApiService(GenreRepository genreRepository) {
+    public IMDbApiService(GenreRepository genreRepository, @Lazy EpisodeService episodeService) {
         this.genreRepository = genreRepository;
+        this.episodeService = episodeService;
         loadRapidApiKey();
     }
     private void loadRapidApiKey() {
@@ -229,4 +235,89 @@ public class IMDbApiService {
 
         return seriesDto;
     }
+
+    public EpisodeDto loadEpisodeData(String episodeImdbId) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String getDetailsImdbURL = "https://imdb8.p.rapidapi.com/title/get-details?tconst=" + episodeImdbId;
+        HttpRequest getDetailsIMDbApiRequest = HttpRequest.newBuilder()
+                .uri(URI.create(getDetailsImdbURL))
+                .header("X-RapidAPI-Key", rapidApiKey)
+                .header("X-RapidAPI-Host", RAPID_API_IMDb_HOST)
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+        HttpResponse<String> getDetailsIMDbApiResponse = client.send(getDetailsIMDbApiRequest, HttpResponse.BodyHandlers.ofString());
+        JsonNode detailsIMDbApiRootNode = objectMapper.readTree(getDetailsIMDbApiResponse.body());
+
+
+        String getOverDetailsIMDbURL = "https://imdb8.p.rapidapi.com/title/get-overview-details?tconst=" + episodeImdbId + "&currentCountry=US";
+        HttpRequest getOverDetailsIMDbApiRequest = HttpRequest.newBuilder()
+                .uri(URI.create(getOverDetailsIMDbURL))
+                .header("X-RapidAPI-Key", rapidApiKey)
+                .header("X-RapidAPI-Host", RAPID_API_IMDb_HOST)
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+        HttpResponse<String> getOverDetailsIMDbApiResponse = client.send(getOverDetailsIMDbApiRequest, HttpResponse.BodyHandlers.ofString());
+        JsonNode overDetailsIMDbApiRootNode = objectMapper.readTree(getOverDetailsIMDbApiResponse.body());
+
+        EpisodeDto episodeDto = new EpisodeDto();
+
+        int runningTimeInMinutes = detailsIMDbApiRootNode.path("runningTimeInMinutes").asInt(43);
+        episodeDto.setDurationMinutes(runningTimeInMinutes);
+
+        String imageUrl = detailsIMDbApiRootNode.path("image").path("url").asText("https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Solid_white_bordered.svg/600px-Solid_white_bordered.svg.png");
+        episodeDto.setImageUrl(imageUrl);
+
+        String plotOutline = overDetailsIMDbApiRootNode.path("plotOutline").path("text").asText();
+        episodeDto.setEpisodeDescription(plotOutline);
+        episodeDto.setMediaUrl("https://www.youtube.com/watch?v=hQqBsvIB40E&ab_channel=jurak");
+
+        return episodeDto;
+
+    }
+
+    public void addSeasonsAndEpisodesToSeries(Series series, String imdbId) throws IOException, InterruptedException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        HttpClient client = HttpClient.newHttpClient();
+        String getSeasonsIMDbURL = "https://imdb8.p.rapidapi.com/title/get-seasons?tconst=" + imdbId;
+
+        HttpRequest getSeasonsIMDbApiRequest = HttpRequest.newBuilder()
+                .uri(URI.create(getSeasonsIMDbURL))
+                .header("X-RapidAPI-Key", rapidApiKey)
+                .header("X-RapidAPI-Host", RAPID_API_IMDb_HOST)
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+
+
+        HttpResponse<String> seasonsIMDbApiResponse = client.send(getSeasonsIMDbApiRequest, HttpResponse.BodyHandlers.ofString());
+
+        JsonNode seasonsIMDbApiRootNode = objectMapper.readTree(seasonsIMDbApiResponse.body());
+
+
+        for (JsonNode seasonNode : seasonsIMDbApiRootNode) {
+            int seasonNumber = seasonNode.path("season").asInt();
+            JsonNode episodesNode = seasonNode.path("episodes");
+
+            if (episodesNode.isArray()) {
+                for (JsonNode episodeNode : episodesNode) {
+                    int episodeNumber = episodeNode.path("episode").asInt();
+                    String episodeTitle = episodeNode.path("title").asText();
+                    String episodeImdbId = extractImdbId(episodeNode.path("id").asText());
+
+                    EpisodeDto episodeDto = loadEpisodeData(episodeImdbId);
+                    episodeDto.setEpisodeNumber(episodeNumber);
+                    episodeDto.setEpisodeTitle(episodeTitle);
+
+                    episodeService.addEpisode(episodeDto, imdbId, seasonNumber);
+                }
+            }
+        }
+    }
+
+    private String extractImdbId(String id) {
+        String[] parts = id.split("/");
+        return parts[parts.length - 1];
+    }
+
 }

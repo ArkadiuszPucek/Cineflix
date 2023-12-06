@@ -25328,6 +25328,11 @@ select.text-input-style {
     width: 100%
 }
 
+.next-button-episode-player-r8Fw3{
+    text-align: right;
+    position: relative;
+    z-index: 2;
+}
 .Frame-module-volume-dcKVE {
     background-color: transparent;
     border: none;

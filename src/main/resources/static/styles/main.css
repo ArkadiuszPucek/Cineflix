@@ -24359,138 +24359,158 @@ td {
 }
 
 .movie-table {
-    width: auto; /* Ustaw pełną szerokość tabeli */
-    border-collapse: collapse; /* Usuń podwójne kreski */
+    width: auto;
+    border-collapse: collapse;
 }
 
 .movie-table th, .movie-table td {
-    text-align: center; /* Wyśrodkuj tekst w komórkach */
-    border: 1px solid #8c8c8c; /* Ustaw delikatne kreski jako obramowanie */
-    padding: 6px; /* Dodaj trochę paddingu dla lepszego wyglądu */
+    text-align: center;
+    border: 1px solid #8c8c8c;
+    padding: 6px;
 }
 
 .movie-table th {
-    background-color: rgba(141, 141, 141, 0.4); /* Dodaj przezroczyste tło */
-    font-weight: bold; /* Ustaw pogrubienie tekstu w nagłówkach */
+    background-color: rgba(141, 141, 141, 0.4);
+    font-weight: bold;
 
 }
 
 .movie-table td:nth-of-type(1) {
-    color: #fafafa; /* czarny lub inny kolor dla kolumny "Tytuł" */
+    color: #fafafa;
 }
 
-/* Określ szerokości poszczególnych kolumn */
 .movie-table th:nth-child(1) {
-    width: 12%; /* Na przykład 20% szerokości tabeli dla kolumny Tytuł */
+    width: 4%;
 }
 
 .movie-table th:nth-child(2) {
-    width: 3%; /* 10% dla kolumny Rok wydania */
+    width: 12%;
 }
 
 .movie-table th:nth-child(3) {
-    width: 3%; /* 5% dla kolumny Limit wieku */
+    width: 3%;
 }
 
 .movie-table th:nth-child(4) {
-    width: 13%; /* 5% dla kolumny Limit wieku */
+    width: 3%;
 }
 
 .movie-table th:nth-child(5) {
-    width: 10%; /* 5% dla kolumny Limit wieku */
+    width: 13%;
 }
 
 .movie-table th:nth-child(6) {
-    width: 6%; /* 5% dla kolumny Limit wieku */
+    width: 10%;
 }
 
 .movie-table th:nth-child(7) {
-    width: 5%; /* 5% dla kolumny Limit wieku */
+    width: 6%;
 }
 
 .movie-table th:nth-child(8) {
-    width: 6%; /* 5% dla kolumny Limit wieku */
+    width: 5%;
 }
 
 .movie-table th:nth-child(9) {
-    width: 3%; /* 5% dla kolumny Limit wieku */
+    width: 6%;
 }
 
 .movie-table th:nth-child(10) {
-    width: 3%; /* 5% dla kolumny Limit wieku */
+    width: 3%;
 }
 
 .movie-table th:nth-child(11) {
-    width: 4%; /* 5% dla kolumny Limit wieku */
+    width: 4%;
+}
+
+.movie-table th:nth-child(12) {
+    width: 3%;
+}
+.movie-table th:nth-child(13) {
+    width: 3%;
+}
+.movie-table th:nth-child(14) {
+    width: 6%;
 }
 
 
 .series-table td {
-    align-items: start; /* domyślne ustawienie dla komórek tabeli */
-    height: auto; /* pozwala komórkom ustawić wysokość na podstawie zawartości */
+    align-items: start;
+    height: auto;
     color: #ababab;
 }
 
 .series-table {
-    width: auto; /* Ustaw pełną szerokość tabeli */
-    border-collapse: collapse; /* Usuń podwójne kreski */
+    width: auto;
+    border-collapse: collapse;
 }
 
 .series-table th, .series-table td {
-    text-align: center; /* Wyśrodkuj tekst w komórkach */
-    border: 1px solid #8c8c8c; /* Ustaw delikatne kreski jako obramowanie */
-    padding: 6px; /* Dodaj trochę paddingu dla lepszego wyglądu */
+    text-align: center;
+    border: 1px solid #8c8c8c;
+    padding: 6px;
 }
 
 .series-table th {
-    background-color: rgba(141, 141, 141, 0.4); /* Dodaj przezroczyste tło */
-    font-weight: bold; /* Ustaw pogrubienie tekstu w nagłówkach */
+    background-color: rgba(141, 141, 141, 0.4);
+    font-weight: bold;
 
 }
 
 .series-table td:nth-of-type(1) {
-    color: #fafafa; /* czarny lub inny kolor dla kolumny "Tytuł" */
+    color: #fafafa;
 }
 
-/* Określ szerokości poszczególnych kolumn */
 .series-table th:nth-child(1) {
-    width: 12%; /* Na przykład 20% szerokości tabeli dla kolumny Tytuł */
+    width: 4%;
 }
 
 .series-table th:nth-child(2) {
-    width: 2%; /* 10% dla kolumny Rok wydania */
+    width: 12%;
 }
 
 .series-table th:nth-child(3) {
-    width: 2%; /* 5% dla kolumny Limit wieku */
+    width: 2%;
 }
 
 .series-table th:nth-child(4) {
-    width: 2%; /* 5% dla kolumny Limit wieku */
+    width: 2%;
 }
 
 .series-table th:nth-child(5) {
-    width: 12%; /* 5% dla kolumny Limit wieku */
+    width: 2%;
 }
 
 .series-table th:nth-child(6) {
-    width: 8%; /* 5% dla kolumny Limit wieku */
+    width: 12%;
 }
 
 .series-table th:nth-child(7) {
-    width: 5%; /* 5% dla kolumny Limit wieku */
+    width: 8%;
 }
 
 .series-table th:nth-child(8) {
-    width: 6%; /* 5% dla kolumny Limit wieku */
+    width: 5%;
 }
 
 .series-table th:nth-child(9) {
-    width: 3%; /* 5% dla kolumny Limit wieku */
+    width: 6%;
 }
 
 .series-table th:nth-child(10) {
-    width: 7%; /* 5% dla kolumny Limit wieku */
+    width: 3%;
+}
+
+.series-table th:nth-child(11) {
+    width: 3%;
+}
+
+.series-table th:nth-child(12) {
+    width: 3%;
+}
+
+.series-table th:nth-child(13) {
+    width: 7%;
 }
 
 .movie-table td {
@@ -26756,7 +26776,7 @@ select.text-input-style {
 .Search-module-container-YLg3F {
     position: absolute;
     width: 100%;
-    z-index: 18
+    z-index: 2;
 }
 
 .Search-module-container-YLg3F input[type=search].Search-module-input-WV9xu::-moz-placeholder {

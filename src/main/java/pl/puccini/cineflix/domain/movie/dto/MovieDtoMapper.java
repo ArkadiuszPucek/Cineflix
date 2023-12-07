@@ -23,6 +23,8 @@ public class MovieDtoMapper {
         movieDto.setImdbUrl(movie.getImdbUrl());
         movieDto.setOnUserList(null);
         movieDto.setUserRating(null);
+        movieDto.setRateUpCount(0);
+        movieDto.setRateDownCount(0);
         return movieDto;
     }
 }

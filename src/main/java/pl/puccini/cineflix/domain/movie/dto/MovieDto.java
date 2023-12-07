@@ -27,5 +27,6 @@ public class MovieDto {
     private String imdbUrl;
     private Boolean onUserList;
     private Boolean userRating;
-
+    private Integer rateUpCount;
+    private Integer rateDownCount;
 }

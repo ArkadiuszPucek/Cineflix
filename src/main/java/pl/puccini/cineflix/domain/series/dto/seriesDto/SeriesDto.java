@@ -26,4 +26,6 @@ public class SeriesDto {
     private Boolean onUserList;
     private Boolean userRating;
     private Long firstUnwatchedEpisodeId;
+    private Integer rateUpCount;
+    private Integer rateDownCount;
 }

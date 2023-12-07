@@ -26,6 +26,7 @@
             <table class="movie-table">
                 <thead>
                 <tr>
+                    <th>ImdbId</th>
                     <th>Title</th>
                     <th>Release year</th>
                     <th>Age limit</th>
@@ -36,11 +37,14 @@
                     <th>Genre</th>
                     <th>Promoted</th>
                     <th>IMDb rating</th>
+                    <th>Rate UP</th>
+                    <th>Rate DOWN</th>
                     <th>       </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="movie : ${allMoviesInService}">
+                    <td th:text="${movie.imdbId}">Title</td>
                     <td th:text="${movie.title}">Title</td>
                     <td th:text="${movie.releaseYear}">Release Year</td>
                     <td th:text="${movie.ageLimit}">Age limit</td>
@@ -51,6 +55,8 @@
                     <td th:text="${movie.genre}">Genre</td>
                     <td th:text="${movie.promoted}">Is promoted</td>
                     <td th:text="${movie.imdbRating}">Imdb Rating</td>
+                    <td th:text="${movie.rateUpCount}">Imdb Rating</td>
+                    <td th:text="${movie.rateDownCount}">Imdb Rating</td>
                     <td>
                         <a th:href="@{'/admin/edit-movie/' + ${movie.imdbId}}" title="Edit" th:text="Edit">
                         </a>

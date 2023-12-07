@@ -9,27 +9,31 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.puccini.cineflix.domain.exceptions.EpisodeNotFoundException;
+import pl.puccini.cineflix.domain.exceptions.MovieNotFoundException;
 import pl.puccini.cineflix.domain.exceptions.SeriesAlreadyExistsException;
 import pl.puccini.cineflix.domain.exceptions.SeriesNotFoundException;
 import pl.puccini.cineflix.domain.genre.Genre;
 import pl.puccini.cineflix.domain.genre.GenreService;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.model.Movie;
+import pl.puccini.cineflix.domain.movie.model.MoviesPromoBox;
+import pl.puccini.cineflix.domain.movie.repository.MoviesPromoBoxRepository;
 import pl.puccini.cineflix.domain.movie.service.MovieService;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
 import pl.puccini.cineflix.domain.series.model.Episode;
 import pl.puccini.cineflix.domain.series.model.Series;
+import pl.puccini.cineflix.domain.series.model.SeriesPromoBox;
+import pl.puccini.cineflix.domain.series.repository.SeriesPromoBoxRepository;
 import pl.puccini.cineflix.domain.series.service.EpisodeService;
 import pl.puccini.cineflix.domain.series.service.SeriesService;
 import pl.puccini.cineflix.domain.user.model.User;
-import pl.puccini.cineflix.domain.user.dto.UserDto;
-import pl.puccini.cineflix.domain.user.service.UserListService;
 import pl.puccini.cineflix.domain.user.service.UserService;
 import pl.puccini.cineflix.domain.user.service.UserUtils;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -40,14 +44,18 @@ public class AdminController {
     private final GenreService genreService;
     private final UserService userService;
     private final UserUtils userUtils;
+    private final SeriesPromoBoxRepository seriesPromoBoxRepository;
+    private final MoviesPromoBoxRepository moviesPromoBoxRepository;
 
-    public AdminController(MovieService movieService, SeriesService seriesService, EpisodeService episodeService, GenreService genreService, UserService userService, UserUtils userUtils) {
+    public AdminController(MovieService movieService, SeriesService seriesService, EpisodeService episodeService, GenreService genreService, UserService userService, UserUtils userUtils, SeriesPromoBoxRepository seriesPromoBoxRepository, MoviesPromoBoxRepository moviesPromoBoxRepository) {
         this.movieService = movieService;
         this.seriesService = seriesService;
         this.episodeService = episodeService;
         this.genreService = genreService;
         this.userService = userService;
         this.userUtils = userUtils;
+        this.seriesPromoBoxRepository = seriesPromoBoxRepository;
+        this.moviesPromoBoxRepository = moviesPromoBoxRepository;
     }
 
 
@@ -168,6 +176,37 @@ public class AdminController {
         return "admin/movies/manage-movies";
     }
 
+    @GetMapping("/admin/manage-movies-promo-box")
+    public String moviesPromoBoxForm(Model model, Authentication authentication){
+        userUtils.addAvatarUrlToModel(authentication, model);
+        MoviesPromoBox currentPromoBox = moviesPromoBoxRepository.findTopByOrderByIdDesc();
+        Long userId = userUtils.getUserIdFromAuthentication(authentication);
+        List<MovieDto> promoBoxImdbIds = movieService.getMoviePromoBox(userId);
+        model.addAttribute("currentPromoBoxImdbIds", promoBoxImdbIds);
+
+        model.addAttribute("currentPromoBox", currentPromoBox);
+
+        return "/admin/movies/movies-promo-box-form";
+    }
+
+    @PostMapping("/admin/manage-movies-promo-box/save")
+    public String saveMoviesPromoBox(
+            @RequestParam String title,
+            @RequestParam String imdbId1,
+            @RequestParam String imdbId2,
+            @RequestParam String imdbId3,
+            @RequestParam String imdbId4,
+            @RequestParam String imdbId5,
+            RedirectAttributes redirectAttributes) {
+        try {
+            movieService.updateMoviePromoBox(title, imdbId1, imdbId2, imdbId3, imdbId4, imdbId5);
+        }catch (MovieNotFoundException e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return "redirect:/admin/manage-movies-promo-box";
+        }
+        return "redirect:/";
+    }
+
 
 //SERIES
 
@@ -276,7 +315,7 @@ public class AdminController {
     @GetMapping("/admin/manage-series")
     public String showManageSeriesForm(Authentication authentication, Model model) {
         userUtils.addAvatarUrlToModel(authentication, model);
-        List<SeriesDto> allSeriesInService = seriesService.findAllMoviesInService();
+        List<SeriesDto> allSeriesInService = seriesService.findAllSeriesInService();
         model.addAttribute("allSeriesInService", allSeriesInService);
 
         return "admin/series/manage-series";
@@ -358,8 +397,6 @@ public class AdminController {
     @PostMapping("/admin/update-episode")
     public String updateSeries(@ModelAttribute("episode") EpisodeDto episodeDto,
                                RedirectAttributes redirectAttributes) {
-
-
         try {
             Episode updatedEpisode = episodeService.updateEpisode(episodeDto);
             String seriesImdbId = updatedEpisode.getSeason().getSeries().getImdbId();
@@ -394,6 +431,59 @@ public class AdminController {
             return "redirect:/admin/manage-series";
         }
     }
+    @GetMapping("/admin/manage-series-promo-box")
+    public String seriesPromoBoxForm(Model model, Authentication authentication){
+        userUtils.addAvatarUrlToModel(authentication, model);
+        SeriesPromoBox currentPromoBox = seriesPromoBoxRepository.findTopByOrderByIdDesc();
+        Long userId = userUtils.getUserIdFromAuthentication(authentication);
+        List<SeriesDto> promoBoxImdbIds = seriesService.getSeriesPromoBox(userId);
+        model.addAttribute("currentPromoBoxImdbIds", promoBoxImdbIds);
+
+        model.addAttribute("currentPromoBox", currentPromoBox);
+
+        return "/admin/series/series-promo-box-form";
+    }
+
+    @PostMapping("/admin/manage-series-promo-box/save")
+    public String saveSeriesPromoBox(
+            @RequestParam String title,
+            @RequestParam String imdbId1,
+            @RequestParam String imdbId2,
+            @RequestParam String imdbId3,
+            @RequestParam String imdbId4,
+            @RequestParam String imdbId5,
+            RedirectAttributes redirectAttributes
+    ) {
+        try {
+            seriesService.updateSeriesPromoBox(title, imdbId1, imdbId2, imdbId3, imdbId4, imdbId5);
+        }catch (SeriesNotFoundException e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return "redirect:/admin/manage-series-promo-box";
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/admin/manage-series-carousels")
+    public String manageSeriesCarouselForm(Model model){
+        List<Genre> genres = genreService.getGenresWithMinimumSeries(1);
+        List<String> activeGenres = genreService.getSelectedGenres();
+
+        Map<String, Boolean> genresWithStatus = genres.stream()
+                .collect(Collectors.toMap(Genre::getGenreType, genre -> activeGenres.contains(genre.getGenreType())));
+
+        model.addAttribute("genresWithStatus", genresWithStatus);
+
+        return "admin/series/manage-series-carousels-form";
+    }
+
+    @PostMapping("/admin/manage-series-carousels/save")
+    public String saveSeriesCarousels(@RequestParam List<String> selectedGenres, RedirectAttributes redirectAttributes){
+        genreService.saveSelectedGenres(selectedGenres);
+
+        redirectAttributes.addFlashAttribute("successMessage", "Carousels settings updated successfully.");
+        return "redirect:/admin/manage-series-carousels";
+    }
+
 
 
 //USERS

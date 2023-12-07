@@ -6,9 +6,9 @@
     <ul class="DropDownUserMenu-module-dropdownList--L-em">
         <ul>
             <li>
-                        <span class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA NavigationItem-module-watched-mwewA">
-                            Movies
-                        </span>
+                <span class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA NavigationItem-module-watched-mwewA">
+                    Movies
+                </span>
                 <ul class="sub-menu">
                     <li><a th:href="@{/admin/add-movie-api}">Add movie by API</a></li>
                     <li><a th:href="@{/admin/add-movie-form}">Add movie manually </a></li>
@@ -35,6 +35,18 @@
                 </span>
                 <ul class="sub-menu">
                     <li><a th:href="@{/master/manage-users}">Manage users</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span class="NavigationItem-module-item-vXU-- NavigationItem-module-compact--avrA NavigationItem-module-watched-mwewA">
+                    Home page
+                </span>
+                <ul class="sub-menu">
+                    <li><a th:href="@{/admin/manage-series-promo-box}">Series promo box</a></li>
+                    <li><a th:href="@{admin/manage-movies-promo-box}">Movies promo box</a></li>
+                    <li><a th:href="@{/admin/manage-series-carousels}">Manege series carousels</a></li>
                 </ul>
             </li>
         </ul>

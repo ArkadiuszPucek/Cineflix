@@ -1,9 +1,11 @@
 package pl.puccini.cineflix.web.user;
 
 import org.springframework.stereotype.Service;
+import pl.puccini.cineflix.domain.genre.GenreService;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.service.MovieService;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
+import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesCarouselConfigDto;
 import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
 import pl.puccini.cineflix.domain.series.service.EpisodeService;
 import pl.puccini.cineflix.domain.series.service.SeriesService;
@@ -12,8 +14,6 @@ import pl.puccini.cineflix.domain.user.service.UserListService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class HomeService {
@@ -21,12 +21,14 @@ public class HomeService {
     private final UserListService userListService;
     private final SeriesService seriesService;
     private final EpisodeService episodeService;
+    private final GenreService genreService;
 
-    public HomeService(MovieService movieService, UserListService userListService, SeriesService seriesService, EpisodeService episodeService) {
+    public HomeService(MovieService movieService, UserListService userListService, SeriesService seriesService, EpisodeService episodeService, GenreService genreService) {
         this.movieService = movieService;
         this.userListService = userListService;
         this.seriesService = seriesService;
         this.episodeService = episodeService;
+        this.genreService = genreService;
     }
 
     public Object getRandomPromotedItem(Long userId) {
@@ -52,26 +54,22 @@ public class HomeService {
         } else {
             return null;
         }
+
     }
 
-    public List<SeriesDto> getSeriesPromoBox(Long userId) {
-        return Stream.of("tt7817340", "tt6470478", "tt4655480", "tt6236572", "tt6664638")
-                .flatMap(imdbId -> seriesService.getSeriesByImdbId(imdbId).stream())
-                .peek(serie -> {
-                    serie.setOnUserList(userListService.isOnList(userId, serie.getImdbId()));
-                    serie.setUserRating(seriesService.getCurrentUserRatingForSeries(serie.getImdbId(), userId).orElse(null));
-                })
-                .collect(Collectors.toList());
-    }
+    public List<SeriesCarouselConfigDto> getSeriesCarouselsByActiveGenres(Long userId) {
+        List<String> activeGenres = genreService.getSelectedGenres();
 
-    public List<MovieDto> getMoviePromoBox(Long userId) {
-        return Stream.of("tt0993842", "tt4034228", "tt2304933", "tt6644200", "tt6146586")
-                .flatMap(imdbId -> movieService.getMoviesByImdbId(imdbId).stream())
-                .peek(movie -> {
-                    movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId()));
-                    movie.setUserRating(movieService.getCurrentUserRatingForMovie(movie.getImdbId(), userId).orElse(null));
-                })
-                .collect(Collectors.toList());
+        List<SeriesCarouselConfigDto> carousels = new ArrayList<>();
+
+        for (String genre : activeGenres) {
+            SeriesCarouselConfigDto config = new SeriesCarouselConfigDto();
+            config.setGenre(genre);
+            config.setSeries(seriesService.getSeriesByGenre(genre, userId));
+            config.setActive(true);
+            carousels.add(config);
+        }
+        return carousels;
     }
 
 }

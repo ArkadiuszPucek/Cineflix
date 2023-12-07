@@ -16,4 +16,8 @@ public interface UserRatingRepository extends CrudRepository<UserRating, Long> {
     Optional<UserRating> findByMovieImdbIdAndUserId(String imdbId, Long userId);
 
     Optional<UserRating> findBySeriesImdbIdAndUserId(String imdbId, Long userId);
+    int countByMovieImdbIdAndUpvote(String imdbId, boolean upvote);
+
+    int countBySeriesImdbIdAndUpvote(String imdbId, boolean upvote);
+
 }

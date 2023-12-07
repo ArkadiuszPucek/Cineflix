@@ -249,12 +249,16 @@
                         </section>
                     </div>
 
+                    <div th:each="carousel : ${carousels}" th:if="${carousel.active}">
+                        <div th:replace="~{fragments :: series-carousel(genreTitle=${carousel.genre + ' Series'}, genre=${carousel.genre.toLowerCase()}, series=${carousel.series})}"></div>
+                    </div>
 
-                    <div th:replace="~{fragments :: series-carousel(genreTitle=${dramaSeriesTitle}, genre=${dramaGenre}, series=${dramaSeries})}"></div>
 
-                    <div th:replace="~{fragments :: series-carousel(genreTitle=${comedySeriesTitle}, genre=${comedyGenre}, series=${comedySeries})}"></div>
+<!--                    <div th:replace="~{fragments :: series-carousel(genreTitle=${dramaSeriesTitle}, genre=${dramaGenre}, series=${dramaSeries})}"></div>-->
 
-                    <div th:replace="~{fragments :: series-carousel(genreTitle=${actionSeriesTitle}, genre=${actionGenre}, series=${actionSeries})}"></div>
+<!--                    <div th:replace="~{fragments :: series-carousel(genreTitle=${comedySeriesTitle}, genre=${comedyGenre}, series=${comedySeries})}"></div>-->
+
+<!--                    <div th:replace="~{fragments :: series-carousel(genreTitle=${actionSeriesTitle}, genre=${actionGenre}, series=${actionSeries})}"></div>-->
 
                     <!--                   MOVIE PROMOBOX-->
                     <div style="display: block;">

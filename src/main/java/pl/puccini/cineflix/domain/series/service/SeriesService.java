@@ -1,7 +1,6 @@
 package pl.puccini.cineflix.domain.series.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import io.micrometer.common.util.StringUtils;
 import org.springframework.stereotype.Service;
 import pl.puccini.cineflix.domain.exceptions.SeriesAlreadyExistsException;
 import pl.puccini.cineflix.domain.exceptions.SeriesNotFoundException;
@@ -18,19 +17,18 @@ import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDtoMapper;
 import pl.puccini.cineflix.domain.series.model.Episode;
 import pl.puccini.cineflix.domain.series.model.Season;
 import pl.puccini.cineflix.domain.series.model.Series;
+import pl.puccini.cineflix.domain.series.model.SeriesPromoBox;
 import pl.puccini.cineflix.domain.series.repository.SeasonRepository;
+import pl.puccini.cineflix.domain.series.repository.SeriesPromoBoxRepository;
 import pl.puccini.cineflix.domain.series.repository.SeriesRepository;
 import pl.puccini.cineflix.domain.user.model.UserRating;
 import pl.puccini.cineflix.domain.user.repository.UserRatingRepository;
 import pl.puccini.cineflix.domain.user.service.UserListService;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class SeriesService {
@@ -42,8 +40,9 @@ public class SeriesService {
     private final GenreService genreService;
     private final EpisodeService episodeService;
     private final UserRatingRepository userRatingRepository;
+    private final SeriesPromoBoxRepository seriesPromoBoxRepository;
 
-    public SeriesService(SeriesRepository seriesRepository, SeasonRepository seasonRepository, IMDbApiService imdbApiService, GenreRepository genreRepository, UserListService userListService, GenreService genreService, EpisodeService episodeService, UserRatingRepository userRatingRepository) {
+    public SeriesService(SeriesRepository seriesRepository, SeasonRepository seasonRepository, IMDbApiService imdbApiService, GenreRepository genreRepository, UserListService userListService, GenreService genreService, EpisodeService episodeService, UserRatingRepository userRatingRepository, SeriesPromoBoxRepository seriesPromoBoxRepository) {
         this.seriesRepository = seriesRepository;
         this.seasonRepository = seasonRepository;
         this.imdbApiService = imdbApiService;
@@ -52,6 +51,7 @@ public class SeriesService {
         this.genreService = genreService;
         this.episodeService = episodeService;
         this.userRatingRepository = userRatingRepository;
+        this.seriesPromoBoxRepository = seriesPromoBoxRepository;
     }
 
 
@@ -66,6 +66,8 @@ public class SeriesService {
                 .map(SeriesDtoMapper::map)
                 .toList();
     }
+
+
 
 
     public List<SeriesDto> getSeriesByGenre(String genre, Long userId) {
@@ -177,9 +179,16 @@ public class SeriesService {
 
 
 
-    public List<SeriesDto> findAllMoviesInService() {
+    public List<SeriesDto> findAllSeriesInService() {
         return seriesRepository.findAll().stream()
-                .map(SeriesDtoMapper::map)
+                .map(series -> {
+                    SeriesDto seriesDto = SeriesDtoMapper.map(series);
+                    int rateUpCount = userRatingRepository.countBySeriesImdbIdAndUpvote(series.getImdbId(), true);
+                    int rateDownCount = userRatingRepository.countBySeriesImdbIdAndUpvote(series.getImdbId(), false);
+                    seriesDto.setRateUpCount(rateUpCount);
+                    seriesDto.setRateDownCount(rateDownCount);
+                    return seriesDto;
+                })
                 .toList();
     }
 
@@ -240,4 +249,53 @@ public class SeriesService {
     }
 
 
+    public List<SeriesDto> getSeriesPromoBox(Long userId) {
+        SeriesPromoBox promoBox = seriesPromoBoxRepository.findTopByOrderByIdDesc();
+        if (promoBox == null) {
+            return Collections.emptyList();
+        }
+
+        String[] imdbIds = promoBox.getImdbIds().split(",");
+        return Arrays.stream(imdbIds)
+                .flatMap(imdbId -> getSeriesByImdbId(imdbId).stream())
+                .peek(serie -> {
+                    serie.setOnUserList(userListService.isOnList(userId, serie.getImdbId()));
+                    serie.setUserRating(getCurrentUserRatingForSeries(serie.getImdbId(), userId).orElse(null));
+                })
+                .collect(Collectors.toList());
+    }
+
+    public String getSeriesPromoBoxTitle() {
+        SeriesPromoBox promoBox = seriesPromoBoxRepository.findTopByOrderByIdDesc();
+        if (promoBox != null) {
+            return promoBox.getSeriesPromoBoxTitle();
+        } else {
+            return "Trending series";
+        }
+    }
+
+    public void updateSeriesPromoBox(String title, String imdbId1, String imdbId2, String imdbId3, String imdbId4, String imdbId5) {
+        List<String> allImdbIds = Arrays.asList(imdbId1, imdbId2, imdbId3, imdbId4, imdbId5);
+        List<String> validImdbIds = new ArrayList<>();
+
+        for (String imdbId : allImdbIds) {
+            if (seriesExists(imdbId)) {
+                validImdbIds.add(imdbId);
+            } else {
+                throw new SeriesNotFoundException("Series not found");
+            }
+        }
+
+        String joinedImdbIds = String.join(",", validImdbIds);
+
+        SeriesPromoBox seriesPromoBox = new SeriesPromoBox();
+        seriesPromoBox.setSeriesPromoBoxTitle(title);
+        seriesPromoBox.setImdbIds(joinedImdbIds);
+        seriesPromoBoxRepository.save(seriesPromoBox);
+
+    }
+
+    private boolean seriesExists(String imdbId) {
+        return seriesRepository.existsByImdbId(imdbId);
+    }
 }

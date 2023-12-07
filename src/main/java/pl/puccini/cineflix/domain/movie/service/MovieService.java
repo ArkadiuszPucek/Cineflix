@@ -1,6 +1,8 @@
 package pl.puccini.cineflix.domain.movie.service;
 
 import org.springframework.stereotype.Service;
+import pl.puccini.cineflix.domain.exceptions.MovieNotFoundException;
+import pl.puccini.cineflix.domain.exceptions.SeriesNotFoundException;
 import pl.puccini.cineflix.domain.genre.Genre;
 import pl.puccini.cineflix.domain.genre.GenreRepository;
 import pl.puccini.cineflix.domain.genre.GenreService;
@@ -8,18 +10,19 @@ import pl.puccini.cineflix.domain.imdb.IMDbApiService;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.dto.MovieDtoMapper;
 import pl.puccini.cineflix.domain.movie.model.Movie;
+import pl.puccini.cineflix.domain.movie.model.MoviesPromoBox;
 import pl.puccini.cineflix.domain.movie.repository.MovieRepository;
+import pl.puccini.cineflix.domain.movie.repository.MoviesPromoBoxRepository;
+import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
+import pl.puccini.cineflix.domain.series.model.SeriesPromoBox;
 import pl.puccini.cineflix.domain.user.model.UserRating;
-import pl.puccini.cineflix.domain.user.model.ViewingHistory;
 import pl.puccini.cineflix.domain.user.repository.UserRatingRepository;
-import pl.puccini.cineflix.domain.user.repository.ViewingHistoryRepository;
 import pl.puccini.cineflix.domain.user.service.UserListService;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class MovieService {
@@ -30,14 +33,16 @@ public class MovieService {
     private final GenreService genreService;
     private final UserListService userListService;
     private final UserRatingRepository userRatingRepository;
+    private final MoviesPromoBoxRepository moviesPromoBoxRepository;
 
-    public MovieService(MovieRepository movieRepository, IMDbApiService imdbApiService, GenreRepository genreRepository, GenreService genreService, UserListService userListService, UserRatingRepository userRatingRepository) {
+    public MovieService(MovieRepository movieRepository, IMDbApiService imdbApiService, GenreRepository genreRepository, GenreService genreService, UserListService userListService, UserRatingRepository userRatingRepository, MoviesPromoBoxRepository moviesPromoBoxRepository) {
         this.movieRepository = movieRepository;
         this.imdbApiService = imdbApiService;
         this.genreRepository = genreRepository;
         this.genreService = genreService;
         this.userListService = userListService;
         this.userRatingRepository = userRatingRepository;
+        this.moviesPromoBoxRepository = moviesPromoBoxRepository;
     }
 
 
@@ -159,7 +164,14 @@ public class MovieService {
 
     public List<MovieDto> findAllMoviesInService(){
         return movieRepository.findAll().stream()
-                .map(MovieDtoMapper::map)
+                .map(movie -> {
+                    MovieDto movieDto = MovieDtoMapper.map(movie);
+                    int rateUpCount = userRatingRepository.countByMovieImdbIdAndUpvote(movie.getImdbId(), true);
+                    int rateDownCount = userRatingRepository.countByMovieImdbIdAndUpvote(movie.getImdbId(), false);
+                    movieDto.setRateUpCount(rateUpCount);
+                    movieDto.setRateDownCount(rateDownCount);
+                    return movieDto;
+                })
                 .toList();
 
     }
@@ -230,6 +242,56 @@ public class MovieService {
     public Optional<Boolean> getCurrentUserRatingForMovie(String imdbId, Long userId) {
         return userRatingRepository.findByMovieImdbIdAndUserId(imdbId, userId)
                 .map(UserRating::isUpvote);
+    }
+
+    public List<MovieDto> getMoviePromoBox(Long userId) {
+        MoviesPromoBox promoBox = moviesPromoBoxRepository.findTopByOrderByIdDesc();
+        if (promoBox == null) {
+            return Collections.emptyList();
+        }
+
+        String[] imdbIds = promoBox.getImdbIds().split(",");
+        return Arrays.stream(imdbIds)
+                .flatMap(imdbId -> getMoviesByImdbId(imdbId).stream())
+                .peek(movie -> {
+                    movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId()));
+                    movie.setUserRating(getCurrentUserRatingForMovie(movie.getImdbId(), userId).orElse(null));
+                })
+                .collect(Collectors.toList());
+    }
+
+    public String getMoviesPromoBoxTitle() {
+        MoviesPromoBox promoBox = moviesPromoBoxRepository.findTopByOrderByIdDesc();
+        if (promoBox != null) {
+            return promoBox.getMoviesPromoBoxTitle();
+        } else {
+            return "Trending Movies";
+        }
+    }
+
+    public void updateMoviePromoBox(String title, String imdbId1, String imdbId2, String imdbId3, String imdbId4, String imdbId5) {
+        List<String> allImdbIds = Arrays.asList(imdbId1, imdbId2, imdbId3, imdbId4, imdbId5);
+        List<String> validImdbIds = new ArrayList<>();
+
+        for (String imdbId : allImdbIds) {
+            if (seriesExists(imdbId)) {
+                validImdbIds.add(imdbId);
+            } else {
+                throw new MovieNotFoundException("Movie not found");
+            }
+        }
+
+        String joinedImdbIds = String.join(",", validImdbIds);
+
+        MoviesPromoBox moviesPromoBox = new MoviesPromoBox();
+        moviesPromoBox.setMoviesPromoBoxTitle(title);
+        moviesPromoBox.setImdbIds(joinedImdbIds);
+        moviesPromoBoxRepository.save(moviesPromoBox);
+
+    }
+
+    private boolean seriesExists(String imdbId) {
+        return movieRepository.existsByImdbId(imdbId);
     }
 
 }

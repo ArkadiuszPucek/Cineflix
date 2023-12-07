@@ -26,6 +26,7 @@
             <table class="series-table">
                 <thead>
                 <tr>
+                    <th>ImdbId</th>
                     <th>Title</th>
                     <th>Seasons</th>
                     <th>Release year</th>
@@ -35,11 +36,14 @@
                     <th>Genre</th>
                     <th>Promoted</th>
                     <th>IMDb rating</th>
+                    <th>Rate UP</th>
+                    <th>Rate DOWN</th>
                     <th>       </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="series : ${allSeriesInService}">
+                    <td th:text="${series.imdbId}">Title</td>
                     <td th:text="${series.title}">Title</td>
                     <td th:text="${series.seasonsCount}">Title</td>
                     <td th:text="${series.releaseYear}">Release Year</td>
@@ -49,6 +53,8 @@
                     <td th:text="${series.genre}">Genre</td>
                     <td th:text="${series.promoted}">Is promoted</td>
                     <td th:text="${series.imdbRating}">Imdb Rating</td>
+                    <td th:text="${series.rateUpCount}">Imdb Rating</td>
+                    <td th:text="${series.rateDownCount}">Imdb Rating</td>
                     <td>
                         <a th:href="@{'/admin/edit-series/' + ${series.imdbId}}" title="Edit" th:text=" Edit "></a>
                         <a href="#" title=" Delete " th:text="Delete" id="deleteSeries" th:onclick="showConfirmDialog()" th:attr="data-imdbId=${series.imdbId}"></a>

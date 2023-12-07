@@ -14,6 +14,9 @@
     <include file="0007_1_create_tables_user_list.xml" relativeToChangelogFile="true" />
     <include file="0008_1_create_table_viewing_history.xml" relativeToChangelogFile="true" />
     <include file="0009_1_create_table_user_ratings.xml" relativeToChangelogFile="true" />
+    <include file="0010_1_create_table_series_promo_box.xml" relativeToChangelogFile="true" />
+    <include file="0011_1_create_table_movies_promo_box.xml" relativeToChangelogFile="true" />
+    <include file="0012_1_create_table_series_carousel_config.xml" relativeToChangelogFile="true" />
 
     <include file="../testdata/0001_genres.sql" relativeToChangelogFile="true" context="dev"/>
     <include file="../testdata/0002_movies.sql" relativeToChangelogFile="true" context="dev"/>
@@ -22,4 +25,7 @@
     <include file="../testdata/0005_episode.sql" relativeToChangelogFile="true" context="dev"/>
     <include file="../testdata/0006_users_and_roles.sql" relativeToChangelogFile="true" context="dev"/>
     <include file="../testdata/0007_user_lists.sql" relativeToChangelogFile="true" context="dev"/>
+    <include file="../testdata/0008_series_promo_box.sql" relativeToChangelogFile="true" context="dev"/>
+    <include file="../testdata/0009_movies_promo_box.sql" relativeToChangelogFile="true" context="dev"/>
+    <include file="../testdata/0010_series_carousel_config.sql" relativeToChangelogFile="true" context="dev"/>
 </databaseChangeLog>

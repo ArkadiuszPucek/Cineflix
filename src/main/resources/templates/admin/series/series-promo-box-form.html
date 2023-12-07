@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ViaPlay</title>
+    <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
+</head>
+<body>
+
+<div class="Layout-module-internal-page--krBv">
+    <div th:replace="~{header :: header}"></div>
+    <h1 class="page-header-admin">Administration panel - Edit series promo box</h1>
+    <div id="content" class="admin-panel">
+        <div th:replace="~{admin/sidebar :: sidebar}"></div>
+        <div class="main-content">
+            <form th:action="@{/admin/manage-series-promo-box/save}" method="post">
+                <div th:if="${message}" th:text="${message}" class="alert alert-danger"></div>
+                <div class="grid-container">
+                    <tr>
+                        <td><input class="text-input-style" type="text" name="title"
+                                   th:value="${currentPromoBox.seriesPromoBoxTitle}"
+                                   placeholder="Title" required></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="text-input-style" type="text" th:name="imdbId1"
+                                   th:value="${currentPromoBoxImdbIds.get(0).imdbId}" pattern="^tt\d{5,8}$" required>
+                        </td>
+                        <td>
+                            <input class="text-input-style" type="text" th:name="imdbId2"
+                                   th:value="${currentPromoBoxImdbIds.get(1).imdbId}" pattern="^tt\d{5,8}$" required>
+                        </td>
+                        <td>
+                            <input class="text-input-style" type="text" th:name="imdbId3"
+                                   th:value="${currentPromoBoxImdbIds.get(2).imdbId}" pattern="^tt\d{5,8}$" required>
+                        </td>
+                        <td>
+                            <input class="text-input-style" type="text" th:name="imdbId4"
+                                   th:value="${currentPromoBoxImdbIds.get(3).imdbId}" pattern="^tt\d{5,8}$" required>
+                        </td>
+                        <td>
+                            <input class="text-input-style" type="text" th:name="imdbId5"
+                                   th:value="${currentPromoBoxImdbIds.get(4).imdbId}" pattern="^tt\d{5,8}$" required>
+                        </td>
+                    </tr>
+                </div>
+                <div class="submit-button-movie-page">
+                    <button type="submit"
+                            class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl"
+                            tabindex="0">Edit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div th:replace="~{footer :: footer}"></div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

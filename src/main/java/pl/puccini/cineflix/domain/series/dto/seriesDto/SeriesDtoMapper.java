@@ -21,6 +21,8 @@ public class SeriesDtoMapper {
         seriesDto.setOnUserList(null);
         seriesDto.setUserRating(null);
         seriesDto.setFirstUnwatchedEpisodeId(null);
+        seriesDto.setRateUpCount(0);
+        seriesDto.setRateDownCount(0);
         return seriesDto;
     }
 }

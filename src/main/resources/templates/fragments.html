@@ -1,6 +1,7 @@
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
 
-<div th:fragment="series-carousel" class="Carousel-module-container-o-YFo">
+<div th:fragment="series-carousel(genreTitle, genre, series, carouselId)"
+     class="Carousel-module-container-o-YFo Carousel-module-hovered-CXqGL">
     <div th:id="'header-' + ${genre}" class="CarouselHeader-module-container-dBOIV">
         <div class="Scaffold-module-scaffold-F6aIC">
             <header class="CarouselHeader-module-wrapper-B8ict">
@@ -14,10 +15,11 @@
             </header>
         </div>
     </div>
-    <div class="Carousel-module-carousel-NbPjL" th:id="${genre}">
+    <div class="Carousel-module-carousel-NbPjL">
         <div class="Carousel-module-wrapper-QhccC">
-            <button type="button" class="Carousel-module-navigation-crAaj Carousel-module-prev-EJuzt"></button>
-            <div class="Carousel-module-inner-4oa8u Carousel-module-useTransition-vWyzl">
+            <button type="button" th:id="'prev-' + ${carouselId}"
+                    class="Carousel-module-navigation-crAaj Carousel-module-prev-EJuzt"></button>
+            <div class="Carousel-module-inner-4oa8u Carousel-module-useTransition-vWyzl" th:id="${carouselId}">
                         <span>
                             <div th:each="seriesModel : ${series}"
                                  class="Item-module-item-yTZtG Item-module-carouselItem-Q3n9V Item-module-landscapeItem-Sf-nw">
@@ -57,15 +59,19 @@
                                                th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})} ">
                                             </a>
                                             <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"
-                                                 data-testhook="item-star" th:classappend="${seriesModel.onUserList ? 'StarButton-module-isStarred-v2AtG' : ''}"
+                                                 data-testhook="item-star"
+                                                 th:classappend="${seriesModel.onUserList ? 'StarButton-module-isStarred-v2AtG' : ''}"
                                                  th:attr="data-imdb-id=${seriesModel.imdbId}"></div>
                                             <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8"
                                                  th:classappend="${seriesModel.userRating != null ? (seriesModel.userRating ? ' RateButtons-module-rateUp-S4se- RateButtons-module-active-n-0Gb' : ' RateButtons-module-rateUp-S4se-') : ' RateButtons-module-rateUp-S4se-'}"
-                                                 onclick="rate('up', this)" th:attr="data-imdbid=${seriesModel.imdbId}" data-testhook="item-rating-up">
+                                                 onclick="rate('up', this)" th:attr="data-imdbid=${seriesModel.imdbId}"
+                                                 data-testhook="item-rating-up">
                                                     </div>
                                             <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8"
                                                  th:classappend="${seriesModel.userRating != null ? (seriesModel.userRating ? ' RateButtons-module-rateDown-DblB1' : ' RateButtons-module-rateDown-DblB1 RateButtons-module-active-n-0Gb') : ' RateButtons-module-rateDown-DblB1'}"
-                                                 onclick="rate('down', this)" th:attr="data-imdbid=${seriesModel.imdbId}" data-testhook="item-rating-down">
+                                                 onclick="rate('down', this)"
+                                                 th:attr="data-imdbid=${seriesModel.imdbId}"
+                                                 data-testhook="item-rating-down">
                                             </div>
                                         </div>
                                     </div>
@@ -74,13 +80,15 @@
                         </span>
                 <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
             </div>
-            <button type="button" class="Carousel-module-navigation-crAaj Carousel-module-next-AXbEv"></button>
+            <button type="button" th:id="'next-' + ${carouselId}"
+                    class="Carousel-module-navigation-crAaj Carousel-module-next-AXbEv"></button>
         </div>
     </div>
 </div>
 
 
-<div th:fragment="movies-carousel" class="Carousel-module-container-o-YFo">
+<div th:fragment="movies-carousel(genreTitle, genre, movies, carouselId)"
+     class="Carousel-module-container-o-YFo Carousel-module-hovered-CXqGL">
     <div th:id="'header-' + ${genre}" class="CarouselHeader-module-container-dBOIV">
         <div class="Scaffold-module-scaffold-F6aIC">
             <header class="CarouselHeader-module-wrapper-B8ict">
@@ -94,17 +102,16 @@
             </header>
         </div>
     </div>
-    <div class="Carousel-module-carousel-NbPjL" th:id="${genre}">
+    <div class="Carousel-module-carousel-NbPjL">
         <div class="Carousel-module-wrapper-QhccC">
-            <button class="Carousel-module-navigation-crAaj Carousel-module-prev-EJuzt"></button>
-            <div class="Carousel-module-inner-4oa8u Carousel-module-useTransition-vWyzl"
-                 style="transform: translateX(0px);">
-                <div style="display: block;">
+            <button type="button" th:id="'prev-' + ${carouselId}"
+                    class="Carousel-module-navigation-crAaj Carousel-module-prev-EJuzt"></button>
+            <div class="Carousel-module-inner-4oa8u Carousel-module-useTransition-vWyzl" th:id="${carouselId}">
                     <span>
                         <div th:each="movieModel : ${movies}"
                              class="Item-module-item-yTZtG Item-module-carouselItem-Q3n9V Item-module-landscapeItem-Sf-nw">
                             <div class="Item-module-box-4uBp3 Item-module-show-qrDtq">
-                                <a class="Item-module-link-Lms-C" tabindex="0"
+                                <a class="Item-module-link-Lms-C" tabindex="-1"
                                    th:with="formattedTitle=${movieModel.title.toLowerCase().replace(' ', '-')}"
                                    th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
                                 </a>
@@ -121,7 +128,8 @@
                                                 </a>
                                             </span>
                                             <span class="Divider-module-divider-U-3--">
-                                                <span class="Year-module-container-60QAr" th:text="${movieModel.releaseYear}">
+                                                <span class="Year-module-container-60QAr"
+                                                      th:text="${movieModel.releaseYear}">
                                                     Year release
                                                 </span>
                                             </span>
@@ -134,26 +142,28 @@
                                            th:href="@{/movies/{formattedTitle}(formattedTitle=${formattedTitle})} ">
                                         </a>
                                         <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"
-                                             data-testhook="item-star" th:classappend="${movieModel.onUserList ? 'StarButton-module-isStarred-v2AtG' : ''}"
+                                             data-testhook="item-star"
+                                             th:classappend="${movieModel.onUserList ? 'StarButton-module-isStarred-v2AtG' : ''}"
                                              th:attr="data-imdb-id=${movieModel.imdbId}"></div>
                                         <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 rate-up"
                                              th:classappend="${movieModel.userRating != null ? (movieModel.userRating ? ' RateButtons-module-rateUp-S4se- RateButtons-module-active-n-0Gb' : ' RateButtons-module-rateUp-S4se-') : ' RateButtons-module-rateUp-S4se-'}"
-                                             onclick="rate('up', this)" th:attr="data-imdbid=${movieModel.imdbId}" data-testhook="item-rating-up">
+                                             onclick="rate('up', this)" th:attr="data-imdbid=${movieModel.imdbId}"
+                                             data-testhook="item-rating-up">
                                         </div>
                                         <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 rate-down"
                                              th:classappend="${movieModel.userRating != null ? (movieModel.userRating ? ' RateButtons-module-rateDown-DblB1' : ' RateButtons-module-rateDown-DblB1 RateButtons-module-active-n-0Gb') : ' RateButtons-module-rateDown-DblB1'}"
-                                             onclick="rate('down', this)" th:attr="data-imdbid=${movieModel.imdbId}" data-testhook="item-rating-down">
+                                             onclick="rate('down', this)" th:attr="data-imdbid=${movieModel.imdbId}"
+                                             data-testhook="item-rating-down">
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
-                            <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
                         </div>
                     </span>
-                </div>
-                <button class="Carousel-module-navigation-crAaj Carousel-module-next-AXbEv"></button>
+                <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
             </div>
+            <button type="button" th:id="'next-' + ${carouselId}"
+                    class="Carousel-module-navigation-crAaj Carousel-module-next-AXbEv"></button>
         </div>
     </div>
 </div>

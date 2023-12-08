@@ -13,4 +13,6 @@ public interface GenreRepository extends CrudRepository<Genre, Long> {
     Genre findByGenreTypeIgnoreCase(String genreType);
     @Query("SELECT g FROM Genre g WHERE (SELECT COUNT(s) FROM Series s WHERE s.genre = g) >= :minSeriesCount")
     List<Genre> findGenresWithMinimumSeries(@Param("minSeriesCount") int minSeriesCount);
+    @Query("SELECT g FROM Genre g WHERE (SELECT COUNT(s) FROM Movie s WHERE s.genre = g) >= :minMoviesCount")
+    List<Genre> findGenresWithMinimumMovie(int minMoviesCount);
 }

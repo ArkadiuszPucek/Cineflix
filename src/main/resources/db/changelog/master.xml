@@ -17,6 +17,7 @@
     <include file="0010_1_create_table_series_promo_box.xml" relativeToChangelogFile="true" />
     <include file="0011_1_create_table_movies_promo_box.xml" relativeToChangelogFile="true" />
     <include file="0012_1_create_table_series_carousel_config.xml" relativeToChangelogFile="true" />
+    <include file="0013_1_create_table_movies_carousel_config.xml" relativeToChangelogFile="true" />
 
     <include file="../testdata/0001_genres.sql" relativeToChangelogFile="true" context="dev"/>
     <include file="../testdata/0002_movies.sql" relativeToChangelogFile="true" context="dev"/>
@@ -28,4 +29,5 @@
     <include file="../testdata/0008_series_promo_box.sql" relativeToChangelogFile="true" context="dev"/>
     <include file="../testdata/0009_movies_promo_box.sql" relativeToChangelogFile="true" context="dev"/>
     <include file="../testdata/0010_series_carousel_config.sql" relativeToChangelogFile="true" context="dev"/>
+    <include file="../testdata/0011_movies_carousel_config.sql" relativeToChangelogFile="true" context="dev"/>
 </databaseChangeLog>

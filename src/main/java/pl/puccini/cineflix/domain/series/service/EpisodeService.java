@@ -62,6 +62,7 @@ public class EpisodeService {
         Series series = season != null ? season.getSeries() : null;
 
         EpisodeInfoDto episodeInfoDto = new EpisodeInfoDto();
+        episodeInfoDto.setImdbId(series.getImdbId());
         episodeInfoDto.setSerialTitle(series != null ? series.getTitle() : "Nieznany serial");
         episodeInfoDto.setSeasonNumber(season != null ? season.getSeasonNumber() : -1);
         episodeInfoDto.setEpisodeNumber(episode.getEpisodeNumber());

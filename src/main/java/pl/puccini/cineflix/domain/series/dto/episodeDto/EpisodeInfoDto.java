@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EpisodeInfoDto {
+    private String imdbId;
     private String serialTitle;
     private Integer seasonNumber;
     private Integer episodeNumber;

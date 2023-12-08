@@ -3,6 +3,7 @@ package pl.puccini.cineflix.web.user;
 import org.springframework.stereotype.Service;
 import pl.puccini.cineflix.domain.genre.GenreService;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
+import pl.puccini.cineflix.domain.movie.dto.MoviesCarouselConfigDto;
 import pl.puccini.cineflix.domain.movie.service.MovieService;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesCarouselConfigDto;
@@ -58,16 +59,35 @@ public class HomeService {
     }
 
     public List<SeriesCarouselConfigDto> getSeriesCarouselsByActiveGenres(Long userId) {
-        List<String> activeGenres = genreService.getSelectedGenres();
+        List<String> activeGenres = genreService.getSeriesSelectedGenres();
 
         List<SeriesCarouselConfigDto> carousels = new ArrayList<>();
 
         for (String genre : activeGenres) {
-            SeriesCarouselConfigDto config = new SeriesCarouselConfigDto();
-            config.setGenre(genre);
-            config.setSeries(seriesService.getSeriesByGenre(genre, userId));
-            config.setActive(true);
-            carousels.add(config);
+            if (!genre.isEmpty()) {
+                SeriesCarouselConfigDto config = new SeriesCarouselConfigDto();
+                config.setGenre(genre);
+                config.setSeries(seriesService.getSeriesByGenre(genre, userId));
+                config.setActive(true);
+                carousels.add(config);
+            }
+        }
+        return carousels;
+    }
+
+    public List<MoviesCarouselConfigDto> getMoviesCarouselsByActiveGenres(Long userId) {
+        List<String> activeGenres = genreService.getMoviesSelectedGenres();
+
+        List<MoviesCarouselConfigDto> carousels = new ArrayList<>();
+
+        for (String genre : activeGenres) {
+            if (!genre.isEmpty()) {
+                MoviesCarouselConfigDto config = new MoviesCarouselConfigDto();
+                config.setGenre(genre);
+                config.setMovies(movieService.getMovieByGenre(genre, userId));
+                config.setActive(true);
+                carousels.add(config);
+            }
         }
         return carousels;
     }

@@ -12,9 +12,13 @@
   <div id="content" class="admin-panel">
     <div class="main-content-episode">
       <div class="episode-info">
-        <h1 th:text="${serialTitle}"></h1>
-        <h2 class="next-button-episode-player-r8Fw3">Next</h2>
-        <h2>Sezon <span th:text="${seasonNumber}"></span>, Epizod <span th:text="${episodeNumber}"></span></h2>
+          <span class="episode-info-h1" th:text="${serialTitle}"></span>
+        <form class="next-button-episode-player-r8Fw3" th:action="@{/add-episode-to-history/{episodeId}(episodeId=${watchedEpisodes.id})}" method="post">
+          <button type="submit">
+            <span>Next episode</span>
+          </button>
+        </form>
+        <span class="episode-info-h2">Sezon <span th:text="${seasonNumber}"></span>, Epizod <span th:text="${episodeNumber}"></span></span>
       </div>
       <div class="responsive-iframe-container">
         <iframe th:src="${mediaUrl}" frameborder="0" allowfullscreen></iframe>

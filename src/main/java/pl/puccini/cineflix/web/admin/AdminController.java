@@ -207,6 +207,30 @@ public class AdminController {
         return "redirect:/";
     }
 
+    @GetMapping("/admin/manage-movies-carousels")
+    public String manageMoviesCarouselForm(Model model){
+        List<Genre> genres = genreService.getGenresWithMinimumMovies(2);
+        List<String> activeGenres = genreService.getMoviesSelectedGenres();
+
+        Map<String, Boolean> genresWithStatus = genres.stream()
+                .collect(Collectors.toMap(Genre::getGenreType, genre -> activeGenres.contains(genre.getGenreType())));
+
+        model.addAttribute("genresWithStatus", genresWithStatus);
+
+        return "admin/movies/manage-movies-carousels-form";
+    }
+
+    @PostMapping("/admin/manage-movies-carousels/save")
+    public String saveMoviesCarousels(@RequestParam(required = false) List<String> selectedGenres, RedirectAttributes redirectAttributes){
+        if (selectedGenres == null) {
+            selectedGenres = new ArrayList<>();
+        }
+        genreService.saveSelectedMoviesGenres(selectedGenres);
+
+        redirectAttributes.addFlashAttribute("message", "Carousels settings updated successfully.");
+        return "redirect:/admin/manage-movies-carousels";
+    }
+
 
 //SERIES
 
@@ -466,7 +490,7 @@ public class AdminController {
     @GetMapping("/admin/manage-series-carousels")
     public String manageSeriesCarouselForm(Model model){
         List<Genre> genres = genreService.getGenresWithMinimumSeries(1);
-        List<String> activeGenres = genreService.getSelectedGenres();
+        List<String> activeGenres = genreService.getSeriesSelectedGenres();
 
         Map<String, Boolean> genresWithStatus = genres.stream()
                 .collect(Collectors.toMap(Genre::getGenreType, genre -> activeGenres.contains(genre.getGenreType())));
@@ -477,10 +501,12 @@ public class AdminController {
     }
 
     @PostMapping("/admin/manage-series-carousels/save")
-    public String saveSeriesCarousels(@RequestParam List<String> selectedGenres, RedirectAttributes redirectAttributes){
-        genreService.saveSelectedGenres(selectedGenres);
-
-        redirectAttributes.addFlashAttribute("successMessage", "Carousels settings updated successfully.");
+    public String saveSeriesCarousels(@RequestParam(required = false) List<String> selectedGenres, RedirectAttributes redirectAttributes){
+        if (selectedGenres == null) {
+            selectedGenres = new ArrayList<>();
+        }
+        genreService.saveSelectedSeriesGenres(selectedGenres);
+        redirectAttributes.addFlashAttribute("message", "Carousels settings updated successfully.");
         return "redirect:/admin/manage-series-carousels";
     }
 

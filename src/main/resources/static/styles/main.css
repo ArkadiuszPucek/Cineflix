@@ -20322,12 +20322,13 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 .Carousel-module-inner-4oa8u {
     display: inline-block;
     margin-left: 80px;
+    margin-right: 80px;
     white-space: nowrap
 }
 
-/*.Carousel-module-inner-4oa8u.Carousel-module-useTransition-vWyzl {*/
-/*    transition: transform .4s ease-out*/
-/*}*/
+.Carousel-module-inner-4oa8u.Carousel-module-useTransition-vWyzl {
+    transition: transform .4s ease-out
+}
 
 .Carousel-module-navigation-crAaj {
     background: rgba(29, 29, 39, .7) no-repeat 50%;
@@ -20335,7 +20336,7 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
     cursor: pointer;
     display: block;
     font-size: 0;
-    height: calc(100% - 32px);
+    height: calc(100% - 0px);
     opacity: 0;
     position: absolute;
     top: 0;
@@ -20411,6 +20412,10 @@ div ~ .SportScheduleBlock-module-container-V6w6v.SportScheduleBlock-module-inATa
 }
 
 .Carousel-module-container-o-YFo.Carousel-module-hovered-CXqGL {
+    opacity: 1
+}
+
+.Carousel-module-container-o-YFo.Carousel-module-hovered-CXqGL .Carousel-module-navigation-crAaj:not(.Carousel-module-disabled-vHRrb) {
     opacity: 1
 }
 
@@ -24588,20 +24593,20 @@ td {
     align-items: center; /* Wyrównanie buttona do wysokości selecta */
 }
 
-button {
-    margin: 0;
-    padding: 0.5em 1em; /* Dostosuj padding przycisku */
-}
+/*button {*/
+/*    margin: 0;*/
+/*    padding: 0.5em 1em; !* Dostosuj padding przycisku *!*/
+/*}*/
 
-/* Dodanie stylów dla przycisku aby pasował do reszty interfejsu */
-button {
-    background-color: #e53156; /* Kolor tła przycisku */
-    color: white; /* Kolor tekstu */
-    border: none; /* Usunięcie obramowania */
-    border-radius: 4px; /* Zaokrąglenie rogów */
-    cursor: pointer; /* Kursor wskazujący możliwość kliknięcia */
-    transition: background-color 0.3s; /* Animacja zmiany koloru tła */
-}
+/*!* Dodanie stylów dla przycisku aby pasował do reszty interfejsu *!*/
+/*button {*/
+/*    background-color: #e53156; !* Kolor tła przycisku *!*/
+/*    color: white; !* Kolor tekstu *!*/
+/*    border: none; !* Usunięcie obramowania *!*/
+/*    border-radius: 4px; !* Zaokrąglenie rogów *!*/
+/*    cursor: pointer; !* Kursor wskazujący możliwość kliknięcia *!*/
+/*    transition: background-color 0.3s; !* Animacja zmiany koloru tła *!*/
+/*}*/
 
 .role-select {
     text-align: center;
@@ -25352,6 +25357,13 @@ select.text-input-style {
     text-align: right;
     position: relative;
     z-index: 2;
+    cursor: pointer;
+}
+.back-to-series-button-31dw3{
+    text-align: left;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
 }
 .Frame-module-volume-dcKVE {
     background-color: transparent;
@@ -34201,8 +34213,27 @@ select.text-input-style {
 .episode-info {
     text-align: center;
     margin-bottom: 20px;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
+
+.episode-info-h1{
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.episode-info-h2{
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.episode-details {
+    display: flex;
+    flex-direction: column;
+}
+
 
 .responsive-iframe-container {
     position: relative;

@@ -1,15 +1,16 @@
-package pl.puccini.cineflix.domain.series.dto.seriesDto;
+package pl.puccini.cineflix.domain.movie.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+
 @Getter
 @Setter
-public class SeriesCarouselConfigDto {
+public class MoviesCarouselConfigDto {
 
     private String genre;
-    private List<SeriesDto> series;
+    private List<MovieDto> movies;
     private boolean isActive;
 
 }

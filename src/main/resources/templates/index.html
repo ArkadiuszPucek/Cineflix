@@ -249,16 +249,10 @@
                         </section>
                     </div>
 
-                    <div th:each="carousel : ${carousels}" th:if="${carousel.active}">
-                        <div th:replace="~{fragments :: series-carousel(genreTitle=${carousel.genre + ' Series'}, genre=${carousel.genre.toLowerCase()}, series=${carousel.series})}"></div>
+                    <!--                    SERIES CAROUSELS-->
+                    <div th:each="carousel : ${seriesCarousels}" th:if="${carousel.active}">
+                        <div th:replace="~{fragments :: series-carousel(genreTitle=${carousel.genre + ' Series'}, genre=${carousel.genre.toLowerCase()}, series=${carousel.series}, carouselId=${'carousel-' + carousel.genre.toLowerCase()})}"></div>
                     </div>
-
-
-<!--                    <div th:replace="~{fragments :: series-carousel(genreTitle=${dramaSeriesTitle}, genre=${dramaGenre}, series=${dramaSeries})}"></div>-->
-
-<!--                    <div th:replace="~{fragments :: series-carousel(genreTitle=${comedySeriesTitle}, genre=${comedyGenre}, series=${comedySeries})}"></div>-->
-
-<!--                    <div th:replace="~{fragments :: series-carousel(genreTitle=${actionSeriesTitle}, genre=${actionGenre}, series=${actionSeries})}"></div>-->
 
                     <!--                   MOVIE PROMOBOX-->
                     <div style="display: block;">
@@ -332,7 +326,9 @@
                             </div>
                         </section>
                     </div>
-                    <div th:replace="~{fragments :: movies-carousel(genreTitle=${thrillerMoviesTitle}, genre=${thrillerGenre}, movies=${thrillerMovies})}"></div>
+                    <div th:each="carousel : ${moviesCarousels}" th:if="${carousel.active}">
+                        <div th:replace="~{fragments :: movies-carousel(genreTitle=${carousel.genre}, genre=${carousel.genre.toLowerCase()}, movies=${carousel.movies}, carouselId=${'carousel-' + carousel.genre.toLowerCase()})}"></div>
+                    </div>
                 </div>
             </div>
 
@@ -343,8 +339,34 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>-->
 <script type="text/javascript" src="/scripts/common.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.Carousel-module-inner-4oa8u').each(function () {
+            var $carousel = $(this);
+            var carouselId = $carousel.attr('id');
+
+        $carousel.slick({
+            infinite: true,
+            speed: 200,
+            slidesToShow: 1,
+            arrows: false,
+            draggable: false,
+            centerMode: true,
+            variableWidth: true,
+        });
+
+            $('#prev-' + carouselId).on('click', function () {
+                $carousel.slick('slickPrev');
+            });
+
+            $('#next-' + carouselId).on('click', function () {
+                $carousel.slick('slickNext');
+            });
+        });
+    });
+
+</script>
 <script>
     document.querySelectorAll('.MyList-module-myList-kmBI5').forEach(button => {
         button.addEventListener('click', function () {

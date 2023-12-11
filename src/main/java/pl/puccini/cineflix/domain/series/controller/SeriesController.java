@@ -39,6 +39,9 @@ public class SeriesController {
         List<Genre> allGenres = genreService.getAllGenres();
         model.addAttribute("genres", allGenres);
 
+        List<SeriesDto> allSeriesInService = seriesService.findAllSeriesInService(userId);
+        model.addAttribute("allSeriesInService", allSeriesInService);
+
         String dramaGenre = "Drama";
         model.addAttribute("dramaSeriesTitle", "Drama series");
         model.addAttribute("dramaSeries", seriesService.getSeriesByGenre(dramaGenre, userId));

@@ -235,72 +235,9 @@
                                         </div>
                                     </section>
                                 </div>
-                                <div class="Carousel-module-carousel-NbPjL">
-                                    <div class="Carousel-module-wrapper-QhccC">
-                                        <button type="button"
-                                                class="Carousel-module-navigation-crAaj Carousel-module-prev-EJuzt"></button>
-                                        <div class="Carousel-module-inner-4oa8u Carousel-module-useTransition-vWyzl">
-                                            <span>
-                                                <div th:each="relatedSeries : ${genre}"
-                                                     class="Item-module-item-yTZtG Item-module-carouselItem-Q3n9V Item-module-landscapeItem-Sf-nw">
-                                                    <div class="Item-module-box-4uBp3 Item-module-show-qrDtq">
-                                                        <a class="Item-module-link-Lms-C" tabindex="-1"
-                                                           th:with="formattedTitle=${relatedSeries.title.replace(' ', '-')+'/sezon-1'}"
-                                                           th:href="@{/series/{formattedTitle}(formattedTitle=${formattedTitle})}">
-                                                        </a>
-                                                        <div class="Item-module-image-CGday"
-                                                             th:style="'background-image: url(' + ${relatedSeries.imageUrl} + ');'">
-                                                        </div>
-                                                        <div class="Item-module-curtain-EV2Ya">
-                                                            <div class="SeriesMeta-module-container-oFAL3">
-                                                                <div class="SeriesMeta-module-metadata-8qwss">
-                                                                    <span class="Divider-module-divider-U-3--">
-                                                                        <a class="ImdbRating-module-link-yYfI- ImdbRating-module-hasDefaultTypography-luAjW"
-                                                                           th:href="@{${relatedSeries.imdbUrl}}"
-                                                                           target="_blank"
-                                                                           tabindex="-1"
-                                                                           th:text="${relatedSeries.imdbRating}">
-                                                                            ImdbRating
-                                                                        </a>
-                                                                    </span>
-                                                                    <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
-                                                                        <span class="Seasons-module-container-ZM15y Seasons-module-hasDefaultTypography-8No96">
-                                                                            <span th:text="${relatedSeries.seasonsCount} + ' ' + (relatedSeries.seasonsCount == 1 ? 'Sezon' : 'Sezony')">
-                                                                                Seasons count
-                                                                            </span>
-                                                                        </span>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="InteractionIcons-module-container-apGgr">
-                                                                <a class="TooltipButton-module-container-PfKnw TooltipButton-module-isItem-R6NdL"
-                                                                   tabindex="-1"
-                                                                   th:href="@{'/series/' + ${relatedSeries.title.toLowerCase().replace(' ', '-')}}">
-                                                                </a>
-                                                                <div class="StarButton-module-container-sGC0y StarButton-module-isItem-SdwJH"
-                                                                     data-testhook="item-star"
-                                                                     th:classappend="${relatedSeries.onUserList ? 'StarButton-module-isStarred-v2AtG' : ''}"
-                                                                     th:attr="data-imdb-id=${relatedSeries.imdbId}"></div>
-                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 rate-up"
-                                                                     th:classappend="${relatedSeries.userRating != null ? (relatedSeries.userRating ? ' RateButtons-module-rateUp-S4se- RateButtons-module-active-n-0Gb' : ' RateButtons-module-rateUp-S4se-') : ' RateButtons-module-rateUp-S4se-'}"
-                                                                     onclick="rate('up', this)" th:attr="data-imdbid=${relatedSeries.imdbId}" data-testhook="item-rating-up">
-                                                                </div>
-                                                                <div class="RateButtons-module-container-oL7lm RateButtons-module-isItem-5vKa8 rate-down"
-                                                                     th:classappend="${relatedSeries.userRating != null ? (relatedSeries.userRating ? ' RateButtons-module-rateDown-DblB1' : ' RateButtons-module-rateDown-DblB1 RateButtons-module-active-n-0Gb') : ' RateButtons-module-rateDown-DblB1'}"
-                                                                     onclick="rate('down', this)" th:attr="data-imdbid=${relatedSeries.imdbId}" data-testhook="item-rating-down"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </span>
-                                            <div class="Item-module-below-BMw6u Item-module-padding-kgN3F"></div>
-                                        </div>
-                                        <button type="button"
-                                                class="Carousel-module-navigation-crAaj Carousel-module-next-AXbEv"></button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
+                        <div th:replace="~{fragments :: series-carousel(genreTitle='Related series', genre=${series.genre.toLowerCase()}, series=${genre}, carouselId=${'carousel-' + series.genre.toLowerCase()})}"></div>
                     </div>
                     <div th:replace="~{footer :: footer}"></div>
                 </div>

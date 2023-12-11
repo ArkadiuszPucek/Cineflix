@@ -339,7 +339,8 @@ public class AdminController {
     @GetMapping("/admin/manage-series")
     public String showManageSeriesForm(Authentication authentication, Model model) {
         userUtils.addAvatarUrlToModel(authentication, model);
-        List<SeriesDto> allSeriesInService = seriesService.findAllSeriesInService();
+        Long userId = userUtils.getUserIdFromAuthentication(authentication);
+        List<SeriesDto> allSeriesInService = seriesService.findAllSeriesInService(userId);
         model.addAttribute("allSeriesInService", allSeriesInService);
 
         return "admin/series/manage-series";

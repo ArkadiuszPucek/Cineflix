@@ -1,22 +1,27 @@
-// $(document).ready(function () {
-//     $('.Carousel-module-inner-4oa8u').slick({
-//         infinite: true,
-//         speed: 200,
-//         slidesToShow: 1,
-//         arrows: false,
-//         draggable: false,
-//         centerMode: true,
-//         variableWidth: true,
-//     });
-//     $('.Carousel-module-prev-EJuzt').on('click', function() {
-//         $carousel.slick('slickPrev');
-//     });
-//
-//     $('.Carousel-module-next-AXbEv').on('click', function() {
-//         $carousel.slick('slickNext');
-//     });
-// });
+$(document).ready(function () {
+    $('.Carousel-module-inner-4oa8u').each(function () {
+        var $carousel = $(this);
+        var carouselId = $carousel.attr('id');
 
+        $carousel.slick({
+            infinite: true,
+            speed: 200,
+            slidesToShow: 1,
+            arrows: false,
+            draggable: false,
+            centerMode: true,
+            variableWidth: true,
+        });
+
+        $('#prev-' + carouselId).on('click', function () {
+            $carousel.slick('slickPrev');
+        });
+
+        $('#next-' + carouselId).on('click', function () {
+            $carousel.slick('slickNext');
+        });
+    });
+});
 
 document.querySelectorAll('.StarButton-module-container-sGC0y').forEach(button => {
     button.addEventListener('click', function () {

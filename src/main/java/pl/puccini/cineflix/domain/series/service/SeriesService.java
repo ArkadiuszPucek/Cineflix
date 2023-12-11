@@ -179,8 +179,8 @@ public class SeriesService {
 
 
 
-    public List<SeriesDto> findAllSeriesInService() {
-        return seriesRepository.findAll().stream()
+    public List<SeriesDto> findAllSeriesInService(Long userId) {
+        List<SeriesDto> allSeriesDto = seriesRepository.findAll().stream()
                 .map(series -> {
                     SeriesDto seriesDto = SeriesDtoMapper.map(series);
                     int rateUpCount = userRatingRepository.countBySeriesImdbIdAndUpvote(series.getImdbId(), true);
@@ -190,6 +190,12 @@ public class SeriesService {
                     return seriesDto;
                 })
                 .toList();
+
+        allSeriesDto.forEach(serie -> {
+            serie.setOnUserList(userListService.isOnList(userId, serie.getImdbId()));
+            serie.setUserRating(getCurrentUserRatingForSeries(serie.getImdbId(), userId).orElse(null));
+        });
+        return allSeriesDto;
     }
 
 

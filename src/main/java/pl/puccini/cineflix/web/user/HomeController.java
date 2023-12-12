@@ -5,14 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pl.puccini.cineflix.domain.genre.GenreService;
-import pl.puccini.cineflix.domain.movie.dto.MoviesCarouselConfigDto;
+import pl.puccini.cineflix.config.carousel.movies.MoviesCarouselConfigDto;
 import pl.puccini.cineflix.domain.movie.service.MovieService;
-import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesCarouselConfigDto;
-import pl.puccini.cineflix.domain.series.model.SeriesCarouselConfig;
+import pl.puccini.cineflix.config.carousel.series.SeriesCarouselConfigDto;
 import pl.puccini.cineflix.domain.series.service.SeriesService;
 import pl.puccini.cineflix.domain.user.service.UserUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller

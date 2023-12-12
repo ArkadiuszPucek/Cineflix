@@ -21,8 +21,4 @@ public class CustomErrorController implements ErrorController {
         userUtils.addAvatarUrlToModel(authentication, model);
         return "error/not-found";
     }
-
-//    public String getErrorPath() {
-//        return "/error";
-//    }
 }

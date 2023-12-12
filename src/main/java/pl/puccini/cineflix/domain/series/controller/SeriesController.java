@@ -42,20 +42,6 @@ public class SeriesController {
         List<SeriesDto> allSeriesInService = seriesService.findAllSeriesInService(userId);
         model.addAttribute("allSeriesInService", allSeriesInService);
 
-        String dramaGenre = "Drama";
-        model.addAttribute("dramaSeriesTitle", "Drama series");
-        model.addAttribute("dramaSeries", seriesService.getSeriesByGenre(dramaGenre, userId));
-        model.addAttribute("dramaGenre", dramaGenre.toLowerCase());
-
-        String comedyGenre = "Comedy";
-        model.addAttribute("comedySeriesTitle", "Comedy series");
-        model.addAttribute("comedySeries", seriesService.getSeriesByGenre(comedyGenre, userId));
-        model.addAttribute("comedyGenre", comedyGenre.toLowerCase());
-
-        String actionGenre = "Action";
-        model.addAttribute("actionSeriesTitle", "Action series");
-        model.addAttribute("actionSeries", seriesService.getSeriesByGenre(actionGenre, userId));
-        model.addAttribute("actionGenre", actionGenre.toLowerCase());
         return "series";
     }
 

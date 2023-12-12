@@ -23,13 +23,11 @@
                 <div id="content" class="article" data-testhook="article">
                     <div class="dockable"></div>
                     <div class="blocksEnsembleContainer-module-container-ZXS1I">
-
                         <div class="ProductPage-module-container-oTkLV">
                             <div>
                                 <div class="Hero-module-wrapper-7yHRB">
                                     <img class="Hero-module-image-NlipI Hero-module-hideImage-CCOEY Hero-module-showImage-09J4b"
-                                         th:src="${movie.backgroundImageUrl}">
-                                </div>
+                                         th:src="${movie.backgroundImageUrl}"></div>
                                 <div class="Hero-module-backdrop-be6rg"></div>
                                 <div class="Hero-module-gradient-ieQvj"></div>
                             </div>
@@ -47,12 +45,15 @@
                                         <div class="ProductPage-module-wrapper-WZR1p">
                                             <div>
                                                 <h1 class="Title-module-container-WuaoJ" th:text="${movie.title}">
-                                                    Title
-                                                </h1>
+                                                    Title</h1>
                                                 <div class="ActionButton-module-container-iom96 ActionButton-module-product-qJKhU ActionButton-module-isLoggedIn-J00sd">
                                                     <div class="ActionButton-module-wrapper-movie-Gds43s">
-                                                        <form class="movie-button" th:action="@{/add-movie-to-history/{imdbId}(imdbId=${movie.imdbId})}" method="post">
-                                                            <button type="submit" class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl Buttons-module-play-AAOaC" tabindex="0">
+                                                        <form class="movie-button"
+                                                              th:action="@{/add-movie-to-history/{imdbId}(imdbId=${movie.imdbId})}"
+                                                              method="post">
+                                                            <button type="submit"
+                                                                    class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl Buttons-module-play-AAOaC"
+                                                                    tabindex="0">
                                                                 <span>Watch</span>
                                                             </button>
                                                         </form>
@@ -65,15 +66,18 @@
                                                              th:attr="data-imdb-id=${movie.imdbId}"></div>
                                                     </a>
                                                     <a class="Rate-module-container-SmrTr Buttons-module-secondary-br7-v RatingButtons-module-icon-HDsa3"
-                                                       data-testhook="rate-button-up" tabindex="0" onclick="rateMovie('up', this)"
+                                                       data-testhook="rate-button-up" tabindex="0"
+                                                       onclick="rateMovie('up', this)"
                                                        th:attr="data-imdbid=${movie.imdbId}">
-                                                        <div class="Rate-module-rate-GCdtz" th:classappend="${movie.userRating != null ? (movie.userRating ? ' Rate-module-activeRatingUp-XcMDm' : ' undefined') : ' null'}"></div>
+                                                        <div class="Rate-module-rate-GCdtz"
+                                                             th:classappend="${movie.userRating != null ? (movie.userRating ? ' Rate-module-activeRatingUp-XcMDm' : ' undefined') : ' null'}"></div>
                                                     </a>
-
                                                     <a class="Rate-module-container-SmrTr Buttons-module-secondary-br7-v RatingButtons-module-icon-HDsa3"
-                                                       data-testhook="rate-button-down" tabindex="0" onclick="rateMovie('down', this)"
+                                                       data-testhook="rate-button-down" tabindex="0"
+                                                       onclick="rateMovie('down', this)"
                                                        th:attr="data-imdbid=${movie.imdbId}">
-                                                        <div class="Rate-module-rate-grszv" th:classappend="${movie.userRating != null ? (movie.userRating ? ' undefined' : ' Rate-module-activeRatingDown-XcMDm') : ' null'}"></div>
+                                                        <div class="Rate-module-rate-grszv"
+                                                             th:classappend="${movie.userRating != null ? (movie.userRating ? ' undefined' : ' Rate-module-activeRatingDown-XcMDm') : ' null'}"></div>
                                                     </a>
                                                 </div>
                                             </div>
@@ -85,8 +89,7 @@
                                             <p class="Facts-module-container-dFnqo">
                                                     <span class="Divider-module-divider-U-3-- Divider-module-hasDefaultTypography-Uy4EO">
                                                         <a class="ImdbRating-module-link-yYfI- ImdbRating-module-facts-DWrMz ImdbRating-module-hasDefaultTypography-luAjW"
-                                                           th:href="@{${movie.imdbUrl}}" target="_blank"
-                                                           rel="noopener noreferrer nofollow" tabindex="-1"
+                                                           th:href="@{${movie.imdbUrl}}" tabindex="-1"
                                                            th:text="${movie.imdbRating}">
                                                             Imdb rating
                                                         </a>
@@ -116,7 +119,7 @@
                                                 <div class="ProductSynopsis-module-synopsis-n5-Be">
                                                     <div class="Group-module-group--XDAf">
                                                         <div class="Synopsis-module-container-pmsNY Synopsis-module-hasDefaultTypography-5xyxY"
-                                                             itemprop="description" th:text="${movie.description}">
+                                                             th:text="${movie.description}">
                                                             Description
                                                         </div>
                                                     </div>
@@ -129,13 +132,9 @@
                                                     <div class="Group-module-group--XDAf">
                                                         <div class="">
                                                             <div>
-                                                                <span class="PeopleList-module-title-voAAo">
-                                                                    Cast
-                                                                </span>
+                                                                <span class="PeopleList-module-title-voAAo">Cast</span>
                                                                 <div class="PeopleList-module-peoplearray-KNtVQ"
-                                                                     th:text="${movie.staff}">
-
-                                                                </div>
+                                                                     th:text="${movie.staff}"></div>
                                                             </div>
                                                         </div>
                                                         <div class="Audio-module-container-OTfgl">
@@ -144,7 +143,7 @@
                                                                 </span>
                                                             <span class="Audio-module-audio-VqD-r"
                                                                   th:text="${movie.languages}">
-                                                                    Movie Languages
+                                                                Movie Languages
                                                             </span>
                                                         </div>
                                                     </div>
@@ -210,7 +209,7 @@
         var headers = new Headers();
         headers.append(csrfHeader, csrfToken);
 
-        fetch('/rate/' + direction + '/' + imdbId, { method: 'POST', headers: headers })
+        fetch('/rate/' + direction + '/' + imdbId, {method: 'POST', headers: headers})
             .then(response => {
                 if (response.ok) {
                     var container = element.closest('.ActionButton-module-container-iom96'); // Kontener przycisków
@@ -218,6 +217,7 @@
                 }
             });
     }
+
     function updateMovieRatingUI(direction, container) {
         var rateUpButton = container.querySelector('[data-testhook="rate-button-up"]');
         var rateDownButton = container.querySelector('[data-testhook="rate-button-down"]');
@@ -271,7 +271,7 @@
         headers.append(csrfHeader, csrfToken);
         var imdbId = element.getAttribute('data-imdbid');
 
-        fetch('/rate/' + direction + '/' + imdbId, { method: 'POST', headers: headers })
+        fetch('/rate/' + direction + '/' + imdbId, {method: 'POST', headers: headers})
             .then(response => {
                 if (response.ok) {
                     var container = element.closest('.InteractionIcons-module-container-apGgr');

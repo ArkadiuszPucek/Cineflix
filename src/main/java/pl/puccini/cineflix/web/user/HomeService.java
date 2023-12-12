@@ -1,12 +1,14 @@
 package pl.puccini.cineflix.web.user;
 
 import org.springframework.stereotype.Service;
+import pl.puccini.cineflix.config.carousel.movies.MovieCarouselService;
+import pl.puccini.cineflix.config.carousel.series.SeriesCarouselService;
 import pl.puccini.cineflix.domain.genre.GenreService;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
-import pl.puccini.cineflix.domain.movie.dto.MoviesCarouselConfigDto;
+import pl.puccini.cineflix.config.carousel.movies.MoviesCarouselConfigDto;
 import pl.puccini.cineflix.domain.movie.service.MovieService;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
-import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesCarouselConfigDto;
+import pl.puccini.cineflix.config.carousel.series.SeriesCarouselConfigDto;
 import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
 import pl.puccini.cineflix.domain.series.service.EpisodeService;
 import pl.puccini.cineflix.domain.series.service.SeriesService;
@@ -22,14 +24,16 @@ public class HomeService {
     private final UserListService userListService;
     private final SeriesService seriesService;
     private final EpisodeService episodeService;
-    private final GenreService genreService;
+    private final SeriesCarouselService seriesCarouselService;
+    private final MovieCarouselService movieCarouselService;
 
-    public HomeService(MovieService movieService, UserListService userListService, SeriesService seriesService, EpisodeService episodeService, GenreService genreService) {
+    public HomeService(MovieService movieService, UserListService userListService, SeriesService seriesService, EpisodeService episodeService, SeriesCarouselService seriesCarouselService, MovieCarouselService movieCarouselService) {
         this.movieService = movieService;
         this.userListService = userListService;
         this.seriesService = seriesService;
         this.episodeService = episodeService;
-        this.genreService = genreService;
+        this.seriesCarouselService = seriesCarouselService;
+        this.movieCarouselService = movieCarouselService;
     }
 
     public Object getRandomPromotedItem(Long userId) {
@@ -59,8 +63,7 @@ public class HomeService {
     }
 
     public List<SeriesCarouselConfigDto> getSeriesCarouselsByActiveGenres(Long userId) {
-        List<String> activeGenres = genreService.getSeriesSelectedGenres();
-
+        List<String> activeGenres = seriesCarouselService.getSelectedGenres();
         List<SeriesCarouselConfigDto> carousels = new ArrayList<>();
 
         for (String genre : activeGenres) {
@@ -76,7 +79,7 @@ public class HomeService {
     }
 
     public List<MoviesCarouselConfigDto> getMoviesCarouselsByActiveGenres(Long userId) {
-        List<String> activeGenres = genreService.getMoviesSelectedGenres();
+        List<String> activeGenres = movieCarouselService.getSelectedGenres();
 
         List<MoviesCarouselConfigDto> carousels = new ArrayList<>();
 

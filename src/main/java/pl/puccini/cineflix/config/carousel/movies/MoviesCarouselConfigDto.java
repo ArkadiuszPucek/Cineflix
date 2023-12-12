@@ -1,7 +1,8 @@
-package pl.puccini.cineflix.domain.movie.dto;
+package pl.puccini.cineflix.config.carousel.movies;
 
 import lombok.Getter;
 import lombok.Setter;
+import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 
 import java.util.List;
 

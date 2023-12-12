@@ -192,13 +192,9 @@
                                                         </div>
                                                         <div class="Episode-module-backdrop-KXm-S" >
                                                             <form th:action="@{/add-episode-to-history/{episodeId}(episodeId=${episode.id})}" method="post">
-                                                            <button type="submit" class="PlayButton-module-container-RmQKd
-                                                                    PlayButton-module-show-B7cDu
-                                                                    PlayButton-module-landscape-dCM5E
-                                                                    PlayButton-module-forceHover-ubElK
-                                                                    PlayButton-module-episode-IOzP7"
+                                                            <button type="submit" class="PlayButton-module-container-RmQKd PlayButton-module-show-B7cDu PlayButton-module-landscape-dCM5E PlayButton-module-forceHover-ubElK PlayButton-module-episode-IOzP7"
                                                                     data-testhook="play-button" tabindex="0">
-                                                                    <figure class="PlayButton-module-icon-q3WfE"></figure>
+                                                                <figure class="PlayButton-module-icon-q3WfE"></figure>
                                                             </button>
                                                             </form>
                                                         </div>
@@ -220,22 +216,6 @@
                                     </div>
                                 </div>
                             </section>
-
-                            <div class="Carousel-module-container-o-YFo" data-testhook="carousel-container">
-                                <div id="header-podobne-seriale" class="CarouselHeader-module-container-dBOIV"
-                                     data-testhook="carousel-header">
-                                    <section itemtype="">
-                                        <div class="Scaffold-module-scaffold-F6aIC">
-                                            <header class="CarouselHeader-module-wrapper-B8ict">
-                                                <h2 class="Title-module-subheader--ZDhF undefined"
-                                                    data-testhook="carousel-title">
-                                                    Related series
-                                                </h2>
-                                            </header>
-                                        </div>
-                                    </section>
-                                </div>
-                            </div>
                         </div>
                         <div th:replace="~{fragments :: series-carousel(genreTitle='Related series', genre=${series.genre.toLowerCase()}, series=${genre}, carouselId=${'carousel-' + series.genre.toLowerCase()})}"></div>
                     </div>

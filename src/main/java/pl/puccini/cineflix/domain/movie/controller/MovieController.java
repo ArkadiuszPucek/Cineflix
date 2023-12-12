@@ -11,6 +11,7 @@ import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.service.MovieService;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeInfoDto;
+import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
 import pl.puccini.cineflix.domain.user.service.UserUtils;
 
 import java.util.List;
@@ -75,10 +76,8 @@ public class MovieController {
         List<Genre> allGenres = genreService.getAllGenres();
         model.addAttribute("genres", allGenres);
 
-        String thrillerGenre = "Thriller";
-        model.addAttribute("thrillerMoviesTitle", thrillerGenre);
-        model.addAttribute("thrillerMovies", movieService.getMovieByGenre(thrillerGenre, userId));
-        model.addAttribute("thrillerGenre", thrillerGenre.toLowerCase());
+        List<MovieDto> allMoviesInService = movieService.findAllMoviesInService(userId);
+        model.addAttribute("allMoviesInService", allMoviesInService);
 
         return "movies";
     }

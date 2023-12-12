@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.puccini.cineflix.config.carousel.movies.MovieCarouselService;
+import pl.puccini.cineflix.config.carousel.series.SeriesCarouselService;
 import pl.puccini.cineflix.domain.exceptions.EpisodeNotFoundException;
 import pl.puccini.cineflix.domain.exceptions.MovieNotFoundException;
 import pl.puccini.cineflix.domain.exceptions.SeriesAlreadyExistsException;
@@ -46,8 +48,10 @@ public class AdminController {
     private final UserUtils userUtils;
     private final SeriesPromoBoxRepository seriesPromoBoxRepository;
     private final MoviesPromoBoxRepository moviesPromoBoxRepository;
+    private final SeriesCarouselService seriesCarouselService;
+    private final MovieCarouselService movieCarouselService;
 
-    public AdminController(MovieService movieService, SeriesService seriesService, EpisodeService episodeService, GenreService genreService, UserService userService, UserUtils userUtils, SeriesPromoBoxRepository seriesPromoBoxRepository, MoviesPromoBoxRepository moviesPromoBoxRepository) {
+    public AdminController(MovieService movieService, SeriesService seriesService, EpisodeService episodeService, GenreService genreService, UserService userService, UserUtils userUtils, SeriesPromoBoxRepository seriesPromoBoxRepository, MoviesPromoBoxRepository moviesPromoBoxRepository, SeriesCarouselService seriesCarouselService, MovieCarouselService movieCarouselService) {
         this.movieService = movieService;
         this.seriesService = seriesService;
         this.episodeService = episodeService;
@@ -56,6 +60,8 @@ public class AdminController {
         this.userUtils = userUtils;
         this.seriesPromoBoxRepository = seriesPromoBoxRepository;
         this.moviesPromoBoxRepository = moviesPromoBoxRepository;
+        this.seriesCarouselService = seriesCarouselService;
+        this.movieCarouselService = movieCarouselService;
     }
 
 
@@ -170,7 +176,8 @@ public class AdminController {
     @GetMapping("/admin/manage-movies")
     public String showManageMovieForm(Authentication authentication, Model model) {
         userUtils.addAvatarUrlToModel(authentication, model);
-        List<MovieDto> allMoviesInService = movieService.findAllMoviesInService();
+        Long userId = userUtils.getUserIdFromAuthentication(authentication);
+        List<MovieDto> allMoviesInService = movieService.findAllMoviesInService(userId);
         model.addAttribute("allMoviesInService", allMoviesInService);
 
         return "admin/movies/manage-movies";
@@ -210,7 +217,7 @@ public class AdminController {
     @GetMapping("/admin/manage-movies-carousels")
     public String manageMoviesCarouselForm(Model model){
         List<Genre> genres = genreService.getGenresWithMinimumMovies(2);
-        List<String> activeGenres = genreService.getMoviesSelectedGenres();
+        List<String> activeGenres = movieCarouselService.getSelectedGenres();
 
         Map<String, Boolean> genresWithStatus = genres.stream()
                 .collect(Collectors.toMap(Genre::getGenreType, genre -> activeGenres.contains(genre.getGenreType())));
@@ -225,7 +232,7 @@ public class AdminController {
         if (selectedGenres == null) {
             selectedGenres = new ArrayList<>();
         }
-        genreService.saveSelectedMoviesGenres(selectedGenres);
+        movieCarouselService.saveSelectedGenres(selectedGenres);
 
         redirectAttributes.addFlashAttribute("message", "Carousels settings updated successfully.");
         return "redirect:/admin/manage-movies-carousels";
@@ -491,7 +498,7 @@ public class AdminController {
     @GetMapping("/admin/manage-series-carousels")
     public String manageSeriesCarouselForm(Model model){
         List<Genre> genres = genreService.getGenresWithMinimumSeries(1);
-        List<String> activeGenres = genreService.getSeriesSelectedGenres();
+        List<String> activeGenres = seriesCarouselService.getSelectedGenres();
 
         Map<String, Boolean> genresWithStatus = genres.stream()
                 .collect(Collectors.toMap(Genre::getGenreType, genre -> activeGenres.contains(genre.getGenreType())));
@@ -506,7 +513,7 @@ public class AdminController {
         if (selectedGenres == null) {
             selectedGenres = new ArrayList<>();
         }
-        genreService.saveSelectedSeriesGenres(selectedGenres);
+        seriesCarouselService.saveSelectedGenres(selectedGenres);
         redirectAttributes.addFlashAttribute("message", "Carousels settings updated successfully.");
         return "redirect:/admin/manage-series-carousels";
     }

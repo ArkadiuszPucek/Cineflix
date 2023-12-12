@@ -7,10 +7,11 @@ $(document).ready(function () {
             infinite: true,
             speed: 200,
             slidesToShow: 1,
+            slidesToScroll: 1,
             arrows: false,
             draggable: false,
             centerMode: true,
-            variableWidth: true,
+            variableWidth: false,
         });
 
         $('#prev-' + carouselId).on('click', function () {

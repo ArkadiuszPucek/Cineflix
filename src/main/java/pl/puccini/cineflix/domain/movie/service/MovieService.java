@@ -162,8 +162,8 @@ public class MovieService {
         return mappedMovie;
     }
 
-    public List<MovieDto> findAllMoviesInService(){
-        return movieRepository.findAll().stream()
+    public List<MovieDto> findAllMoviesInService(Long userId){
+        List<MovieDto> allMoviesDto = movieRepository.findAll().stream()
                 .map(movie -> {
                     MovieDto movieDto = MovieDtoMapper.map(movie);
                     int rateUpCount = userRatingRepository.countByMovieImdbIdAndUpvote(movie.getImdbId(), true);
@@ -174,6 +174,11 @@ public class MovieService {
                 })
                 .toList();
 
+        allMoviesDto.forEach(movie -> {
+            movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId()));
+            movie.setUserRating(getCurrentUserRatingForMovie(movie.getImdbId(), userId).orElse(null));
+        });
+        return allMoviesDto;
     }
 
     public List<MovieDto> searchMovies(String query) {

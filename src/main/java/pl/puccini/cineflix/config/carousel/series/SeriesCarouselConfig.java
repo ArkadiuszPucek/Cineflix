@@ -1,4 +1,4 @@
-package pl.puccini.cineflix.domain.series.model;
+package pl.puccini.cineflix.config.carousel.series;
 
 import jakarta.persistence.*;
 import lombok.Getter;

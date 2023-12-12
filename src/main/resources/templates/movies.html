@@ -57,8 +57,7 @@
                         <div class="StickyDiv-module-mark-Me4XV StickyDiv-module-bot--lgll"
                              style="transform: translateY(-64px);"></div>
                     </div>
-
-                    <div th:replace="~{fragments :: movies-carousel(genreTitle=${thrillerMoviesTitle}, genre=${thrillerGenre}, movies=${thrillerMovies})}"></div>
+                    <div th:replace="~{fragments :: items-containter(model=${allMoviesInService})}"></div>
                 </div>
                 <div th:replace="~{footer :: footer}"></div>
             </div>

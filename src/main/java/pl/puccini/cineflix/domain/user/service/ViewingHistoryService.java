@@ -5,13 +5,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.puccini.cineflix.domain.exceptions.EpisodeNotFoundException;
 import pl.puccini.cineflix.domain.exceptions.UserNotFoundException;
+import pl.puccini.cineflix.domain.movie.MovieFacade;
 import pl.puccini.cineflix.domain.movie.model.Movie;
-import pl.puccini.cineflix.domain.movie.service.MovieService;
 import pl.puccini.cineflix.domain.series.model.Episode;
 import pl.puccini.cineflix.domain.series.service.EpisodeService;
 import pl.puccini.cineflix.domain.user.dto.WatchedItemDto;
 import pl.puccini.cineflix.domain.user.model.User;
-import pl.puccini.cineflix.domain.user.model.UserList;
 import pl.puccini.cineflix.domain.user.model.ViewingHistory;
 import pl.puccini.cineflix.domain.user.repository.ViewingHistoryRepository;
 
@@ -27,15 +26,15 @@ public class ViewingHistoryService {
     private final ViewingHistoryRepository viewingHistoryRepository;
     private final UserService userService;
     private final EpisodeService episodeService;
-    private final MovieService movieService;
+    private final MovieFacade movieFacade;
 
-
-    public ViewingHistoryService(ViewingHistoryRepository viewingHistoryRepository, UserService userService, @Lazy EpisodeService episodeService, MovieService movieService) {
+    public ViewingHistoryService(ViewingHistoryRepository viewingHistoryRepository, UserService userService, @Lazy EpisodeService episodeService, MovieFacade movieFacade) {
         this.viewingHistoryRepository = viewingHistoryRepository;
         this.userService = userService;
         this.episodeService = episodeService;
-        this.movieService = movieService;
+        this.movieFacade = movieFacade;
     }
+
 
     public void saveEpisodeToViewingHistory(Long userId, Long episodeId){
         try{
@@ -59,7 +58,7 @@ public class ViewingHistoryService {
     public void saveMovieToViewingHistory(Long userId, String imdbId){
         try{
             User user = userService.findUserById(userId);
-            Movie movie = movieService.getMovieByImdbId(imdbId);
+            Movie movie = movieFacade.getMovieByImdbId(imdbId);
 
             ViewingHistory history = new ViewingHistory();
             history.setUser(user);

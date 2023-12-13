@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.puccini.cineflix.domain.genre.Genre;
 import pl.puccini.cineflix.domain.genre.GenreService;
+import pl.puccini.cineflix.domain.series.SeriesFacade;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.cineflix.domain.series.dto.seasonDto.SeasonDto;
 import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
@@ -18,16 +19,16 @@ import java.util.List;
 @Controller
 @RequestMapping("/series")
 public class SeriesController {
-    private final SeriesService seriesService;
     private final GenreService genreService;
     private final UserUtils userUtils;
     private final EpisodeService episodeService;
+    private final SeriesFacade seriesFacade;
 
-    public SeriesController(SeriesService seriesService, GenreService genreService, UserUtils userUtils, EpisodeService episodeService) {
-        this.seriesService = seriesService;
+    public SeriesController(GenreService genreService, UserUtils userUtils, EpisodeService episodeService, SeriesFacade seriesFacade) {
         this.genreService = genreService;
         this.userUtils = userUtils;
         this.episodeService = episodeService;
+        this.seriesFacade = seriesFacade;
     }
 
 
@@ -39,7 +40,7 @@ public class SeriesController {
         List<Genre> allGenres = genreService.getAllGenres();
         model.addAttribute("genres", allGenres);
 
-        List<SeriesDto> allSeriesInService = seriesService.findAllSeriesInService(userId);
+        List<SeriesDto> allSeriesInService = seriesFacade.findAllSeries(userId);
         model.addAttribute("allSeriesInService", allSeriesInService);
 
         return "series";
@@ -52,7 +53,7 @@ public class SeriesController {
         Long userId = userUtils.getUserIdFromAuthentication(authentication);
         String capitalizedGenre = Character.toUpperCase(genre.charAt(0)) + genre.substring(1);
 
-        List<SeriesDto> seriesByGenre = seriesService.getSeriesByGenre(capitalizedGenre, userId);
+        List<SeriesDto> seriesByGenre = seriesFacade.getSeriesByGenre(capitalizedGenre, userId);
 
         List<Genre> allGenres = genreService.getAllGenres();
         model.addAttribute("genres", allGenres);
@@ -69,12 +70,12 @@ public class SeriesController {
         Long userId = userUtils.getUserIdFromAuthentication(authentication);
 
         String normalizedTitle = title.replace("-", " ").toLowerCase();
-        SeriesDto seriesDto = seriesService.findSeriesByTitle(normalizedTitle, userId);
+        SeriesDto seriesDto = seriesFacade.findSeriesByTitle(normalizedTitle, userId);
         if (seriesDto == null) {
             return "error/not-found";
         }
 
-        List<SeasonDto> seasons = seriesService.getSeasonsForSeries(seriesDto.getImdbId());
+        List<SeasonDto> seasons = seriesFacade.getSeasonsForSeries(seriesDto.getImdbId());
 
         model.addAttribute("seasons", seasons);
         model.addAttribute("title", title);
@@ -95,11 +96,11 @@ public class SeriesController {
         EpisodeDto firstUnwatchedEpisode = episodeService.findFirstUnwatchedEpisode(seriesDto.getImdbId(), userId);
         model.addAttribute("watchedEpisodes", firstUnwatchedEpisode);
 
-        List<EpisodeDto> episodes = seriesService.getEpisodesForSeason(selectedSeason.getId(), userId);
+        List<EpisodeDto> episodes = seriesFacade.getEpisodesForSeason(selectedSeason.getId(), userId);
         model.addAttribute("episodes", episodes);
 
         String genre = seriesDto.getGenre();
-        List<SeriesDto> seriesByGenre = seriesService.getSeriesByGenre(genre, userId);
+        List<SeriesDto> seriesByGenre = seriesFacade.getSeriesByGenre(genre, userId);
         model.addAttribute("genre", seriesByGenre);
 
         model.addAttribute("series", seriesDto);

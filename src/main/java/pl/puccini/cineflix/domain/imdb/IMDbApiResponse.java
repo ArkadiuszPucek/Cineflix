@@ -10,5 +10,5 @@ import lombok.Setter;
 @Setter
 public class IMDbApiResponse {
     @JsonProperty("ratings")
-    private IMDbData imdbRating;
+    private double imdbRating;
 }

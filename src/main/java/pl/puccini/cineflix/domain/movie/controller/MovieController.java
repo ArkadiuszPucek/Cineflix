@@ -7,11 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.puccini.cineflix.domain.genre.Genre;
 import pl.puccini.cineflix.domain.genre.GenreService;
+import pl.puccini.cineflix.domain.movie.MovieFacade;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.service.MovieService;
-import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
-import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeInfoDto;
-import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
 import pl.puccini.cineflix.domain.user.service.UserUtils;
 
 import java.util.List;
@@ -19,15 +17,14 @@ import java.util.List;
 @Controller
 @RequestMapping("/movies")
 public class MovieController {
-
-    private final MovieService movieService;
     private final GenreService genreService;
     private final UserUtils userUtils;
+    private final MovieFacade movieFacade;
 
-    public MovieController(MovieService movieService, GenreService genreService, UserUtils userUtils) {
-        this.movieService = movieService;
+    public MovieController(GenreService genreService, UserUtils userUtils, MovieFacade movieFacade) {
         this.genreService = genreService;
         this.userUtils = userUtils;
+        this.movieFacade = movieFacade;
     }
 
     @GetMapping("/{value}")
@@ -35,12 +32,12 @@ public class MovieController {
         userUtils.addAvatarUrlToModel(authentication, model);
         String normalizedTitle = value.replace("-", " ").toLowerCase();
         Long userId = userUtils.getUserIdFromAuthentication(authentication);
-        MovieDto movieDto = movieService.findMovieByTitle(normalizedTitle, userId);
+        MovieDto movieDto = movieFacade.findMovieByTitle(normalizedTitle, userId);
 
         if (movieDto != null) {
             model.addAttribute("title", value);
 
-            List<MovieDto> movieByGenre = movieService.getMovieByGenre(movieDto.getGenre(), userId);
+            List<MovieDto> movieByGenre = movieFacade.getMovieByGenre(movieDto.getGenre(), userId);
             model.addAttribute("moviesByGenre", movieByGenre);
 
             model.addAttribute("movie", movieDto);
@@ -54,7 +51,7 @@ public class MovieController {
             if (genreByType != null) {
                 model.addAttribute("genre", capitalizedGenre);
 
-                List<MovieDto> moviesByGenre = movieService.getMovieByGenre(capitalizedGenre, userId);
+                List<MovieDto> moviesByGenre = movieFacade.getMovieByGenre(capitalizedGenre, userId);
                 model.addAttribute("moviesByGenre", moviesByGenre);
 
                 List<Genre> allGenres = genreService.getAllGenres();
@@ -76,7 +73,7 @@ public class MovieController {
         List<Genre> allGenres = genreService.getAllGenres();
         model.addAttribute("genres", allGenres);
 
-        List<MovieDto> allMoviesInService = movieService.findAllMoviesInService(userId);
+        List<MovieDto> allMoviesInService = movieFacade.findAllMovies(userId);
         model.addAttribute("allMoviesInService", allMoviesInService);
 
         return "movies";
@@ -86,7 +83,7 @@ public class MovieController {
     public String playMovie(@PathVariable String imdbId, Authentication authentication, Model model) {
         userUtils.addAvatarUrlToModel(authentication, model);
 
-        MovieDto movieDto = movieService.findMovieByImdbId(imdbId);
+        MovieDto movieDto = movieFacade.getMovieDtoByImdbId(imdbId);
 
         if (movieDto == null) {
             return "error/not-found";

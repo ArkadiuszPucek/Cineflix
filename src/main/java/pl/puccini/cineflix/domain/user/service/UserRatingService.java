@@ -12,18 +12,17 @@ import pl.puccini.cineflix.domain.user.model.UserRating;
 import pl.puccini.cineflix.domain.user.repository.UserRatingRepository;
 import pl.puccini.cineflix.domain.user.repository.UserRepository;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-public class RatingService {
+public class UserRatingService {
     private final UserRatingRepository userRatingRepository;
     private final UserRepository userRepository;
     private final MovieRepository movieRepository;
     private final SeriesRepository seriesRepository;
 
 
-    public RatingService(UserRatingRepository userRatingRepository, UserRepository userRepository, MovieRepository movieRepository, SeriesRepository seriesRepository) {
+    public UserRatingService(UserRatingRepository userRatingRepository, UserRepository userRepository, MovieRepository movieRepository, SeriesRepository seriesRepository) {
         this.userRatingRepository = userRatingRepository;
         this.userRepository = userRepository;
         this.movieRepository = movieRepository;
@@ -72,4 +71,14 @@ public class RatingService {
             userRatingRepository.save(newRating);
         }
     }
+    public Optional<Boolean> getCurrentUserRatingForMovie(String imdbId, Long userId) {
+        return userRatingRepository.findByMovieImdbIdAndUserId(imdbId, userId)
+                .map(UserRating::isUpvote);
+    }
+
+    public Optional<Boolean> getCurrentUserRatingForSeries(String imdbId, Long userId) {
+        return userRatingRepository.findBySeriesImdbIdAndUserId(imdbId, userId)
+                .map(UserRating::isUpvote);
+    }
+
 }

@@ -1,6 +1,9 @@
-package pl.puccini.cineflix.config.carousel.movies;
+package pl.puccini.cineflix.config.carousel.movies.service;
 
 import org.springframework.stereotype.Service;
+import pl.puccini.cineflix.config.carousel.CarouselConfigService;
+import pl.puccini.cineflix.config.carousel.movies.model.MoviesCarouselConfig;
+import pl.puccini.cineflix.config.carousel.movies.repository.MovieCarouselConfigRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;

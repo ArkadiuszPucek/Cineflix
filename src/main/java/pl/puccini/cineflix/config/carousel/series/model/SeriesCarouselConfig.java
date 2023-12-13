@@ -1,4 +1,4 @@
-package pl.puccini.cineflix.config.carousel.movies;
+package pl.puccini.cineflix.config.carousel.series.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class MoviesCarouselConfig {
+public class SeriesCarouselConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

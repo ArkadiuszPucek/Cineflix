@@ -6,21 +6,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RestController;
 import pl.puccini.cineflix.domain.exceptions.UserNotFoundException;
-import pl.puccini.cineflix.domain.user.service.RatingService;
+import pl.puccini.cineflix.domain.user.service.UserRatingService;
 import pl.puccini.cineflix.domain.user.service.UserUtils;
 
 @Controller
 @RequestMapping("/rate")
 public class RatingController {
 
-    private final RatingService ratingService;
+    private final UserRatingService userRatingService;
     private final UserUtils userUtils;
 
     @Autowired
-    public RatingController(RatingService ratingService, UserUtils userUtils) {
-        this.ratingService = ratingService;
+    public RatingController(UserRatingService userRatingService, UserUtils userUtils) {
+        this.userRatingService = userRatingService;
         this.userUtils = userUtils;
     }
 
@@ -30,7 +29,7 @@ public class RatingController {
         boolean isUpvote = "up".equals(direction);
 
         try {
-            ratingService.rateItem(imdbId, userId, isUpvote);
+            userRatingService.rateItem(imdbId, userId, isUpvote);
             return ResponseEntity.ok().build();
         } catch (UserNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nie znaleziono użytkownika.");

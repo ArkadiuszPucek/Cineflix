@@ -1,142 +1,90 @@
 package pl.puccini.cineflix.domain.movie.service;
 
 import org.springframework.stereotype.Service;
-import pl.puccini.cineflix.domain.exceptions.MovieNotFoundException;
-import pl.puccini.cineflix.domain.exceptions.SeriesNotFoundException;
+import pl.puccini.cineflix.domain.exceptions.*;
 import pl.puccini.cineflix.domain.genre.Genre;
-import pl.puccini.cineflix.domain.genre.GenreRepository;
 import pl.puccini.cineflix.domain.genre.GenreService;
 import pl.puccini.cineflix.domain.imdb.IMDbApiService;
+import pl.puccini.cineflix.domain.movie.MovieFactory;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.dto.MovieDtoMapper;
 import pl.puccini.cineflix.domain.movie.model.Movie;
-import pl.puccini.cineflix.domain.movie.model.MoviesPromoBox;
 import pl.puccini.cineflix.domain.movie.repository.MovieRepository;
 import pl.puccini.cineflix.domain.movie.repository.MoviesPromoBoxRepository;
-import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
-import pl.puccini.cineflix.domain.series.model.SeriesPromoBox;
-import pl.puccini.cineflix.domain.user.model.UserRating;
 import pl.puccini.cineflix.domain.user.repository.UserRatingRepository;
 import pl.puccini.cineflix.domain.user.service.UserListService;
+import pl.puccini.cineflix.domain.user.service.UserRatingService;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class MovieService {
 
     private final MovieRepository movieRepository;
     private final IMDbApiService imdbApiService;
-    private final GenreRepository genreRepository;
     private final GenreService genreService;
-    private final UserListService userListService;
     private final UserRatingRepository userRatingRepository;
-    private final MoviesPromoBoxRepository moviesPromoBoxRepository;
+    private final UserRatingService userRatingService;
+    private final MovieFactory movieFactory;
+    private final UserListService userListService;
 
-    public MovieService(MovieRepository movieRepository, IMDbApiService imdbApiService, GenreRepository genreRepository, GenreService genreService, UserListService userListService, UserRatingRepository userRatingRepository, MoviesPromoBoxRepository moviesPromoBoxRepository) {
+    public MovieService(MovieRepository movieRepository, IMDbApiService imdbApiService, GenreService genreService, UserRatingRepository userRatingRepository, MoviesPromoBoxRepository moviesPromoBoxRepository, UserRatingService userRatingService, MovieFactory movieFactory, UserListService userListService) {
         this.movieRepository = movieRepository;
         this.imdbApiService = imdbApiService;
-        this.genreRepository = genreRepository;
         this.genreService = genreService;
-        this.userListService = userListService;
         this.userRatingRepository = userRatingRepository;
-        this.moviesPromoBoxRepository = moviesPromoBoxRepository;
+        this.userRatingService = userRatingService;
+        this.movieFactory = movieFactory;
+        this.userListService = userListService;
     }
 
-
-    public List<MovieDto> findAllPromotedMovies() {
-        return movieRepository.findAllByPromotedIsTrue().stream()
-                .map(MovieDtoMapper::map)
-                .toList();
+    public Movie addMovieByApiIfNotExist(MovieDto movieDto) throws IOException, InterruptedException {
+        if (existsByImdbId(movieDto.getImdbId())) {
+            throw new MovieAlreadyExistsException("The movie with the given IMDb id exists on the website!");
+        }
+        return addMovieByApi(movieDto);
     }
 
     public boolean existsByImdbId(String imdbId) {
         return movieRepository.existsByImdbId(imdbId);
     }
 
-//    public void addMovieManual(MovieDto movieDto) {
-//        Movie movie = new Movie();
-//        movie.setImdbId(movieDto.getImdbId());
-//        movie.setTitle(movieDto.getTitle());
-//        movie.setReleaseYear(movieDto.getReleaseYear());
-//        movie.setImageUrl(movieDto.getImageUrl());
-//        movie.setBackgroundImageUrl(movieDto.getBackgroundImageUrl());
-//        movie.setMediaUrl(movieDto.getMediaUrl());
-//        movie.setTimeline(movieDto.getTimeline());
-//        movie.setAgeLimit(movieDto.getAgeLimit());
-//        movie.setDescription(movieDto.getDescription());
-//        movie.setStaff(movieDto.getStaff());
-//        movie.setDirectedBy(movieDto.getDirectedBy());
-//        movie.setLanguages(movieDto.getLanguages());
-//        movie.setGenre(genreRepository.findByGenreTypeIgnoreCase(movieDto.getGenre()));
-//        movie.setImdbRating(movieDto.getImdbRating());
-//        movie.setPromoted(movieDto.isPromoted());
-//        movie.setImdbUrl("https://www.imdb.com/title/"+movieDto.getImdbId());
-//        movieRepository.save(movie);
-//    }
-//
-//    public Movie addMovieByApi(MovieDto movieDto) throws IOException, InterruptedException {
-//        MovieDto movieApiDto = imdbApiService.fetchIMDbData(movieDto.getImdbId());
-//        Movie movie = new Movie();
-//        movie.setImdbId(movieApiDto.getImdbId());
-//        movie.setTitle(movieApiDto.getTitle());
-//        movie.setReleaseYear(movieApiDto.getReleaseYear());
-//        movie.setImageUrl(movieApiDto.getImageUrl());
-//        movie.setBackgroundImageUrl(movieApiDto.getBackgroundImageUrl());
-//        movie.setMediaUrl(movieApiDto.getMediaUrl());
-//        movie.setTimeline(movieApiDto.getTimeline());
-//        movie.setAgeLimit(movieApiDto.getAgeLimit());
-//        movie.setDescription(movieApiDto.getDescription());
-//        movie.setStaff(movieApiDto.getStaff());
-//        movie.setDirectedBy(movieApiDto.getDirectedBy());
-//        movie.setLanguages(movieApiDto.getLanguages());
-//        movie.setGenre(genreRepository.findByGenreTypeIgnoreCase(movieApiDto.getGenre()));
-//        movie.setImdbRating(movieApiDto.getImdbRating());
-//        movie.setPromoted(movieDto.isPromoted());
-//        movie.setImdbUrl("https://www.imdb.com/title/"+movieDto.getImdbId());
-//        movieRepository.save(movie);
-//        return movie;
-//    }
-
     public void addMovieManual(MovieDto movieDto) {
-        Movie movie = mapMovieDtoToMovie(movieDto, null);
+        Movie movie = movieFactory.createMovie(movieDto, null);
         movieRepository.save(movie);
     }
 
     public Movie addMovieByApi(MovieDto movieDto) throws IOException, InterruptedException {
-        MovieDto movieApiDto = imdbApiService.fetchIMDbData(movieDto.getImdbId());
-        Movie movie = mapMovieDtoToMovie(movieApiDto, movieDto.isPromoted());
-        movieRepository.save(movie);
-        return movie;
+        String type = imdbApiService.fetchIMDbForTypeCheck(movieDto.getImdbId());
+        if (type.equals("movie")){
+            MovieDto movieApiDto = imdbApiService.fetchIMDbDataForMovies(movieDto.getImdbId());
+            Movie movie = movieFactory.createMovie(movieApiDto, movieDto.isPromoted());
+            movieRepository.save(movie);
+            return movie;
+        }else {
+            throw new IncorrectTypeException("Incorrect imdbId type for movie");
+        }
     }
 
-    private Movie mapMovieDtoToMovie(MovieDto movieDto, Boolean isPromoted) {
-        Movie movie = new Movie();
-        movie.setImdbId(movieDto.getImdbId());
-        movie.setTitle(movieDto.getTitle());
-        movie.setReleaseYear(movieDto.getReleaseYear());
-        movie.setImageUrl(movieDto.getImageUrl());
-        movie.setBackgroundImageUrl(movieDto.getBackgroundImageUrl());
-        movie.setMediaUrl(movieDto.getMediaUrl());
-        movie.setTimeline(movieDto.getTimeline());
-        movie.setAgeLimit(movieDto.getAgeLimit());
-        movie.setDescription(movieDto.getDescription());
-        movie.setStaff(movieDto.getStaff());
-        movie.setDirectedBy(movieDto.getDirectedBy());
-        movie.setLanguages(movieDto.getLanguages());
-        movie.setGenre(genreRepository.findByGenreTypeIgnoreCase(movieDto.getGenre()));
-        movie.setImdbRating(movieDto.getImdbRating());
-        movie.setPromoted(isPromoted != null ? isPromoted : movieDto.isPromoted());
-        movie.setImdbUrl("https://www.imdb.com/title/" + movieDto.getImdbId());
-        return movie;
+    public boolean updateMovie(MovieDto movieDto) {
+        Movie existingMovie = movieRepository.findMovieByImdbId(movieDto.getImdbId());
+        if (existingMovie != null) {
+            movieFactory.updateMovieWithDto(existingMovie, movieDto);
+            movieRepository.save(existingMovie);
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public List<MovieDto> getMoviesByImdbId(String imdbId){
-        return movieRepository.findAllByImdbId(imdbId).stream()
-                .map(MovieDtoMapper::map)
-                .toList();
+    public boolean deleteMovieByImdbId(String imdbId) {
+        Movie movieByImdbId = movieRepository.findMovieByImdbId(imdbId);
+        if (movieByImdbId != null) {
+            movieRepository.delete(movieByImdbId);
+            return true;
+        }
+        return false;
     }
 
     public List<MovieDto> getMovieByGenre(String genre, Long userId){
@@ -146,7 +94,7 @@ public class MovieService {
                 .toList();
         moviesDtos.forEach(movie -> {
             movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId()));
-            movie.setUserRating(getCurrentUserRatingForMovie(movie.getImdbId(), userId).orElse(null));
+            movie.setUserRating(userRatingService.getCurrentUserRatingForMovie(movie.getImdbId(), userId).orElse(null));
         });
         return moviesDtos;
     }
@@ -158,7 +106,7 @@ public class MovieService {
         }
         MovieDto mappedMovie = MovieDtoMapper.map(movie);
         mappedMovie.setOnUserList(userListService.isOnList(userId, mappedMovie.getImdbId()));
-        mappedMovie.setUserRating(getCurrentUserRatingForMovie(mappedMovie.getImdbId(), userId).orElse(null));
+        mappedMovie.setUserRating(userRatingService.getCurrentUserRatingForMovie(mappedMovie.getImdbId(), userId).orElse(null));
         return mappedMovie;
     }
 
@@ -176,7 +124,7 @@ public class MovieService {
 
         allMoviesDto.forEach(movie -> {
             movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId()));
-            movie.setUserRating(getCurrentUserRatingForMovie(movie.getImdbId(), userId).orElse(null));
+            movie.setUserRating(userRatingService.getCurrentUserRatingForMovie(movie.getImdbId(), userId).orElse(null));
         });
         return allMoviesDto;
     }
@@ -196,31 +144,6 @@ public class MovieService {
         return MovieDtoMapper.map(movieByImdbId);
     }
 
-    public boolean updateMovie(MovieDto movieDto) {
-        Movie existingMovie = movieRepository.findMovieByImdbId(movieDto.getImdbId());
-
-        if (existingMovie != null) {
-            existingMovie.setTitle(movieDto.getTitle());
-            existingMovie.setReleaseYear(movieDto.getReleaseYear());
-            existingMovie.setImageUrl(movieDto.getImageUrl());
-            existingMovie.setBackgroundImageUrl(movieDto.getBackgroundImageUrl());
-            existingMovie.setMediaUrl(movieDto.getMediaUrl());
-            existingMovie.setTimeline(movieDto.getTimeline());
-            existingMovie.setAgeLimit(movieDto.getAgeLimit());
-            existingMovie.setDescription(movieDto.getDescription());
-            existingMovie.setStaff(movieDto.getStaff());
-            existingMovie.setDirectedBy(movieDto.getDirectedBy());
-            existingMovie.setLanguages(movieDto.getLanguages());
-            existingMovie.setGenre(genreRepository.findByGenreTypeIgnoreCase(movieDto.getGenre()));
-            existingMovie.setImdbRating(movieDto.getImdbRating());
-            existingMovie.setPromoted(movieDto.isPromoted());
-            movieRepository.save(existingMovie);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public Movie getMovieByImdbId(String imdbId){
         return movieRepository.findMovieByImdbId(imdbId);
     }
@@ -229,74 +152,4 @@ public class MovieService {
         Movie movieByImdbId = movieRepository.findMovieByImdbId(imdbId);
         return movieByImdbId.getTitle().toLowerCase().replace(' ', '-');
     }
-
-    public MovieDto findMovieByTitle(String title){
-        Movie movie = movieRepository.findByTitleIgnoreCase(title);
-        return MovieDtoMapper.map(movie);
-    }
-
-    public boolean deleteMovieByImdbId(String imdbId) {
-        Movie movieByImdbId = movieRepository.findMovieByImdbId(imdbId);
-        if (movieByImdbId != null) {
-            movieRepository.delete(movieByImdbId);
-            return true;
-        }
-        return false;
-    }
-
-    public Optional<Boolean> getCurrentUserRatingForMovie(String imdbId, Long userId) {
-        return userRatingRepository.findByMovieImdbIdAndUserId(imdbId, userId)
-                .map(UserRating::isUpvote);
-    }
-
-    public List<MovieDto> getMoviePromoBox(Long userId) {
-        MoviesPromoBox promoBox = moviesPromoBoxRepository.findTopByOrderByIdDesc();
-        if (promoBox == null) {
-            return Collections.emptyList();
-        }
-
-        String[] imdbIds = promoBox.getImdbIds().split(",");
-        return Arrays.stream(imdbIds)
-                .flatMap(imdbId -> getMoviesByImdbId(imdbId).stream())
-                .peek(movie -> {
-                    movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId()));
-                    movie.setUserRating(getCurrentUserRatingForMovie(movie.getImdbId(), userId).orElse(null));
-                })
-                .collect(Collectors.toList());
-    }
-
-    public String getMoviesPromoBoxTitle() {
-        MoviesPromoBox promoBox = moviesPromoBoxRepository.findTopByOrderByIdDesc();
-        if (promoBox != null) {
-            return promoBox.getMoviesPromoBoxTitle();
-        } else {
-            return "Trending Movies";
-        }
-    }
-
-    public void updateMoviePromoBox(String title, String imdbId1, String imdbId2, String imdbId3, String imdbId4, String imdbId5) {
-        List<String> allImdbIds = Arrays.asList(imdbId1, imdbId2, imdbId3, imdbId4, imdbId5);
-        List<String> validImdbIds = new ArrayList<>();
-
-        for (String imdbId : allImdbIds) {
-            if (seriesExists(imdbId)) {
-                validImdbIds.add(imdbId);
-            } else {
-                throw new MovieNotFoundException("Movie not found");
-            }
-        }
-
-        String joinedImdbIds = String.join(",", validImdbIds);
-
-        MoviesPromoBox moviesPromoBox = new MoviesPromoBox();
-        moviesPromoBox.setMoviesPromoBoxTitle(title);
-        moviesPromoBox.setImdbIds(joinedImdbIds);
-        moviesPromoBoxRepository.save(moviesPromoBox);
-
-    }
-
-    private boolean seriesExists(String imdbId) {
-        return movieRepository.existsByImdbId(imdbId);
-    }
-
 }

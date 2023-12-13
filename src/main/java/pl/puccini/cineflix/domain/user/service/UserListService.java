@@ -7,7 +7,6 @@ import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.dto.MovieDtoMapper;
 import pl.puccini.cineflix.domain.movie.model.Movie;
 import pl.puccini.cineflix.domain.movie.repository.MovieRepository;
-import pl.puccini.cineflix.domain.movie.service.MovieService;
 import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
 import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDtoMapper;
 import pl.puccini.cineflix.domain.series.model.Series;
@@ -28,17 +27,16 @@ public class UserListService {
     private final UserRepository userRepository;
     private final MovieRepository movieRepository;
     private final SeriesRepository seriesRepository;
-    private final SeriesService seriesService;
-    private final MovieService movieService;
+    private final UserRatingService userRatingService;
 
-    public UserListService(UserListRepository userListRepository, UserRepository userRepository, MovieRepository movieRepository, SeriesRepository seriesRepository, @Lazy SeriesService seriesService, @Lazy MovieService movieService) {
+    public UserListService(UserListRepository userListRepository, UserRepository userRepository, MovieRepository movieRepository, SeriesRepository seriesRepository, UserRatingService userRatingService) {
         this.userListRepository = userListRepository;
         this.userRepository = userRepository;
         this.movieRepository = movieRepository;
         this.seriesRepository = seriesRepository;
-        this.seriesService = seriesService;
-        this.movieService = movieService;
+        this.userRatingService = userRatingService;
     }
+
 
     public List<MovieDto> getUserMovies(Long userId) {
         List<UserList> userLists = userListRepository.findByUserId(userId);
@@ -49,8 +47,7 @@ public class UserListService {
             if (movieByImdbId != null){
                 MovieDto mappedMovie = MovieDtoMapper.map(movieByImdbId);
                 mappedMovie.setOnUserList(isOnList(userId, mappedMovie.getImdbId()));
-                mappedMovie.setUserRating(movieService
-                        .getCurrentUserRatingForMovie(mappedMovie.getImdbId(), userId).orElse(null));
+                mappedMovie.setUserRating(userRatingService.getCurrentUserRatingForMovie(mappedMovie.getImdbId(), userId).orElse(null));
                 movies.add(mappedMovie);
             }
         }
@@ -66,7 +63,7 @@ public class UserListService {
             if (seriesByImdbId != null) {
                 SeriesDto mappedSeries = SeriesDtoMapper.map(seriesByImdbId);
                 mappedSeries.setOnUserList(isOnList(userId, mappedSeries.getImdbId()));
-                mappedSeries.setUserRating(seriesService
+                mappedSeries.setUserRating(userRatingService
                         .getCurrentUserRatingForSeries(mappedSeries.getImdbId(), userId).orElse(null));
                 series.add(mappedSeries);
             }

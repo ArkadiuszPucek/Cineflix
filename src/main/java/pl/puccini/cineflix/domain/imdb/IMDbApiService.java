@@ -4,34 +4,35 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import pl.puccini.cineflix.domain.genre.Genre;
-import pl.puccini.cineflix.domain.genre.GenreRepository;
+import pl.puccini.cineflix.domain.exceptions.EpisodeNotFoundException;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
-import pl.puccini.cineflix.domain.series.model.Series;
 import pl.puccini.cineflix.domain.series.service.EpisodeService;
 import pl.puccini.cineflix.web.admin.ConfigLoader;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.*;
-import java.util.*;
 
 
 @Service
 public class IMDbApiService {
 
-    private final GenreRepository genreRepository;
     private final EpisodeService episodeService;
+    private final HttpClientService httpClientService;
+    private final IMDbApiUrlBuilder imDbApiUrlBuilder;
+    private final IMDbDataMapper imDbDataMapper;
+    private final ObjectMapper objectMapper;
     private static final String RAPID_API_HOST = "mdblist.p.rapidapi.com";
     private static final String RAPID_API_MDA_HOST = "movie-database-alternative.p.rapidapi.com";
     private static final String RAPID_API_IMDb_HOST = "imdb8.p.rapidapi.com";
     private String rapidApiKey;
 
-    public IMDbApiService(GenreRepository genreRepository, @Lazy EpisodeService episodeService) {
-        this.genreRepository = genreRepository;
+    public IMDbApiService(@Lazy EpisodeService episodeService, HttpClientService httpClientService, IMDbApiUrlBuilder imDbApiUrlBuilder, IMDbDataMapper imDbDataMapper, ObjectMapper objectMapper) {
         this.episodeService = episodeService;
+        this.httpClientService = httpClientService;
+        this.imDbApiUrlBuilder = imDbApiUrlBuilder;
+        this.imDbDataMapper = imDbDataMapper;
+        this.objectMapper = objectMapper;
         loadRapidApiKey();
     }
     private void loadRapidApiKey() {
@@ -39,285 +40,72 @@ public class IMDbApiService {
         rapidApiKey = config.getProperty("rapid_api_key");
     }
 
-    public MovieDto fetchIMDbData(String imdbId) throws IOException, InterruptedException {
-        String apiUrl = "https://mdblist.p.rapidapi.com/?i=" + imdbId;
-        String apiMdaUrl = "https://movie-database-alternative.p.rapidapi.com/?r=json&i=" + imdbId;
-
-
-        HttpRequest mdblistApiRequest = HttpRequest.newBuilder()
-                .uri(URI.create(apiUrl))
-                .header("X-RapidAPI-Key", rapidApiKey)
-                .header("X-RapidAPI-Host", RAPID_API_HOST)
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
-
-        HttpRequest mdaApiRequest = HttpRequest.newBuilder()
-                .uri(URI.create(apiMdaUrl))
-                .header("X-RapidAPI-Key", rapidApiKey)
-                .header("X-RapidAPI-Host", RAPID_API_MDA_HOST)
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpResponse<String> mdblistApiResponse = client.send(mdblistApiRequest, HttpResponse.BodyHandlers.ofString());
-        HttpResponse<String> mdaApiResponse = client.send(mdaApiRequest, HttpResponse.BodyHandlers.ofString());
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode mdblistApiRootNode = objectMapper.readTree(mdblistApiResponse.body());
-        JsonNode mdaApiRootNode = objectMapper.readTree(mdaApiResponse.body());
-
-        MovieDto movieDto = new MovieDto();
-
-        String title = mdblistApiRootNode.path("title").asText(null);
-        int year = mdblistApiRootNode.path("year").asInt(-1);
-        String imageUrl = mdblistApiRootNode.path("poster").asText(null);
-        String backgroundImageUrl = mdblistApiRootNode.path("backdrop").asText("https://creativity103.com/collections/Surreal/blurredcolours3780.jpg");
-        String mediaUrl = mdblistApiRootNode.path("trailer").asText("https://www.youtube.com/watch?v=hQqBsvIB40E&ab_channel=jurak");
-        int timeLine = mdblistApiRootNode.path("runtime").asInt(-1);
-        int ageLimit = mdblistApiRootNode.path("age_rating").asInt(16);
-        String description = mdblistApiRootNode.path("description").asText(null);
-        String actors = mdaApiRootNode.path("Actors").asText("brak informacji");
-        String directedBy = mdaApiRootNode.path("Director").asText("brak informacji");
-        String language = mdaApiRootNode.path("Language").asText("Polski");
-        String genres = mdaApiRootNode.path("Genre").asText("Crime");
-        List<String> genreList = Arrays.asList(genres.split(", "));
-        Optional<Genre> matchedGenre = genreList.stream()
-                .map(genreRepository::findByGenreTypeIgnoreCase)
-                .filter(Objects::nonNull)
-                .findFirst();
-        double imdbRating = mdaApiRootNode.path("imdbRating").asInt(-1);
-
-
-        if (title == null || title.isEmpty()) {
-            title = mdaApiRootNode.path("Title").asText();
-        }
-
-        if (year == -1) {
-            year = mdaApiRootNode.path("Year").asInt();
-        }
-
-        if (imageUrl == null || imageUrl.isEmpty()) {
-            imageUrl = mdaApiRootNode.path("Poster").asText();
-        }
-
-        if (timeLine == -1) {
-            timeLine = mdaApiRootNode.path("Runtime").asInt();
-        }
-        if (description == null || description.isEmpty()) {
-            description = mdaApiRootNode.path("Plot").asText();
-        }
-        if (imdbRating == -1) {
-            JsonNode ratingsArray = mdblistApiRootNode.path("ratings");
-            if (ratingsArray.isArray()) {
-                for (JsonNode ratingElement : ratingsArray) {
-                    if ("imdb".equals(ratingElement.path("source").asText())) {
-                        movieDto.setImdbRating(ratingElement.path("value").asDouble());
-                        break;
-                    }
-                }
-            }
-        }
-
-        movieDto.setImdbId(imdbId);
-        movieDto.setTitle(title);
-        movieDto.setReleaseYear(year);
-        movieDto.setImageUrl(imageUrl);
-        movieDto.setBackgroundImageUrl(backgroundImageUrl);
-        movieDto.setMediaUrl(mediaUrl);
-        movieDto.setTimeline(timeLine);
-        movieDto.setAgeLimit(ageLimit);
-        movieDto.setDescription(description);
-        movieDto.setStaff(actors);
-        movieDto.setDirectedBy(directedBy);
-        movieDto.setLanguages(language);
-        matchedGenre.ifPresent(genre -> movieDto.setGenre(genre.getGenreType()));
-        movieDto.setImdbRating(imdbRating);
-        movieDto.setImdbUrl("https://www.imdb.com/title/" + imdbId);
-
-        return movieDto;
+    public String fetchIMDbForTypeCheck(String imdbId) throws IOException, InterruptedException{
+        String mdbListApiRootNode = httpClientService.createApiRequest(imDbApiUrlBuilder.buildMovieDataBaseListAPIUrl(imdbId), rapidApiKey, RAPID_API_HOST);
+        return objectMapper.readTree(mdbListApiRootNode).path("type").asText();
     }
 
+    public MovieDto fetchIMDbDataForMovies(String imdbId) throws IOException, InterruptedException {
+        String mdbListApiRootNode = httpClientService.createApiRequest(imDbApiUrlBuilder.buildMovieDataBaseListAPIUrl(imdbId), rapidApiKey, RAPID_API_HOST);
+        String mdaApiRootNode = httpClientService.createApiRequest(imDbApiUrlBuilder.buildMovieDatabaseAlternativeAPIUrl(imdbId), rapidApiKey, RAPID_API_MDA_HOST);
 
-    public SeriesDto fetchIMDbDataForSeries(String imdbId) throws IOException, InterruptedException {
-
-        String mdbListUrl = "https://mdblist.p.rapidapi.com/?i=" + imdbId;
-        String overDetailsIMDbURL = "https://imdb8.p.rapidapi.com/title/get-overview-details?tconst=" + imdbId + "&currentCountry=US";
-        String getSeasonsIMDbURL = "https://imdb8.p.rapidapi.com/title/get-seasons?tconst=" + imdbId;
-        String autoCompleteIMDbURL = "https://imdb8.p.rapidapi.com/auto-complete?q=" + imdbId;
-
-
-        HttpRequest mdblistApiRequest = HttpRequest.newBuilder()
-                .uri(URI.create(mdbListUrl))
-                .header("X-RapidAPI-Key", rapidApiKey)
-                .header("X-RapidAPI-Host", RAPID_API_HOST)
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
-
-        HttpRequest getOverDetailsIMDbApiRequest = HttpRequest.newBuilder()
-                .uri(URI.create(overDetailsIMDbURL))
-                .header("X-RapidAPI-Key", rapidApiKey)
-                .header("X-RapidAPI-Host", RAPID_API_IMDb_HOST)
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
-
-        HttpRequest getSeasonsIMDbApiRequest = HttpRequest.newBuilder()
-                .uri(URI.create(getSeasonsIMDbURL))
-                .header("X-RapidAPI-Key", rapidApiKey)
-                .header("X-RapidAPI-Host", RAPID_API_IMDb_HOST)
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
-
-        HttpRequest getAutoCompleteIMDbApiRequest = HttpRequest.newBuilder()
-                .uri(URI.create(autoCompleteIMDbURL))
-                .header("X-RapidAPI-Key", rapidApiKey)
-                .header("X-RapidAPI-Host", RAPID_API_IMDb_HOST)
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
-
-
-
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpResponse<String> mdblistApiResponse = client.send(mdblistApiRequest, HttpResponse.BodyHandlers.ofString());
-        HttpResponse<String> overDetailsIMDbApiResponse = client.send(getOverDetailsIMDbApiRequest, HttpResponse.BodyHandlers.ofString());
-        HttpResponse<String> seasonsIMDbApiResponse = client.send(getSeasonsIMDbApiRequest, HttpResponse.BodyHandlers.ofString());
-        HttpResponse<String> autoCompleteIMDbApiResponse = client.send(getAutoCompleteIMDbApiRequest, HttpResponse.BodyHandlers.ofString());
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode mdblistApiRootNode = objectMapper.readTree(mdblistApiResponse.body());
-        JsonNode overDetailsIMDbApiRootNode = objectMapper.readTree(overDetailsIMDbApiResponse.body());
-        JsonNode seasonsIMDbApiRootNode = objectMapper.readTree(seasonsIMDbApiResponse.body());
-        JsonNode autoCompleteIMDbApiRootNode = objectMapper.readTree(autoCompleteIMDbApiResponse.body());
-
-        SeriesDto seriesDto = new SeriesDto();
-
-        String title = mdblistApiRootNode.path("title").asText(null);
-        int releaseYear = mdblistApiRootNode.path("year").asInt(-1);
-        String imageUrl = mdblistApiRootNode.path("poster").asText(null);
-        String backgroundImageUrl = mdblistApiRootNode.path("backdrop").asText("https://creativity103.com/collections/Surreal/blurredcolours3780.jpg");
-        String description = mdblistApiRootNode.path("description").asText(null);
-        String staff = autoCompleteIMDbApiRootNode.path("d").get(0).path("s").asText(" ");
-        JsonNode genresNode = overDetailsIMDbApiRootNode.path("genres");
-        int ageLimit = mdblistApiRootNode.path("age_rating").asInt(16);
-        JsonNode ratingsNode = overDetailsIMDbApiRootNode.path("ratings");
-
-
-        if (!ratingsNode.isMissingNode()) {
-            double rating = ratingsNode.path("rating").asDouble(5.0);
-            seriesDto.setImdbRating(rating);
-        }
-
-        List<String> genresList = new ArrayList<>();
-        if (genresNode.isArray()) {
-            genresNode.forEach(genre -> genresList.add(genre.asText()));
-        }
-        Optional<Genre> matchedGenre = genresList.stream()
-                .map(genreRepository::findByGenreTypeIgnoreCase)
-                .filter(Objects::nonNull)
-                .findFirst();
-        if (matchedGenre.isPresent()) {
-            seriesDto.setGenre(matchedGenre.get().getGenreType());
-        } else {
-            seriesDto.setGenre("Nieznany gatunek");
-        }
-
-        seriesDto.setImdbId(imdbId);
-        seriesDto.setTitle(title);
-        seriesDto.setReleaseYear(releaseYear);
-        seriesDto.setImageUrl(imageUrl);
-        seriesDto.setBackgroundImageUrl(backgroundImageUrl);
-        seriesDto.setAgeLimit(ageLimit);
-        seriesDto.setDescription(description);
-        seriesDto.setStaff(staff);
-        matchedGenre.ifPresent(genre -> seriesDto.setGenre(genre.getGenreType()));
-        seriesDto.setImdbUrl("https://www.imdb.com/title/" + imdbId);
-        seriesDto.setSeasonsCount(seasonsIMDbApiRootNode.size());
-
-        return seriesDto;
+        return imDbDataMapper.mapToMovieDto(mdbListApiRootNode, mdaApiRootNode);
     }
 
-    public EpisodeDto loadEpisodeData(String episodeImdbId) throws IOException, InterruptedException {
-        HttpClient client = HttpClient.newHttpClient();
-        ObjectMapper objectMapper = new ObjectMapper();
+    public SeriesDto fetchIMDbDataForSeries(String imdbId) throws IOException, InterruptedException{
+        String mdbListApiRootNode = httpClientService.createApiRequest(imDbApiUrlBuilder.buildMovieDataBaseListAPIUrl(imdbId), rapidApiKey, RAPID_API_HOST);
+        String overDetailsRootNode = httpClientService.createApiRequest(imDbApiUrlBuilder.buildOverDetailsIMDbAPIUrl(imdbId), rapidApiKey, RAPID_API_IMDb_HOST);
+        String getSeasonsRootNode = httpClientService.createApiRequest(imDbApiUrlBuilder.buildGetSeasonsIMDbAPIUrl(imdbId), rapidApiKey, RAPID_API_IMDb_HOST);
+        String autoCompleteRootNode = httpClientService.createApiRequest(imDbApiUrlBuilder.buildAutoCompleteIMDbAPIUrl(imdbId), rapidApiKey, RAPID_API_IMDb_HOST);
 
-        String getDetailsImdbURL = "https://imdb8.p.rapidapi.com/title/get-details?tconst=" + episodeImdbId;
-        HttpRequest getDetailsIMDbApiRequest = HttpRequest.newBuilder()
-                .uri(URI.create(getDetailsImdbURL))
-                .header("X-RapidAPI-Key", rapidApiKey)
-                .header("X-RapidAPI-Host", RAPID_API_IMDb_HOST)
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
-        HttpResponse<String> getDetailsIMDbApiResponse = client.send(getDetailsIMDbApiRequest, HttpResponse.BodyHandlers.ofString());
-        JsonNode detailsIMDbApiRootNode = objectMapper.readTree(getDetailsIMDbApiResponse.body());
-
-
-        String getOverDetailsIMDbURL = "https://imdb8.p.rapidapi.com/title/get-overview-details?tconst=" + episodeImdbId + "&currentCountry=US";
-        HttpRequest getOverDetailsIMDbApiRequest = HttpRequest.newBuilder()
-                .uri(URI.create(getOverDetailsIMDbURL))
-                .header("X-RapidAPI-Key", rapidApiKey)
-                .header("X-RapidAPI-Host", RAPID_API_IMDb_HOST)
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
-        HttpResponse<String> getOverDetailsIMDbApiResponse = client.send(getOverDetailsIMDbApiRequest, HttpResponse.BodyHandlers.ofString());
-        JsonNode overDetailsIMDbApiRootNode = objectMapper.readTree(getOverDetailsIMDbApiResponse.body());
-
-        EpisodeDto episodeDto = new EpisodeDto();
-
-        int runningTimeInMinutes = detailsIMDbApiRootNode.path("runningTimeInMinutes").asInt(43);
-        episodeDto.setDurationMinutes(runningTimeInMinutes);
-
-        String imageUrl = detailsIMDbApiRootNode.path("image").path("url").asText("https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Solid_white_bordered.svg/600px-Solid_white_bordered.svg.png");
-        episodeDto.setImageUrl(imageUrl);
-
-        String plotOutline = overDetailsIMDbApiRootNode.path("plotOutline").path("text").asText();
-        episodeDto.setEpisodeDescription(plotOutline);
-        episodeDto.setMediaUrl("https://www.youtube.com/watch?v=hQqBsvIB40E&ab_channel=jurak");
-
-        return episodeDto;
-
+        return imDbDataMapper.mapToSeriesDto(mdbListApiRootNode, overDetailsRootNode, getSeasonsRootNode, autoCompleteRootNode);
     }
 
-    public void addSeasonsAndEpisodesToSeries(Series series, String imdbId) throws IOException, InterruptedException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        HttpClient client = HttpClient.newHttpClient();
-        String getSeasonsIMDbURL = "https://imdb8.p.rapidapi.com/title/get-seasons?tconst=" + imdbId;
+    public EpisodeDto fetchIMDbDataForEpisodes(String episodeImdbId) throws IOException, InterruptedException{
+        String getDetailsRootNode = httpClientService.createApiRequest(imDbApiUrlBuilder.buildGetDetailsIMDbAPIUrl(episodeImdbId), rapidApiKey, RAPID_API_IMDb_HOST);
+        String overDetailsRootNode = httpClientService.createApiRequest(imDbApiUrlBuilder.buildOverDetailsIMDbAPIUrl(episodeImdbId), rapidApiKey, RAPID_API_IMDb_HOST);
 
-        HttpRequest getSeasonsIMDbApiRequest = HttpRequest.newBuilder()
-                .uri(URI.create(getSeasonsIMDbURL))
-                .header("X-RapidAPI-Key", rapidApiKey)
-                .header("X-RapidAPI-Host", RAPID_API_IMDb_HOST)
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
+        return imDbDataMapper.mapToEpisodeDto(getDetailsRootNode, overDetailsRootNode);
+    }
 
+    public void fetchIMDbDataAndAddSeasonsAndEpisodesToSeries(String imdbId) throws IOException, InterruptedException{
+        JsonNode seasonsNode = httpClientService.fetchSeasonsFromApi(imDbApiUrlBuilder.getSeasonsIMDbAPIUrl(imdbId), rapidApiKey, RAPID_API_IMDb_HOST);
+        processSeasons(seasonsNode, imdbId);
+    }
 
-        HttpResponse<String> seasonsIMDbApiResponse = client.send(getSeasonsIMDbApiRequest, HttpResponse.BodyHandlers.ofString());
-
-        JsonNode seasonsIMDbApiRootNode = objectMapper.readTree(seasonsIMDbApiResponse.body());
-
-
-        for (JsonNode seasonNode : seasonsIMDbApiRootNode) {
+    private void processSeasons(JsonNode seasonsNode, String seriesImdbId) {
+        for (JsonNode seasonNode : seasonsNode) {
             int seasonNumber = seasonNode.path("season").asInt();
-            JsonNode episodesNode = seasonNode.path("episodes");
+            processEpisodes(seasonNode.path("episodes"), seriesImdbId, seasonNumber);
+        }
+    }
 
-            if (episodesNode.isArray()) {
-                for (JsonNode episodeNode : episodesNode) {
-                    int episodeNumber = episodeNode.path("episode").asInt();
-                    String episodeTitle = episodeNode.path("title").asText();
-                    String episodeImdbId = extractImdbId(episodeNode.path("id").asText());
-
-                    EpisodeDto episodeDto = loadEpisodeData(episodeImdbId);
-                    episodeDto.setEpisodeNumber(episodeNumber);
-                    episodeDto.setEpisodeTitle(episodeTitle);
-
-                    episodeService.addEpisode(episodeDto, imdbId, seasonNumber);
-                }
+    private void processEpisodes(JsonNode episodesNode, String seriesImdbId, int seasonNumber) {
+        if (episodesNode.isArray()) {
+            for (JsonNode episodeNode : episodesNode) {
+                EpisodeDto episodeDto = createEpisodeDto(episodeNode);
+                episodeService.addEpisode(episodeDto, seriesImdbId, seasonNumber);
             }
         }
+    }
+
+    private EpisodeDto createEpisodeDto(JsonNode episodeNode) {
+        String episodeImdbId = extractImdbId(episodeNode.path("id").asText());
+        EpisodeDto episodeDto = null;
+        try {
+            episodeDto = fetchIMDbDataForEpisodes(episodeImdbId);
+        } catch (IOException e) {
+            throw new EpisodeNotFoundException("Episode not found");
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        episodeDto.setEpisodeNumber(episodeNode.path("episode").asInt());
+        episodeDto.setEpisodeTitle(episodeNode.path("title").asText());
+        return episodeDto;
     }
 
     private String extractImdbId(String id) {
         String[] parts = id.split("/");
         return parts[parts.length - 1];
     }
-
 }

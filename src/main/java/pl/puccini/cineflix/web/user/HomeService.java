@@ -1,18 +1,19 @@
 package pl.puccini.cineflix.web.user;
 
 import org.springframework.stereotype.Service;
-import pl.puccini.cineflix.config.carousel.movies.MovieCarouselService;
-import pl.puccini.cineflix.config.carousel.series.SeriesCarouselService;
-import pl.puccini.cineflix.domain.genre.GenreService;
+import pl.puccini.cineflix.config.carousel.movies.service.MovieCarouselService;
+import pl.puccini.cineflix.config.carousel.series.service.SeriesCarouselService;
+import pl.puccini.cineflix.domain.movie.MovieFacade;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
-import pl.puccini.cineflix.config.carousel.movies.MoviesCarouselConfigDto;
-import pl.puccini.cineflix.domain.movie.service.MovieService;
+import pl.puccini.cineflix.config.carousel.movies.dto.MoviesCarouselConfigDto;
+import pl.puccini.cineflix.domain.movie.service.MoviePromotionService;
+import pl.puccini.cineflix.domain.series.SeriesFacade;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
-import pl.puccini.cineflix.config.carousel.series.SeriesCarouselConfigDto;
+import pl.puccini.cineflix.config.carousel.series.dto.SeriesCarouselConfigDto;
 import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
 import pl.puccini.cineflix.domain.series.service.EpisodeService;
+import pl.puccini.cineflix.domain.series.service.SeriesPromotionService;
 import pl.puccini.cineflix.domain.series.service.SeriesService;
-import pl.puccini.cineflix.domain.user.service.UserListService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,29 +21,31 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class HomeService {
-    private final MovieService movieService;
-    private final UserListService userListService;
-    private final SeriesService seriesService;
+    private final MovieFacade movieFacade;
     private final EpisodeService episodeService;
     private final SeriesCarouselService seriesCarouselService;
     private final MovieCarouselService movieCarouselService;
+    private final MoviePromotionService moviePromotionService;
+    private final SeriesPromotionService seriesPromotionService;
+    private final SeriesFacade seriesFacade;
 
-    public HomeService(MovieService movieService, UserListService userListService, SeriesService seriesService, EpisodeService episodeService, SeriesCarouselService seriesCarouselService, MovieCarouselService movieCarouselService) {
-        this.movieService = movieService;
-        this.userListService = userListService;
-        this.seriesService = seriesService;
+    public HomeService(MovieFacade movieFacade, EpisodeService episodeService, SeriesCarouselService seriesCarouselService, MovieCarouselService movieCarouselService, MoviePromotionService moviePromotionService, SeriesPromotionService seriesPromotionService, SeriesFacade seriesFacade) {
+        this.movieFacade = movieFacade;
         this.episodeService = episodeService;
         this.seriesCarouselService = seriesCarouselService;
         this.movieCarouselService = movieCarouselService;
+        this.moviePromotionService = moviePromotionService;
+        this.seriesPromotionService = seriesPromotionService;
+        this.seriesFacade = seriesFacade;
     }
 
     public Object getRandomPromotedItem(Long userId) {
-        List<MovieDto> allPromotedMovies = movieService.findAllPromotedMovies();
-        allPromotedMovies.forEach(movie -> movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId())));
+        List<MovieDto> allPromotedMovies = moviePromotionService.findAllPromotedMovies();
+        allPromotedMovies.forEach(movie -> movie.setOnUserList(movieFacade.isMovieOnUserList(userId, movie.getImdbId())));
 
-        List<SeriesDto> allPromotedSeries = seriesService.findAllPromotedSeries();
+        List<SeriesDto> allPromotedSeries = seriesPromotionService.findAllPromotedSeries();
         allPromotedSeries.forEach(series -> {
-            series.setOnUserList(userListService.isOnList(userId, series.getImdbId()));
+            series.setOnUserList(movieFacade.isMovieOnUserList(userId, series.getImdbId()));
             EpisodeDto firstUnwatchedEpisode = episodeService.findFirstUnwatchedEpisode(series.getImdbId(), userId);
             series.setFirstUnwatchedEpisodeId(firstUnwatchedEpisode != null ? firstUnwatchedEpisode.getId() : null);
         });
@@ -70,7 +73,7 @@ public class HomeService {
             if (!genre.isEmpty()) {
                 SeriesCarouselConfigDto config = new SeriesCarouselConfigDto();
                 config.setGenre(genre);
-                config.setSeries(seriesService.getSeriesByGenre(genre, userId));
+                config.setSeries(seriesFacade.getSeriesByGenre(genre, userId));
                 config.setActive(true);
                 carousels.add(config);
             }
@@ -87,7 +90,7 @@ public class HomeService {
             if (!genre.isEmpty()) {
                 MoviesCarouselConfigDto config = new MoviesCarouselConfigDto();
                 config.setGenre(genre);
-                config.setMovies(movieService.getMovieByGenre(genre, userId));
+                config.setMovies(movieFacade.getMovieByGenre(genre, userId));
                 config.setActive(true);
                 carousels.add(config);
             }

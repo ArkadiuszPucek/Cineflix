@@ -1,4 +1,4 @@
-package pl.puccini.cineflix.config.carousel.movies;
+package pl.puccini.cineflix.config.carousel.movies.dto;
 
 import lombok.Getter;
 import lombok.Setter;

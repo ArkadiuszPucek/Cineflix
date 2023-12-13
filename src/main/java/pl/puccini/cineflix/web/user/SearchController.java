@@ -5,13 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.puccini.cineflix.domain.kids.KidsContentService;
+import pl.puccini.cineflix.domain.kids.KidsMovieService;
+import pl.puccini.cineflix.domain.kids.KidsSeriesService;
+import pl.puccini.cineflix.domain.movie.MovieFacade;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
-import pl.puccini.cineflix.domain.movie.model.Movie;
-import pl.puccini.cineflix.domain.movie.service.MovieService;
+import pl.puccini.cineflix.domain.series.SeriesFacade;
 import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
-import pl.puccini.cineflix.domain.series.model.Series;
-import pl.puccini.cineflix.domain.series.service.SeriesService;
 import pl.puccini.cineflix.domain.user.service.UserUtils;
 
 import java.util.ArrayList;
@@ -20,18 +19,20 @@ import java.util.List;
 
 @Controller
 public class SearchController {
-    private final MovieService movieService;
-    private final SeriesService seriesService;
-    private final KidsContentService kidsContentService;
+    private final MovieFacade movieFacade;
     private final UserUtils userUtils;
+    private final KidsMovieService kidsMovieService;
+    private final KidsSeriesService kidsSeriesService;
+    private final SeriesFacade seriesFacade;
 
-
-    public SearchController(MovieService movieService, SeriesService seriesService, KidsContentService kidsContentService, UserUtils userUtils) {
-        this.movieService = movieService;
-        this.seriesService = seriesService;
-        this.kidsContentService = kidsContentService;
+    public SearchController(MovieFacade movieFacade, UserUtils userUtils, KidsMovieService kidsMovieService, KidsSeriesService kidsSeriesService, SeriesFacade seriesFacade) {
+        this.movieFacade = movieFacade;
         this.userUtils = userUtils;
+        this.kidsMovieService = kidsMovieService;
+        this.kidsSeriesService = kidsSeriesService;
+        this.seriesFacade = seriesFacade;
     }
+
 
     @GetMapping("/search")
     public String search(
@@ -46,16 +47,16 @@ public class SearchController {
         if(query != null && !query.isEmpty()) {
             String loweredQuery = query.toLowerCase();
 
-            List<MovieDto> movies = movieService.searchMovies(loweredQuery);
-            List<SeriesDto> series = seriesService.searchSeries(loweredQuery);
+            List<MovieDto> movies = movieFacade.searchMovies(loweredQuery);
+            List<SeriesDto> series = seriesFacade.searchSeries(loweredQuery);
 
             if ("movies".equals(filter)) {
                 model.addAttribute("activeAttribute", movies);
             } else if ("series".equals(filter)) {
                 model.addAttribute("activeAttribute", series);
             } else if ("kids".equals(filter)) {
-                List<MovieDto> allKidsMovies = kidsContentService.getAllKidsMovies(userId);
-                List<SeriesDto> allKidsSeries = kidsContentService.getAllKidsSeries(userId);
+                List<MovieDto> allKidsMovies = kidsMovieService.getAllKidsMovies(userId);
+                List<SeriesDto> allKidsSeries = kidsSeriesService.getAllKidsSeries(userId);
                 List<Object> mixedKidsContent = new ArrayList<>();
                 mixedKidsContent.addAll(allKidsMovies);
                 mixedKidsContent.addAll(allKidsSeries);

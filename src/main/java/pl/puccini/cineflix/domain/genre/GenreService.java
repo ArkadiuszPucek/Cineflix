@@ -1,13 +1,7 @@
 package pl.puccini.cineflix.domain.genre;
 
 import org.springframework.stereotype.Service;
-import pl.puccini.cineflix.config.carousel.movies.MoviesCarouselConfig;
-import pl.puccini.cineflix.config.carousel.movies.MovieCarouselConfigRepository;
-import pl.puccini.cineflix.config.carousel.series.SeriesCarouselConfig;
-import pl.puccini.cineflix.config.carousel.series.SeriesCarouselConfigRepository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service

@@ -8,19 +8,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pl.puccini.cineflix.config.carousel.movies.MovieCarouselService;
-import pl.puccini.cineflix.config.carousel.series.SeriesCarouselService;
-import pl.puccini.cineflix.domain.exceptions.EpisodeNotFoundException;
-import pl.puccini.cineflix.domain.exceptions.MovieNotFoundException;
-import pl.puccini.cineflix.domain.exceptions.SeriesAlreadyExistsException;
-import pl.puccini.cineflix.domain.exceptions.SeriesNotFoundException;
+import pl.puccini.cineflix.config.carousel.movies.service.MovieCarouselService;
+import pl.puccini.cineflix.config.carousel.series.service.SeriesCarouselService;
+import pl.puccini.cineflix.domain.exceptions.*;
 import pl.puccini.cineflix.domain.genre.Genre;
 import pl.puccini.cineflix.domain.genre.GenreService;
+import pl.puccini.cineflix.domain.movie.MovieFacade;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.model.Movie;
 import pl.puccini.cineflix.domain.movie.model.MoviesPromoBox;
 import pl.puccini.cineflix.domain.movie.repository.MoviesPromoBoxRepository;
+import pl.puccini.cineflix.domain.movie.service.MoviePromotionService;
 import pl.puccini.cineflix.domain.movie.service.MovieService;
+import pl.puccini.cineflix.domain.series.SeriesFacade;
 import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
 import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
 import pl.puccini.cineflix.domain.series.model.Episode;
@@ -28,6 +28,7 @@ import pl.puccini.cineflix.domain.series.model.Series;
 import pl.puccini.cineflix.domain.series.model.SeriesPromoBox;
 import pl.puccini.cineflix.domain.series.repository.SeriesPromoBoxRepository;
 import pl.puccini.cineflix.domain.series.service.EpisodeService;
+import pl.puccini.cineflix.domain.series.service.SeriesPromotionService;
 import pl.puccini.cineflix.domain.series.service.SeriesService;
 import pl.puccini.cineflix.domain.user.model.User;
 import pl.puccini.cineflix.domain.user.service.UserService;
@@ -40,8 +41,6 @@ import java.util.stream.Collectors;
 
 @Controller
 public class AdminController {
-    private final MovieService movieService;
-    private final SeriesService seriesService;
     private final EpisodeService episodeService;
     private final GenreService genreService;
     private final UserService userService;
@@ -50,10 +49,12 @@ public class AdminController {
     private final MoviesPromoBoxRepository moviesPromoBoxRepository;
     private final SeriesCarouselService seriesCarouselService;
     private final MovieCarouselService movieCarouselService;
+    private final MoviePromotionService moviePromotionService;
+    private final SeriesPromotionService seriesPromotionService;
+    private final MovieFacade movieFacade;
+    private final SeriesFacade seriesFacade;
 
-    public AdminController(MovieService movieService, SeriesService seriesService, EpisodeService episodeService, GenreService genreService, UserService userService, UserUtils userUtils, SeriesPromoBoxRepository seriesPromoBoxRepository, MoviesPromoBoxRepository moviesPromoBoxRepository, SeriesCarouselService seriesCarouselService, MovieCarouselService movieCarouselService) {
-        this.movieService = movieService;
-        this.seriesService = seriesService;
+    public AdminController(EpisodeService episodeService, GenreService genreService, UserService userService, UserUtils userUtils, SeriesPromoBoxRepository seriesPromoBoxRepository, MoviesPromoBoxRepository moviesPromoBoxRepository, SeriesCarouselService seriesCarouselService, MovieCarouselService movieCarouselService, MoviePromotionService moviePromotionService, SeriesPromotionService seriesPromotionService, MovieFacade movieFacade, SeriesFacade seriesFacade) {
         this.episodeService = episodeService;
         this.genreService = genreService;
         this.userService = userService;
@@ -62,6 +63,10 @@ public class AdminController {
         this.moviesPromoBoxRepository = moviesPromoBoxRepository;
         this.seriesCarouselService = seriesCarouselService;
         this.movieCarouselService = movieCarouselService;
+        this.moviePromotionService = moviePromotionService;
+        this.seriesPromotionService = seriesPromotionService;
+        this.movieFacade = movieFacade;
+        this.seriesFacade = seriesFacade;
     }
 
 
@@ -74,11 +79,11 @@ public class AdminController {
 
     @PostMapping("/admin/add-movie-form")
     public String addMovieManual(MovieDto movie, RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
-        if (movieService.existsByImdbId(movie.getImdbId())) {
+        if (movieFacade.doesMovieExists(movie.getImdbId())) {
             redirectAttributes.addFlashAttribute("error", "A film with the given IMDb id exists on the website!");
             return "redirect:/add-movie-form";
         }
-        movieService.addMovieManual(movie);
+        movieFacade.addMovieManual(movie);
         String normalizedTitle = movie.getTitle().toLowerCase().replace(" ", "-");
 
         return "redirect:/movies/" + normalizedTitle;
@@ -100,15 +105,18 @@ public class AdminController {
     }
 
     @PostMapping("/admin/add-movie-api")
-    public String addMovieByApi(MovieDto movie, RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
-        if (movieService.existsByImdbId(movie.getImdbId())) {
-            redirectAttributes.addFlashAttribute("error", "A film with the given IMDb id exists on the website!");
-            return "redirect:/add-movie-api";
+    public String addMovieByApi(MovieDto movie, RedirectAttributes redirectAttributes) {
+        try {
+            Movie movieFromApi = movieFacade.addMovieIfNotExist(movie);
+            String normalizedTitle = movieFromApi.getTitle().toLowerCase().replace(" ", "-");
+            return "redirect:/movies/" + normalizedTitle;
+        } catch (IncorrectTypeException | MovieAlreadyExistsException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/admin/add-movie-api";
+        } catch (IOException | InterruptedException e) {
+            redirectAttributes.addFlashAttribute("error", "An error occured: " + e.getMessage());
+            return "redirect:/admin/add-movie-api";
         }
-        Movie movieFromApi = movieService.addMovieByApi(movie);
-        String normalizedTitle = movieFromApi.getTitle().toLowerCase().replace(" ", "-");
-
-        return "redirect:/movies/" + normalizedTitle;
     }
 
     @GetMapping("/admin/add-movie-api")
@@ -124,7 +132,7 @@ public class AdminController {
     @GetMapping("/admin/edit-movie/{imdbId}")
     public String showEditMovieForm(@PathVariable String imdbId, Authentication authentication, Model model) {
         userUtils.addAvatarUrlToModel(authentication, model);
-        MovieDto movieByImdbId = movieService.findMovieByImdbId(imdbId);
+        MovieDto movieByImdbId = movieFacade.getMovieDtoByImdbId(imdbId);
 
         model.addAttribute("movie", movieByImdbId);
         List<Genre> allGenres = genreService.getAllGenres();
@@ -138,7 +146,7 @@ public class AdminController {
     @PostMapping("/admin/update-movie")
     public String updateMovie(@ModelAttribute("movie") MovieDto movieDto, RedirectAttributes redirectAttributes) {
         try {
-            boolean updateResult = movieService.updateMovie(movieDto);
+            boolean updateResult = movieFacade.updateMovie(movieDto);
 
             if (updateResult) {
                 redirectAttributes.addFlashAttribute("success", "The video has been successfully updated.");
@@ -161,7 +169,7 @@ public class AdminController {
                               Model model) {
         userUtils.addAvatarUrlToModel(authentication, model);
         if ("deleteMovie".equals(action)) {
-            boolean deleted = movieService.deleteMovieByImdbId(imdbId);
+            boolean deleted = movieFacade.deleteMovie(imdbId);
             if (deleted) {
                 redirectAttributes.addFlashAttribute("success", "The video has been successfully removed.");
             } else {
@@ -177,7 +185,7 @@ public class AdminController {
     public String showManageMovieForm(Authentication authentication, Model model) {
         userUtils.addAvatarUrlToModel(authentication, model);
         Long userId = userUtils.getUserIdFromAuthentication(authentication);
-        List<MovieDto> allMoviesInService = movieService.findAllMoviesInService(userId);
+        List<MovieDto> allMoviesInService = movieFacade.findAllMovies(userId);
         model.addAttribute("allMoviesInService", allMoviesInService);
 
         return "admin/movies/manage-movies";
@@ -188,7 +196,7 @@ public class AdminController {
         userUtils.addAvatarUrlToModel(authentication, model);
         MoviesPromoBox currentPromoBox = moviesPromoBoxRepository.findTopByOrderByIdDesc();
         Long userId = userUtils.getUserIdFromAuthentication(authentication);
-        List<MovieDto> promoBoxImdbIds = movieService.getMoviePromoBox(userId);
+        List<MovieDto> promoBoxImdbIds = moviePromotionService.getMoviePromoBox(userId);
         model.addAttribute("currentPromoBoxImdbIds", promoBoxImdbIds);
 
         model.addAttribute("currentPromoBox", currentPromoBox);
@@ -206,7 +214,7 @@ public class AdminController {
             @RequestParam String imdbId5,
             RedirectAttributes redirectAttributes) {
         try {
-            movieService.updateMoviePromoBox(title, imdbId1, imdbId2, imdbId3, imdbId4, imdbId5);
+            moviePromotionService.updateMoviePromoBox(title, imdbId1, imdbId2, imdbId3, imdbId4, imdbId5);
         }catch (MovieNotFoundException e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "redirect:/admin/manage-movies-promo-box";
@@ -244,13 +252,13 @@ public class AdminController {
 
     @PostMapping("/admin/add-series-form")
     public String addSeriesManual(@ModelAttribute SeriesDto series, RedirectAttributes redirectAttributes, HttpSession session) {
-        if (seriesService.existsByImdbId(series.getImdbId())) {
+        if (seriesFacade.doesSeriesExists(series.getImdbId())) {
             redirectAttributes.addFlashAttribute("message", "A film with the given IMDb id exists on the website!");
             return "redirect:/admin/add-series-form";
         }
 
         try {
-            seriesService.addSeriesManual(series);
+            seriesFacade.addSeriesManual(series);
             session.setAttribute("seasonsCount", series.getSeasonsCount());
             session.setAttribute("title", series.getTitle());
             redirectAttributes.addFlashAttribute("seasonsCount", series.getSeasonsCount());
@@ -321,11 +329,10 @@ public class AdminController {
     @PostMapping("/admin/add-series-api")
     public String addSeriesByApi(SeriesDto series, RedirectAttributes redirectAttributes) {
         try {
-            Series seriesFromApi = seriesService.addSeriesIfNotExist(series);
-            String normalizedTitle = seriesService.getNormalizedSeriesTitle(seriesFromApi.getTitle());
-
-            return "redirect:/series/" + normalizedTitle +"/sezon-1";
-        } catch (SeriesAlreadyExistsException e) {
+            Series seriesFromApi = seriesFacade.addSeriesByApiIfNotExist(series);
+            String normalizedTitle = seriesFacade.formatSeriesTitle(seriesFromApi.getTitle());
+            return "redirect:/series/" + normalizedTitle + "/sezon-1";
+        }catch (IncorrectTypeException | SeriesAlreadyExistsException e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/admin/add-series-api";
         } catch (IOException | InterruptedException e) {
@@ -347,7 +354,7 @@ public class AdminController {
     public String showManageSeriesForm(Authentication authentication, Model model) {
         userUtils.addAvatarUrlToModel(authentication, model);
         Long userId = userUtils.getUserIdFromAuthentication(authentication);
-        List<SeriesDto> allSeriesInService = seriesService.findAllSeriesInService(userId);
+        List<SeriesDto> allSeriesInService = seriesFacade.findAllSeries(userId);
         model.addAttribute("allSeriesInService", allSeriesInService);
 
         return "admin/series/manage-series";
@@ -356,7 +363,7 @@ public class AdminController {
     @GetMapping("/admin/edit-series/{imdbId}")
     public String showEditSeriesForm(@PathVariable String imdbId, Authentication authentication, Model model) {
         userUtils.addAvatarUrlToModel(authentication, model);
-        SeriesDto seriesByImdbId = seriesService.findSeriesByImdbId(imdbId);
+        SeriesDto seriesByImdbId = seriesFacade.getSeriesDtoByImdbId(imdbId);
 
         model.addAttribute("series", seriesByImdbId);
         List<Genre> allGenres = genreService.getAllGenres();
@@ -370,7 +377,7 @@ public class AdminController {
     @PostMapping("/admin/update-series")
     public String updateSeries(@ModelAttribute("series") SeriesDto seriesDto, RedirectAttributes redirectAttributes) {
         try {
-            seriesService.updateSeries(seriesDto);
+            seriesFacade.updateSeries(seriesDto);
             redirectAttributes.addFlashAttribute("success", "The series has been successfully updated.");
             return "redirect:/admin/manage-series";
         } catch (SeriesNotFoundException e) {
@@ -391,7 +398,7 @@ public class AdminController {
         userUtils.addAvatarUrlToModel(authentication, model);
 
         if ("deleteSeries".equals(action)) {
-            boolean deleted = seriesService.deleteSeriesByImdbId(imdbId);
+            boolean deleted = seriesFacade.deleteSeries(imdbId);
             if (deleted) {
                 redirectAttributes.addFlashAttribute("success", "The series has been successfully removed.");
             } else {
@@ -406,7 +413,7 @@ public class AdminController {
     @GetMapping("/admin/edit-series-seasons/{imdbId}")
     public String showManageSeasonsForm(@PathVariable String imdbId, Model model, HttpSession session, Authentication authentication) {
         userUtils.addAvatarUrlToModel(authentication, model);
-        Series series = seriesService.findSeriesByImdbIdSeriesType(imdbId);
+        Series series = seriesFacade.getSeriesByImdbId(imdbId);
         session.setAttribute("imdbId", imdbId);
 
         if (series == null){
@@ -468,7 +475,7 @@ public class AdminController {
         userUtils.addAvatarUrlToModel(authentication, model);
         SeriesPromoBox currentPromoBox = seriesPromoBoxRepository.findTopByOrderByIdDesc();
         Long userId = userUtils.getUserIdFromAuthentication(authentication);
-        List<SeriesDto> promoBoxImdbIds = seriesService.getSeriesPromoBox(userId);
+        List<SeriesDto> promoBoxImdbIds = seriesPromotionService.getSeriesPromoBox(userId);
         model.addAttribute("currentPromoBoxImdbIds", promoBoxImdbIds);
 
         model.addAttribute("currentPromoBox", currentPromoBox);
@@ -487,7 +494,7 @@ public class AdminController {
             RedirectAttributes redirectAttributes
     ) {
         try {
-            seriesService.updateSeriesPromoBox(title, imdbId1, imdbId2, imdbId3, imdbId4, imdbId5);
+            seriesPromotionService.updateSeriesPromoBox(title, imdbId1, imdbId2, imdbId3, imdbId4, imdbId5);
         }catch (SeriesNotFoundException e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "redirect:/admin/manage-series-promo-box";

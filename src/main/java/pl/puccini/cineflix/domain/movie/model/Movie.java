@@ -3,8 +3,8 @@ package pl.puccini.cineflix.domain.movie.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import pl.puccini.cineflix.domain.genre.Genre;
-import pl.puccini.cineflix.domain.user.model.UserRating;
+import pl.puccini.cineflix.domain.genre.model.Genre;
+import pl.puccini.cineflix.domain.user.userRatings.model.UserRating;
 
 import java.util.Set;
 

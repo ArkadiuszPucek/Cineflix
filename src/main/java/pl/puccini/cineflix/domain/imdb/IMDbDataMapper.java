@@ -4,12 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
-import pl.puccini.cineflix.domain.exceptions.IncorrectTypeException;
-import pl.puccini.cineflix.domain.genre.Genre;
-import pl.puccini.cineflix.domain.genre.GenreRepository;
+import pl.puccini.cineflix.domain.exceptions.DataMappingException;
+import pl.puccini.cineflix.domain.genre.model.Genre;
+import pl.puccini.cineflix.domain.genre.repository.GenreRepository;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
-import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
-import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
+import pl.puccini.cineflix.domain.series.main.episode.episodeDto.EpisodeDto;
+import pl.puccini.cineflix.domain.series.main.series.seriesDto.SeriesDto;
 
 import java.util.*;
 
@@ -24,9 +24,42 @@ public class IMDbDataMapper {
         this.objectMapper = new ObjectMapper();
     }
 
-    public MovieDto mapToMovieDto(String mdbListApiResponse, String mdaApiResponse) throws JsonProcessingException {
-        JsonNode mdblistApiRootNode = objectMapper.readTree(mdbListApiResponse);
-        JsonNode mdaApiRootNode = objectMapper.readTree(mdaApiResponse);
+    public MovieDto mapToMovieDto(String mdbListApiResponse, String mdaApiResponse) {
+        try {
+            JsonNode mdblistApiRootNode = objectMapper.readTree(mdbListApiResponse);
+            JsonNode mdaApiRootNode = objectMapper.readTree(mdaApiResponse);
+
+            return parseMovieDto(mdblistApiRootNode, mdaApiRootNode);
+        } catch (JsonProcessingException e) {
+            throw new DataMappingException("Error processing JSON for movie mapping", e);
+        }
+    }
+
+    public SeriesDto mapToSeriesDto(String mdbListApi, String overDetails, String getSeasons, String autoComplete) {
+        try {
+            JsonNode mdbListApiRootNode = objectMapper.readTree(mdbListApi);
+            JsonNode overDetailsRootNode = objectMapper.readTree(overDetails);
+            JsonNode getSeasonsRootNode = objectMapper.readTree(getSeasons);
+            JsonNode autoCompleteRootNode = objectMapper.readTree(autoComplete);
+
+            return parseSeriesDto(mdbListApiRootNode, overDetailsRootNode, getSeasonsRootNode, autoCompleteRootNode);
+        } catch (JsonProcessingException e) {
+            throw new DataMappingException("Error processing JSON for series mapping", e);
+        }
+    }
+
+    public EpisodeDto mapToEpisodeDto(String getDetailsApi, String overDetailsApi) {
+        try {
+            JsonNode getDetailsRootNode = objectMapper.readTree(getDetailsApi);
+            JsonNode overDetailsRootNode = objectMapper.readTree(overDetailsApi);
+
+            return parseEpisodeDto(getDetailsRootNode, overDetailsRootNode);
+        } catch (JsonProcessingException e) {
+            throw new DataMappingException("Error processing JSON for episode mapping", e);
+        }
+    }
+
+    private MovieDto parseMovieDto(JsonNode mdblistApiRootNode, JsonNode mdaApiRootNode) {
         MovieDto movieDto = new MovieDto();
 
         String imdbId = mdblistApiRootNode.path("imdbid").asText(null);
@@ -102,11 +135,8 @@ public class IMDbDataMapper {
         return movieDto;
     }
 
-    public SeriesDto mapToSeriesDto(String mdbListApi, String overDetails, String getSeasons, String autoComplete) throws JsonProcessingException {
-        JsonNode mdbListApiRootNode = objectMapper.readTree(mdbListApi);
-        JsonNode overDetailsRootNode = objectMapper.readTree(overDetails);
-        JsonNode getSeasonsRootNode = objectMapper.readTree(getSeasons);
-        JsonNode autoCompleteRootNode = objectMapper.readTree(autoComplete);
+    private SeriesDto parseSeriesDto(JsonNode mdbListApiRootNode, JsonNode overDetailsRootNode,
+                                     JsonNode getSeasonsRootNode, JsonNode autoCompleteRootNode) {
         SeriesDto seriesDto = new SeriesDto();
 
         String imdbId = mdbListApiRootNode.path("imdbid").asText(null);
@@ -155,10 +185,7 @@ public class IMDbDataMapper {
         return seriesDto;
     }
 
-    public EpisodeDto mapToEpisodeDto(String getDetailsApi, String overDetailsApi) throws JsonProcessingException {
-        JsonNode getDetailsRootNode = objectMapper.readTree(getDetailsApi);
-        JsonNode overDetailsRootNode = objectMapper.readTree(overDetailsApi);
-
+    private EpisodeDto parseEpisodeDto(JsonNode getDetailsRootNode, JsonNode overDetailsRootNode) {
         EpisodeDto episodeDto = new EpisodeDto();
 
         int runningTimeInMinutes = getDetailsRootNode.path("runningTimeInMinutes").asInt(43);

@@ -1,8 +1,8 @@
 package pl.puccini.cineflix.domain.kids;
 
 import org.springframework.stereotype.Service;
-import pl.puccini.cineflix.domain.series.SeriesFacade;
-import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
+import pl.puccini.cineflix.domain.series.main.series.SeriesFacade;
+import pl.puccini.cineflix.domain.series.main.series.seriesDto.SeriesDto;
 
 import java.util.List;
 

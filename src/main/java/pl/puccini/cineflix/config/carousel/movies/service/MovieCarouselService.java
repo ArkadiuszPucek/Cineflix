@@ -1,7 +1,7 @@
 package pl.puccini.cineflix.config.carousel.movies.service;
 
 import org.springframework.stereotype.Service;
-import pl.puccini.cineflix.config.carousel.CarouselConfigService;
+import pl.puccini.cineflix.config.carousel.repository.CarouselConfigRepository;
 import pl.puccini.cineflix.config.carousel.movies.model.MoviesCarouselConfig;
 import pl.puccini.cineflix.config.carousel.movies.repository.MovieCarouselConfigRepository;
 
@@ -10,13 +10,12 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class MovieCarouselService implements CarouselConfigService<MoviesCarouselConfig> {
+public class MovieCarouselService implements CarouselConfigRepository<MoviesCarouselConfig> {
 private final MovieCarouselConfigRepository movieCarouselConfigRepository;
 
     public MovieCarouselService(MovieCarouselConfigRepository movieCarouselConfigRepository) {
         this.movieCarouselConfigRepository = movieCarouselConfigRepository;
     }
-
     @Override
     public void saveSelectedGenres(List<String> selectedGenres) {
         MoviesCarouselConfig config = getConfigById(1L);
@@ -24,7 +23,6 @@ private final MovieCarouselConfigRepository movieCarouselConfigRepository;
         config.setActiveGenres(joinedGenres);
         movieCarouselConfigRepository.save(config);
     }
-
     @Override
     public List<String> getSelectedGenres() {
         MoviesCarouselConfig config = getTopByOrderByIdDesc();
@@ -32,7 +30,6 @@ private final MovieCarouselConfigRepository movieCarouselConfigRepository;
                 Arrays.asList(config.getActiveGenres().split(",")) :
                 new ArrayList<>();
     }
-
     @Override
     public MoviesCarouselConfig getConfigById(Long id) {
         return movieCarouselConfigRepository.findById(id).orElse(new MoviesCarouselConfig());

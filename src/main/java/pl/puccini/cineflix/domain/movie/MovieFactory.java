@@ -1,7 +1,7 @@
 package pl.puccini.cineflix.domain.movie;
 
 import org.springframework.stereotype.Component;
-import pl.puccini.cineflix.domain.genre.GenreRepository;
+import pl.puccini.cineflix.domain.genre.repository.GenreRepository;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.model.Movie;
 

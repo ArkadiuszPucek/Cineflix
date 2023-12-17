@@ -2,37 +2,35 @@ package pl.puccini.cineflix.domain.imdb;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import pl.puccini.cineflix.domain.exceptions.EpisodeNotFoundException;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
-import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
-import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
-import pl.puccini.cineflix.domain.series.service.EpisodeService;
-import pl.puccini.cineflix.web.admin.ConfigLoader;
+import pl.puccini.cineflix.domain.series.main.episode.EpisodeFacade;
+import pl.puccini.cineflix.domain.series.main.episode.episodeDto.EpisodeDto;
+import pl.puccini.cineflix.domain.series.main.series.seriesDto.SeriesDto;
+import pl.puccini.cineflix.config.configLoader.ConfigLoader;
 
 import java.io.IOException;
 
 
 @Service
 public class IMDbApiService {
-
-    private final EpisodeService episodeService;
     private final HttpClientService httpClientService;
     private final IMDbApiUrlBuilder imDbApiUrlBuilder;
     private final IMDbDataMapper imDbDataMapper;
     private final ObjectMapper objectMapper;
+    private final EpisodeFacade episodeFacade;
     private static final String RAPID_API_HOST = "mdblist.p.rapidapi.com";
     private static final String RAPID_API_MDA_HOST = "movie-database-alternative.p.rapidapi.com";
     private static final String RAPID_API_IMDb_HOST = "imdb8.p.rapidapi.com";
     private String rapidApiKey;
 
-    public IMDbApiService(@Lazy EpisodeService episodeService, HttpClientService httpClientService, IMDbApiUrlBuilder imDbApiUrlBuilder, IMDbDataMapper imDbDataMapper, ObjectMapper objectMapper) {
-        this.episodeService = episodeService;
+    public IMDbApiService(HttpClientService httpClientService, IMDbApiUrlBuilder imDbApiUrlBuilder, IMDbDataMapper imDbDataMapper, ObjectMapper objectMapper, EpisodeFacade episodeFacade) {
         this.httpClientService = httpClientService;
         this.imDbApiUrlBuilder = imDbApiUrlBuilder;
         this.imDbDataMapper = imDbDataMapper;
         this.objectMapper = objectMapper;
+        this.episodeFacade = episodeFacade;
         loadRapidApiKey();
     }
     private void loadRapidApiKey() {
@@ -46,24 +44,24 @@ public class IMDbApiService {
     }
 
     public MovieDto fetchIMDbDataForMovies(String imdbId) throws IOException, InterruptedException {
-        String mdbListApiRootNode = httpClientService.createApiRequest(imDbApiUrlBuilder.buildMovieDataBaseListAPIUrl(imdbId), rapidApiKey, RAPID_API_HOST);
-        String mdaApiRootNode = httpClientService.createApiRequest(imDbApiUrlBuilder.buildMovieDatabaseAlternativeAPIUrl(imdbId), rapidApiKey, RAPID_API_MDA_HOST);
+        String mdbListApiRootNode = makeApiRequestWithRateLimitHandling(imDbApiUrlBuilder.buildMovieDataBaseListAPIUrl(imdbId), rapidApiKey, RAPID_API_HOST);
+        String mdaApiRootNode = makeApiRequestWithRateLimitHandling(imDbApiUrlBuilder.buildMovieDatabaseAlternativeAPIUrl(imdbId), rapidApiKey, RAPID_API_MDA_HOST);
 
         return imDbDataMapper.mapToMovieDto(mdbListApiRootNode, mdaApiRootNode);
     }
 
     public SeriesDto fetchIMDbDataForSeries(String imdbId) throws IOException, InterruptedException{
-        String mdbListApiRootNode = httpClientService.createApiRequest(imDbApiUrlBuilder.buildMovieDataBaseListAPIUrl(imdbId), rapidApiKey, RAPID_API_HOST);
-        String overDetailsRootNode = httpClientService.createApiRequest(imDbApiUrlBuilder.buildOverDetailsIMDbAPIUrl(imdbId), rapidApiKey, RAPID_API_IMDb_HOST);
-        String getSeasonsRootNode = httpClientService.createApiRequest(imDbApiUrlBuilder.buildGetSeasonsIMDbAPIUrl(imdbId), rapidApiKey, RAPID_API_IMDb_HOST);
-        String autoCompleteRootNode = httpClientService.createApiRequest(imDbApiUrlBuilder.buildAutoCompleteIMDbAPIUrl(imdbId), rapidApiKey, RAPID_API_IMDb_HOST);
+        String mdbListApiRootNode = makeApiRequestWithRateLimitHandling(imDbApiUrlBuilder.buildMovieDataBaseListAPIUrl(imdbId), rapidApiKey, RAPID_API_HOST);
+        String overDetailsRootNode = makeApiRequestWithRateLimitHandling(imDbApiUrlBuilder.buildOverDetailsIMDbAPIUrl(imdbId), rapidApiKey, RAPID_API_IMDb_HOST);
+        String getSeasonsRootNode = makeApiRequestWithRateLimitHandling(imDbApiUrlBuilder.buildGetSeasonsIMDbAPIUrl(imdbId), rapidApiKey, RAPID_API_IMDb_HOST);
+        String autoCompleteRootNode = makeApiRequestWithRateLimitHandling(imDbApiUrlBuilder.buildAutoCompleteIMDbAPIUrl(imdbId), rapidApiKey, RAPID_API_IMDb_HOST);
 
         return imDbDataMapper.mapToSeriesDto(mdbListApiRootNode, overDetailsRootNode, getSeasonsRootNode, autoCompleteRootNode);
     }
 
     public EpisodeDto fetchIMDbDataForEpisodes(String episodeImdbId) throws IOException, InterruptedException{
-        String getDetailsRootNode = httpClientService.createApiRequest(imDbApiUrlBuilder.buildGetDetailsIMDbAPIUrl(episodeImdbId), rapidApiKey, RAPID_API_IMDb_HOST);
-        String overDetailsRootNode = httpClientService.createApiRequest(imDbApiUrlBuilder.buildOverDetailsIMDbAPIUrl(episodeImdbId), rapidApiKey, RAPID_API_IMDb_HOST);
+        String getDetailsRootNode = makeApiRequestWithRateLimitHandling(imDbApiUrlBuilder.buildGetDetailsIMDbAPIUrl(episodeImdbId), rapidApiKey, RAPID_API_IMDb_HOST);
+        String overDetailsRootNode = makeApiRequestWithRateLimitHandling(imDbApiUrlBuilder.buildOverDetailsIMDbAPIUrl(episodeImdbId), rapidApiKey, RAPID_API_IMDb_HOST);
 
         return imDbDataMapper.mapToEpisodeDto(getDetailsRootNode, overDetailsRootNode);
     }
@@ -84,7 +82,7 @@ public class IMDbApiService {
         if (episodesNode.isArray()) {
             for (JsonNode episodeNode : episodesNode) {
                 EpisodeDto episodeDto = createEpisodeDto(episodeNode);
-                episodeService.addEpisode(episodeDto, seriesImdbId, seasonNumber);
+                episodeFacade.addEpisode(episodeDto, seriesImdbId, seasonNumber);
             }
         }
     }
@@ -107,5 +105,17 @@ public class IMDbApiService {
     private String extractImdbId(String id) {
         String[] parts = id.split("/");
         return parts[parts.length - 1];
+    }
+
+    private String makeApiRequestWithRateLimitHandling(String url, String apiKey, String apiHost) throws IOException, InterruptedException {
+        for (int i = 0; i < 2; i++) {
+            String response = httpClientService.createApiRequest(url, apiKey, apiHost);
+            JsonNode responseJson = objectMapper.readTree(response);
+            if (!responseJson.has("message")) {
+                return response;
+            }
+            Thread.sleep(1000);
+        }
+        throw new IOException("Exceeded rate limit multiple times.");
     }
 }

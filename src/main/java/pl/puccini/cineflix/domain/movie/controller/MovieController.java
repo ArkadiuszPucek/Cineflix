@@ -5,25 +5,27 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.puccini.cineflix.domain.genre.Genre;
-import pl.puccini.cineflix.domain.genre.GenreService;
+import pl.puccini.cineflix.domain.MediaUtils;
+import pl.puccini.cineflix.domain.genre.GenreFacade;
+import pl.puccini.cineflix.domain.genre.model.Genre;
 import pl.puccini.cineflix.domain.movie.MovieFacade;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
-import pl.puccini.cineflix.domain.movie.service.MovieService;
-import pl.puccini.cineflix.domain.user.service.UserUtils;
+import pl.puccini.cineflix.domain.UserUtils;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/movies")
 public class MovieController {
-    private final GenreService genreService;
+    private final GenreFacade genreFacade;
     private final UserUtils userUtils;
+    private final MediaUtils mediaUtils;
     private final MovieFacade movieFacade;
 
-    public MovieController(GenreService genreService, UserUtils userUtils, MovieFacade movieFacade) {
-        this.genreService = genreService;
+    public MovieController(GenreFacade genreFacade, UserUtils userUtils, MediaUtils mediaUtils, MovieFacade movieFacade) {
+        this.genreFacade = genreFacade;
         this.userUtils = userUtils;
+        this.mediaUtils = mediaUtils;
         this.movieFacade = movieFacade;
     }
 
@@ -46,7 +48,7 @@ public class MovieController {
             return "movie-title";
         } else {
             String capitalizedGenre = Character.toUpperCase(value.charAt(0)) + value.substring(1);
-            Genre genreByType = genreService.getGenreByType(capitalizedGenre);
+            Genre genreByType = genreFacade.getGenreByType(capitalizedGenre);
 
             if (genreByType != null) {
                 model.addAttribute("genre", capitalizedGenre);
@@ -54,7 +56,7 @@ public class MovieController {
                 List<MovieDto> moviesByGenre = movieFacade.getMovieByGenre(capitalizedGenre, userId);
                 model.addAttribute("moviesByGenre", moviesByGenre);
 
-                List<Genre> allGenres = genreService.getAllGenres();
+                List<Genre> allGenres = genreFacade.getAllGenres();
                 model.addAttribute("genres", allGenres);
                 response.setStatus(HttpServletResponse.SC_OK);
 
@@ -70,7 +72,7 @@ public class MovieController {
         userUtils.addAvatarUrlToModel(authentication, model);
         Long userId = userUtils.getUserIdFromAuthentication(authentication);
 
-        List<Genre> allGenres = genreService.getAllGenres();
+        List<Genre> allGenres = genreFacade.getAllGenres();
         model.addAttribute("genres", allGenres);
 
         List<MovieDto> allMoviesInService = movieFacade.findAllMovies(userId);
@@ -89,7 +91,7 @@ public class MovieController {
             return "error/not-found";
         }
 
-        String youTubeUrl = userUtils.extractVideoId(movieDto.getMediaUrl());
+        String youTubeUrl = mediaUtils.extractVideoId(movieDto.getMediaUrl());
         model.addAttribute("mediaUrl", youTubeUrl);
         model.addAttribute("movieTitle", movieDto.getTitle());
         return "movie-player";

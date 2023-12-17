@@ -4,40 +4,38 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.puccini.cineflix.domain.genre.Genre;
-import pl.puccini.cineflix.domain.genre.GenreService;
-import pl.puccini.cineflix.domain.series.SeriesFacade;
-import pl.puccini.cineflix.domain.series.dto.episodeDto.EpisodeDto;
-import pl.puccini.cineflix.domain.series.dto.seasonDto.SeasonDto;
-import pl.puccini.cineflix.domain.series.dto.seriesDto.SeriesDto;
-import pl.puccini.cineflix.domain.series.service.EpisodeService;
-import pl.puccini.cineflix.domain.series.service.SeriesService;
-import pl.puccini.cineflix.domain.user.service.UserUtils;
+import pl.puccini.cineflix.domain.genre.GenreFacade;
+import pl.puccini.cineflix.domain.genre.model.Genre;
+import pl.puccini.cineflix.domain.series.main.episode.EpisodeFacade;
+import pl.puccini.cineflix.domain.series.main.series.SeriesFacade;
+import pl.puccini.cineflix.domain.series.main.episode.episodeDto.EpisodeDto;
+import pl.puccini.cineflix.domain.series.main.season.seasonDto.SeasonDto;
+import pl.puccini.cineflix.domain.series.main.series.seriesDto.SeriesDto;
+import pl.puccini.cineflix.domain.UserUtils;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/series")
 public class SeriesController {
-    private final GenreService genreService;
+    private final GenreFacade genreFacade;
     private final UserUtils userUtils;
-    private final EpisodeService episodeService;
+    private final EpisodeFacade episodeFacade;
     private final SeriesFacade seriesFacade;
 
-    public SeriesController(GenreService genreService, UserUtils userUtils, EpisodeService episodeService, SeriesFacade seriesFacade) {
-        this.genreService = genreService;
+    public SeriesController(GenreFacade genreFacade, UserUtils userUtils, EpisodeFacade episodeFacade, SeriesFacade seriesFacade) {
+        this.genreFacade = genreFacade;
         this.userUtils = userUtils;
-        this.episodeService = episodeService;
+        this.episodeFacade = episodeFacade;
         this.seriesFacade = seriesFacade;
     }
-
 
     @GetMapping
     public String seriesPage(Authentication authentication, Model model) {
         userUtils.addAvatarUrlToModel(authentication, model);
         Long userId = userUtils.getUserIdFromAuthentication(authentication);
 
-        List<Genre> allGenres = genreService.getAllGenres();
+        List<Genre> allGenres = genreFacade.getAllGenres();
         model.addAttribute("genres", allGenres);
 
         List<SeriesDto> allSeriesInService = seriesFacade.findAllSeries(userId);
@@ -55,7 +53,7 @@ public class SeriesController {
 
         List<SeriesDto> seriesByGenre = seriesFacade.getSeriesByGenre(capitalizedGenre, userId);
 
-        List<Genre> allGenres = genreService.getAllGenres();
+        List<Genre> allGenres = genreFacade.getAllGenres();
         model.addAttribute("genres", allGenres);
 
         model.addAttribute("genre", capitalizedGenre);
@@ -93,7 +91,7 @@ public class SeriesController {
             return "error/not-found";
         }
 
-        EpisodeDto firstUnwatchedEpisode = episodeService.findFirstUnwatchedEpisode(seriesDto.getImdbId(), userId);
+        EpisodeDto firstUnwatchedEpisode = episodeFacade.findFirstUnwatchedEpisode(seriesDto.getImdbId(), userId);
         model.addAttribute("watchedEpisodes", firstUnwatchedEpisode);
 
         List<EpisodeDto> episodes = seriesFacade.getEpisodesForSeason(selectedSeason.getId(), userId);

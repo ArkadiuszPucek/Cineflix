@@ -1,43 +1,43 @@
 package pl.puccini.cineflix.domain.movie.service;
 
 import org.springframework.stereotype.Service;
-import pl.puccini.cineflix.domain.exceptions.*;
-import pl.puccini.cineflix.domain.genre.Genre;
-import pl.puccini.cineflix.domain.genre.GenreService;
+import pl.puccini.cineflix.domain.exceptions.IncorrectTypeException;
+import pl.puccini.cineflix.domain.exceptions.MovieAlreadyExistsException;
+import pl.puccini.cineflix.domain.exceptions.MovieNotFoundException;
+import pl.puccini.cineflix.domain.genre.GenreFacade;
+import pl.puccini.cineflix.domain.genre.model.Genre;
 import pl.puccini.cineflix.domain.imdb.IMDbApiService;
 import pl.puccini.cineflix.domain.movie.MovieFactory;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.dto.MovieDtoMapper;
 import pl.puccini.cineflix.domain.movie.model.Movie;
 import pl.puccini.cineflix.domain.movie.repository.MovieRepository;
-import pl.puccini.cineflix.domain.movie.repository.MoviesPromoBoxRepository;
-import pl.puccini.cineflix.domain.user.repository.UserRatingRepository;
-import pl.puccini.cineflix.domain.user.service.UserListService;
-import pl.puccini.cineflix.domain.user.service.UserRatingService;
+import pl.puccini.cineflix.domain.user.userLists.UserListFacade;
+import pl.puccini.cineflix.domain.user.userRatings.UserRatingFacade;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class MovieService {
 
     private final MovieRepository movieRepository;
     private final IMDbApiService imdbApiService;
-    private final GenreService genreService;
-    private final UserRatingRepository userRatingRepository;
-    private final UserRatingService userRatingService;
+    private final GenreFacade genreFacade;
     private final MovieFactory movieFactory;
-    private final UserListService userListService;
+    private final UserListFacade userListFacade;
+    private final UserRatingFacade userRatingFacade;
 
-    public MovieService(MovieRepository movieRepository, IMDbApiService imdbApiService, GenreService genreService, UserRatingRepository userRatingRepository, MoviesPromoBoxRepository moviesPromoBoxRepository, UserRatingService userRatingService, MovieFactory movieFactory, UserListService userListService) {
+    public MovieService(MovieRepository movieRepository, IMDbApiService imdbApiService, GenreFacade genreFacade, MovieFactory movieFactory, UserListFacade userListFacade, UserRatingFacade userRatingFacade) {
         this.movieRepository = movieRepository;
         this.imdbApiService = imdbApiService;
-        this.genreService = genreService;
-        this.userRatingRepository = userRatingRepository;
-        this.userRatingService = userRatingService;
+        this.genreFacade = genreFacade;
         this.movieFactory = movieFactory;
-        this.userListService = userListService;
+        this.userListFacade = userListFacade;
+        this.userRatingFacade = userRatingFacade;
     }
+
 
     public Movie addMovieByApiIfNotExist(MovieDto movieDto) throws IOException, InterruptedException {
         if (existsByImdbId(movieDto.getImdbId())) {
@@ -68,7 +68,7 @@ public class MovieService {
     }
 
     public boolean updateMovie(MovieDto movieDto) {
-        Movie existingMovie = movieRepository.findMovieByImdbId(movieDto.getImdbId());
+        Movie existingMovie = movieRepository.findMovieByImdbId(movieDto.getImdbId()).orElseThrow(()->new MovieNotFoundException("Movie not found"));
         if (existingMovie != null) {
             movieFactory.updateMovieWithDto(existingMovie, movieDto);
             movieRepository.save(existingMovie);
@@ -79,7 +79,7 @@ public class MovieService {
     }
 
     public boolean deleteMovieByImdbId(String imdbId) {
-        Movie movieByImdbId = movieRepository.findMovieByImdbId(imdbId);
+        Movie movieByImdbId = movieRepository.findMovieByImdbId(imdbId).orElseThrow(()->new MovieNotFoundException("Movie not found"));
         if (movieByImdbId != null) {
             movieRepository.delete(movieByImdbId);
             return true;
@@ -88,13 +88,13 @@ public class MovieService {
     }
 
     public List<MovieDto> getMovieByGenre(String genre, Long userId){
-        Genre genreByType = genreService.getGenreByType(genre);
+        Genre genreByType = genreFacade.getGenreByType(genre);
         List<MovieDto> moviesDtos = movieRepository.findAllByGenre(genreByType).stream()
                 .map(MovieDtoMapper::map)
                 .toList();
         moviesDtos.forEach(movie -> {
-            movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId()));
-            movie.setUserRating(userRatingService.getCurrentUserRatingForMovie(movie.getImdbId(), userId).orElse(null));
+            movie.setOnUserList(userListFacade.isOnList(userId, movie.getImdbId()));
+            movie.setUserRating(userRatingFacade.getCurrentUserRatingForMovie(movie.getImdbId(), userId).orElse(null));
         });
         return moviesDtos;
     }
@@ -105,8 +105,8 @@ public class MovieService {
             return null;
         }
         MovieDto mappedMovie = MovieDtoMapper.map(movie);
-        mappedMovie.setOnUserList(userListService.isOnList(userId, mappedMovie.getImdbId()));
-        mappedMovie.setUserRating(userRatingService.getCurrentUserRatingForMovie(mappedMovie.getImdbId(), userId).orElse(null));
+        mappedMovie.setOnUserList(userListFacade.isOnList(userId, mappedMovie.getImdbId()));
+        mappedMovie.setUserRating(userRatingFacade.getCurrentUserRatingForMovie(mappedMovie.getImdbId(), userId).orElse(null));
         return mappedMovie;
     }
 
@@ -114,8 +114,8 @@ public class MovieService {
         List<MovieDto> allMoviesDto = movieRepository.findAll().stream()
                 .map(movie -> {
                     MovieDto movieDto = MovieDtoMapper.map(movie);
-                    int rateUpCount = userRatingRepository.countByMovieImdbIdAndUpvote(movie.getImdbId(), true);
-                    int rateDownCount = userRatingRepository.countByMovieImdbIdAndUpvote(movie.getImdbId(), false);
+                    int rateUpCount = userRatingFacade.getRateUpCountForMovies(movie);
+                    int rateDownCount = userRatingFacade.getRateDownCountForMovies(movie);
                     movieDto.setRateUpCount(rateUpCount);
                     movieDto.setRateDownCount(rateDownCount);
                     return movieDto;
@@ -123,8 +123,8 @@ public class MovieService {
                 .toList();
 
         allMoviesDto.forEach(movie -> {
-            movie.setOnUserList(userListService.isOnList(userId, movie.getImdbId()));
-            movie.setUserRating(userRatingService.getCurrentUserRatingForMovie(movie.getImdbId(), userId).orElse(null));
+            movie.setOnUserList(userListFacade.isOnList(userId, movie.getImdbId()));
+            movie.setUserRating(userRatingFacade.getCurrentUserRatingForMovie(movie.getImdbId(), userId).orElse(null));
         });
         return allMoviesDto;
     }
@@ -140,16 +140,16 @@ public class MovieService {
     }
 
     public MovieDto findMovieByImdbId(String imdbId){
-        Movie movieByImdbId = movieRepository.findMovieByImdbId(imdbId);
+        Movie movieByImdbId = movieRepository.findMovieByImdbId(imdbId).orElseThrow(()->new MovieNotFoundException("Movie not found"));
         return MovieDtoMapper.map(movieByImdbId);
     }
 
     public Movie getMovieByImdbId(String imdbId){
-        return movieRepository.findMovieByImdbId(imdbId);
+        return movieRepository.findMovieByImdbId(imdbId).orElseThrow(()->new MovieNotFoundException("Movie not found"));
     }
 
     public String getFormattedMovieTitle(String imdbId){
-        Movie movieByImdbId = movieRepository.findMovieByImdbId(imdbId);
+        Movie movieByImdbId = movieRepository.findMovieByImdbId(imdbId).orElseThrow(()->new MovieNotFoundException("Movie not found"));
         return movieByImdbId.getTitle().toLowerCase().replace(' ', '-');
     }
 }

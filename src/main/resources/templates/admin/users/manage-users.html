@@ -2,39 +2,37 @@
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>ViaPlay</title>
+    <title>Cineflix</title>
     <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
 </head>
 <body>
 
 <div class="Layout-module-internal-page--krBv">
     <div th:replace="~{header :: header}"></div>
-    <h1 class="page-header-admin">Panel administracyjny - zarządzaj użytkownikami</h1>
+    <h1 class="page-header-admin">Administration panel - manage users</h1>
     <div th:if="${message}" th:text="${message}" class="alert manage-success"></div>
     <div id="content" class="admin-panel">
         <div th:replace="~{admin/sidebar :: sidebar}"></div>
         <div class="main-content">
             <div id="customDialogOverlay" class="custom-dialog-overlay">
                 <div id="customDialogBox" class="custom-dialog-box">
-                    <p>Czy na pewno chcesz usunąć tego użytkownika?</p>
-                    <button onclick="submitForm('deleteUser')">Tak</button>
-                    <button onclick="submitForm('dontDeleteUser')">Nie</button>
+                    <p>Are you sure you want to delete this user?</p>
+                    <button onclick="submitForm('deleteUser')">Yes</button>
+                    <button onclick="submitForm('dontDeleteUser')">No</button>
                 </div>
             </div>
             <input type="hidden" id="action" value="">
             <table class="users-table">
                 <thead>
                 <tr>
-                    <th>Id</th>
                     <th>E-mail</th>
-                    <th>Rola</th>
+                    <th>Role</th>
                     <th></th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="user : ${users}">
-                    <td th:text="${user.id}">Id</td>
                     <td th:text="${user.email}">E-mail</td>
                     <td th:text="${user.getRoleNames()}">Rola</td>
                     <td>
@@ -49,7 +47,7 @@
                                 </select>
                                 <button type="submit"
                                         class="Buttons-module-primary--YHdl change-role-button"
-                                        tabindex="0">Zmień
+                                        tabindex="0">Change
                                 </button>
                             </form>
                         </th:block>

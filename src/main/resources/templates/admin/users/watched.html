@@ -2,7 +2,7 @@
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>ViaPlay</title>
+    <title>Cineflix</title>
     <link rel="stylesheet" href="/styles/main.css" th:href="@{/styles/main.css}" type="text/css">
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
@@ -55,12 +55,12 @@
                                                     </div>
                                                     <div class="Item-module-below-BMw6u Item-module-centeredExperiment-Q0zBG">
                                                         <div class="EpisodeMeta-module-container--GenC">
-                                                            <div class="EpisodeMeta-module-title-u8wR7"
+                                                            <div class="EpisodeMeta-module-title-l4H9X"
                                                                  th:if="${item.type == 'episode'}"
                                                                  th:text="${item.title} + ' S' + ${item.seasonNumber} + ' | E' + ${item.episodeNumber}">
                                                                 Series title + season number + episode number
                                                             </div>
-                                                            <div class="EpisodeMeta-module-title-u8wR7"
+                                                            <div class="EpisodeMeta-module-title-l4H9X"
                                                                  th:if="${item.type == 'movie'}"
                                                                  th:text="${item.title}">
                                                                 Movie title

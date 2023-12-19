@@ -98,6 +98,10 @@ public class MovieManagementFacade {
         carouselFacade.saveSelectedGenresForMovies(selectedGenres);
     }
 
+    public String getNormalizedMovieTitle(String title){
+        return movieFacade.getNormalizedMovieTitle(title);
+    }
+
 
 
 

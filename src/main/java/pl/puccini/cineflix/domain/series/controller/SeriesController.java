@@ -67,8 +67,7 @@ public class SeriesController {
         userUtils.addAvatarUrlToModel(authentication, model);
         Long userId = userUtils.getUserIdFromAuthentication(authentication);
 
-        String normalizedTitle = title.replace("-", " ").toLowerCase();
-        SeriesDto seriesDto = seriesFacade.findSeriesByTitle(normalizedTitle, userId);
+        SeriesDto seriesDto = seriesFacade.findSeriesByTitle(seriesFacade.formatSeriesTitle(title), userId);
         if (seriesDto == null) {
             return "error/not-found";
         }

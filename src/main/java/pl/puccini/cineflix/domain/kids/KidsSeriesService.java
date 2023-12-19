@@ -15,7 +15,6 @@ public class KidsSeriesService {
         this.seriesFacade = seriesFacade;
     }
 
-
     public List<SeriesDto> getAllKidsSeries(Long userId) {
         return seriesFacade.getSeriesByGenre(KIDS_GENRE, userId);
     }

@@ -148,8 +148,7 @@ public class MovieService {
         return movieRepository.findMovieByImdbId(imdbId).orElseThrow(()->new MovieNotFoundException("Movie not found"));
     }
 
-    public String getFormattedMovieTitle(String imdbId){
-        Movie movieByImdbId = movieRepository.findMovieByImdbId(imdbId).orElseThrow(()->new MovieNotFoundException("Movie not found"));
-        return movieByImdbId.getTitle().toLowerCase().replace(' ', '-');
+    public String getNormalizedMovieTitle(String title){
+        return title.toLowerCase().replace(' ', '-');
     }
 }

@@ -1,7 +1,9 @@
-package pl.puccini.cineflix.domain.series.main.season;
+package pl.puccini.cineflix.domain.series.main.season.service;
 
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import pl.puccini.cineflix.domain.series.main.season.model.Season;
+import pl.puccini.cineflix.domain.series.main.season.repository.SeasonRepository;
 import pl.puccini.cineflix.domain.series.main.series.SeriesFacade;
 import pl.puccini.cineflix.domain.series.main.series.model.Series;
 

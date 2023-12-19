@@ -14,8 +14,6 @@ public class KidsMovieService {
     public KidsMovieService(MovieFacade movieFacade) {
         this.movieFacade = movieFacade;
     }
-
-
     public List<MovieDto> getAllKidsMovies(Long userId) {
         return movieFacade.getMovieByGenre(KIDS_GENRE, userId);
     }

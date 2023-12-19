@@ -1,6 +1,7 @@
-package pl.puccini.cineflix.domain.series.main.season;
+package pl.puccini.cineflix.domain.series.main.season.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import pl.puccini.cineflix.domain.series.main.season.model.Season;
 import pl.puccini.cineflix.domain.series.main.series.model.Series;
 
 import java.util.List;

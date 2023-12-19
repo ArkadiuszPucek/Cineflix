@@ -18,8 +18,8 @@ import pl.puccini.cineflix.domain.series.main.series.repository.SeriesRepository
 import pl.puccini.cineflix.domain.series.main.series.seriesDto.SeriesDto;
 import pl.puccini.cineflix.domain.series.main.series.seriesDto.SeriesDtoMapper;
 import pl.puccini.cineflix.domain.series.main.episode.model.Episode;
-import pl.puccini.cineflix.domain.series.main.season.Season;
-import pl.puccini.cineflix.domain.series.main.season.SeasonRepository;
+import pl.puccini.cineflix.domain.series.main.season.model.Season;
+import pl.puccini.cineflix.domain.series.main.season.repository.SeasonRepository;
 import pl.puccini.cineflix.domain.user.userLists.UserListFacade;
 import pl.puccini.cineflix.domain.user.userRatings.UserRatingFacade;
 

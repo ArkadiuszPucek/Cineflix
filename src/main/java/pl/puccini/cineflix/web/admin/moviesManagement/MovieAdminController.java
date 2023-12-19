@@ -34,7 +34,8 @@ public class MovieAdminController {
             return "redirect:/add-movie-form";
         }
         movieManagementFacade.addMovieManual(movie);
-        String normalizedTitle = movie.getTitle().toLowerCase().replace(" ", "-");
+        String normalizedTitle = movieManagementFacade.getNormalizedMovieTitle(movie.getTitle());
+
 
         return "redirect:/movies/" + normalizedTitle;
     }
@@ -58,7 +59,7 @@ public class MovieAdminController {
     public String addMovieByApi(MovieDto movie, RedirectAttributes redirectAttributes) {
         try {
             Movie movieFromApi = movieManagementFacade.addMovieIfNotExist(movie);
-            String normalizedTitle = movieFromApi.getTitle().toLowerCase().replace(" ", "-");
+            String normalizedTitle = movieManagementFacade.getNormalizedMovieTitle(movieFromApi.getTitle());
             return "redirect:/movies/" + normalizedTitle;
         } catch (IncorrectTypeException | MovieAlreadyExistsException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());

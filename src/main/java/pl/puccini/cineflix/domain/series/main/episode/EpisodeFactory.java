@@ -3,7 +3,7 @@ package pl.puccini.cineflix.domain.series.main.episode;
 import org.springframework.stereotype.Service;
 import pl.puccini.cineflix.domain.series.main.episode.episodeDto.EpisodeDto;
 import pl.puccini.cineflix.domain.series.main.episode.model.Episode;
-import pl.puccini.cineflix.domain.series.main.season.Season;
+import pl.puccini.cineflix.domain.series.main.season.model.Season;
 
 @Service
 public class EpisodeFactory {

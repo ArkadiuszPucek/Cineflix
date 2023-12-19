@@ -12,10 +12,10 @@ import java.net.http.HttpResponse;
 
 @Service
 public class HttpClientService {
-    private final HttpClient httpClient;
+    private final HttpClientWrapper httpClientWrapper;
 
-    public HttpClientService() {
-        this.httpClient = HttpClient.newHttpClient();
+    public HttpClientService(HttpClientWrapper httpClientWrapper) {
+        this.httpClientWrapper = httpClientWrapper;
     }
 
     public String createApiRequest(String url, String apiKey, String apiHost) throws IOException, InterruptedException {
@@ -26,7 +26,7 @@ public class HttpClientService {
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
 
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = httpClientWrapper.send(request);
         return response.body();
     }
 

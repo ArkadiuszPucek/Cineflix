@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import pl.puccini.cineflix.domain.genre.model.Genre;
-import pl.puccini.cineflix.domain.series.main.season.Season;
+import pl.puccini.cineflix.domain.series.main.season.model.Season;
 import pl.puccini.cineflix.domain.user.userRatings.model.UserRating;
 
 import java.util.ArrayList;

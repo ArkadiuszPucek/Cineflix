@@ -3,7 +3,7 @@ package pl.puccini.cineflix.domain.series.main.episode.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import pl.puccini.cineflix.domain.series.main.season.Season;
+import pl.puccini.cineflix.domain.series.main.season.model.Season;
 
 @Entity
 @Getter

@@ -5,16 +5,14 @@ import pl.puccini.cineflix.config.promoBox.seriesPromoBox.model.SeriesPromoBox;
 import pl.puccini.cineflix.config.promoBox.seriesPromoBox.repository.SeriesPromoBoxRepository;
 import pl.puccini.cineflix.domain.exceptions.SeriesNotFoundException;
 import pl.puccini.cineflix.domain.series.main.series.SeriesFacade;
+import pl.puccini.cineflix.domain.series.main.series.model.Series;
 import pl.puccini.cineflix.domain.series.main.series.seriesDto.SeriesDto;
 import pl.puccini.cineflix.domain.series.main.series.seriesDto.SeriesDtoMapper;
 import pl.puccini.cineflix.domain.series.main.series.repository.SeriesRepository;
 import pl.puccini.cineflix.domain.user.userLists.UserListFacade;
 import pl.puccini.cineflix.domain.user.userRatings.UserRatingFacade;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,7 +46,9 @@ public class SeriesPromotionService {
 
         String[] imdbIds = promoBox.getImdbIds().split(",");
         return Arrays.stream(imdbIds)
-                .map(seriesFacade::getSeriesByImdbId)
+                .map(seriesRepository::findSeriesByImdbId)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .map(SeriesDtoMapper::map)
                 .peek(seriesDto -> {
                     seriesDto.setOnUserList(userListFacade.isOnList(userId, seriesDto.getImdbId()));

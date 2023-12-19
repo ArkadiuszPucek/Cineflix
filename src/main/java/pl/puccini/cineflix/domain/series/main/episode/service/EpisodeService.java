@@ -10,12 +10,11 @@ import pl.puccini.cineflix.domain.series.main.episode.episodeDto.EpisodeDtoMappe
 import pl.puccini.cineflix.domain.series.main.episode.model.Episode;
 import pl.puccini.cineflix.domain.series.main.series.SeriesFacade;
 import pl.puccini.cineflix.domain.series.main.episode.episodeDto.EpisodeInfoDto;
-import pl.puccini.cineflix.domain.series.main.season.Season;
-import pl.puccini.cineflix.domain.series.main.season.SeasonService;
+import pl.puccini.cineflix.domain.series.main.season.model.Season;
+import pl.puccini.cineflix.domain.series.main.season.service.SeasonService;
 import pl.puccini.cineflix.domain.series.main.series.model.Series;
 import pl.puccini.cineflix.domain.series.main.episode.repository.EpisodeRepository;
 import pl.puccini.cineflix.domain.user.viewingHistory.ViewingHistoryFacade;
-import pl.puccini.cineflix.domain.user.viewingHistory.service.UserViewingHistoryService;
 
 import java.util.Comparator;
 import java.util.List;

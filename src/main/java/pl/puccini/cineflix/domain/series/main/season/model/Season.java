@@ -1,4 +1,4 @@
-package pl.puccini.cineflix.domain.series.main.season;
+package pl.puccini.cineflix.domain.series.main.season.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -56,4 +56,8 @@ public class MovieFacade {
         movieService.addMovieManual(movieDto);
     }
 
-}
+    public String getNormalizedMovieTitle(String title) {
+        return movieService.getNormalizedMovieTitle(title);
+    }
+
+    }

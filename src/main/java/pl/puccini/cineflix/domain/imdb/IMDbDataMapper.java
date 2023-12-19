@@ -76,10 +76,12 @@ public class IMDbDataMapper {
         String language = mdaApiRootNode.path("Language").asText("Polski");
         String genres = mdaApiRootNode.path("Genre").asText("Crime");
         List<String> genreList = Arrays.asList(genres.split(", "));
+
         Optional<Genre> matchedGenre = genreList.stream()
                 .map(genreRepository::findByGenreTypeIgnoreCase)
                 .filter(Objects::nonNull)
                 .findFirst();
+
         double imdbRating = mdaApiRootNode.path("imdbRating").asInt(-1);
 
         if (imdbId == null || imdbId.isEmpty()) {
@@ -128,7 +130,13 @@ public class IMDbDataMapper {
         movieDto.setStaff(actors);
         movieDto.setDirectedBy(directedBy);
         movieDto.setLanguages(language);
-        matchedGenre.ifPresent(genre -> movieDto.setGenre(genre.getGenreType()));
+        matchedGenre.ifPresent(genre -> {
+            if ("Animation".equalsIgnoreCase((genre.getGenreType()))){
+                movieDto.setGenre("Kids");
+            }else {
+                movieDto.setGenre(genre.getGenreType());
+            }
+        });
         movieDto.setImdbRating(imdbRating);
         movieDto.setImdbUrl("https://www.imdb.com/title/" + imdbId);
 
@@ -178,7 +186,13 @@ public class IMDbDataMapper {
         seriesDto.setAgeLimit(ageLimit);
         seriesDto.setDescription(description);
         seriesDto.setStaff(staff);
-        matchedGenre.ifPresent(genre -> seriesDto.setGenre(genre.getGenreType()));
+        matchedGenre.ifPresent(genre -> {
+            if ("Animation".equalsIgnoreCase((genre.getGenreType()))){
+                seriesDto.setGenre("Kids");
+            }else {
+                seriesDto.setGenre(genre.getGenreType());
+            }
+        });
         seriesDto.setImdbUrl("https://www.imdb.com/title/" + imdbId);
         seriesDto.setSeasonsCount(getSeasonsRootNode.size());
 

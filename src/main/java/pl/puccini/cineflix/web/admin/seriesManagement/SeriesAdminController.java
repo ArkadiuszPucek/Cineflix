@@ -284,7 +284,8 @@ public class SeriesAdminController {
     }
 
     @GetMapping("/admin/manage-series-carousels")
-    public String manageSeriesCarouselForm(Model model){
+    public String manageSeriesCarouselForm(Model model, Authentication authentication){
+        seriesManagementFacade.addAvatarUrlToModel(authentication, model);
         List<Genre> genres = seriesManagementFacade.getGenresWithMinimumSeries(1);
         List<String> activeGenres = seriesManagementFacade.getSelectedGenresForSeries();
 

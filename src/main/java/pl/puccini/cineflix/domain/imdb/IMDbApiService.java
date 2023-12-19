@@ -108,13 +108,13 @@ public class IMDbApiService {
     }
 
     private String makeApiRequestWithRateLimitHandling(String url, String apiKey, String apiHost) throws IOException, InterruptedException {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 4; i++) {
             String response = httpClientService.createApiRequest(url, apiKey, apiHost);
             JsonNode responseJson = objectMapper.readTree(response);
             if (!responseJson.has("message")) {
                 return response;
             }
-            Thread.sleep(1000);
+            Thread.sleep(1600);
         }
         throw new IOException("Exceeded rate limit multiple times.");
     }

@@ -196,7 +196,7 @@
                                          class="Item-module-item-yTZtG Item-module-carouselItem-Q3n9V Item-module-landscapeItem-Sf-nw Item-module-mosaicGridItem-XKjcG"
                                          th:id="'series-' + ${promoItem.imdbId}"
                                          th:data-product-id="${promoItem.imdbId}">
-                                        <div class="Item-module-box-4uBp3 Item-module-show-qrDtq">
+                                        <div class="Item-module-promobox-53fes Item-module-show-qrDtq">
                                             <div class="Item-module-image-CGday" th:style="'background-image: url(' + ${promoItem.imageUrl} + ');'"></div>
                                             <a class="Item-module-link-Lms-C"
                                                tabindex="-1"
@@ -274,9 +274,9 @@
                                          class="Item-module-item-yTZtG Item-module-carouselItem-Q3n9V Item-module-landscapeItem-Sf-nw Item-module-mosaicGridItem-XKjcG"
                                          th:id="'series-' + ${promoItem.imdbId}"
                                          th:data-product-id="${promoItem.imdbId}">
-                                        <div class="Item-module-box-4uBp3 Item-module-show-qrDtq">
+                                        <div class="Item-module-promobox-53fes Item-module-show-qrDtq">
                                             <div class="Item-module-image-CGday"
-                                                 th:style="'background-image: url(' + ${promoItem.imageUrl} + ');'">
+                                                 th:style="'background-image: url(' + ${promoItem.backgroundImageUrl} + ');'">
                                             </div>
                                             <a class="Item-module-link-Lms-C"
                                                tabindex="-1"
@@ -347,12 +347,12 @@
             var carouselId = $carousel.attr('id');
 
         $carousel.slick({
-            infinite: true,
+            infinite: false,
             speed: 200,
             slidesToShow: 1,
             arrows: false,
             draggable: false,
-            centerMode: true,
+            centerMode: false,
             variableWidth: true,
         });
 

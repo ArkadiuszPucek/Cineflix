@@ -33,7 +33,9 @@ public class MovieController {
     public String movieValueHandle(@PathVariable String value, Model model, Authentication authentication, HttpServletResponse response) {
         userUtils.addAvatarUrlToModel(authentication, model);
         Long userId = userUtils.getUserIdFromAuthentication(authentication);
-        MovieDto movieDto = movieFacade.findMovieByTitle(movieFacade.getNormalizedMovieTitle(value), userId);
+        String searchingFormatTitle = value.toLowerCase().replace("-", " ");
+
+        MovieDto movieDto = movieFacade.findMovieByTitle(searchingFormatTitle, userId);
 
         if (movieDto != null) {
             model.addAttribute("title", value);

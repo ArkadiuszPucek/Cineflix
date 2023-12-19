@@ -1432,7 +1432,7 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
 }
 
 .Scaffold-module-scaffold-F6aIC {
-    margin: 0 90px;
+    margin: 15px 90px;
     position: relative
 }
 
@@ -1820,10 +1820,10 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
     content: "";
     height: 100%;
     position: absolute;
-    width: 100%
+    width: 80%
 }
 
-.Item-module-box-4uBp3 {
+.Item-module-promobox-53fes {
     background-color: #2b2b35;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
@@ -1836,20 +1836,43 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
     transition: box-shadow 0.3s ease-in-out;
 }
 
+.Item-module-box-4uBp3 {
+    background-color: #2b2b35;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+    cursor: pointer;
+    display: block;
+    overflow: hidden;
+    position: relative;
+    height: 365px;
+    text-decoration: none;
+    width: 80%;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
 .Item-module-box-4uBp3:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.Item-module-box-4uBp3.Item-module-show-qrDtq .Item-module-curtain-EV2Ya {
+.Item-module-box-4uBp3 .Item-module-show-qrDtq .Item-module-curtain-EV2Ya {
     height: 100%;
     opacity: 1;
     top: 0
 }
 
+.Item-module-promobox-53fes .Item-module-show-qrDtq .Item-module-curtain-EV2Ya {
+    height: 100%;
+    opacity: 1;
+    top: 0
+}
+
+
+
 .Item-module-image-CGday {
     animation: Item-module-fadeIn-ZuV4x .4s ease-in forwards;
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
     border-radius: 8px;
     height: 100%;
     left: 0;
@@ -1859,7 +1882,7 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
 }
 
 .Item-module-curtain-EV2Ya {
-    height: 120%;
+    height: 110%;
     left: 0;
     overflow: hidden;
     position: absolute;
@@ -1872,6 +1895,11 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
 }
 
 .Item-module-box-4uBp3:hover .Item-module-curtain-EV2Ya {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.Item-module-promobox-53fes:hover .Item-module-curtain-EV2Ya {
     display: block;
     background-color: rgba(0, 0, 0, 0.5);
 }
@@ -1912,9 +1940,17 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
     display: block;
     padding-top: 56.25%
 }
+.Item-module-landscapeItem-Sf-nw .Item-module-promobox-53fes .Item-module-link-Lms-C:after, .Item-module-landscapeItem-Sf-nw .Item-module-promobox-53fes:before {
+    content: "";
+    display: block;
+    padding-top: 56.25%
+}
 
 @media screen and (min-width: 3500px) {
     .Item-module-box-4uBp3, .Item-module-image-CGday, .Item-module-item-yTZtG:before {
+        border-radius: .3336vw
+    }
+    .Item-module-promobox-53fes, .Item-module-image-CGday, .Item-module-item-yTZtG:before {
         border-radius: .3336vw
     }
 
@@ -1963,7 +1999,7 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
 }
 
 .Item-module-item-yTZtG.Item-module-carouselItem-Q3n9V {
-     /*margin: 0 1px 0 0; */
+     margin: 18px -40px 0 0;
 }
 
 @media screen and (min-width: 1695px) and (max-width: 3499px) {
@@ -1972,7 +2008,7 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
     }
 
     .Item-module-landscapeItem-Sf-nw.Item-module-carouselItem-Q3n9V {
-        width: calc(20vw - 56px)
+        width: calc(20vw - 60px)
     }
 
     .Item-module-landscapeItem-Sf-nw.Item-module-mosaicGridItem-XKjcG {
@@ -2323,7 +2359,7 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
     position: relative;
     text-align: center;
     text-overflow: ellipsis;
-    width: 100%;
+    width: 80%;
     z-index: 1
 }
 
@@ -2611,7 +2647,7 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
 }
 
 .InteractionIcons-module-container-apGgr {
-    padding: 8px 8px 0 0;
+    padding: 53px 8px 0 0;
     position: absolute;
     right: 0;
     top: 0;
@@ -4645,7 +4681,7 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
 }
 
 .SeasonsNavigation-module-dropdown-Q3ieP {
-    background: #1d1d27;
+    background: #2b2b35;
     border-radius: 8px
 }
 
@@ -4706,7 +4742,10 @@ button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=reset
     display: block;
     line-height: normal;
     margin: 4px;
-    padding: 12px 20px
+    padding: 12px 20px;
+    background: #2b2b35;
+    border: none;
+
 }
 
 .SeasonButton-module-season-fRUUl .SeasonButton-module-link-NG1PO {

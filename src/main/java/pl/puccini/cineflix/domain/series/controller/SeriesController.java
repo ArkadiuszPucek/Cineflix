@@ -66,8 +66,9 @@ public class SeriesController {
     public String showSeriesPage(@PathVariable String title, @PathVariable int seasonNumber, Authentication authentication, Model model) {
         userUtils.addAvatarUrlToModel(authentication, model);
         Long userId = userUtils.getUserIdFromAuthentication(authentication);
+        String searchingFormatTitle = title.toLowerCase().replace("-", " ");
 
-        SeriesDto seriesDto = seriesFacade.findSeriesByTitle(seriesFacade.formatSeriesTitle(title), userId);
+        SeriesDto seriesDto = seriesFacade.findSeriesByTitle(searchingFormatTitle, userId);
         if (seriesDto == null) {
             return "error/not-found";
         }

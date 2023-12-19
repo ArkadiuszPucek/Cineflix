@@ -8,9 +8,9 @@ values
 insert into
     user_role (name, description)
 values
-    ('ADMIN', 'pełne uprawnienia'),
-    ('USER', 'podstawowe uprawnienia, możliwość oddawania głosów'),
-    ('EDITOR', 'podstawowe uprawnienia + możliwość zarządzania treściami');
+    ('ADMIN', 'full permissions'),
+    ('USER', 'basic rights, ability to cast votes'),
+    ('EDITOR', 'basic permissions + ability to manage content');
 
 insert into
     user_roles (user_id, role_id)

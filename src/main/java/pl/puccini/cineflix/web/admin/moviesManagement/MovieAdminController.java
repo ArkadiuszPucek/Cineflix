@@ -172,8 +172,9 @@ public class MovieAdminController {
     }
 
     @GetMapping("/admin/manage-movies-carousels")
-    public String manageMoviesCarouselForm(Model model){
-        List<Genre> genres = movieManagementFacade.getGenresWithMinimumMovies(2);
+    public String manageMoviesCarouselForm(Model model, Authentication authentication){
+        movieManagementFacade.addAvatarUrlToModel(authentication, model);
+        List<Genre> genres = movieManagementFacade.getGenresWithMinimumMovies(6);
         List<String> activeGenres = movieManagementFacade.getSelectedGenresForMovies();
 
         Map<String, Boolean> genresWithStatus = genres.stream()

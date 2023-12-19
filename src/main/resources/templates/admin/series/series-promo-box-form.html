@@ -24,23 +24,23 @@
                     <tr>
                         <td>
                             <input class="text-input-style" type="text" th:name="imdbId1"
-                                   th:value="${currentPromoBoxImdbIds.get(0).imdbId}" pattern="^tt\d{5,8}$" required>
+                                   th:value="${currentPromoBoxImdbIds.size() > 0 ? currentPromoBoxImdbIds.get(0).imdbId : ''}" pattern="^tt\d{5,8}$" required>
                         </td>
                         <td>
                             <input class="text-input-style" type="text" th:name="imdbId2"
-                                   th:value="${currentPromoBoxImdbIds.get(1).imdbId}" pattern="^tt\d{5,8}$" required>
+                                   th:value="${currentPromoBoxImdbIds.size() > 1 ? currentPromoBoxImdbIds.get(1).imdbId : ''}" pattern="^tt\d{5,8}$" required>
                         </td>
                         <td>
                             <input class="text-input-style" type="text" th:name="imdbId3"
-                                   th:value="${currentPromoBoxImdbIds.get(2).imdbId}" pattern="^tt\d{5,8}$" required>
+                                   th:value="${currentPromoBoxImdbIds.size() > 2 ? currentPromoBoxImdbIds.get(2).imdbId : ''}" pattern="^tt\d{5,8}$" required>
                         </td>
                         <td>
                             <input class="text-input-style" type="text" th:name="imdbId4"
-                                   th:value="${currentPromoBoxImdbIds.get(3).imdbId}" pattern="^tt\d{5,8}$" required>
+                                   th:value="${currentPromoBoxImdbIds.size() > 3 ? currentPromoBoxImdbIds.get(3).imdbId : ''}" pattern="^tt\d{5,8}$" required>
                         </td>
                         <td>
                             <input class="text-input-style" type="text" th:name="imdbId5"
-                                   th:value="${currentPromoBoxImdbIds.get(4).imdbId}" pattern="^tt\d{5,8}$" required>
+                                   th:value="${currentPromoBoxImdbIds.size() > 4 ? currentPromoBoxImdbIds.get(4).imdbId : ''}" pattern="^tt\d{5,8}$" required>
                         </td>
                     </tr>
                 </div>

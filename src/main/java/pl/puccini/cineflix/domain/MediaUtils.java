@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 public class MediaUtils {
 
     public String extractVideoId(String youtubeUrl) {
-        Pattern pattern = Pattern.compile("https?://www\\.youtube\\.com/watch\\?v=([\\w-]+)");
+        Pattern pattern = Pattern.compile("https?://(?:www\\.)?youtube\\.com/watch\\?v=([\\w-]+)");
         Matcher matcher = pattern.matcher(youtubeUrl);
 
         if (matcher.find()) {

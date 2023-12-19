@@ -12,9 +12,9 @@
   <div id="content" class="admin-panel">
     <div id="customDialogOverlay" class="custom-dialog-overlay">
       <div id="customDialogBox" class="custom-dialog-box">
-        <p>Czy na pewno chcesz usunąć swoje konto?</p>
-        <button onclick="submitForm('deleteAccount')">Tak</button>
-        <button onclick="submitForm('dontDeleteAccount')">Nie</button>
+        <p>CAre you sure you want to delete your account?</p>
+        <button onclick="submitForm('deleteAccount')">Yes</button>
+        <button onclick="submitForm('dontDeleteAccount')">No</button>
       </div>
     </div>
     <div class="section-wrapper">
@@ -27,14 +27,14 @@
             <div th:if="${success}">
               <div class="manage-message-user-manage-page" th:text="${success}"></div>
             </div>
-            <h1 class="page-title__header">Zmień avatar</h1></div>
+            <h1 class="page-title__header">Change avatar</h1></div>
           <div class="page-info-container">
             <div class="avatar-selection">
               <form th:action="@{/change-avatar}" method="post">
                 <div class="avatars">
                   <div th:each="avatar, iterStat : ${avatars}">
                     <label>
-                      <input type="radio" name="selectedAvatar" th:value="${avatar}" th:id="${'avatar' + iterStat.index}" />
+                      <input type="radio" name="selectedAvatar" th:value="${avatar}" th:id="${'avatar' + iterStat.index}" hidden />
                       <img th:src="@{${avatar}}" th:alt="${avatar}" />
                     </label>
                   </div>
@@ -42,7 +42,7 @@
                 <div class="submit-button-login-page">
                   <button type="submit"
                           class="PlayButtonText-module-container-tunCR Buttons-module-primary--YHdl"
-                          tabindex="0">Zmień avatar
+                          tabindex="0">Change avatar
                   </button>
                 </div>
               </form>

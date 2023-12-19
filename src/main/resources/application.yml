@@ -1,6 +1,6 @@
 spring:
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
   liquibase:
     change-log: db/changelog/master.xml

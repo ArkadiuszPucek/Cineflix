@@ -151,4 +151,8 @@ public class MovieService {
     public String getNormalizedMovieTitle(String title){
         return title.toLowerCase().replace(' ', '-');
     }
+
+    public int getNumberOfMoviesByGenre(Genre genreType) {
+        return movieRepository.countMoviesByGenre(genreType);
+    }
 }

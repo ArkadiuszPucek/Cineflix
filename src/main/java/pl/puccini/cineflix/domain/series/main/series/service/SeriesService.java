@@ -191,4 +191,8 @@ public class SeriesService {
         }
         return episodeDtos;
     }
+
+    public int getNumberOfSeriesByGenre(Genre genreType) {
+        return seriesRepository.countSeriesByGenre(genreType);
+    }
 }

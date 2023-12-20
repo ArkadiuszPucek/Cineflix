@@ -75,7 +75,22 @@ public class IMDbDataMapper {
         String directedBy = mdaApiRootNode.path("Director").asText("brak informacji");
         String language = mdaApiRootNode.path("Language").asText("Polski");
         String genres = mdaApiRootNode.path("Genre").asText("Crime");
+
         List<String> genreList = Arrays.asList(genres.split(", "));
+        if (genreList.contains("Animation")) {
+            movieDto.setGenre("Kids");
+        } else {
+            Optional<Genre> matchedGenre = genreList.stream()
+                    .map(genreRepository::findByGenreTypeIgnoreCase)
+                    .filter(Objects::nonNull)
+                    .findFirst();
+
+            matchedGenre.ifPresent(genre -> movieDto.setGenre(genre.getGenreType()));
+
+            if (matchedGenre.isEmpty()) {
+                movieDto.setGenre("Unknown genre");
+            }
+        }
 
         Optional<Genre> matchedGenre = genreList.stream()
                 .map(genreRepository::findByGenreTypeIgnoreCase)
@@ -168,14 +183,19 @@ public class IMDbDataMapper {
         if (genresNode.isArray()) {
             genresNode.forEach(genre -> genresList.add(genre.asText()));
         }
-        Optional<Genre> matchedGenre = genresList.stream()
-                .map(genreRepository::findByGenreTypeIgnoreCase)
-                .filter(Objects::nonNull)
-                .findFirst();
-        if (matchedGenre.isPresent()) {
-            seriesDto.setGenre(matchedGenre.get().getGenreType());
+        if (genresList.contains("Animation")) {
+            seriesDto.setGenre("Kids");
         } else {
-            seriesDto.setGenre("Unknown genre");
+            Optional<Genre> matchedGenre = genresList.stream()
+                    .map(genreRepository::findByGenreTypeIgnoreCase)
+                    .filter(Objects::nonNull)
+                    .findFirst();
+
+            matchedGenre.ifPresent(genre -> seriesDto.setGenre(genre.getGenreType()));
+
+            if (!matchedGenre.isPresent()) {
+                seriesDto.setGenre("Unknown genre");
+            }
         }
 
         seriesDto.setImdbId(imdbId);
@@ -186,13 +206,6 @@ public class IMDbDataMapper {
         seriesDto.setAgeLimit(ageLimit);
         seriesDto.setDescription(description);
         seriesDto.setStaff(staff);
-        matchedGenre.ifPresent(genre -> {
-            if ("Animation".equalsIgnoreCase((genre.getGenreType()))){
-                seriesDto.setGenre("Kids");
-            }else {
-                seriesDto.setGenre(genre.getGenreType());
-            }
-        });
         seriesDto.setImdbUrl("https://www.imdb.com/title/" + imdbId);
         seriesDto.setSeasonsCount(getSeasonsRootNode.size());
 
@@ -202,7 +215,7 @@ public class IMDbDataMapper {
     private EpisodeDto parseEpisodeDto(JsonNode getDetailsRootNode, JsonNode overDetailsRootNode) {
         EpisodeDto episodeDto = new EpisodeDto();
 
-        int runningTimeInMinutes = getDetailsRootNode.path("runningTimeInMinutes").asInt(43);
+        int runningTimeInMinutes = getDetailsRootNode.path("runningTimeInMinutes").asInt(38);
         episodeDto.setDurationMinutes(runningTimeInMinutes);
 
         String imageUrl = getDetailsRootNode.path("image").path("url").asText("https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Solid_white_bordered.svg/600px-Solid_white_bordered.svg.png");

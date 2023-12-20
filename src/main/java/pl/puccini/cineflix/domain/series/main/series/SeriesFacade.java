@@ -1,6 +1,7 @@
 package pl.puccini.cineflix.domain.series.main.series;
 
 import org.springframework.stereotype.Component;
+import pl.puccini.cineflix.domain.genre.model.Genre;
 import pl.puccini.cineflix.domain.series.main.episode.episodeDto.EpisodeDto;
 import pl.puccini.cineflix.domain.series.main.season.seasonDto.SeasonDto;
 import pl.puccini.cineflix.domain.series.main.series.model.Series;
@@ -72,5 +73,8 @@ public class SeriesFacade {
 
     public List<EpisodeDto> getEpisodesForSeason(Long seasondId, Long userId){
         return seriesService.getEpisodesForSeason(seasondId, userId);
+    }
+    public int getNumberOfMoviesByGenre(Genre genreType) {
+        return seriesService.getNumberOfSeriesByGenre(genreType);
     }
 }

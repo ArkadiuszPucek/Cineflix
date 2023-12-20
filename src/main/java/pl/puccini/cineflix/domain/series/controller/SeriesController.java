@@ -14,6 +14,7 @@ import pl.puccini.cineflix.domain.series.main.series.seriesDto.SeriesDto;
 import pl.puccini.cineflix.domain.UserUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/series")
@@ -36,7 +37,9 @@ public class SeriesController {
         Long userId = userUtils.getUserIdFromAuthentication(authentication);
 
         List<Genre> allGenres = genreFacade.getAllGenres();
-        model.addAttribute("genres", allGenres);
+        List<Genre> filteredGenres = allGenres.stream()
+                .filter(seriesGenre -> seriesFacade.getNumberOfMoviesByGenre(seriesGenre) > 1).toList();
+        model.addAttribute("genres", filteredGenres);
 
         List<SeriesDto> allSeriesInService = seriesFacade.findAllSeries(userId);
         model.addAttribute("allSeriesInService", allSeriesInService);
@@ -54,7 +57,9 @@ public class SeriesController {
         List<SeriesDto> seriesByGenre = seriesFacade.getSeriesByGenre(capitalizedGenre, userId);
 
         List<Genre> allGenres = genreFacade.getAllGenres();
-        model.addAttribute("genres", allGenres);
+        List<Genre> filteredGenres = allGenres.stream()
+                .filter(seriesGenre -> seriesFacade.getNumberOfMoviesByGenre(seriesGenre) > 1).toList();
+        model.addAttribute("genres", filteredGenres);
 
         model.addAttribute("genre", capitalizedGenre);
         model.addAttribute("seriesByGenre", seriesByGenre);

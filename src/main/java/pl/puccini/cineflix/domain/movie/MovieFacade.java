@@ -1,6 +1,7 @@
 package pl.puccini.cineflix.domain.movie;
 
 import org.springframework.stereotype.Component;
+import pl.puccini.cineflix.domain.genre.model.Genre;
 import pl.puccini.cineflix.domain.movie.dto.MovieDto;
 import pl.puccini.cineflix.domain.movie.model.Movie;
 import pl.puccini.cineflix.domain.movie.service.MovieService;
@@ -59,5 +60,7 @@ public class MovieFacade {
     public String getNormalizedMovieTitle(String title) {
         return movieService.getNormalizedMovieTitle(title);
     }
-
+    public int getNumberOfMoviesByGenre(Genre genreType) {
+        return movieService.getNumberOfMoviesByGenre(genreType);
     }
+}
